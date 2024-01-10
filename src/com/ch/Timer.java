@@ -53,6 +53,6 @@ public class Timer {
         delta = delta < 0 || delta > 1 ? 0 : delta;
         time += delta;
     }
-
 }
+
 
