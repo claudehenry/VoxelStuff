@@ -14,6 +14,15 @@ import com.ch.voxel.World;
 
 public class Main {
 	
+ /**
+  * This function sets up the display and OpenGL graphics contexts and then enters a
+  * main loop that continues running until the program exits with status code 0.
+  * 
+  * @param args The `args` parameter is an array of strings passed to the `main()`
+  * method when the program is executed. In this case , it is not used and has a default
+  * value of null . Therefore , the `main()` method can be considered as accepting no
+  * arguments .
+  */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +39,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+ /**
+  * This function initializes the display mode and creates a window using LWJGL. It
+  * sets vsync enabled and prints the current OpenGL version.
+  */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +54,17 @@ public class Main {
 		}
 	}
 	
+ /**
+  * This function initializes the graphics pipeline and sets up the basic rendering
+  * context for a 3D game using Java. It sets the background color of the scene to
+  * grayish-blue with darkness factor (0.1f), sets grabbed mouse state as true to
+  * enable mouse input capture during gameplay), sets cull face and depth test states
+  * as true , initializes the camera to look at -0.5/-0.5 coordinate points; load
+  * default shader
+  * and loads texture "block0.png". The vertices and indices arrays contain the basic
+  * 3x4 matrix  of a 3D world chunk without any texture coordiantes applied yet. The
+  * function does not define any models nor objects
+  */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +107,17 @@ public class Main {
 		
 	}
 	
+ /**
+  * This function is a game loop that manages the updates and rendering of the game.
+  * It:
+  * 
+  * 	- initializes the timer and updates the frame rate display
+  * 	- updates the game world using the `update` method
+  * 	- renders the game graphics using the `render` method
+  * 	- updates the screen display using the `Display.update` method
+  * 
+  * It also displays information about the current memory usage and the FPS.
+  */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +140,27 @@ public class Main {
 		
 	}
 	
+ /**
+  * This function updates the position of an object (represented by `c` and `w`) based
+  * on user input and movements. It uses the `processInput()` method to receive the
+  * input from the user (dt is the time step), and then updates the position of the
+  * object using the information received.
+  * 
+  * @param dt The `dt` parameter represents the elapsed time since the last frame and
+  * is used to update the animation and physics simulations over time. It allows for
+  * smooth movements and responses to user input.
+  */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+ /**
+  * This function is a Render function that renders four children (ch[i][j][k]) of a
+  * Container (c) using the Scene (s) and ViewProjection (c.getViewProjection())
+  * matrices. It also sets up and clears the color and modelview projection uniforms
+  * for each child.
+  */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +182,15 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+ /**
+  * This function calls the `System.exit()` method with the given `status` parameter
+  * to exit the program with that status.
+  * 
+  * @param status The `status` input parameter passes the exit code to the operating
+  * system when exiting the program. It determines the exit status that will be returned
+  * to the operating system and any parent processes. In most cases a value of zero
+  * (0) indicates success and a non-zero value indicates an error or failure.
+  */
 	private static void exit(int status) {
 		System.exit(status);
 	}
