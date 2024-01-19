@@ -1,7 +1,6 @@
 package com.ch.math;
 
 public class Vector3f {
-
 	private float x;
 	private float y;
 	private float z;
