@@ -16,6 +16,14 @@ public class Vector3f {
 		this.z = z;
 	}
 
+ /**
+  * This function calculates the length of a 3D vector.
+  * 
+  * @returns This function takes no arguments and returns the square root of the sum
+  * of the squared coordinates of the object. In other words: it returns the length
+  * of the vector representing the object. The output is a float value that represents
+  * the magnitude or distance of the object from the origin.
+  */
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
