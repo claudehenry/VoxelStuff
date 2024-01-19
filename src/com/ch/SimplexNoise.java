@@ -40,16 +40,133 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 {2,0,1,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,0,1,2},{3,0,2,1},{0,0,0,0},{3,1,2,0},
 	 {2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}};
 	 // This method is a *lot* faster than using (int)Math.floor(x)
+  /**
+   * This function returns the nearest integer to a double value x rounded down if x
+   * is positive and rounded up if x is negative.
+   * 
+   * @param x The `x` input parameter is passed by value and is only used to determine
+   * the sign of `x` before casting it to an integer using `((int)x)` or `(int)(x-1)`.
+   * It does not have any other effect on the function's behavior.
+   * 
+   * @returns The function `fastfloor` takes a `double` parameter `x` and returns an
+   * `int`. If `x` is positive (i.e., greater than zero), the function simply casts `x`
+   * to an integer using `((int)x)`. If `x` is non-positive (i.e., equal to or less
+   * than zero), the function subtracts 1 from `x` before casting it to an integer.
+   * 
+   * In other words:
+   * 
+   * 	- If x is positive: fastfloor(x) = x
+   * 	- If x is non-positive: fastfloor(x) = x - 1
+   * 
+   * Therefore the output returned by this function is either x (if x is positive) or
+   * x-1 (if x is non-positive).
+   */
 	 private static int fastfloor(double x) {
 	 return x>0 ? (int)x : (int)x-1;
 	 }
+  /**
+   * The function `dot(int[], double x)`, given an array of integers `g` and two doubles
+   * `x` and `y`, returns the dot product of the two vectors `g` and `[x]`, i.e., it
+   * returns `g[0]*x + g[1]*y`.
+   * 
+   * @param g The `g` input parameter is an array of integers that represents the
+   * gradient of the function with respect to the inputs `x` and `y`.
+   * 
+   * @param x The `x` input parameter multiplies each element of the `g` array by the
+   * corresponding coefficient of the linear combination.
+   * 
+   * @param y The `y` input parameter is not used at all inside the function. It is an
+   * unused variable and therefore has no effect on the function's behavior or output.
+   * 
+   * @returns The function `dot` takes an integer array `g`, a double `x`, and a double
+   * `y`, and returns their dot product (the sum of the products of the corresponding
+   * elements).
+   * 
+   * Therefore the output of the function is a double value representing the dot product
+   * of `g`, `x`, and `y`.
+   */
 	 private static double dot(int g[], double x, double y) {
 	 return g[0]*x + g[1]*y; }
+  /**
+   * This function calculates the dot product of three vectors represented as arrays
+   * of double values (x), (y), and (z), using the coefficients storedin an array g[],
+   * and returns the result as a double value.
+   * 
+   * @param g The `g` input parameter is an array of three integers (`int[] g = new
+   * int[3]`), and it represents the coefficients of the dot product. The function
+   * calculates the dot product of the vectors represented by `x`, `y`, and `z` with
+   * the vectors represented by the elements of the `g` array.
+   * 
+   * @param x The `x` input parameter is ignored. The function doesn't use it at all.
+   * 
+   * @param y The `y` input parameter is not used anywhere inside the function `dot()`.
+   * Therefore it is optional and can be removed.
+   * 
+   * @param z The `z` parameter is not used anywhere inside the function `dot(int g[].,
+   * double x`, so it has no effect and can be safely removed from the function definition.
+   * 
+   * @returns The output of this function is a double value calculated as the dot product
+   * of the values of the elements of the `g` array and the input `x`, `y`, and `z` values.
+   * 
+   * Concisely: The function takes an integer array `g`, doubles `x`, `y`, and `z`, and
+   * returns the dot product of the corresponding elements of `g` and the input values.
+   */
 	 private static double dot(int g[], double x, double y, double z) {
 	 return g[0]*x + g[1]*y + g[2]*z; }
+  /**
+   * This function calculates the dot product of a set of four doubles (x y z w) with
+   * a set of four integers (g0 g1 g2 g3).
+   * 
+   * @param g The `g` input parameter is an array of four doubles that represents a
+   * vector. The function takes these values and uses them to compute the dot product
+   * with the input parameters `x`, `y`, `z`, and `w`.
+   * 
+   * @param x In the function `dot(int g[], double x)`, the `x` parameter is ignored.
+   * The function takes four double values as parameters `g`, but the first parameter
+   * `x` is of type `int` and is not used anywhere within the function. Therefore the
+   * input `x` does not have any effect on the behavior of the function.
+   * 
+   * @param y The `y` input parameter is not used at all inside the `dot` function. It
+   * is not referred to anywhere within the code of the function.
+   * 
+   * @param z The `z` input parameter is not used at all within the `dot()` function.
+   * Therefore it is superfluous and can be removed.
+   * 
+   * @param w The `w` input parameter is not used anywhere within the function and is
+   * therefore redundant or unnecessary. It can be removed without affecting the
+   * functionality of the code.
+   * 
+   * @returns The function `dot` takes six input parameters: an integer array `g`, and
+   * five double parameters `x`, `y`, `z`, `w`. The function returns a double value
+   * computed as the dot product of the elements of `g` with `x`, `y`, `z`, and `w`.
+   * In other words:
+   * 
+   * The output returned by this function is a dot product of two vectors represented
+   * as arrays of integers.
+   */
 	 private static double dot(int g[], double x, double y, double z, double w) {
 	 return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 	 // 2D simplex noise
+  /**
+   * This function implements a 2D simulated annealing noise algorithm. It takes two
+   * inputs x and y and computes a noise value based on the position of each point
+   * within a predefined simplex. The output is scaled to return values between -1 and
+   * 1.
+   * 
+   * @param xin The `xin` input parameter is a double value that is used as one of the
+   * two inputs to determine which simplex cell the current point belongs to. It is
+   * skewed and then unskewed along with the other input `yin` to determine the corner
+   * of the simplex that the point belongs to.
+   * 
+   * @param yin The `yin` input parameter is ignored. The function only uses `xin` to
+   * determine the simplex cell that the point belongs to.
+   * 
+   * @returns The output returned by the `noise()` function is a double value between
+   * -1 and 1. It is generated using a simulation of a random walk on a simplex lattice
+   * to create a Perlin noise pattern. The function takes two double parameters
+   * representing the x and y coordinates of a point on the grid and returns a smoothed
+   * version of the noise pattern at that point.
+   */
 	 public static double noise(double xin, double yin) {
 	 double n0, n1, n2; // Noise contributions from the three corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -105,6 +222,38 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 70.0 * (n0 + n1 + n2);
 	 }
 	 // 3D simplex noise
+  /**
+   * This function implements a 3D Simplex noise algorithm for generating random values
+   * within a given space. It takes three input coordinates (xin. yin. zin) and calculates
+   * the noise value based on the location of the point within one of four simplified
+   * tetrahedral zones defined by the input coordinates and four corner points.
+   * 
+   * @param xin The `xin` input parameter is one of the three doubles that are passed
+   * to the `noise()` function and represents the input value for the x-coordinate of
+   * the point being generated using Perlin noise.
+   * 
+   * @param yin The `yin` input parameter is not used anywhere within the noise()
+   * function. Therefore it has no effect on its output. The unused inputs do have a
+   * default value however that gets triggered with debug builds if you set either yin
+   * and cin accordingly or neither one and just leave only cin without any assignement
+   * or initilization to default values such as zeroes like below (c/++ mainly targets
+   * academu programs not games since gamedev almost only c targets etc..
+   * void main() {cin.sync_with_stdio(false);  cout.tie(0,"/>");  int cinBuffy =0;cin
+   * >> cinBuffy ;  noise(3.5678941840332E-5 ,4 ,4) return 0;
+   * }
+   * 
+   * @param zin The `zin` input parameter is not used or referenced anywhere inside the
+   * noise function code. It's effectively an unused and optional parameter that could
+   * be removed without changing the functionality of the noise function.
+   * 
+   * @returns This function computes noise from four corners of a Simplex noise
+   * computation. The output returned by the function is a double value representing
+   * the final noise value between -1 and 1 after being scaled by 32. The noise values
+   * are computed from contributions made by each of the four corners using dot products
+   * and values like t0 and t1 that determine the degree to which each corner contributes
+   * to the overall output based on their distance from the origin and inside/outside
+   * the simplex boundaries.
+   */
 	 public static double noise(double xin, double yin, double zin) {
 	 double n0, n1, n2, n3; // Noise contributions from the four corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -187,6 +336,46 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 32.0*(n0 + n1 + n2 + n3);
 	 }
 	 // 4D simplex noise
+  /**
+   * The provided code is a G4 mesh simulation routine that calculates the dot product
+   * of gradient vectors and position values for five vertices (corners) of a 3D hexagonal
+   * mesh element. It uses a hashed gradient index technique to distribute the computation
+   * among the 16 vertices of the hexahedron and return a single value covering the
+   * range [-1;1].
+   * 
+   * @param x The `x` parameter is an index into the vertices of a quadrilateral mesh.
+   * It is used to select one of the four corners of the mesh as the current corner to
+   * work with.
+   * 
+   * @param y The `y` parameter is the fourth input to the Simplex noise function and
+   * serves as a generic "parameter" that can be used to scale or modify the output of
+   * the function. In other words: it's a sort of bias for the Simplex function that
+   * lets you alter the shape and distribution of the noise.
+   * 
+   * @param z The `z` parameter is unused and can be ignored. The function ignores it
+   * and only uses the other three coordinates (`x`, `y`, and `w`).
+   * 
+   * @param w The `w` input parameter is a scalator used to scale the result of the
+   * hashed gradient norm calculation from the range `[0.6,-0.6]` to the range `[-1.0001
+   * 1.0001]`.
+   * 
+   * @returns The output returned by the `hashed_gradient` function is a scalar value
+   * that represents the gradient of a quadrilateral object at a given point. Specifically:
+   * 
+   * 	- The output value ranges from -1 to 1.
+   * 	- It is computed as the sum of the contributions from the five corners of the
+   * quadrilateral object (which are determined by hashing the gradient indices), each
+   * weighted by a power of the distance between the current point and the corresponding
+   * corner.
+   * 
+   * The function takes as input:
+   * 
+   * 	- `x0`, `y0`, `z0`, `w0` : coordinates of the current point.
+   * 	- `G4` : length of one edge of the gradient grid.
+   * 	- `simplex[c][i]`: coefficients of the Bernstein basis for the polynomial of
+   * degree 2 that describes the piecewise-defined function.
+   * 	- `perm`: a list of permutations used to construct the hashed gradient indices.
+   */
 	 double noise(double x, double y, double z, double w) {
 
 	 // The skewing and unskewing factors are hairy again for the 4D case
@@ -212,7 +401,7 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 // To find out which of the 24 possible simplices we're in, we need to
 	 // determine the magnitude ordering of x0, y0, z0 and w0.
 	 // The method below is a good way of finding the ordering of x,y,z,w and
-	 // then find the correct traversal order for the simplex we’re in.
+	 // then find the correct traversal order for the simplex weÂ’re in.
 	 // First, six pair-wise comparisons are performed between each possible pair
 	 // of the four coordinates, and the results are used to add up binary bits
 	 // for an integer index.
