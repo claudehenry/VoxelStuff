@@ -1,6 +1,7 @@
 package com.ch.math;
 
 public class Vector3f {
+	
 	private float x;
 	private float y;
 	private float z;
@@ -15,17 +16,6 @@ public class Vector3f {
 		this.z = z;
 	}
 
- /**
-  * This function calculates the length of a 3D vector. It returns the square root of
-  * the sum of the squared components of the vector.
-  * 
-  * 
-  * @returns { float } The output returned by this function is the square root of the
-  * sum of the squares of the three coordinates `x`, `y`, and `z`. In other words，the
-  * function returns the length of the given vector.
-  * 
-  * Concisely，the output can be described as "the length of the input vector".
-  */
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
