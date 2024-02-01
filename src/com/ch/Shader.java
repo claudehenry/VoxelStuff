@@ -42,6 +42,18 @@ public class Shader {
 		return this.program;
 	}
 	
+	/**
+	 * This function sets a single or multiple floating-point uniform variables of a GL20
+	 * GPU shader program.
+	 * 
+	 * @param name The `name` input parameter is a string that identifies the uniform
+	 * being set. It is used to retrieve the location of the uniform within the Shader Program.
+	 * 
+	 * @param vals The `vals` parameter is an array of float values that are used to set
+	 * the uniform values for the specified location (represented by the `name` parameter).
+	 * The number of elements inside the `vals` array determines which overloaded version
+	 * of the `glUniform` method will be called.
+	 */
 	public void uniformf(String name, float ...vals) {
 		switch (vals.length) {
 		case 1:
@@ -59,10 +71,33 @@ public class Shader {
 		}
 	}
 	
+	/**
+	 * This function sets the uniform matrix 4 on a location defined by `name`, using the
+	 * linear data from `mat` and flipping it if necessary.
+	 * 
+	 * @param name The `name` input parameter is a string that is used as an index into
+	 * a buffer object to store the matrix data. It is passed as the first argument to
+	 * the `glUniformMatrix4` method.
+	 * 
+	 * @param mat The `mat` input parameter is a `Matrix4f` object that contains the
+	 * uniform transformation matrix to be applied to the specified object.
+	 */
 	public void unifromMat4(String name, Matrix4f mat) {
 		GL20.glUniformMatrix4(getLoaction(name), false, Util.createFlippedBuffer(mat.getLinearData()));
 	}
 	
+	/**
+	 * This function returns the OpenGL uniform location for a specified name within a program.
+	 * 
+	 * @param name The `name` input parameter passed to `glGetUniformLocation()` specifies
+	 * the name of the uniform that we want to locate. It is a string representing the
+	 * name of the uniform we are looking for.
+	 * 
+	 * @returns The function `getLoaction` returns the integer location of a uniform
+	 * within a shader program specified by the name of the uniform. The return type is
+	 * an `int`, and the value returned is the memory location of theuniform within the
+	 * program's uniform block.
+	 */
 	public int getLoaction(String name) {
 		return GL20.glGetUniformLocation(program, name);
 	}
