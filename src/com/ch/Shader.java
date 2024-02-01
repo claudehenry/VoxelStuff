@@ -24,10 +24,20 @@ public class Shader {
 		this.program = program;
 	}
 	
+	/**
+	 * This function binds a previously created OpenGL program object to the currently
+	 * active graphics pipeline using `GL20.glUseProgram()` method.
+	 */
 	public void bind() {
 		GL20.glUseProgram(program);
 	}
 	
+	/**
+	 * This function returns the value of the `program` field of the object that it is
+	 * called on.
+	 * 
+	 * @returns The output returned by this function is "undefined".
+	 */
 	public int getProgram() {
 		return this.program;
 	}
@@ -62,6 +72,19 @@ public class Shader {
 		}
 	}
 	
+	/**
+	 * This function sets the uniform matrix for a specific location (named by "name")
+	 * using the given "mat" as its value.
+	 * 
+	 * @param name The `name` input parameter is a label used to identify the specific
+	 * uniform variable that should be updated with the contents of the `mat` matrix. It
+	 * is passed as an argument to the `glUniformMatrix4()` method to specify the name
+	 * of the uniform variable to update.
+	 * 
+	 * @param mat The `mat` input parameter is a `Matrix4f` object that contains the
+	 * uniform transformation matrix data to be applied to the specified location (defined
+	 * by the `name` parameter).
+	 */
 	public void unifromMat4(String name, Matrix4f mat) {
 		GL20.glUniformMatrix4(getLoaction(name), false, Util.createFlippedBuffer(mat.getLinearData()));
 	}
