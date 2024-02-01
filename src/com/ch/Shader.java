@@ -42,19 +42,6 @@ public class Shader {
 		return this.program;
 	}
 	
- /**
-  * This function sets uniform floats for a shader program. It takes a name and an
-  * arbitrary number of float values as arguments. It uses a switch statement to
-  * determine which uniform buffer size to use based on the length of the argument list.
-  * 
-  * @param name The `name` input parameter is a string that identifies the uniform
-  * variable to be set. It is used to retrieve the location of the uniform variable
-  * using the `getLoaction()` method.
-  * 
-  * @param vals The `vals` input parameter is an array of floating-point numbers that
-  * specifies the uniform values to be set. The length of the array determines the
-  * number of uniform components being set.
-  */
 	public void uniformf(String name, float ...vals) {
 		switch (vals.length) {
 		case 1:
@@ -72,35 +59,10 @@ public class Shader {
 		}
 	}
 	
-	/**
-	 * This function sets the uniform matrix for a specific location (named by "name")
-	 * using the given "mat" as its value.
-	 * 
-	 * @param name The `name` input parameter is a label used to identify the specific
-	 * uniform variable that should be updated with the contents of the `mat` matrix. It
-	 * is passed as an argument to the `glUniformMatrix4()` method to specify the name
-	 * of the uniform variable to update.
-	 * 
-	 * @param mat The `mat` input parameter is a `Matrix4f` object that contains the
-	 * uniform transformation matrix data to be applied to the specified location (defined
-	 * by the `name` parameter).
-	 */
 	public void unifromMat4(String name, Matrix4f mat) {
 		GL20.glUniformMatrix4(getLoaction(name), false, Util.createFlippedBuffer(mat.getLinearData()));
 	}
 	
- /**
-  * This function retrieves the location of a uniform variable within a shader program.
-  * It takes the name of the uniform as a string and returns its location as an integer.
-  * 
-  * @param name The `name` input parameter is a string that specifies the name of the
-  * uniform variable that you want to retrieve the location of.
-  * 
-  * @returns The function `getLoaction(String name)` returns an `int` value that
-  * represents the OpenGL uniform location of the given name within the currently bound
-  * GPU program. In other words., it returns the integer value of the GL uniform
-  * location identifier obtained using `glGetUniformLocation()`.
-  */
 	public int getLoaction(String name) {
 		return GL20.glGetUniformLocation(program, name);
 	}
