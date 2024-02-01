@@ -24,14 +24,44 @@ public class Shader {
 		this.program = program;
 	}
 	
+	/**
+	 * This function binds the GPU program specified by `program` to the current rendering
+	 * context using `glUseProgram()` from the OpenGL GL20 class.
+	 */
 	public void bind() {
 		GL20.glUseProgram(program);
 	}
 	
+	/**
+	 * This function returns the value of the `program` field of the object that the
+	 * function is called on.
+	 * 
+	 * @returns The function `getProgram()` returns the value of the field `program` of
+	 * the object that is invoking the method. Since `program` is undefined and there is
+	 * no object that is invoking the method as the function is defined outside any class
+	 * or instance context; thus there is no object to refer to and hence no value can
+	 * be returned. Therefore the output returned by this function will be undefined or
+	 * a null reference.
+	 */
 	public int getProgram() {
 		return this.program;
 	}
 	
+	/**
+	 * This function sets a uniform value for a OpenGL shader program using the `glUniform`
+	 * method. It accepts a name of the uniform and an arbitrary number of float values
+	 * as parameters. The function uses a switch statement to determine which overload
+	 * of `glUniform` to use based on the length of the `vals` array.
+	 * 
+	 * @param name The `name` parameter is a string that specifies the name of the uniform
+	 * variable that should be set.
+	 * 
+	 * @param vals The `vals` input parameter is an array of float values that are used
+	 * to set the uniform values for the shader. The length of the `vals` array determines
+	 * which uniform variable is set (1f for one floating point value), and the values
+	 * are passed as arguments to the corresponding GL functions (e.g. `glUniform1f()`,
+	 * `glUniform2f()`, etc.) to set the uniform values.
+	 */
 	public void uniformf(String name, float ...vals) {
 		switch (vals.length) {
 		case 1:
@@ -49,6 +79,17 @@ public class Shader {
 		}
 	}
 	
+	/**
+	 * This function sets the uniform matrix on a GLES 2.0 context using the provided
+	 * `Matrix4f` object as its data.
+	 * 
+	 * @param name The `name` parameter is a String that is used as an index into a
+	 * bindings table to specify which uniform variable should be updated with the matrix
+	 * value.
+	 * 
+	 * @param mat The `mat` parameter is a `Matrix4f` object that contains the matrix
+	 * data to be set as a uniform buffer within the shader program.
+	 */
 	public void unifromMat4(String name, Matrix4f mat) {
 		GL20.glUniformMatrix4(getLoaction(name), false, Util.createFlippedBuffer(mat.getLinearData()));
 	}
