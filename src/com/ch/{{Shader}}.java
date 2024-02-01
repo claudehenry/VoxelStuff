@@ -24,14 +24,38 @@ public class Shader {
 		this.program = program;
 	}
 	
+	/**
+	 * This function binds the OpenGL program object identified by `program` to the current
+	 * graphics context.
+	 */
 	public void bind() {
 		GL20.glUseProgram(program);
 	}
 	
+	/**
+	 * This function returns the value of the `program` field of the object that it is
+	 * called on.
+	 * 
+	 * @returns The output returned by this function is "undefined".
+	 */
 	public int getProgram() {
 		return this.program;
 	}
 	
+	/**
+	 * This function sets a single uniform (a value that is applied to all vertices of a
+	 * render object) on the currently bound OpenGL GPU context using the glUniform*()
+	 * method. It takes a name of the uniform and an array of float values as input. The
+	 * length of the input array determines which overloaded version of glUniform*() to
+	 * call based on the number of float values passed.
+	 * 
+	 * @param name The `name` input parameter is a string that represents the name of the
+	 * uniform to be set. It is used to identify the specific uniform among multiple
+	 * uniforms that are available on the graphics pipeline.
+	 * 
+	 * @param vals The `vals` input parameter is an array of floats that specifies the
+	 * values to be uniformized.
+	 */
 	public void uniformf(String name, float ...vals) {
 		switch (vals.length) {
 		case 1:
@@ -49,6 +73,17 @@ public class Shader {
 		}
 	}
 	
+	/**
+	 * This function sets the uniform matrix4 of a specific name (passed as string) to
+	 * the value of a given Matrix4f object (also passed as argument).
+	 * 
+	 * @param name The `name` parameter is a string that specifies the uniform name for
+	 * which the `Matrix4f` data is being bound. It is used to identify the specific
+	 * uniform buffer object (UBO) that the matrix data should be bound to.
+	 * 
+	 * @param mat The `mat` input parameter is a `Matrix4f` object that contains the
+	 * matrix data to be set as a uniform for a given OpenGL location.
+	 */
 	public void unifromMat4(String name, Matrix4f mat) {
 		GL20.glUniformMatrix4(getLoaction(name), false, Util.createFlippedBuffer(mat.getLinearData()));
 	}
