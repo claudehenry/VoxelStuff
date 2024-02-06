@@ -37,20 +37,56 @@ public class Texture {
 	}
 
 
+	/**
+	 * The function `bind()` with no arguments is a no-op and does nothing.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * This function binds a texture with the specified sampler slot (which is an integer
+	 * between 0 and 31) using the glActiveTexture and glBindTexture functions.
+	 * 
+	 * @param samplerSlot The `samplerSlot` input parameter specifies which texture unit
+	 * (i.e., GL_TEXTURE0 + samplerSlot) should be bound to the given texture ID (id).
+	 * It ranges from 0 to 31 and is used to uniquely identify a particular texture unit
+	 * among the available 32 texture units.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * This function returns the value of the field "id" of the object that it is called
+	 * on.
+	 * 
+	 * @returns The output returned by this function is "undefined". The reason is that
+	 * the field "id" has not been initialized or assigned a value yet. Therefore the
+	 * function "getID()" returns undefined as there is no value to return.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * This function loads a texture from a file and returns the ID of the texture.
+	 * 
+	 * @param fileName The `fileName` input parameter is the path to the texture image
+	 * file that should be loaded into the graphics card's memory.
+	 * 
+	 * @returns The output of the `loadTexture` function is an integer identifier for a
+	 * OpenGL texture object that represents the loaded image. Specifically:
+	 * 
+	 * 	- If the loading process succeeds and the texture data is correctly initialized
+	 * (i.e., the image data is valid and the texture object is created successfully),
+	 * the function returns the integer identifier for the texture object.
+	 * 	- If any exception or error occurs during the loading process (e.g., the input
+	 * image file cannot be read or the texture object cannot be created), the function
+	 * returns 0 to indicate failure.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
