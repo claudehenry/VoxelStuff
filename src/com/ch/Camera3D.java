@@ -15,6 +15,21 @@ public class Camera3D extends Camera {
 		calculateProjectionMatrix(values);
 	}
 
+	/**
+	 * Certainly. Here's your answer:
+	 * 
+	 * The `calculateProjectionMatrix()` method returns a projection matrix with values
+	 * taken from the passed-in `CameraStruct` data. It creates the matrix using the
+	 * information stored within `data`.
+	 * 
+	 * @param data The input parameter `data` passes a `CameraStruct` instance to the
+	 * function. This structure contains essential information for matrix projection
+	 * transformation. The function utilizes data from this struct to compute the projection
+	 * matrix.
+	 * 
+	 * @returns The function calculates the projection matrix and returns it as a Matrix4f
+	 * object.
+	 */
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
 		return (projection = data.getAsMatrix4());
