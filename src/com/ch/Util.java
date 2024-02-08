@@ -61,17 +61,6 @@ public class Util {
 		return BufferUtils.createByteBuffer(size);
 	}
 
- /**
-  * This function creates an int buffer from a varargs parameter `values`, puts the
-  * values into the buffer and flips the buffer. Then returns the flipped buffer.
-  * 
-  * @param values The `values` input parameter is an array of integers that is put
-  * into the newly created `IntBuffer` instance.
-  * 
-  * @returns The function `createFlippedBuffer()` takes an array of integers as input
-  * and returns an int buffer that contains the elements of the input array reversed
-  * (i.e., flipped).
-  */
 	public static IntBuffer createFlippedBuffer(int... values) {
 		IntBuffer buffer = createIntBuffer(values.length);
 		buffer.put(values);
@@ -80,19 +69,6 @@ public class Util {
 		return buffer;
 	}
 	
- /**
-  * This function creates a FloatBuffer and fills it with the provided float values.
-  * Then it flips the buffer to make it ready for drawing.
-  * 
-  * @param values The `values` parameter is an array of floats that is passed to the
-  * `put()` method of the `FloatBuffer` object to fill it with data.
-  * 
-  * @returns The output returned by this function is a FloatBuffer object that represents
-  * the provided array of floats with the components reversed (i.e., the elements are
-  * arranged from back to front). The function creates a new FloatBuffer instance and
-  * puts the contents of the input array into it. Then it flips the buffer to make the
-  * data ready for use.
-  */
 	public static FloatBuffer createFlippedBuffer(float... values) {
 		FloatBuffer buffer = createFloatBuffer(values.length);
 		buffer.put(values);
