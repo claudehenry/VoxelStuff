@@ -10,14 +10,53 @@ import org.lwjgl.BufferUtils;
 
 public class Util {
 	
+	/**
+	 * This function creates a Float Buffer of a specific size using the BufferUtils class.
+	 * 
+	 * @param size The `size` parameter is used to specify the number of floating-point
+	 * elements that the created buffer will hold. It determines the capacity of the buffer.
+	 * 
+	 * @returns Based on the code snippet provided above:
+	 * 
+	 * The output of this function will be a FloatBuffer object that holds an array of
+	 * floating-point numbers with size bytes (or whatever the size argument passed into
+	 * the method is). To be more explicit about BufferUtil.createFloatBuffer (), which
+	 * is called inside this function to create a new float buffer.
+	 */
 	public static FloatBuffer createFloatBuffer(int size) {
 		return BufferUtils.createFloatBuffer(size);
 	}
 
+	/**
+	 * This function creates an integer buffer of a specified size using the Buffers
+	 * utility class's createIntBuffer method.
+	 * 
+	 * @param size The `size` parameter specifies the number of elements that the created
+	 * `IntBuffer` should be able to hold.
+	 * 
+	 * @returns Based on the information provided about the function `createIntBuffer`,
+	 * it appears to be a factory method that creates an instance of the `IntBuffer` class
+	 * with a specified size. The function call `BufferUtils.createIntBuffer(size)` is
+	 * used to create the `IntBuffer`.
+	 * The output returned by this function is therefore an `IntBuffer` object with the
+	 * specified size.
+	 */
 	public static IntBuffer createIntBuffer(int size) {
 		return BufferUtils.createIntBuffer(size);
 	}
 
+	/**
+	 * This function creates a ByteBuffer of a specific size using the BufferUtils class.
+	 * 
+	 * @param size The input parameter `size` represents the initial capacity of the
+	 * created `ByteBuffer`, and it is used to determine how much memory to allocate for
+	 * the buffer when it's created.
+	 * 
+	 * @returns The `createByteBuffer()` method takes an integer `size` as input and
+	 * returns a `ByteBuffer` object that can hold bytes up to that size. The return type
+	 * is `BufferUtils.createByteBuffer(size)`, which is a static method that creates a
+	 * new byte buffer of the specified size using the `BufferUtil` class.
+	 */
 	public static ByteBuffer createByteBuffer(int size) {
 		return BufferUtils.createByteBuffer(size);
 	}
