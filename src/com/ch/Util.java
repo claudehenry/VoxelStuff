@@ -10,14 +10,51 @@ import org.lwjgl.BufferUtils;
 
 public class Util {
 	
+	/**
+	 * This function creates a new instance of the FloatBuffer class and returns it to
+	 * the caller with the given size parameter that defines how many memory locations
+	 * are requested.
+	 * 
+	 * @param size The size parameter is the total number of floating-point numbers to
+	 * be stored within the newly created float buffer object.
+	 * 
+	 * @returns The function "createFloatBuffer" returns a floating point buffer object
+	 * using the BufferUtils class. The object will contain an array of float values and
+	 * has size as the number of elements it can hold.
+	 */
 	public static FloatBuffer createFloatBuffer(int size) {
 		return BufferUtils.createFloatBuffer(size);
 	}
 
+	/**
+	 * This function creates an integer buffer of the specified size using the BufferUtils
+	 * class.
+	 * 
+	 * @param size The `size` input parameter specifies the size of the int buffer to be
+	 * created. It determines the number of elements the buffer can hold.
+	 * 
+	 * @returns This function called `createIntBuffer` has a return type of `public static
+	 * IntBuffer` and takes an integer parameter called `size`. The function returns an
+	 * instance of `IntBuffer`.
+	 */
 	public static IntBuffer createIntBuffer(int size) {
 		return BufferUtils.createIntBuffer(size);
 	}
 
+	/**
+	 * The provided function "createByteBuffer" creates a byte buffer of a given size
+	 * using the method "createByteBuffer" of the class "BufferUtils".
+	 * 
+	 * @param size The size parameter determines how many bytes of memory are allotted
+	 * for the resulting ByteBuffer.
+	 * 
+	 * @returns Based on the provided code snippet:
+	 * 
+	 * The output of `createByteBuffer(size)` is a newly created `ByteBuffer` object with
+	 * the specified `size`. The function calls `BufferUtils.createByteBuffer(size)` to
+	 * create the `ByteBuffer`, and returns it. Therefore the output is a `ByteBuffer`
+	 * object with the specified size.
+	 */
 	public static ByteBuffer createByteBuffer(int size) {
 		return BufferUtils.createByteBuffer(size);
 	}
