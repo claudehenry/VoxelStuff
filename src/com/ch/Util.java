@@ -10,50 +10,14 @@ import org.lwjgl.BufferUtils;
 
 public class Util {
 	
- /**
-  * This function creates a float buffer of the specified size using the `BufferUtils`
-  * class.
-  * 
-  * @param size The `size` input parameter specifies the size of the floating-point
-  * buffer to be created. It determines the number of float values that will be stored
-  * inside the buffer.
-  * 
-  * @returns The output returned by this function is a `FloatBuffer` object that
-  * represents a buffer of floating-point numbers with the specified size (in bytes).
-  */
 	public static FloatBuffer createFloatBuffer(int size) {
 		return BufferUtils.createFloatBuffer(size);
 	}
 
- /**
-  * This function creates an `IntBuffer` object of the specified size using the
-  * `BufferUtils` class.
-  * 
-  * @param size The `size` input parameter specifies the number of elements that the
-  * returned buffer can hold.
-  * 
-  * @returns The function `createIntBuffer(int size)` returns an `IntBuffer` instance
-  * of size `size`. The returned buffer is created using the `BufferUtils.createIntBuffer()`
-  * method.
-  */
 	public static IntBuffer createIntBuffer(int size) {
 		return BufferUtils.createIntBuffer(size);
 	}
 
- /**
-  * This function creates a new `ByteBuffer` instance with the specified size.
-  * 
-  * @param size The `size` input parameter specifies the capacity of the byte buffer
-  * to be created.
-  * 
-  * @returns The function `createByteBuffer` takes an integer `size` as input and
-  * returns a ` ByteBuffer`. The return value is an instance of `BufferUtils.createByteBuffer(size)`,
-  * which is a method from the `org.apache.mina.core. buffer.utils` class. This method
-  * creates a new byte buffer with the specified size.
-  * 
-  * In other words.  The function takes a given amount of memory as input and creates
-  * a new object to store that memory.
-  */
 	public static ByteBuffer createByteBuffer(int size) {
 		return BufferUtils.createByteBuffer(size);
 	}
