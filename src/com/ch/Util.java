@@ -61,6 +61,20 @@ public class Util {
 		return BufferUtils.createByteBuffer(size);
 	}
 
+	/**
+	 * The `createFlippedBuffer` function takes an array of integers as parameter and
+	 * returns an Intel buffer containing those values. It first creates an Intel buffer
+	 * with the same size as the array passed as argument then puts the values of the
+	 * array into the buffer and finally flips the buffer.
+	 * 
+	 * @param values The values parameter is an array of integers that are put into the
+	 * IntBuffer.
+	 * 
+	 * @returns The output returned by this function is an IntBuffer object that contains
+	 * the values from the input parameter 'values', with all the values inverted (i.e.
+	 * - values[i] is returned instead of values[i]). Additionally the buffer is flipped
+	 * after putting the values inside.
+	 */
 	public static IntBuffer createFlippedBuffer(int... values) {
 		IntBuffer buffer = createIntBuffer(values.length);
 		buffer.put(values);
@@ -69,6 +83,17 @@ public class Util {
 		return buffer;
 	}
 	
+	/**
+	 * This function creates a Float Buffer with the input float array's values and returns
+	 * the flipped buffer.
+	 * 
+	 * @param values The `values` parameter is an array of floats that gets put into the
+	 * float buffer.
+	 * 
+	 * @returns This method takes an array of floats as input and creates a floating point
+	 * buffer. It then puts the contents of the input array into the buffer and flips it
+	 * so that its positioned at the start of the buffer. The output returned is the FloatBuffer.
+	 */
 	public static FloatBuffer createFlippedBuffer(float... values) {
 		FloatBuffer buffer = createFloatBuffer(values.length);
 		buffer.put(values);
