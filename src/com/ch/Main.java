@@ -42,6 +42,12 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * This function sets up the graphics pipeline for a 3D rendering application using
+	 * Java and LWJGL library. It sets background color set grabbed mouse pointer disable
+	 * mouse move updates depth buffer enable face culling genarates a model view  transform
+	 * and sets the position of the camera to zero
+	 */
 	private static void initGL() {
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
 		
@@ -84,6 +90,11 @@ public class Main {
 	}
 	
 
+	/**
+	 * This function initializes a timer and runs an application loop that updates and
+	 * renders the game. It also updates the screen title and displays important system
+	 * information such as memory usage.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -106,6 +117,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * This function called "update" updates the position of an object "w" based on user
+	 * input and the game's elapsed time (represented by the variable "dt"), using the
+	 * class "c" to perform transformations and obtain the position of the object.
+	 * 
+	 * @param dt In the `update()` method mentioned above and depicted below
+	 * ```
+	 * private static void update(float dt) { },
+	 * ```
+	 * The purpose of the `dt` parameter is to accept the elapsed time from a past frame
+	 * to a present (or current) one (which ever might be appropriate), this makes it
+	 * possible for a more efficient management of game logic processes over time such
+	 * as smoothing animations (movement velocity calculation). In general a game will
+	 * poll delta-time multiple times a frame (say for example between drawing frame 1 &
+	 * drawing frame 2).
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
