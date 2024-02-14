@@ -15,6 +15,19 @@ public class Camera3D extends Camera {
 		calculateProjectionMatrix(values);
 	}
 
+	/**
+	 * This function calculates the projection matrix of a Camera object based on the
+	 * Camera's internal data.
+	 * 
+	 * @param data The "data" parameter being passed into the overloaded function calculates
+	 * a Matrix4f that contains data about the perspective-projection from view coordinates
+	 * to screen coordinates within the application; thus allowing it to be manipulated
+	 * to meet user needs later on down the line. In essence: it provides necessary camera
+	 * settings necessary to determine what appears on your computer screen when an
+	 * application using this class is run/executed.
+	 * 
+	 * @returns This method returns a Matrix4f object that contains the projection matrix.
+	 */
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
 		return (projection = data.getAsMatrix4());
