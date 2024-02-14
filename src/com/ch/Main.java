@@ -107,11 +107,29 @@ public class Main {
 		
 	}
 	
+	/**
+	 * This function updates the position of a character (c) based on user input and the
+	 * elapsed time (dt). It also updates the position of the cursor (w) relative to the
+	 * character's transform matrix.
+	 * 
+	 * @param dt The `dt` input parameter represents an elapsed time measured over multiple
+	 * game frame updates - think of it like a time delta since the previous call to
+	 * update(). Passingdt= as an argument lets each function iteration calculate based
+	 * on fractions of seconds (which adds up to useful simulation delays) instead of
+	 * relying exclusively on Fixed Update Time Stepping
+	 * (although the c# Game loop's fixed updates already provide this behavior when a
+	 * fixed timestep is set for c#).
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * This method is responsible for rendering the 3D models within a 4x4 matrix structure
+	 * called ch[i][j][k]. It sets up the appropriate modelviewprojection matrices and
+	 * binds the shader programs before calling draw() on each 3D model.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
