@@ -14,15 +14,6 @@ import com.ch.voxel.World;
 
 public class Main {
 	
- /**
-  * This function sets up the display and OpenGL graphics contexts and then enters a
-  * main loop that continues running until the program exits with status code 0.
-  * 
-  * @param args The `args` parameter is an array of strings passed to the `main()`
-  * method when the program is executed. In this case , it is not used and has a default
-  * value of null . Therefore , the `main()` method can be considered as accepting no
-  * arguments .
-  */
 	public static void main(String[] args) {
 		
 		initDisplay();
