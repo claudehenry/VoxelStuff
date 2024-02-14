@@ -29,11 +29,7 @@ public class Main {
 	private static Camera3D c;
 //	private static Chunk[][][] ch;
 	private static World w;
-	
- /**
-  * This function initializes the display mode and creates a window using LWJGL. It
-  * sets vsync enabled and prints the current OpenGL version.
-  */
+
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
