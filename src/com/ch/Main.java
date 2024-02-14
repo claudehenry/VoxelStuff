@@ -41,17 +41,6 @@ public class Main {
 		}
 	}
 	
- /**
-  * This function initializes the graphics pipeline and sets up the basic rendering
-  * context for a 3D game using Java. It sets the background color of the scene to
-  * grayish-blue with darkness factor (0.1f), sets grabbed mouse state as true to
-  * enable mouse input capture during gameplay), sets cull face and depth test states
-  * as true , initializes the camera to look at -0.5/-0.5 coordinate points; load
-  * default shader
-  * and loads texture "block0.png". The vertices and indices arrays contain the basic
-  * 3x4 matrix  of a 3D world chunk without any texture coordiantes applied yet. The
-  * function does not define any models nor objects
-  */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
