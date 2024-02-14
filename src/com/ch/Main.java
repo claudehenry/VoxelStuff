@@ -41,7 +41,8 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	
+
+	/** */
 	private static void initGL() {
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
 		
