@@ -16,6 +16,21 @@ public class Camera3D extends Camera {
 	}
 
 	
+	/**
+	 * This function calculates and returns the projection matrix for a camera based on
+	 * the camera's structured data.
+	 * 
+	 * @param data The `data` input parameter is an object containing properties of the
+	 * camera used to render a specific view or perspective. It specifically holds
+	 * information regarding projection such as projection matrix. The function uses data
+	 * from that object and applies it directly to calculate the needed perspective for
+	 * a matrix4f object that represents the camera's field of vision.
+	 * 
+	 * @returns The output of this function calculateProjectionMatrix is a Matrix4f object
+	 * that represents the projection matrix for a specific camera perspective. The method
+	 * takes a CameraStruct data object as input and returns the projection matrix as a
+	 * Matrix4f object.
+	 */
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
 		return (projection = data.getAsMatrix4());
