@@ -105,16 +105,6 @@ public class Main {
 		
 	}
 	
- /**
-  * This function updates the position of an object (represented by `c` and `w`) based
-  * on user input and movements. It uses the `processInput()` method to receive the
-  * input from the user (dt is the time step), and then updates the position of the
-  * object using the information received.
-  * 
-  * @param dt The `dt` parameter represents the elapsed time since the last frame and
-  * is used to update the animation and physics simulations over time. It allows for
-  * smooth movements and responses to user input.
-  */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
