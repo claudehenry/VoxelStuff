@@ -112,12 +112,6 @@ public class Main {
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
- /**
-  * This function is a Render function that renders four children (ch[i][j][k]) of a
-  * Container (c) using the Scene (s) and ViewProjection (c.getViewProjection())
-  * matrices. It also sets up and clears the color and modelview projection uniforms
-  * for each child.
-  */
 	private static void render() {
 		
 //		Model.enableAttribs();
