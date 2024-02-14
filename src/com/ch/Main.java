@@ -83,8 +83,8 @@ public class Main {
 		c.getTransform().setPos(new Vector3f(0, 0, 0));
 		
 	}
-	
 
+	/** */
 	private static void loop() {
 		
 		Timer.init();
