@@ -15,6 +15,7 @@ public class Camera3D extends Camera {
 		calculateProjectionMatrix(values);
 	}
 
+	
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
 		return (projection = data.getAsMatrix4());
