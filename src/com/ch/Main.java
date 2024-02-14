@@ -31,6 +31,7 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 
+	/** */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
