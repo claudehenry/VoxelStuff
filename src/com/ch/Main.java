@@ -83,17 +83,7 @@ public class Main {
 		
 	}
 	
- /**
-  * This function is a game loop that manages the updates and rendering of the game.
-  * It:
-  * 
-  * 	- initializes the timer and updates the frame rate display
-  * 	- updates the game world using the `update` method
-  * 	- renders the game graphics using the `render` method
-  * 	- updates the screen display using the `Display.update` method
-  * 
-  * It also displays information about the current memory usage and the FPS.
-  */
+
 	private static void loop() {
 		
 		Timer.init();
