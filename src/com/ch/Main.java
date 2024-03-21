@@ -14,6 +14,12 @@ import com.ch.voxel.World;
 
 public class Main {
 	
+	/**
+	 * initializes and sets up the display and GL context, enters an infinite loop for
+	 * rendering and event handling, and exits with a successful status code of 0.
+	 * 
+	 * @param args 0 or more command-line arguments passed to the program when it is executed.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +36,11 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * sets up a display mode with resolution 1920x1080, creates a GL context with forward
+	 * compatibility and VSync enabled, and prints the version of OpenGL supported by the
+	 * system.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +52,11 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * initializes and sets up various graphics-related components and variables, including
+	 * the clear color, mouse grabbing, cull face and depth testing, camera, shader,
+	 * texture, and world objects.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +99,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * initializes a timer, then enters a loop that repeatedly updates and renders the
+	 * game environment while not receiving a close request or the escape key. It displays
+	 * the frame rate, memory usage, and other information on the title bar of the display.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +126,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * updates the position of an object based on input and transform changes.
+	 * 
+	 * @param dt Δ time (time difference) between the previous frame and the current
+	 * frame, which is used to simulate game physics and update game objects accordingly.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * renders a 3D model using the specified color and transformation matrix. It sets
+	 * up the render context, binds the model, and draws it using the specified color and
+	 * transformation matrix.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +163,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * terminates the current process with the specified exit status, which is an integer
+	 * value.
+	 * 
+	 * @param status value that will be passed to the `System.exit()` method, which
+	 * terminates the application with the specified status code.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}
