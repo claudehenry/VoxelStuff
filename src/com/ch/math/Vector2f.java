@@ -1,5 +1,6 @@
 package com.ch.math;
 
+
 public class Vector2f {
 	
 	private float x;
