@@ -14,6 +14,13 @@ import com.ch.voxel.World;
 
 public class Main {
 	
+	/**
+	 * initializes and configures a graphical display and OpenGL library for rendering,
+	 * enters an event-driven loop to handle user input and render the game environment,
+	 * and then exits with a success code of 0.
+	 * 
+	 * @param args command-line arguments passed to the program when it is executed.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +37,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * initializes and sets up a display mode with a resolution of 1920x1080, enables
+	 * vsync, and prints the version of OpenGL supported by the system.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +52,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * initializes GL elements such as color, culling, depth testing, and textures, sets
+	 * up a camera and loads a shader, then creates a world object.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +98,12 @@ public class Main {
 		
 	}
 	
+	/**
+	 * continuously runs a loop of actions until the `Display.isCloseRequested()` or
+	 * `Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)` conditions are met. The function updates
+	 * the display title, clears the color and depth buffers, renders the scene, and
+	 * updates the display.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +126,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * updates an entity's position based on input and transformation values.
+	 * 
+	 * @param dt timestamp difference between two frames of animation, and it is used to
+	 * calculate the update value for position and other parameters of the object being
+	 * updated.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * updates the screen display by drawing models using a rendering context provided
+	 * by a GraphicsState object and a view projection matrix.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +163,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * terminates the application by calling the `System.exit()` method with the specified
+	 * status argument, which is used to determine the exit code.
+	 * 
+	 * @param status value to be passed as an argument to the `System.exit()` method,
+	 * indicating the exit code for the application.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}
