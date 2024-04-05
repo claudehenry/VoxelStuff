@@ -12,9 +12,23 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * False
+ */
 public class Main {
 
 	/** */
+ /**
+  * initializes display and GL context, then enters an infinite loop for rendering and
+  * exits with a success code.
+  * 
+  * @param args 1 or more command-line arguments passed to the program, which are then
+  * ignored in this implementation of the `main` method.
+  * 
+  * 	- Length: 0 (no arguments passed)
+  * 	- Elements: [] (no arguments passed)
+  * 	- Class type: null (no class type information available)
+  */
 	public static void main(String[] args) {
 		initDisplay();
 		initGL();
@@ -31,6 +45,10 @@ public class Main {
 	private static World w;
 
 	/** */
+ /**
+  * initializes the display settings for a Java application, setting the screen
+  * resolution and VSync enabled to true, and printing the version of GL11.
+  */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -43,6 +61,10 @@ public class Main {
 	}
 
 	/** */
+ /**
+  * initializes the GL context for a 3D game, setting up the camera, shader, and
+  * texture, as well as defining the geometry of the scene.
+  */
 	private static void initGL() {
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
 		
@@ -85,6 +107,11 @@ public class Main {
 	}
 
 	/** */
+ /**
+  * initalizes a timer, enters an infinite loop, and updates the display title and FPS
+  * every iteration. It also renders the game scene and clears the color and depth
+  * buffers before checking for closing or escaping.
+  */
 	private static void loop() {
 		
 		Timer.init();
@@ -107,11 +134,23 @@ public class Main {
 		
 	}
 	
+ /**
+  * updates the position of an entity (w) based on input (c.processInput()) and the
+  * entity's transformation matrix.
+  * 
+  * @param dt time step for which the code is being executed, and it is used to update
+  * the position of the object in the scene.
+  */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+ /**
+  * renders a 3D model using a specific shader and matrices. It first enables and binds
+  * the necessary uniforms and matrices, then draws the model using the `draw` method.
+  * Finally, it disables the uniforms and matrices again.
+  */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -141,6 +180,12 @@ public class Main {
   * system when exiting the program. It determines the exit status that will be returned
   * to the operating system and any parent processes. In most cases a value of zero
   * (0) indicates success and a non-zero value indicates an error or failure.
+  */
+ /**
+  * terminates the current Java process, passing the specified status code to the
+  * operating system's exit mechanism.
+  * 
+  * @param status exit code that System.exit should use when exiting the program.
   */
 	private static void exit(int status) {
 		System.exit(status);
