@@ -37,20 +37,67 @@ public class Texture {
 	}
 
 
+ /**
+  * 0 binds an event handler to a specific event.
+  */
 	public void bind() {
 		bind(0);
 	}
 
+ /**
+  * sets the active texture slot to a specific index (0-31) and binds a texture to
+  * that slot using the `glBindTexture()` method.
+  * 
+  * @param samplerSlot 0-based index of a texture slot to bind for use with the current
+  * GPU context.
+  */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+ /**
+  * retrieves the value of a field named `id`.
+  * 
+  * @returns the value of the `id` field.
+  */
 	public int getID() {
 		return id;
 	}
 
+ /**
+  * loads a texture from an image file and returns the generated texture ID. It reads
+  * the image, converts it to a byte array, and uploads it to the GPU as a 2D texture
+  * using the GL_RGBA8 format with mipmapping enabled.
+  * 
+  * @param fileName filename of the image to be loaded and processed by the `loadTexture()`
+  * method.
+  * 
+  * 	- `ImageIO.read(new File(fileName))` is used to read the contents of the file
+  * specified by `fileName`.
+  * 	- The resulting `BufferedImage` object contains information about the image's
+  * pixels, color model, and other attributes.
+  * 	- `image.getWidth()` and `image.getHeight()` provide the dimensions of the image.
+  * 	- `image.getColorModel().hasAlpha()` indicates whether the image has an alpha
+  * channel (i.e., transparency).
+  * 	- The `ByteBuffer` object is created to store the pixel data, which is then put
+  * into it using the `put()` method.
+  * 	- The pixel data is stored as a 4-component RGBA value (red, green, blue, and
+  * alpha) for each pixel in the image.
+  * 	- The `glGenTextures()` function is used to create a new OpenGL texture ID.
+  * 	- The `glBindTexture(GL_TEXTURE_2D, id)` command binds the newly created texture
+  * ID to the current GL context.
+  * 	- The `glTexParameteri()` functions are used to set various texture parameters,
+  * including wrapping, filtering, and mipmap generation.
+  * 	- The `glTexImage2D()` function is used to load the pixel data from the `BufferedImage`
+  * object into the OpenGL texture.
+  * 	- The `GL30.glGenerateMipmap()` function is used to generate mipmap levels for
+  * the texture, if necessary.
+  * 	- Finally, the `return id;` statement returns the newly created texture ID.
+  * 
+  * @returns an OpenGL texture ID for a loaded image.
+  */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
