@@ -21,14 +21,13 @@ public class Main {
   * initializes display and GL resources, enters an event loop, and exits with a return
   * value of 0.
   * 
-  * @param args 0 or more command-line arguments passed to the program, which are
-  * ignored in this case.
+  * @param args 1 or more command-line arguments passed to the `main` function when
+  * the program is launched, which are then ignored in this particular implementation.
   * 
-  * 	- `args`: An array of strings containing command-line arguments passed to the program.
-  * 	- Length: The number of elements in the `args` array, which is equal to the number
-  * of command-line arguments passed to the program.
-  * 	- Elements: Each element in the `args` array represents a command-line argument
-  * passed to the program.
+  * 	- `args`: An array of strings containing command-line arguments passed to the
+  * program by the user.
+  * 	- Length: The number of elements in the `args` array, which is always non-zero
+  * in this case.
   */
 	public static void main(String[] args) {
 		
@@ -47,9 +46,8 @@ public class Main {
 	private static World w;
 	
  /**
-  * sets up a display mode with a resolution of 1920x1080, creates a GL context with
-  * forward compatibility and VSync enabled, and prints the current GL version using
-  * `GL11.glGetString()`.
+  * initializes the display mode, creates a GL context, enables VSync, and prints the
+  * GL version string.
   */
 	private static void initDisplay() {
 		try {
@@ -63,8 +61,8 @@ public class Main {
 	}
 	
  /**
-  * sets up the basic layout for a 3D graphics application, including enabling culling
-  * and depth testing, loading a shader, creating a texture, and defining a camera position.
+  * initializes the GL context by setting up camera, lighting, and shading parameters.
+  * It also loads a texture and creates a model.
   */
 	private static void initGL() {
 		
@@ -109,8 +107,8 @@ public class Main {
 	}
 	
  /**
-  * executes a loop that updates and renders graphics, displays FPS information, and
-  * checks for closing or escape key presses.
+  * updates a display's title and renders an image using OpenGL every 100 milliseconds
+  * until the user closes the display or presses the escape key.
   */
 	private static void loop() {
 		
@@ -135,10 +133,10 @@ public class Main {
 	}
 	
  /**
-  * updates an entity's position based on input and transform data, using `processInput`
-  * and `updatePos`.
+  * updates the position of an entity (`w`) based on input and transform values, using
+  * the `processInput` method to manipulate the entity's state.
   * 
-  * @param dt time step used for updating the position of the entity in the game world.
+  * @param dt 3D time step that is used to update the position of the object in the scene.
   */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -146,8 +144,8 @@ public class Main {
 	}
 
  /**
-  * renders a 3D model using the WebGL renderer. It sets up the rendering context,
-  * binds the model's vertices, and draws the model using the ModelViewProjection matrix.
+  * renders a 3D model using the specified color and transforms it according to the
+  * view and projection matrices.
   */
 	private static void render() {
 		
@@ -171,11 +169,10 @@ public class Main {
 	}
 	
  /**
-  * terminates the Java program by calling the `System.exit()` method with the specified
-  * status code, which is an integer value ranging from 0 to 255.
+  * terminates the current Java process with the specified status code.
   * 
-  * @param status value to be used when calling the `System.exit()` method, indicating
-  * the exit status of the program.
+  * @param status exit code to be returned by the `System.exit()` method, indicating
+  * the outcome of the program's execution.
   */
 	private static void exit(int status) {
 		System.exit(status);
