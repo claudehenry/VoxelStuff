@@ -18,14 +18,17 @@ import com.ch.voxel.World;
 public class Main {
 	
  /**
-  * initializes and sets up a display and graphics library, enters an infinite loop
-  * for rendering, and exits with a successful return value of 0.
+  * initializes display and GL resources, enters an event loop, and exits with a return
+  * value of 0.
   * 
-  * @param args 1 or more command-line arguments passed to the program when it is
-  * launched, which are then ignored by the `main` method.
+  * @param args 0 or more command-line arguments passed to the program, which are
+  * ignored in this case.
   * 
-  * 	- Length: The length of the `args` array is 0.
-  * 	- Elements: The `args` array contains no elements.
+  * 	- `args`: An array of strings containing command-line arguments passed to the program.
+  * 	- Length: The number of elements in the `args` array, which is equal to the number
+  * of command-line arguments passed to the program.
+  * 	- Elements: Each element in the `args` array represents a command-line argument
+  * passed to the program.
   */
 	public static void main(String[] args) {
 		
@@ -44,8 +47,9 @@ public class Main {
 	private static World w;
 	
  /**
-  * sets up a display with a resolution of 1920x1080, enabled vertical syncing, and
-  * prints the GL version string using `GL11.glGetString()`.
+  * sets up a display mode with a resolution of 1920x1080, creates a GL context with
+  * forward compatibility and VSync enabled, and prints the current GL version using
+  * `GL11.glGetString()`.
   */
 	private static void initDisplay() {
 		try {
@@ -59,8 +63,8 @@ public class Main {
 	}
 	
  /**
-  * initializes the GL context, sets up the camera and shader, loads a texture, and
-  * creates a world object.
+  * sets up the basic layout for a 3D graphics application, including enabling culling
+  * and depth testing, loading a shader, creating a texture, and defining a camera position.
   */
 	private static void initGL() {
 		
@@ -105,8 +109,8 @@ public class Main {
 	}
 	
  /**
-  * continuously runs a loop while certain conditions are not met, updating the display
-  * title and rendering the scene every iteration.
+  * executes a loop that updates and renders graphics, displays FPS information, and
+  * checks for closing or escape key presses.
   */
 	private static void loop() {
 		
@@ -131,11 +135,10 @@ public class Main {
 	}
 	
  /**
-  * updates the position of an object (w) based on input from another object (c) and
-  * a time parameter (dt).
+  * updates an entity's position based on input and transform data, using `processInput`
+  * and `updatePos`.
   * 
-  * @param dt time step that is used to update the position of the entity represented
-  * by `w`.
+  * @param dt time step used for updating the position of the entity in the game world.
   */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -143,8 +146,8 @@ public class Main {
 	}
 
  /**
-  * updates the viewport rendering of a 3D scene by binding and uniforming model
-  * matrices, then calling `w.render()` to draw the scene using the unified matrix.
+  * renders a 3D model using the WebGL renderer. It sets up the rendering context,
+  * binds the model's vertices, and draws the model using the ModelViewProjection matrix.
   */
 	private static void render() {
 		
@@ -168,10 +171,11 @@ public class Main {
 	}
 	
  /**
-  * terminates the Java process with a specified exit code.
+  * terminates the Java program by calling the `System.exit()` method with the specified
+  * status code, which is an integer value ranging from 0 to 255.
   * 
-  * @param status exit code to be returned by the `System.exit()` method, indicating
-  * the result of the program's execution.
+  * @param status value to be used when calling the `System.exit()` method, indicating
+  * the exit status of the program.
   */
 	private static void exit(int status) {
 		System.exit(status);
