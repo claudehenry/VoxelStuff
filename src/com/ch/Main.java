@@ -12,23 +12,15 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
-/**
- * TODO
- */
 public class Main {
 	
- /**
-  * initializes display and GL resources, enters an event loop, and exits with a return
-  * value of 0.
-  * 
-  * @param args 1 or more command-line arguments passed to the `main` function when
-  * the program is launched, which are then ignored in this particular implementation.
-  * 
-  * 	- `args`: An array of strings containing command-line arguments passed to the
-  * program by the user.
-  * 	- Length: The number of elements in the `args` array, which is always non-zero
-  * in this case.
-  */
+	/**
+	 * initializes and displays graphics, initializes GL context, and enters an event
+	 * loop before exiting with a success code.
+	 * 
+	 * @param args 1 or more command-line arguments passed to the program, which can be
+	 * used to initialize and configure the application as needed.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -45,10 +37,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
- /**
-  * initializes the display mode, creates a GL context, enables VSync, and prints the
-  * GL version string.
-  */
+	/**
+	 * sets up a display mode and creates an GL context, enabling vsync and printing the
+	 * GL version string.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -60,10 +52,9 @@ public class Main {
 		}
 	}
 	
- /**
-  * initializes the GL context by setting up camera, lighting, and shading parameters.
-  * It also loads a texture and creates a model.
-  */
+	/**
+	 * initializes GL context, sets up camera, enables depth testing and loads shaders.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -106,10 +97,11 @@ public class Main {
 		
 	}
 	
- /**
-  * updates a display's title and renders an image using OpenGL every 100 milliseconds
-  * until the user closes the display or presses the escape key.
-  */
+	/**
+	 * continuously updates and renders a graphical display while checking for closure
+	 * requests and key presses. It updates the display title and displays frames per
+	 * second, and free and total memory information.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -132,21 +124,21 @@ public class Main {
 		
 	}
 	
- /**
-  * updates the position of an entity (`w`) based on input and transform values, using
-  * the `processInput` method to manipulate the entity's state.
-  * 
-  * @param dt 3D time step that is used to update the position of the object in the scene.
-  */
+	/**
+	 * updates the position of a `w` object based on input from a `c` object and uses the
+	 * transformation matrix to update the position.
+	 * 
+	 * @param dt delta time, which is used to update the position of the object in the scene.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
- /**
-  * renders a 3D model using the specified color and transforms it according to the
-  * view and projection matrices.
-  */
+	/**
+	 * updates the rendering of a 3D scene by binding and applying uniform values to the
+	 * Model's matrix, then drawing the models using the `draw` method.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -168,12 +160,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
- /**
-  * terminates the current Java process with the specified status code.
-  * 
-  * @param status exit code to be returned by the `System.exit()` method, indicating
-  * the outcome of the program's execution.
-  */
+	/**
+	 * terminates the current program process with the specified status code provided as
+	 * an argument.
+	 * 
+	 * @param status exit code for the program, which determines how the operating system
+	 * will terminate the process when the function is called.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}
