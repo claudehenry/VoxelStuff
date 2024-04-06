@@ -18,15 +18,14 @@ import com.ch.voxel.World;
 public class Main {
 	
  /**
-  * initializes display and GL capabilities, then enters an endless loop for rendering
-  * and exits with a successful return code (0).
+  * initializes and sets up a display and graphics library, enters an infinite loop
+  * for rendering, and exits with a successful return value of 0.
   * 
-  * @param args 0 or more command-line arguments passed to the `main` method by the
-  * user, which are ignored in this implementation.
+  * @param args 1 or more command-line arguments passed to the program when it is
+  * launched, which are then ignored by the `main` method.
   * 
-  * 	- Length: The function takes no arguments (represented by an empty array `String[]
-  * args`).
-  * 	- Type: The elements of `args` are of type `String`.
+  * 	- Length: The length of the `args` array is 0.
+  * 	- Elements: The `args` array contains no elements.
   */
 	public static void main(String[] args) {
 		
@@ -45,9 +44,8 @@ public class Main {
 	private static World w;
 	
  /**
-  * initializes the display and sets up GL11 parameters for the Java application. It
-  * sets the display mode to 1920x1080, creates a new Display object with forward
-  * compatible profile, enables vertical sync, and prints the GL version string.
+  * sets up a display with a resolution of 1920x1080, enabled vertical syncing, and
+  * prints the GL version string using `GL11.glGetString()`.
   */
 	private static void initDisplay() {
 		try {
@@ -61,8 +59,8 @@ public class Main {
 	}
 	
  /**
-  * initializes OpenGL and sets up a 3D scene with a camera, shader, texture, and
-  * vertices. It also creates a world object for rendering purposes.
+  * initializes the GL context, sets up the camera and shader, loads a texture, and
+  * creates a world object.
   */
 	private static void initGL() {
 		
@@ -107,8 +105,8 @@ public class Main {
 	}
 	
  /**
-  * updates the display title and renders the scene using the `render()` method,
-  * repeating the process until the user closes the window or presses the escape key.
+  * continuously runs a loop while certain conditions are not met, updating the display
+  * title and rendering the scene every iteration.
   */
 	private static void loop() {
 		
@@ -133,10 +131,11 @@ public class Main {
 	}
 	
  /**
-  * updates the position of an object (`w`) based on input data (`c.processInput()`)
-  * and transforms the position using the object's transformation matrix.
+  * updates the position of an object (w) based on input from another object (c) and
+  * a time parameter (dt).
   * 
-  * @param dt delta time, which is used to update the position of the object in the scene.
+  * @param dt time step that is used to update the position of the entity represented
+  * by `w`.
   */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -144,9 +143,8 @@ public class Main {
 	}
 
  /**
-  * is responsible for rendering objects in a 3D scene using a shader and a model view
-  * projection matrix. It sets up the shader, binds the model, and draws the objects
-  * in the scene.
+  * updates the viewport rendering of a 3D scene by binding and uniforming model
+  * matrices, then calling `w.render()` to draw the scene using the unified matrix.
   */
 	private static void render() {
 		
@@ -170,10 +168,10 @@ public class Main {
 	}
 	
  /**
-  * terminates the Java process with the specified exit status (0-255).
+  * terminates the Java process with a specified exit code.
   * 
-  * @param status exit code that will be passed to the `System.exit()` method, indicating
-  * the reason for the program's termination.
+  * @param status exit code to be returned by the `System.exit()` method, indicating
+  * the result of the program's execution.
   */
 	private static void exit(int status) {
 		System.exit(status);
