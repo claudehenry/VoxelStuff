@@ -12,8 +12,22 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * TODO
+ */
 public class Main {
 	
+ /**
+  * initializes display and GL capabilities, then enters an endless loop for rendering
+  * and exits with a successful return code (0).
+  * 
+  * @param args 0 or more command-line arguments passed to the `main` method by the
+  * user, which are ignored in this implementation.
+  * 
+  * 	- Length: The function takes no arguments (represented by an empty array `String[]
+  * args`).
+  * 	- Type: The elements of `args` are of type `String`.
+  */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +44,11 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+ /**
+  * initializes the display and sets up GL11 parameters for the Java application. It
+  * sets the display mode to 1920x1080, creates a new Display object with forward
+  * compatible profile, enables vertical sync, and prints the GL version string.
+  */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +60,10 @@ public class Main {
 		}
 	}
 	
+ /**
+  * initializes OpenGL and sets up a 3D scene with a camera, shader, texture, and
+  * vertices. It also creates a world object for rendering purposes.
+  */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +106,10 @@ public class Main {
 		
 	}
 	
+ /**
+  * updates the display title and renders the scene using the `render()` method,
+  * repeating the process until the user closes the window or presses the escape key.
+  */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +132,22 @@ public class Main {
 		
 	}
 	
+ /**
+  * updates the position of an object (`w`) based on input data (`c.processInput()`)
+  * and transforms the position using the object's transformation matrix.
+  * 
+  * @param dt delta time, which is used to update the position of the object in the scene.
+  */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+ /**
+  * is responsible for rendering objects in a 3D scene using a shader and a model view
+  * projection matrix. It sets up the shader, binds the model, and draws the objects
+  * in the scene.
+  */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +169,12 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+ /**
+  * terminates the Java process with the specified exit status (0-255).
+  * 
+  * @param status exit code that will be passed to the `System.exit()` method, indicating
+  * the reason for the program's termination.
+  */
 	private static void exit(int status) {
 		System.exit(status);
 	}

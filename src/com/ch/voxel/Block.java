@@ -1,5 +1,14 @@
 package com.ch.voxel;
 
+/**
+ * represents a block with positional and boolean attributes for various properties,
+ * including flexibility, breakability, and top/bottom placement.
+ * Fields:
+ * 	- z (int): of the Block class represents an integer value that represents the
+ * depth or height of the block in the 3D space.
+ * 	- rt (boolean): of the Block class represents a boolean value indicating whether
+ * the block is rotated to the right.
+ */
 public class Block {
 	
 	public int x, y, z;

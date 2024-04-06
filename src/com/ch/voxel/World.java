@@ -6,6 +6,9 @@ import com.ch.Camera;
 import com.ch.Shader;
 
 
+/**
+ * TODO
+ */
 public class World {
 
 	private int x, y, z; // in chunks
@@ -21,6 +24,10 @@ public class World {
 		gen();
 	}
 	
+ /**
+  * iterates through a 3D grid, creating new `Chunk` objects at each position and
+  * updating their block layouts before passing them to the genetic model.
+  */
 	private void gen() {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
@@ -31,6 +38,22 @@ public class World {
 				}
 	}
 
+ /**
+  * updates the position of a Chunk object based on its offset from the player's
+  * position, and adjusts the chunk's blocks to match the new position within the world.
+  * 
+  * @param x 2D coordinate of the chunk position relative to the world's origin, and
+  * it is used to determine which chunks are updated or generated based on their
+  * proximity to the chunk being processed.
+  * 
+  * @param y 2D coordinate of the chunk's location within the world, and is used to
+  * determine the appropriate chunks to update or generate based on their position
+  * relative to the player's position.
+  * 
+  * @param z 3D position of the chunk in the world, and it is used to determine whether
+  * the chunk needs to be updated or not based on its distance from the player's current
+  * position.
+  */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
 		final int _y = 0;//(int) (y / Chunk.CHUNK_SIZE);
@@ -215,6 +238,35 @@ public class World {
 		/* welp... this logic sure looks aweful */
 	}
 
+ /**
+  * performs rendering using a shader and a camera. It iterates over chunks in a 3D
+  * environment and draws each chunk's model using the shader and camera parameters.
+  * 
+  * @param s 3D shader object that is being rendered, and it is used to set the uniform
+  * values for the shader using the `uniformf()` and `unifromMat4()` methods.
+  * 
+  * 	- `s`: A `Shader` object that represents a shader program. It has various properties
+  * and attributes, such as `unifromMat4()`, `uniformf()`, `getModelMatrix()`,
+  * `getViewProjection()`, etc.
+  * 
+  * The `render` function iterates over each pixel in the 2D array `chunks`, applying
+  * the shader program to each pixel. For each pixel, it sets the color of the pixel
+  * using the `unifromMat4()` and `uniformf()` methods, and then draws the 3D model
+  * associated with the pixel using the `getModelMatrix()` method. The `getViewProjection()`
+  * method is used to compute the view-projection matrix for each pixel, which is then
+  * multiplied with the model matrix to obtain the final transformation matrix for
+  * each pixel.
+  * 
+  * @param c 3D camera object, which is used to transform the chunk's model matrix
+  * using the view projection matrix.
+  * 
+  * 	- `Camera c`: This is an instance of the `Camera` class, which represents the
+  * camera used to render the 3D scene. It has various attributes such as the viewport
+  * dimensions (`width` and `height`), the near and far clipping planes, the field of
+  * view, and the aspect ratio.
+  * 	- `W`, `H`, and `D`: These are the dimensions of the simulation's world, heightmap,
+  * and depth map, respectively. They are used to iterate over the chunks in the scene.
+  */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
