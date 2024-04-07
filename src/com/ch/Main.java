@@ -13,23 +13,23 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * TODO
+ * in this code example is responsible for setting up and rendering a 3D scene using
+ * the OpenGL API and the Java programming language. It initializes the OpenGL context,
+ * sets up the camera and lighting, and loads a texture and a shader. It also defines
+ * a World object and a Chunk class to represent the 3D environment. The main loop
+ * renders the scene and updates the position of the camera using input from the user.
  */
 public class Main {
 	
  /**
-  * initializes display and GL components, enters an infinite loop to handle user input
-  * and eventually exits with a return value of 0.
+  * initializes display and GL contexts, enters an infinite loop to render graphics,
+  * and then exits with a return value of 0.
   * 
-  * @param args 1 or more command-line arguments passed to the program when it is
-  * launched, which are then ignored by the `main` function.
+  * @param args 0 or more command-line arguments passed to the program by the user,
+  * which are ignored in this case and treated as an empty array.
   * 
-  * 	- Length: The length of the array is 0, indicating that no command-line arguments
-  * were provided when the program was executed.
-  * 	- Elements: The array contains no elements, as there are no command-line arguments
-  * to process.
-  * 	- Class: The element type of the array is `String`, indicating that each element
-  * in the array is a string value.
+  * 	- Length: 0 (a single null argument)
+  * 	- Elements: null (no arguments provided directly to the function)
   */
 	public static void main(String[] args) {
 		
@@ -48,8 +48,8 @@ public class Main {
 	private static World w;
 	
  /**
-  * sets up a display mode and creates a Display object with the specified dimensions,
-  * VSync enabled, and prints the OpenGL version string to the console.
+  * sets up a display mode with a resolution of 1920x1080, creates a GL context with
+  * forward compatibility and VSync enabled, and prints the current GL version.
   */
 	private static void initDisplay() {
 		try {
@@ -63,8 +63,9 @@ public class Main {
 	}
 	
  /**
-  * initializes and sets up various GL settings and objects for a 3D graphics application.
-  * It loads a shader, creates a camera and texture, and initializes a world object.
+  * initializes and sets up various GL elements, including clear color, grabbing mouse,
+  * enabling cull face and depth test, loading a shader, creating a texture, and
+  * defining a world object.
   */
 	private static void initGL() {
 		
@@ -109,8 +110,8 @@ public class Main {
 	}
 	
  /**
-  * continuously runs a loop while certain conditions are not met, updating the display
-  * title and graphics buffer every iteration.
+  * updates and displays various system metrics, including FPS, memory usage, and GPU
+  * rendering progress, using `Timer`, `Display`, `Keyboard`, and `GL11` classes.
   */
 	private static void loop() {
 		
@@ -135,11 +136,10 @@ public class Main {
 	}
 	
  /**
-  * updates an object's position based on input and transform values, using `processInput`
-  * to process input data and `updatePos` to update the object's position.
+  * updates the position of an object (`w`) based on input and transformation.
   * 
-  * @param dt time step or elapsed time since the last update, and it is used to
-  * calculate the position of the object in the scene.
+  * @param dt time step for which the update operation is being performed, and it is
+  * used to compute the position of the entity represented by the `w` variable.
   */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -147,9 +147,8 @@ public class Main {
 	}
 
  /**
-  * renders a 3D model using a shader and a camera view projection matrix. It sets up
-  * the shader's uniforms with the appropriate colors, then draws the model using the
-  * view projection matrix.
+  * renders a 3D scene using a rendering engine. It sets up the rendering context,
+  * binds a model, and applies a transformation matrix to the model before drawing it.
   */
 	private static void render() {
 		
@@ -173,11 +172,10 @@ public class Main {
 	}
 	
  /**
-  * terminates the Java application with the specified exit status, which can be any
-  * integer value between 0 and 2147483647.
+  * terminates the Java process with the specified exit code, which is passed as an argument.
   * 
-  * @param status 0-based exit code to be returned by the `System.exit()` method, which
-  * terminates the current Java process.
+  * @param status value to be passed as an argument to the `System.exit()` method,
+  * which terminates the Java program.
   */
 	private static void exit(int status) {
 		System.exit(status);
