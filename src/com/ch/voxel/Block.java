@@ -1,13 +1,11 @@
 package com.ch.voxel;
 
 /**
- * represents a three-dimensional block with coordinates and various boolean flags
- * for its properties.
+ * represents a 3D coordinate with various flags for its properties.
  * Fields:
- * 	- z (int): in the Block class represents the depth value of the block, with
- * possible values ranging from 0 to 255.
- * 	- rt (boolean): represents whether a block is right-clickable on the specific
- * instance of the Block class.
+ * 	- z (int): represents the vertical position of a block in a 3D space.
+ * 	- rt (boolean): of the Block class represents whether the block is currently being
+ * mined.
  */
 public class Block {
 	

@@ -7,11 +7,11 @@ import com.ch.Shader;
 
 
 /**
- * in this implementation is responsible for rendering 3D chunks in a Minecraft-like
- * game. It manages an array of Chunk objects, which represent the 3D environment,
- * and renders them using a Shader object and a Camera object. The World class also
- * handles the movement of the player and the updates to the Chunk array based on the
- * player's position.
+ * in the given code is responsible for managing a 3D world, including its chunk
+ * structure, rendering, and collision detection. The class has several methods for
+ * generating new chunks based on the player's position, updating block positions,
+ * and rendering the chunks using a shader. It also includes a render method that
+ * takes a camera and shader as parameters and renders the chunks based on their positions.
  */
 public class World {
 
@@ -29,8 +29,8 @@ public class World {
 	}
 	
  /**
-  * iterates through a 3D grid of chunks, creating new chunks at each position and
-  * updating their block states before passing them to a genetic model for evolution.
+  * iterates over a grid of chunks, creating and updating blocks within each chunk,
+  * and then converting them to a gen model.
   */
 	private void gen() {
 		for (int i = 0; i < W; i++)
@@ -43,19 +43,19 @@ public class World {
 	}
 
  /**
-  * updates the position of an object in a world based on its previous position and
-  * some logical conditions. It also tries to avoid generating new chunks if possible
-  * by using a temporary array for that purpose.
+  * updates the position of the chunk's block based on the user input and checks for
+  * collisions with other chunks, updating the chunk's blocks and reassigning them to
+  * the new position if necessary.
   * 
-  * @param x 2D position of the chunk in the world, which is used to determine whether
-  * the chunk has moved and to update its position accordingly.
+  * @param x 2D coordinate of the chunk's position within the world, which is used to
+  * update the chunk's position and dimensions based on its z-coordinate.
   * 
   * @param y 2D coordinate of the chunk's position in the world, which is used to
-  * determine the correct chunk to update or generate based on the `x` and `z` coordinates.
+  * determine the correct chunk to update based on the `x` and `z` coordinates.
   * 
-  * @param z 3D coordinate of the current chunk's position in the world, and it is
-  * used to determine whether the chunk has moved too far away from its original
-  * position, and if so, to update the chunk's position accordingly.
+  * @param z 3D position of the chunk to be generated, and it is used to determine the
+  * correct chunk to be generated based on the differences between the current chunk
+  * and the specified chunk at the specified position.
   */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
@@ -242,28 +242,32 @@ public class World {
 	}
 
  /**
-  * takes a shader object `s` and a camera object `c` as inputs, loops through every
-  * pixel in a 3D chunk, and renders the corresponding model using the current
-  * view-projection matrix.
+  * renders a 3D model using a shader and a camera. It iterates over the chunks of a
+  * 3D scene, sets the color of each chunk using its position, and then draws the
+  * corresponding 3D model using the shader and camera.
   * 
-  * @param s 3D shader that is being rendered, and it is used to set the color of each
-  * pixel in the rendering process.
+  * @param s 3D rendering shader that is being applied to the graphics pipeline, and
+  * it is used to set the uniform values of the shader using the `unifrom*` methods.
   * 
-  * 	- `s`: A `Shader` object representing the shading model for rendering 3D graphics.
-  * It has various attributes such as uniforms, samplers, and buffers that can be
-  * accessed through its methods.
-  * 	- `c`: A `Camera` object representing the camera's perspective for rendering 3D
-  * graphics. It has properties such as position, orientation, and field of view that
-  * can be accessed through its methods.
+  * 	- `s`: A `Shader` object representing the current shader being used. Its properties
+  * include the shader's name, version, and texture units.
+  * 	- `c`: A `Camera` object representing the active camera in the scene. It has
+  * properties such as the position, orientation, and field of view.
   * 
-  * @param c 3D camera object used to project the scene onto the view plane, and is
-  * used by the shader to compute the final color of each pixel based on the camera's
-  * perspective.
+  * The function iterates over a 3D grid of chunks, computing the color of each chunk
+  * using the current shader and drawing it on the screen using the active camera's
+  * view projection matrix.
   * 
-  * 	- `c`: A `Camera` object, representing the camera used for rendering. It has
-  * various properties such as `getViewProjection()` method that returns a `Matrix4f`
-  * object representing the view projection matrix, and `getModelMatrix()` method that
-  * returns a `Matrix4f` object representing the model matrix.
+  * @param c 3D camera object that determines the viewpoint for rendering the scene.
+  * 
+  * 	- `Camera c`: This is an instance of the `Camera` class, which represents a camera
+  * in the game engine. It has various properties such as `getViewProjection()`,
+  * `getModelMatrix()`, and `draw()` that are used to render the 3D model from the
+  * specified camera perspective.
+  * 	- `Shader s`: This is an instance of the `Shader` class, which represents a shader
+  * program in the game engine. It has various properties such as `uniformf()` and
+  * `unifromMat4()` that are used to set uniform values and matrix transformations for
+  * the shader.
   */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)
