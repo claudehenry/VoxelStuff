@@ -1,7 +1,11 @@
 package com.ch.math;
 
 /**
- * TODO
+ * is a mathematical representation of a 2D vector in Java. It has two fields: x and
+ * y, which represent the components of the vector, and several methods for manipulating
+ * and computing with the vector. These include length(), max(), dot(), cross(),
+ * lerp(), rotate(), add(), sub(), mul(), div(), abs(), set() and as3DVector(). The
+ * class also provides methods for checking equality with another vector.
  */
 public class Vector2f {
 	
@@ -14,9 +18,8 @@ public class Vector2f {
 	}
 
  /**
-  * calculates the Euclidean distance of a point in two-dimensional space, given its
-  * coordinates `x` and `y`. It uses the formula for the length of a vector to return
-  * the square root of the sum of the squares of the coordinates.
+  * calculates the Euclidean distance of a point in two-dimensional space by taking
+  * the square root of the sum of the squares of its x and y coordinates.
   * 
   * @returns the square root of the sum of the squares of the `x` and `y` coordinates.
   */
@@ -25,50 +28,45 @@ public class Vector2f {
 	}
 
  /**
-  * returns the maximum value of two floating-point arguments `x` and `y`.
+  * computes the maximum value of two floating-point numbers `x` and `y`.
   * 
-  * @returns the larger of the two input values, `x` and `y`, represented as a
-  * floating-point number.
+  * @returns the maximum value of either `x` or `y`.
   */
 	public float max() {
 		return Math.max(x, y);
 	}
 
  /**
-  * takes a `Vector2f` object `r` as input and computes the dot product of its `x` and
-  * `y` components with the corresponding components of the function's input parameters,
-  * returning the result as a float value.
+  * computes the dot product of a `Vector2f` object and a given `Vector2f` argument,
+  * returning the result as a floating-point value.
   * 
-  * @param r 2D vector to be multiplied with the component values of the `Vector2f`
-  * object returned by the method.
+  * @param r 2D vector to which the `x` and `y` components of the returning value will
+  * be dot-producted.
   * 
-  * 	- `r` is a `Vector2f` class instance representing a two-dimensional vector in
-  * homogeneous coordinates.
-  * 	- `x` and `y` are the x and y coordinates of the vector, respectively.
+  * `r`: A `Vector2f` instance containing the coordinates (x, y) of a point in 2D
+  * space. The `x` and `y` attributes hold the individual coordinates, respectively.
   * 
   * @returns a floating-point number representing the dot product of the input vector
-  * and the component values of the function.
+  * and another vector represented by `r`.
   */
 	public float dot(Vector2f r) {
 		return x * r.getX() + y * r.getY();
 	}
 
  /**
-  * normalizes a vector by dividing its components by their magnitudes, returning a
-  * new vector with the same direction but with magnitude equal to the original vector's
-  * length.
+  * normalizes a vector by dividing its components by the vector's length, resulting
+  * in a unitized vector with magnitude equal to one.
   * 
-  * @returns a normalized version of the input vector, with a length of 1.
+  * @returns a normalized vector with x and y components scaled proportionally to the
+  * length of the original vector.
   * 
-  * 	- The returned vector has the same x-coordinates as the original input vector,
-  * scaled by the length of the original vector.
-  * 	- The returned vector has the same y-coordinates as the original input vector,
-  * scaled by the length of the original vector.
-  * 	- The scale factor is always non-zero, meaning that the output vector will never
-  * be zero or have a magnitude of zero.
-  * 
-  * Overall, the `normalized` function takes an input vector and returns a scaled
-  * version of it, where the scaling factor is the length of the input vector.
+  * 	- The output is a `Vector2f` object representing a normalized version of the
+  * original vector.
+  * 	- The x-component of the output is calculated as `x / length`, where `length` is
+  * the magnitude (or length) of the original vector.
+  * 	- The y-component of the output is calculated similarly, i.e., `y / length`.
+  * 	- The resulting vector has a magnitude equal to the magnitude of the original
+  * vector, but its direction is normalized to lie on the axis of the coordinate system.
   */
 	public Vector2f normalized() {
 		float length = length();
@@ -77,71 +75,73 @@ public class Vector2f {
 	}
 
  /**
-  * computes the vector product of two vectors, returning a scalar value representing
-  * the magnitude of the cross product.
+  * takes a `Vector2f` argument `r` and returns the product of its `x` and `y` components,
+  * without using any actual multiplication operation.
   * 
-  * @param r 2D vector to perform the cross product with the current vector.
+  * @param r 2D vector to be multiplied with the current vector, resulting in a new
+  * 2D vector that is the cross product of the two vectors.
   * 
-  * 	- `r` is a `Vector2f` object representing a 2D point or vector in the mathematical
-  * space.
-  * 	- `x` and `y` are the coordinates of the point or vector, which are float values.
+  * 	- `r` is an instance of Vector2f, which represents a 2D point or vector in the
+  * Java programming language.
+  * 	- `r.getX()` and `r.getY()` return the x- and y-coordinates of the point or vector,
+  * respectively.
+  * 	- The returned value is the dot product of `x` and `r.y` minus the dot product
+  * of `y` and `r.x`.
   * 
-  * The function calculates the cross product of two vectors by multiplying the
-  * x-coordinate of the first vector by the y-coordinate of the second vector and vice
-  * versa, and then returning the result as a floating-point value.
-  * 
-  * @returns a floating-point value representing the dot product of two vectors.
+  * @returns a scalar value representing the cross product of two vectors.
   */
 	public float cross(Vector2f r) {
 		return x * r.getY() - y * r.getX();
 	}
 
  /**
-  * takes a `Vector2f` object `dest` and a `float` parameter `lerpFactor`, and returns
-  * a new `Vector2f` object that is a linear interpolation of the current object and
-  * `dest`.
+  * calculates the linear interpolation between two vector values, `dest` and `this`,
+  * based on a specified factor `lerpFactor`. It returns a new vector representing the
+  * interpolated value.
   * 
-  * @param dest 2D destination point to which the vector is being interpolated towards.
+  * @param dest 2D destination vector that the current vector will be interpolated to.
   * 
-  * The `dest` parameter is of type `Vector2f`, which represents a 2D vector in
-  * mathematical notation. It contains the target values for the lerping operation.
+  * 	- `dest`: This is the destination point where the linear interpolation will be
+  * performed. It has two components - `x` and `y`, representing the position of the
+  * point in the x-axis and y-axis, respectively.
+  * 	- `lerpFactor`: This is a scalar value that represents the factor by which the
+  * current position will be interpolated towards the destination point.
   * 
-  * @param lerpFactor linear interpolation factor between the current vector value and
-  * the destination vector value.
+  * @param lerpFactor scalar value that determines the interpolation between the current
+  * position and the destination position of the vector.
   * 
-  * @returns a vector that interpolates between the input `dest` and the current
-  * position of the object.
+  * @returns a new `Vector2f` object that represents the interpolated value between
+  * the current position and the destination position.
   * 
-  * 	- The output is a `Vector2f` object that represents the interpolated value between
-  * the input `dest` and the current position of the entity.
-  * 	- The interpolation is performed using the `sub`, `mul`, and `add` methods of the
-  * `Vector2f` class, which allow for smooth and precise calculation of the interpolated
-  * value.
-  * 	- The `lerpFactor` parameter represents the ratio of the distance between the
-  * input `dest` and the current position of the entity to the total distance between
-  * the input `dest` and the entity's final destination.
+  * The `Vector2f` object returned by `lerp` represents the interpolated position
+  * between the original `this` object and the destination `dest` object. The `mul`
+  * method is applied to the difference between the two objects (`this - dest`) to
+  * produce a value representing the interpolation factor, which is then added to the
+  * original object using the `add` method. This produces the final interpolated position.
   */
 	public Vector2f lerp(Vector2f dest, float lerpFactor) {
 		return dest.sub(this).mul(lerpFactor).add(this);
 	}
 
  /**
-  * rotates a `Vector2f` object by the specified angle in radians, returning a new
-  * `Vector2f` object with the rotated coordinates.
+  * rotates a vector by an angle in radians, returning the rotated vector in a new
+  * coordinate system.
   * 
-  * @param angle 2D angle of rotation in radians, which is used to calculate the
-  * resulting vector's coordinates.
+  * @param angle 2D rotation angle in radians, which is multiplied by the cosine and
+  * sine of that angle to produce the new coordinates of the rotated vector.
   * 
-  * @returns a new `Vector2f` object with the x and y components rotated by the specified
-  * angle.
+  * @returns a new `Vector2f` instance with the x-axis and y-axis values rotated by
+  * the provided angle.
   * 
-  * The output is a `Vector2f` object, which represents a 2D point in homogeneous
-  * coordinates. The x-coordinate represents the horizontal position of the point,
-  * while the y-coordinate represents its vertical position.
+  * 	- The output is a `Vector2f` object, representing a 2D point in the xy-plane.
+  * 	- The x-coordinate of the output is calculated as (x * cos - y * sin), where x
+  * and y are the input coordinates of the function.
+  * 	- The y-coordinate of the output is calculated as (x * sin + y * cos), again using
+  * the input coordinates x and y.
   * 
-  * The values of the output are calculated by multiplying the original point's x and
-  * y coordinates by the cosine and sine of the angle of rotation, respectively. This
-  * results in a new point that has been rotated around the origin by the specified angle.
+  * In summary, the `rotate` function takes a float angle as input and returns a new
+  * `Vector2f` object representing the rotated point based on the cosine and sine of
+  * the angle in radians.
   */
 	public Vector2f rotate(float angle) {
 		double rad = Math.toRadians(angle);
@@ -152,246 +152,248 @@ public class Vector2f {
 	}
 
  /**
-  * takes a `Vector2f` argument `r` and returns a new `Vector2f` instance with the sum
-  * of the current vector's components and those of the given `r` vector.
+  * takes a `Vector2f` argument `r` and returns a new `Vector2f` object representing
+  * the sum of the current object's components and the argument's components.
   * 
   * @param r 2D vector to be added to the current vector.
   * 
-  * The `Vector2f` object `r` represents a two-dimensional vector with an x-component
-  * and a y-component, both of which are doubles. The x-component is represented by
-  * the variable `x`, and the y-component is represented by the variable `y`.
+  * 	- `x`: The x-coordinate of the input vector.
+  * 	- `y`: The y-coordinate of the input vector.
   * 
-  * @returns a new `Vector2f` object representing the sum of the input vectors.
+  * @returns a new vector with the sum of the input vectors' x and y coordinates.
   * 
-  * The returned vector has an x-coordinate that is equal to the sum of the x-coordinates
-  * of the two input vectors and a y-coordinate that is equal to the sum of the
-  * y-coordinates of the two input vectors.
+  * 	- The returned object is a new instance of `Vector2f`, which represents a 2D
+  * vector with x and y components.
+  * 	- The x component of the returned vector is the sum of the x component of the
+  * input vector `r` and the x component of the current vector.
+  * 	- The y component of the returned vector is the sum of the y component of the
+  * input vector `r` and the y component of the current vector.
   */
 	public Vector2f add(Vector2f r) {
 		return new Vector2f(x + r.getX(), y + r.getY());
 	}
 
  /**
-  * adds a floating-point value to the vector's x and y components, returning a new
-  * vector object with the updated values.
+  * takes a single float argument `r` and returns a new `Vector2f` instance with the
+  * sum of the current vector's `x` and `y` components and the provided `r` value.
   * 
-  * @param r 2D vector to be added to the current vector.
+  * @param r 2D vector to add to the current vector.
   * 
-  * @returns a new `Vector2f` instance with the sum of the original vector's components
-  * and the given scalar value.
+  * @returns a new `Vector2f` instance with the sum of the original vector's coordinates
+  * and the given float value.
   * 
-  * The Vector2f object returned by the `add` function has two components, x and y,
-  * which represent the added value in each dimension, respectively. Specifically, the
-  * x component represents the addition of r to the existing x-coordinate, while the
-  * y component represents the addition of r to the existing y-coordinate. The resulting
-  * vector maintains the same orientation as the original input vector.
+  * The returned Vector2f object represents a point in 2D space with x-coordinate equal
+  * to the original vector's x coordinate plus the input parameter r and y-coordinate
+  * equal to the original vector's y coordinate plus the input parameter r.
   */
 	public Vector2f add(float r) {
 		return new Vector2f(x + r, y + r);
 	}
 
     /**
-     * takes two floating-point arguments `x` and `y`, and returns a new `Vector2f`
-     * instance with the sum of the current instance's `x` and `y` components and the
-     * input `x` and `y` components.
+     * adds two floating-point values to a `Vector2f` object, returning a new `Vector2f`
+     * instance with the sum of the original object's x and y components and the input x
+     * and y values.
      * 
-     * @param x 2D coordinate that is added to the current position of the vector.
+     * @param x 2D coordinate to add to the current position of the vector.
      * 
      * @param y 2nd component of the resulting vector.
      * 
-     * @returns a new `Vector2f` instance representing the sum of the input `x` and `y`
-     * values.
+     * @returns a new `Vector2f` object representing the sum of the input `x` and `y` values.
      * 
-     * The return type is `Vector2f`, which means it represents a 2D vector with
-     * floating-point components.
-     * The method takes two floating-point arguments `x` and `y` and adds them to the
-     * corresponding components of this object's vector, resulting in a new vector object
-     * that represents the sum of the original vector and the input values.
+     * The returned Vector2f object has an x-component that is equal to the sum of the
+     * x-component of this object and the argument x, and a y-component that is equal to
+     * the sum of the y-component of this object and the argument y.
      */
     public Vector2f add(float x, float y) {
         return new Vector2f(this.x + x, this.y + y);
     }
 
  /**
-  * takes a `Vector2f` argument `r` and returns a new `Vector2f` object representing
-  * the difference between the current vector and `r`.
+  * takes a `Vector2f` argument `r` and returns a new `Vector2f` instance representing
+  * the difference between the current vector's components and those of the input vector.
   * 
-  * @param r 2D vector to be subtracted from the current vector.
+  * @param r 2D vector to be subtracted from the current vector, resulting in a new
+  * vector that represents the difference between the two vectors.
   * 
-  * 	- `x`: The x-coordinate of the vector, which is also the input to the function.
-  * 	- `y`: The y-coordinate of the vector, which is also a part of the input to the
-  * function.
+  * 	- `x`: The real value of the first component of the input vector.
+  * 	- `y`: The real value of the second component of the input vector.
   * 
-  * @returns a new vector representing the difference between the input vector and the
-  * reference vector.
+  * @returns a new `Vector2f` object representing the difference between the input
+  * vector and the reference vector.
   * 
-  * The returned value represents the difference between the original vector's components
-  * (x and y) and the input vector's components (r.x and r.y).
-  * 
-  * The resulting vector has the same magnitude as the original vector, but its direction
-  * is shifted by the amount of the input vector's components.
-  * 
-  * The returned value can be used to calculate various geometric calculations such
-  * as distances, angles, and areas.
+  * The returned Vector2f object has coordinates x and y that represent the difference
+  * between the original vector's coordinates and the given vector's coordinates.
   */
 	public Vector2f sub(Vector2f r) {
 		return new Vector2f(x - r.getX(), y - r.getY());
 	}
 
  /**
-  * takes a single float argument `r` and returns a new `Vector2f` object with components
-  * `x - r` and `y - r`.
+  * takes a single floating-point value `r` and returns a new `Vector2f` object
+  * representing the difference between the current vector's coordinates and `r`.
   * 
-  * @param r 2D vector to subtract from the current vector.
+  * @param r 2D point that the function subtracts from the current vector position to
+  * produce the new vector output.
   * 
-  * @returns a new `Vector2f` instance representing the difference between the original
-  * vector and the given scalar value.
+  * @returns a new `Vector2f` object representing the difference between the original
+  * vector and the given value.
   * 
-  * The output is a `Vector2f` object representing a point in 2D space, where `x` and
-  * `y` represent the x- and y-coordinates, respectively, of the point. The value of
-  * `r` is subtracted from both coordinates to obtain the resulting point.
+  * The `Vector2f` object returned by the function represents the difference between
+  * the original vector's components and the input parameter `r`. Specifically, the
+  * x-coordinate of the returned vector is equal to the original vector's x-coordinate
+  * minus the input `r`, while its y-coordinate is equal to the original vector's
+  * y-coordinate minus the input `r`.
+  * 
+  * The returned vector has the same components as the original vector, but with the
+  * values shifted by the amount of `r` provided as input. This function can be used
+  * to subtract a scalar value from a vector, effectively moving the vector in the
+  * opposite direction by that amount.
   */
 	public Vector2f sub(float r) {
 		return new Vector2f(x - r, y - r);
 	}
 
  /**
-  * multiplies a `Vector2f` object by another `Vector2f` object, returning a new
-  * `Vector2f` with the product of the two components.
+  * multiplies the vector's x and y components by the corresponding components of
+  * another vector, returning a new vector with the result.
   * 
-  * @param r 2D vector that multiplies with the current vector, resulting in a new 2D
-  * vector output.
+  * @param r 2D vector to be multiplied with the current vector, resulting in a new
+  * 2D vector with the product of the corresponding components.
   * 
-  * 	- `x`: The real part of the vector representing the x-coordinate.
-  * 	- `y`: The imaginary part of the vector representing the y-coordinate.
+  * 	- `x`: The x-coordinate of `r`, which is a `float`.
+  * 	- `y`: The y-coordinate of `r`, which is also a `float`.
   * 
-  * @returns a new vector with the product of the input vector's x and y components
-  * multiplied by the corresponding components of the passed vector.
+  * @returns a new `Vector2f` instance with the product of the input vector's `x` and
+  * `y` components multiplied by the corresponding components of the given vector `r`.
   * 
-  * The `Vector2f` object returned by the function has the same x-coordinate as the
-  * input `r`, and the y-coordinate is obtained by multiplying the x-coordinate of the
-  * input by the scalar value passed as an argument to the function.
+  * The output is a new Vector2f object that represents the product of the input vectors.
   * 
-  * The resulting vector object has a length equal to the product of the magnitudes
-  * of the two input vectors, and its direction is the same as that of the input vector
-  * r, but with its magnitude increased by the product of the scalar value and the
-  * magnitude of the input vector.
+  * The x-coordinate of the output is equal to the product of the x-coordinates of the
+  * input vectors.
+  * 
+  * The y-coordinate of the output is equal to the product of the y-coordinates of the
+  * input vectors.
   */
 	public Vector2f mul(Vector2f r) {
 		return new Vector2f(x * r.getX(), y * r.getY());
 	}
 
  /**
-  * multiplies the components of a `Vector2f` object by a given scalar value, returning
-  * a new `Vector2f` object with the scaled components.
+  * multiplies the components of a `Vector2f` object by a given scalar value.
   * 
-  * @param r scalar value to be multiplied with the vector components of the `Vector2f`
-  * instance returned by the function.
+  * @param r scalar value used to multiply the `x` and `y` components of the `Vector2f`
+  * instance.
   * 
-  * @returns a new `Vector2f` instance with x and y components scaled by the input `r`.
+  * @returns a vector with x and y components scaled by the input value `r`.
   * 
-  * The output is a `Vector2f` object, representing a 2D point with x and y components.
-  * The x component of the output is equal to the product of the x component of the
-  * input vector and the scalar value r.
-  * The y component of the output is equal to the product of the y component of the
-  * input vector and the scalar value r.
+  * The output is a `Vector2f` object that represents the product of the input `x` and
+  * `r`, and the input `y` and `r`. Therefore, the output has two components: `x * r`
+  * and `y * r`, which correspond to the x-component and y-component of the resulting
+  * vector, respectively.
   */
 	public Vector2f mul(float r) {
 		return new Vector2f(x * r, y * r);
 	}
 
  /**
-  * takes a vector `r` as input and returns a new vector with the same x-component
-  * scaled by the reciprocal of the x-component of `r`, and the y-component scaled by
-  * the reciprocal of the y-component of `r`.
+  * takes a `Vector2f` argument `r` and returns a new `Vector2f` object with the
+  * components scaled by the reciprocals of the corresponding values in `r`.
   * 
-  * @param r 2D vector to be divided by the current vector.
+  * @param r 2D vector to which the current vector is being divided.
   * 
-  * 	- `x`: The x-coordinate of `r`.
-  * 	- `y`: The y-coordinate of `r`.
+  * 	- The `x` property of `r` is used as the dividend in the calculation.
+  * 	- The `y` property of `r` is used as the divisor in the calculation.
   * 
-  * @returns a new vector with the same x-coordinates as the original vector, scaled
-  * by the reciprocal of the input vector's x-coordinate.
+  * @returns a vector with the same x-coordinates as the original vector, scaled by
+  * the reciprocal of the input vector's x-coordinate.
   * 
-  * The output is a `Vector2f` object with x-coord and y-coord components calculated
-  * as follows: `x / r.getX()` and `y / r.getY()`. Therefore, the output has the same
-  * units (e.g. pixels) as the input.
+  * 	- The output is a new instance of the `Vector2f` class, which means it has two
+  * components (x and y) that represent the result of dividing the input vector's x
+  * and y components by the input r.getX() and r.getY(), respectively.
+  * 	- The output's x component represents the result of dividing the input vector's
+  * x component by the input r.getX(), which is a non-negative value representing the
+  * scaling factor applied to the x component of the output.
+  * 	- The output's y component represents the result of dividing the input vector's
+  * y component by the input r.getY(), which is also a non-negative value representing
+  * the scaling factor applied to the y component of the output.
   */
 	public Vector2f div(Vector2f r) {
 		return new Vector2f(x / r.getX(), y / r.getY());
 	}
 
  /**
-  * takes a single floating-point argument `r` and returns a new `Vector2f` instance
-  * with scaled x and y components proportional to `r`.
+  * takes a scalar parameter `r` and returns a new `Vector2f` instance with the x and
+  * y components scaled by the ratio of `r`.
   * 
-  * @param r scalar value that is used to perform the division on the `x` and `y`
-  * components of the `Vector2f` object.
+  * @param r factor by which the vector's components are divided.
   * 
-  * @returns a new `Vector2f` instance with the x-coordinate and y-coordinate scaled
-  * by the input parameter `r`.
+  * @returns a vector with x and y components scaled by the input parameter `r`.
   * 
-  * 	- The output is a `Vector2f` object representing a scaled version of the original
-  * vector.
-  * 	- The scaling factor is the input parameter `r`.
-  * 	- The x and y components of the output are calculated as the original x and y
-  * components divided by the input r.
+  * The output is a `Vector2f` object representing a scaled version of the original vector.
+  * The x and y components of the output are calculated by dividing the corresponding
+  * components of the original vector by the input parameter `r`.
+  * The resulting vector has the same magnitude as the original vector, but its direction
+  * is scaled by a factor of `r`.
   */
 	public Vector2f div(float r) {
 		return new Vector2f(x / r, y / r);
 	}
 
  /**
-  * calculates and returns a new `Vector2f` instance with the absolute values of its
-  * `x` and `y` components.
+  * computes and returns a new `Vector2f` instance with the absolute values of its `x`
+  * and `y` components.
   * 
-  * @returns a new `Vector2f` instance with the absolute value of its input components.
+  * @returns a new `Vector2f` object containing the absolute values of the original
+  * vector's `x` and `y` components.
   * 
-  * 	- The output is a Vector2f object representing the absolute value of the input Vector2f.
-  * 	- The x and y components of the output are equal to the absolute values of the
-  * corresponding input components.
-  * 	- The output has the same dimensions as the input, i.e., it has the same number
-  * of elements.
+  * 	- The output is a new `Vector2f` object containing the absolute values of the
+  * input `x` and `y` coordinates.
+  * 	- The `x` and `y` components of the output are both non-negative integers,
+  * representing the absolute values of the original coordinates.
+  * 	- The output has the same dimension as the input, with the same type and scale.
   */
 	public Vector2f abs() {
 		return new Vector2f(Math.abs(x), Math.abs(y));
 	}
 
  /**
-  * returns a string representing the location of an object in a two-dimensional space,
-  * comprising its x and y coordinates enclosed in parentheses.
+  * returns a string representation of a point (x, y) by concatenating the values of
+  * x and y inside parentheses.
   * 
   * @returns a string representing the point (x, y) using parentheses and the values
-  * of x and y separated by a space.
+  * of x and y as separate components.
   * 
-  * 	- The parentheses in the return statement indicate that the output is a tuple of
-  * two values, x and y.
-  * 	- The individual values within the parentheses are also expressed as literals,
-  * indicating that they are not variables or expressions that can be evaluated at runtime.
-  * 	- The concatenation operator used to combine the two values into a single string
-  * (" " separates them) suggests that these values may represent coordinates or
-  * positions in some context.
+  * 	- The parentheses `( )` are included as part of the output.
+  * 	- The variable `x` is included in the output followed by a space character `+`.
+  * 	- The variable `y` is also included in the output followed by another space
+  * character `+`.
+  * 
+  * Therefore, the output returned by the `toString` function is simply a concatenation
+  * of the values of `x` and `y` separated by spaces.
   */
 	public String toString() {
 		return "(" + x + " " + y + ")";
 	}
 
  /**
-  * modifies the component values of a `Vector2f` object by assigning new float values
-  * to its `x` and `y` fields, and then returns the modified object reference.
+  * sets the `x` and `y` components of a `Vector2f` object to the input values, returning
+  * the modified object.
   * 
-  * @param x 2D coordinate value that updates the `x` component of the `Vector2f` object.
+  * @param x 2D position of the `Vector2f` instance and assigns its value to the `x`
+  * field of the instance.
   * 
-  * @param y 2nd component of the `Vector2f` object, which is being updated to match
-  * the provided value.
+  * @param y 2nd component of the `Vector2f` object being modified, which is updated
+  * to match the provided value.
   * 
-  * @returns a reference to the same `Vector2f` instance, with the `x` and `y` components
-  * updated to the provided values.
+  * @returns a reference to the modified vector object.
   * 
-  * The `Vector2f` class returns an instance of itself after setting the `x` and `y`
-  * components of the object to the input values `x` and `y`, respectively. Therefore,
-  * the output is the same instance of `Vector2f` that was passed as an argument to
-  * the function.
+  * 	- This is a method that sets the x-coordinate and y-coordinate of the Vector2f instance.
+  * 	- The method returns a reference to the same Vector2f instance, indicating that
+  * the object itself is modified rather than creating a new version with the updated
+  * values.
+  * 	- The return type is `Vector2f`, indicating that the method returns an instance
+  * of the Vector2f class.
   */
 	public Vector2f set(float x, float y) {
 		this.x = x;
@@ -400,24 +402,23 @@ public class Vector2f {
 	}
 
  /**
-  * sets the corresponding components of this vector to the corresponding components
-  * of the `Vector2f` reference `r`.
+  * sets the `x` and `y` components of the `Vector2f` object to the values passed as
+  * parameters.
   * 
-  * @param r 2D vector to be set as the value of the `Vector2f` instance, and its
-  * `getX()` and `getY()` methods are called to set the corresponding components of
-  * the instance.
+  * @param r 2D vector that contains the x and y coordinates to be set in the `set()`
+  * method of the `Vector2f` class.
   * 
-  * 	- `getX()` and `getY()`: These are methods that retrieve the x-coordinate and
-  * y-coordinate values of `r`, respectively.
+  * 	- `getX()` and `getY()`: These methods return the x-coordinate and y-coordinate
+  * values of the input vector, respectively.
   * 
-  * @returns a reference to the original vector with the x and y coordinates updated.
+  * @returns a reference to the original vector with its components updated to match
+  * the input parameter values.
   * 
-  * 	- The method sets the values of the `x` and `y` fields of the `Vector2f` object
-  * to those of the parameter `r`.
-  * 	- The return type of the method is the same as the original object, indicating
-  * that the method does not create a new object but rather modifies the existing one.
-  * 	- The method name `set` suggests that it is intended for setting or modifying the
-  * properties of an object, rather than creating a new one.
+  * 	- The output is a reference to the same instance of the `Vector2f` class as the
+  * input parameter. This means that any changes made to the input parameter within
+  * the function will affect the output as well.
+  * 	- The output contains the updated values of the `x` and `y` components of the
+  * vector, which are set to the corresponding values of the input parameter.
   */
 	public Vector2f set(Vector2f r) {
 		set(r.getX(), r.getY());
@@ -425,22 +426,25 @@ public class Vector2f {
 	}
 
     /**
-     * converts a `Vector2f` instance into a `Vector3f` instance by adding a third component
-     * representing the z-coordinate, which is initially set to zero.
+     * converts a `Vector2f` instance into an equivalent `Vector3f` instance by adding a
+     * third component representing the z-coordinate of the vector, which is set to zero
+     * by default.
      * 
-     * @returns a new `Vector3f` instance with values `(x, y, 0)`.
+     * @returns a new `Vector3f` instance with the values `x`, `y`, and `0` for the x,
+     * y, and z components, respectively.
      * 
-     * 	- The Vector3f object represents a 3D vector with x, y, and z components.
-     * 	- The x, y, and z components are set to the input values of the function.
-     * 	- The resulting Vector3f object has a length of 0, indicating that it is a unit
-     * vector.
+     * 	- The `Vector3f` object represents a 3D vector with three components: `x`, `y`,
+     * and `z`.
+     * 	- The `x`, `y`, and `z` components represent the coordinates of the 3D vector.
+     * 	- The vector is returned as an instance of the `Vector3f` class, which provides
+     * methods for calculating the dot product, magnitude, and other operations on 3D vectors.
      */
     public Vector3f as3DVector() {
         return new Vector3f(x, y, 0);
     }
 
  /**
-  * returns the value of the `x` field.
+  * retrieves the value of a variable `x`.
   * 
   * @returns a floating-point value representing the variable `x`.
   */
@@ -449,50 +453,55 @@ public class Vector2f {
 	}
 
  /**
-  * sets the value of the `x` field of its container object to the argument passed as
-  * a float value.
+  * sets the value of the `x` field of the object to which it belongs.
   * 
-  * @param x float value that will be assigned to the `x` field of the class instance
-  * upon calling the `setX()` method.
+  * @param x float value that is assigned to the `x` field of the class instance being
+  * modified by the `setX()` method.
   */
 	public void setX(float x) {
 		this.x = x;
 	}
 
  /**
-  * returns the value of `y`.
+  * returns the value of the `y` field.
   * 
-  * @returns the value of the `y` field.
+  * @returns the value of the `y` field, which is a `float` variable.
   */
 	public float getY() {
 		return y;
 	}
 
  /**
-  * sets the value of the field `y` to the argument passed as a float.
+  * sets the value of the instance field `y`.
   * 
-  * @param y float value that will be assigned to the `y` field of the object being
-  * passed as an argument to the `setY()` method.
+  * @param y new value of the instance variable `y` that is being assigned to through
+  * the function call.
   */
 	public void setY(float y) {
 		this.y = y;
 	}
 
  /**
-  * compares two `Vector2f` objects based on their `x` and `y` components, returning
-  * `true` if they are identical, and `false` otherwise.
+  * compares a `Vector2f` instance `r` to the current instance, returning `true` if
+  * both instances have the same `x` and `y` coordinates.
   * 
-  * @param r 2D point to which the current vector is compared for equality.
+  * @param r 2D vector to which the current vector is being compared for equality.
   * 
-  * `x`: It is a double value representing the x-coordinate of the vector.
+  * 	- `x`: The first component of the vector represents the x-coordinates of the two
+  * vectors being compared.
+  * 	- `y`: The second component of the vector represents the y-coordinates of the two
+  * vectors being compared.
   * 
-  * @returns a boolean value indicating whether the Vector2f object has the same x and
-  * y coordinates as the provided Vector2f object.
+  * By comparing the values of these components, the function determines if the two
+  * vectors are equal.
   * 
-  * 	- `x`: The value of `x` in the current object is compared with the corresponding
-  * value of `r`. If they are equal, the function returns `true`.
-  * 	- `y`: The value of `y` in the current object is compared with the corresponding
-  * value of `r`. If they are equal, the function returns `true`.
+  * @returns a boolean value indicating whether the vector's coordinates are equal to
+  * those of the provided vector.
+  * 
+  * 	- The `x` and `y` fields of the returning object reference are compared with their
+  * corresponding counterparts in the argument vector using the `==` operator.
+  * 	- If these fields match, the function returns `true`.
+  * 	- Otherwise, it returns `false`.
   */
 	public boolean equals(Vector2f r) {
 		return x == r.getX() && y == r.getY();

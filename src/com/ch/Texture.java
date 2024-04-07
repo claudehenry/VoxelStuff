@@ -26,9 +26,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
-/**
- * TODO
- */
 public class Texture {
 
 	private int id;
@@ -40,70 +37,45 @@ public class Texture {
 	}
 
 
- /**
-  * 0 at the root level calls the method `bind` with the argument `0`, which is applied
-  * to the corresponding method parameter.
-  */
+	/**
+	 * sets the value of an object's field to a specified value.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
- /**
-  * sets the active texture slot to a specific index (0-31) and binds the specified
-  * texture ID to that slot.
-  * 
-  * @param samplerSlot 0-based index of a texture slot in the GPU, with values ranging
-  * from 0 to 31, and is used to specify which texture to bind to the current texture
-  * slot.
-  */
+	/**
+	 * specifies which texture to use for rendering by setting the active texture slot
+	 * and binding the specified texture to that slot using glBindTexture().
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot that the function binds to the
+	 * current GL context.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
- /**
-  * returns the current ID of an object.
-  * 
-  * @returns the value of the `id` field.
-  */
+	/**
+	 * returns the `id` field of an object.
+	 * 
+	 * @returns an integer representing the ID of the object.
+	 */
 	public int getID() {
 		return id;
 	}
 
- /**
-  * loads a 2D texture image from a file and creates a texture object in OpenGL, setting
-  * up mipmapping and texture filtering parameters.
-  * 
-  * @param fileName filename of the image to be loaded and read into a texture.
-  * 
-  * 	- `ImageIO.read(new File(fileName))` - This method reads an image from the specified
-  * file and returns a `BufferedImage`.
-  * 	- `int[] pixels` - This is an array of integers that represents the pixel data
-  * of the image.
-  * 	- `BufferedImage.getRGB()` - This method returns the color values of the image
-  * at a given position (x, y).
-  * 	- `image.getWidth()` and `image.getHeight()` - These methods return the width and
-  * height of the image, respectively.
-  * 	- `image.getColorModel().hasAlpha()` - This method checks if the image has an
-  * alpha channel (transparency information).
-  * 	- `ByteBuffer buffer` - This is a buffer that will be used to store the pixel
-  * data of the image.
-  * 	- `glBindTexture(GL_TEXTURE_2D, id)` - This method binds the texture ID to the
-  * current GL context.
-  * 	- `glTexParameteri(GL_TEXTURE_2D, ...)` - These methods set various parameters
-  * for the texture, such as wrapping and filtering.
-  * 	- `glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.getWidth(), image.getHeight(),
-  * 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer)` - This method sets the pixel data of the
-  * texture to the specified buffer.
-  * 	- `GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D)` - This method generates mipmaps for
-  * the texture.
-  * 	- `GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER,
-  * GL11.GL_LINEAR_MIPMAP_LINEAR)` - This method sets the minimum filtering mode to
-  * linear for mipmapped textures.
-  * 
-  * @returns an OpenGL texture ID representing a loaded texture.
-  */
+	/**
+	 * loads an image from a file and creates a texture object in OpenGL using the
+	 * `glGenTextures`, `glBindTexture`, `glTexParameteri`, `glTexImage2D`, and
+	 * `glGenerateMipmap` methods. It returns the ID of the created texture object.
+	 * 
+	 * @param fileName filename of the texture image to be loaded and processed by the
+	 * `loadTexture()` method.
+	 * 
+	 * @returns an integer representing the ID of the generated texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));

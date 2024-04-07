@@ -3,7 +3,10 @@ package com.ch;
 import org.lwjgl.Sys;
 
 /**
- * TODO
+ * is a Java class that provides functions to measure the elapsed time and frame rate.
+ * The class has several methods for calculating and updating the frame rate, as well
+ * as accessing the current frame rate and elapsed time. These methods include
+ * `getDelta()`, `getFPS()`, and `getTime()`.
  */
 public class Timer {
 
@@ -15,30 +18,30 @@ public class Timer {
     public static float time;
 
  /**
-  * multiplies the current time in milliseconds by a factor of 1000 and then divides
-  * it by the timer resolution to provide a consistent measurement of time.
+  * calculates seconds since the epoch by multiplying milliseconds by a resolution
+  * factor and then dividing by 1000.
   * 
-  * @returns a converted and scaled version of the current system time, represented
-  * as a long value in milliseconds.
+  * @returns a long value representing a time interval in milliseconds based on the
+  * system's timer resolution.
   */
 	private static long getTimeS() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
  /**
-  * initializes a variable `lastFPS` with the current time using the `getTimeS()`
-  * method, which is used to track the frame rate of an application.
+  * initializes a variable `lastFPS` with the current time's value using the `getTimeS()`
+  * method, which captures the FPS (frames per second) of the application at startup.
   */
 	public static void init() {
 		lastFPS = getTimeS();
 	}
 
  /**
-  * calculates the time difference between two points, represented by `time` and
-  * `lastFrame`, respectively, using the `getTimeS()` method. It then returns the
-  * result as a float value.
+  * calculates the time difference between two points, represented by `lastFrame` and
+  * `time`, respectively. The returned value is a floating-point number representing
+  * the delta time in seconds.
   * 
-  * @returns a floating-point number representing the time difference between two frames.
+  * @returns a floating-point value representing the time difference between two frames.
   */
 	private static float calculateDelta() {
 		long time = getTimeS();
@@ -48,9 +51,8 @@ public class Timer {
 	}
 
  /**
-  * updates the frame rate by incrementing `currentFPS` every 1000 milliseconds,
-  * resetting `fps` to zero when the time since the last update exceeds 1 second, and
-  * storing the new value of `fps`.
+  * updates the frames per second (FPS) count every 1 second, resetting the counter
+  * when 10 seconds have passed since the last update.
   */
 	private static void updateFPS() {
 		if (getTimeS() - lastFPS > 1000) {
@@ -62,8 +64,8 @@ public class Timer {
 	}
 
  /**
-  * returns the value of the `delta` field, which is a `float` variable storing an
-  * unspecified value.
+  * retrieves the value of the `delta` field, which is a private static variable storing
+  * an unknown value.
   * 
   * @returns a floating-point value representing the delta.
   */
@@ -72,26 +74,27 @@ public class Timer {
 	}
 
  /**
-  * returns the current frame rate as a floating-point number.
+  * retrieves the current frame rate per second (FPS) and returns it as a float value.
   * 
-  * @returns the current frame rate in floats.
+  * @returns the current frame rate of the application.
   */
 	public static float getFPS() {
 		return currentFPS;
 	}
 
     /**
-     * returs a floating-point representation of the current time.
+     * returns the value of a `time` field, which is likely used to store the current
+     * time or date.
      * 
-     * @returns a floating-point representation of time.
+     * @returns a floating-point representation of the current time.
      */
     public static float getTime() {
         return time;
     }
 
     /**
-     * updates the frame rate, calculates and stores the time elapsed since the last
-     * update, and scales the time value to the range [0, 1].
+     * updates the frame rate, calculates and sets a delta time value, and increments a
+     * time variable.
      */
     public static void update() {
         updateFPS();
