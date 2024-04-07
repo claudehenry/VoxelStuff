@@ -12,15 +12,25 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * TODO
+ */
 public class Main {
 	
-	/**
-	 * initializes and displays graphics, initializes GL context, and enters an event
-	 * loop before exiting with a success code.
-	 * 
-	 * @param args 1 or more command-line arguments passed to the program, which can be
-	 * used to initialize and configure the application as needed.
-	 */
+ /**
+  * initializes display and GL components, enters an infinite loop to handle user input
+  * and eventually exits with a return value of 0.
+  * 
+  * @param args 1 or more command-line arguments passed to the program when it is
+  * launched, which are then ignored by the `main` function.
+  * 
+  * 	- Length: The length of the array is 0, indicating that no command-line arguments
+  * were provided when the program was executed.
+  * 	- Elements: The array contains no elements, as there are no command-line arguments
+  * to process.
+  * 	- Class: The element type of the array is `String`, indicating that each element
+  * in the array is a string value.
+  */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -37,10 +47,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
-	/**
-	 * sets up a display mode and creates an GL context, enabling vsync and printing the
-	 * GL version string.
-	 */
+ /**
+  * sets up a display mode and creates a Display object with the specified dimensions,
+  * VSync enabled, and prints the OpenGL version string to the console.
+  */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -52,9 +62,10 @@ public class Main {
 		}
 	}
 	
-	/**
-	 * initializes GL context, sets up camera, enables depth testing and loads shaders.
-	 */
+ /**
+  * initializes and sets up various GL settings and objects for a 3D graphics application.
+  * It loads a shader, creates a camera and texture, and initializes a world object.
+  */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -97,11 +108,10 @@ public class Main {
 		
 	}
 	
-	/**
-	 * continuously updates and renders a graphical display while checking for closure
-	 * requests and key presses. It updates the display title and displays frames per
-	 * second, and free and total memory information.
-	 */
+ /**
+  * continuously runs a loop while certain conditions are not met, updating the display
+  * title and graphics buffer every iteration.
+  */
 	private static void loop() {
 		
 		Timer.init();
@@ -124,21 +134,23 @@ public class Main {
 		
 	}
 	
-	/**
-	 * updates the position of a `w` object based on input from a `c` object and uses the
-	 * transformation matrix to update the position.
-	 * 
-	 * @param dt delta time, which is used to update the position of the object in the scene.
-	 */
+ /**
+  * updates an object's position based on input and transform values, using `processInput`
+  * to process input data and `updatePos` to update the object's position.
+  * 
+  * @param dt time step or elapsed time since the last update, and it is used to
+  * calculate the position of the object in the scene.
+  */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
-	/**
-	 * updates the rendering of a 3D scene by binding and applying uniform values to the
-	 * Model's matrix, then drawing the models using the `draw` method.
-	 */
+ /**
+  * renders a 3D model using a shader and a camera view projection matrix. It sets up
+  * the shader's uniforms with the appropriate colors, then draws the model using the
+  * view projection matrix.
+  */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -160,13 +172,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
-	/**
-	 * terminates the current program process with the specified status code provided as
-	 * an argument.
-	 * 
-	 * @param status exit code for the program, which determines how the operating system
-	 * will terminate the process when the function is called.
-	 */
+ /**
+  * terminates the Java application with the specified exit status, which can be any
+  * integer value between 0 and 2147483647.
+  * 
+  * @param status 0-based exit code to be returned by the `System.exit()` method, which
+  * terminates the current Java process.
+  */
 	private static void exit(int status) {
 		System.exit(status);
 	}
