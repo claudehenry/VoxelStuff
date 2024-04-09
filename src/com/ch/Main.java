@@ -12,8 +12,26 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * of a 3D graphics program in Java, using the Android SDK and the OpenGL ES API. It
+ * creates a camera, a world, and a shader, and updates and renders the scene using
+ * the camera's pose and the world's geometry. The program also handles user input
+ * and provides frames per second and memory usage information.
+ */
 public class Main {
 	
+ /**
+  * initializes displays and GL libraries, then enters an infinite loop for game
+  * rendering and exits with a successful program termination status.
+  * 
+  * @param args 1 or more command line arguments passed to the program when it is
+  * executed, which are then ignored by the `main` function.
+  * 
+  * 	- The `String[] args` represents an array of strings passed as command-line
+  * arguments to the program when executed.
+  * 	- Each element in the array represents a separate argument passed to the program.
+  * 	- No other properties or attributes are available for `args`.
+  */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +48,11 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+ /**
+  * sets up a display mode with a resolution of 1920x1080, creates a Display object
+  * using the PixelFormat and ContextAttribs classes, enables vsync, and prints the
+  * GL version string.
+  */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +64,10 @@ public class Main {
 		}
 	}
 	
+ /**
+  * initializes a 3D graphics environment in Java. It sets up the GL context, loads a
+  * shader, creates a camera and texture, and defines vertices and indices for a 3D model.
+  */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +110,10 @@ public class Main {
 		
 	}
 	
+ /**
+  * updates a display title and renders an image using the GL11 API, while periodically
+  * checking for closing requests and keyboard escape presses.
+  */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +136,22 @@ public class Main {
 		
 	}
 	
+ /**
+  * updates the position of an object (`w`) based on input and transform changes, using
+  * the `processInput` method to handle input processing and the `updatePos` method
+  * to update the object's position.
+  * 
+  * @param dt time step used for updating the object's position and state.
+  */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+ /**
+  * renders a 3D model using a shader, binding and uniforming variables for color and
+  * model view projection matrix, and drawing the model using the `draw` method.
+  */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +173,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+ /**
+  * terminates the current Java process, passing the specified status code to the
+  * operating system's exit mechanism.
+  * 
+  * @param status exit code that will be returned by the `System.exit()` method,
+  * indicating the outcome of the program's execution.
+  */
 	private static void exit(int status) {
 		System.exit(status);
 	}

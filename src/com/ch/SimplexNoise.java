@@ -1,5 +1,13 @@
 package com.ch;
 
+/**
+ * is a Java implementation of the Simplex Noise algorithm, which is a mathematical
+ * formula used to generate random numbers that have a predictable pattern. The class
+ * provides a simple and efficient way to generate noise patterns in various formats,
+ * including 1D, 2D, and 3D. The algorithm uses a set of coordinates (x0, y0, z0, w0)
+ * as input and returns a value between -1 and 1 that represents the noise pattern
+ * at that location.
+ */
 public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 private static int grad3[][] = {{1,1,0},{-1,1,0},{1,-1,0},{-1,-1,0},
 	 {1,0,1},{-1,0,1},{1,0,-1},{-1,0,-1},
@@ -40,16 +48,90 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 {2,0,1,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,0,1,2},{3,0,2,1},{0,0,0,0},{3,1,2,0},
 	 {2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}};
 	 // This method is a *lot* faster than using (int)Math.floor(x)
+  /**
+   * takes a double argument and returns its nearest integer value, rounding down if
+   * the input is positive and up if it is negative.
+   * 
+   * @param x double value for which the fast floor function is being called, and it
+   * determines the output of the function.
+   * 
+   * @returns an integer between 0 and the input value, inclusive.
+   */
 	 private static int fastfloor(double x) {
 	 return x>0 ? (int)x : (int)x-1;
 	 }
+  /**
+   * computes the dot product of a given vector (represented by two doubles) and a point
+   * in the Cartesian plane (represented by two more doubles).
+   * 
+   * @param g 2D coordinates of a point in the dot product calculation.
+   * 
+   * @param x 1st component of the array argument `g`, multiplied by `x`.
+   * 
+   * @param y 2nd coordinate of the point to be calculated in the dot product operation.
+   * 
+   * @returns a double value calculated as the product of the corresponding elements
+   * of the input arrays `g` and the input values `x` and `y`.
+   */
 	 private static double dot(int g[], double x, double y) {
 	 return g[0]*x + g[1]*y; }
+  /**
+   * computes the dot product of a vector with three components (x, y, z) and a scalar
+   * value.
+   * 
+   * @param g 3D coordinate of the point where the dot product is being computed.
+   * 
+   * @param x 3D coordinate of a point that is being calculated as the dot product of
+   * with the other two inputs, `y` and `z`.
+   * 
+   * @param y 2nd component of the input vector and is multiplied by the corresponding
+   * element of the input array `g`.
+   * 
+   * @param z 3rd coordinate of the point being evaluated, and is multiplied by the
+   * value of `g[2]` before being added to the results of the multiplication of `x`,
+   * `y`, and `g[0]`.
+   * 
+   * @returns a double value representing the dot product of the given vectors.
+   */
 	 private static double dot(int g[], double x, double y, double z) {
 	 return g[0]*x + g[1]*y + g[2]*z; }
+  /**
+   * computes the dot product of a given array of integers `g` with a vector of doubles
+   * `(x, y, z, w)`. The function returns the result of the dot product calculation.
+   * 
+   * @param g 4-dimensional array that contains the coordinates of the point to be dot
+   * producted with the provided vectors.
+   * 
+   * @param x 0th element of an array `g`, which is multiplied by `x` before being
+   * combined with the values of the other parameters to produce the output.
+   * 
+   * @param y 2nd coordinate of the point in 3D space that the dot product is being
+   * calculated for.
+   * 
+   * @param z 3rd dimension of the input array `g`, which is multiplied by the weight
+   * `w` and added to the results of the previous multiplications of the other input
+   * parameters `x`, `y`, and `g[1]`.
+   * 
+   * @param w 4th coordinate of the point to be dot-producted with the given vectors.
+   * 
+   * @returns a double value calculated as a sum of four input values.
+   */
 	 private static double dot(int g[], double x, double y, double z, double w) {
 	 return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 	 // 2D simplex noise
+  /**
+   * generates a noise value based on the input coordinates and a simplex-based hash
+   * function. The output is a scaled value between -1 and 1.
+   * 
+   * @param xin 2D coordinate of a point in the input space, which is skewed to determine
+   * which simplex cell it belongs to.
+   * 
+   * @param yin 2D noise sample's y-coordinate and is used to calculate the contribution
+   * from the middle simplex corner.
+   * 
+   * @returns a scaled value between -1 and 1, representing a noise value based on the
+   * distances from a triangular simplex's corners to a given point in the input space.
+   */
 	 public static double noise(double xin, double yin) {
 	 double n0, n1, n2; // Noise contributions from the three corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -105,6 +187,25 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 70.0 * (n0 + n1 + n2);
 	 }
 	 // 3D simplex noise
+  /**
+   * generates a noise value for a given point in a 3D space based on a simplex noise
+   * algorithm. It takes three coordinates (x, y, z) and returns a scaled noise value
+   * between [-1, 1].
+   * 
+   * @param xin 3D coordinates of a point in space, which are used to determine the
+   * simplex cell that the point belongs to and to calculate the noise contribution
+   * from that cell.
+   * 
+   * @param yin 2D projection of the 3D point in the x-direction, and it is used to
+   * calculate the skew factor for the input space.
+   * 
+   * @param zin 3D noise value at the current position, which is used to compute the
+   * contributions from each of the four simplex corners and then add them to get the
+   * final noise value.
+   * 
+   * @returns a scaled noise value between [-1, 1], calculated based on the distances
+   * from a set of simplex corners in 3D space.
+   */
 	 public static double noise(double xin, double yin, double zin) {
 	 double n0, n1, n2, n3; // Noise contributions from the four corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -187,6 +288,27 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 32.0*(n0 + n1 + n2 + n3);
 	 }
 	 // 4D simplex noise
+  /**
+   * computes a vector field gradients for a given mesh, used to generate random positions
+   * within a bounding box. It takes into account the position and size of the mesh,
+   * as well as the number of corners in each simplex.
+   * 
+   * @param x 0-based index of the current vertex in the simplex, which is used to
+   * calculate the contribution from each simplex corner and sum them up to compute the
+   * total gradient norm.
+   * 
+   * @param y 2nd coordinate of the point in 3D space, which is used in the computation
+   * of the dot product of the gradient vector with the point coordinates, and thus
+   * affects the contribution from each simplex corner to the total energy.
+   * 
+   * @param z 3D coordinates of the point in the mesh, which are used to calculate the
+   * gradient vector at that point.
+   * 
+   * @param w 4th coordinate of the point being evaluated, which is used to compute the
+   * contribution from the fourth simplex corner in the gradient calculation.
+   * 
+   * @returns a scalar value between -1 and 1, representing the noise level in a 3D mesh.
+   */
 	 double noise(double x, double y, double z, double w) {
 
 	 // The skewing and unskewing factors are hairy again for the 4D case
@@ -212,7 +334,7 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 // To find out which of the 24 possible simplices we're in, we need to
 	 // determine the magnitude ordering of x0, y0, z0 and w0.
 	 // The method below is a good way of finding the ordering of x,y,z,w and
-	 // then find the correct traversal order for the simplex we’re in.
+	 // then find the correct traversal order for the simplex weÂ’re in.
 	 // First, six pair-wise comparisons are performed between each possible pair
 	 // of the four coordinates, and the results are used to add up binary bits
 	 // for an integer index.
