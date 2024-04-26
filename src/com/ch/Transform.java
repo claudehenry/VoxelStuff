@@ -4,14 +4,6 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Quaternion;
 import com.ch.math.Vector3f;
 
-
-/**
- * is a representation of a transformation in 3D space, with fields for position
- * (pos), rotation (rot), and scale (scale). It also has methods to update the transform
- * based on changes in the position, rotation, or scale, as well as get/setters for
- * each field. Additionally, it provides methods to rotate and look at a point, and
- * gets the transformation matrix that represents the transform.
- */
 public class Transform {
 
 	private Transform parent;
