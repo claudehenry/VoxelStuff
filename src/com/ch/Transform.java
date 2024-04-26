@@ -37,10 +37,6 @@ public class Transform {
 		parentMatrix = new Matrix4f().initIdentity();
 	}
 
-	/**
-	 * updates an object's position, rotation, and scale based on the current values
-	 * provided, storing the previous values in a temporary vector for future reference.
-	 */
 	public void update() {
 		if (oldPos != null) {
 			if (!oldPos.equals(pos))
