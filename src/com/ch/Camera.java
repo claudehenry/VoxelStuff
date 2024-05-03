@@ -4,7 +4,6 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 public abstract class Camera {
-	
 	protected Matrix4f projection;
 	protected Matrix4f viewProjectionMat4;
 	protected CameraStruct values;
