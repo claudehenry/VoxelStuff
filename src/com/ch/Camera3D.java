@@ -14,14 +14,6 @@ public class Camera3D extends Camera {
 		calculateProjectionMatrix(values);
 	}
 
-	/**
-	 * Calculates a perspective projection matrix based on the given camera data.
-	 * 
-	 * @param data 3D camera's properties, such as its position, orientation, and field
-	 * of view, which are used to compute the projection matrix.
-	 * 
-	 * @returns a Matrix4f object representing the camera's projection matrix.
-	 */
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
 		return (projection = data.getAsMatrix4());
