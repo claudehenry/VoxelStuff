@@ -4,43 +4,111 @@
     "path": "src/com/ch/Camera3D.java",
     "content": {
       "structured": {
-        "description": "",
+        "description": "A `Camera3D` class that handles 3D camera functionality. It includes a constructor that initializes the camera's matrices and a method for calculating the projection matrix based on viewport size and aspect ratio. The `processInput()` method processes mouse and keyboard input to rotate and move an object based on its transform, and multiplies the movement speed by 10 when the 'LShift' key is pressed. The code also includes a `move()` method for moving the object along a given direction by a specified distance.",
         "items": [
           {
-            "id": "22996fc0-e14e-492a-8e68-17fc08ffdc0f",
+            "id": "23fb9784-2764-17b1-c241-65de2c25e63c",
             "ancestors": [],
             "type": "function",
-            "name": "calculateProjectionMatrix",
+            "description": "is an extension of the Camera class that processes mouse and keyboard input to rotate and move an object based on its transform. It also multiplies the movement speed by 10 when the 'LShift' key is pressed. The processInput method calculates the movement amount based on the user's input and moves the object along a specified direction using the getTransform().add() method.",
+            "name": "Camera3D",
             "location": {
-              "offset": "\t",
-              "indent": 1,
-              "insert": 17,
-              "start": 17
+              "start": 10,
+              "insert": 10,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
             },
-            "returns": "Matrix4f",
+            "item_type": "class",
+            "length": 102,
+            "docLength": null
+          },
+          {
+            "id": "96873f35-6121-1eaa-e644-1d190badd007",
+            "ancestors": [
+              "23fb9784-2764-17b1-c241-65de2c25e63c"
+            ],
+            "type": "function",
+            "description": "calculates a matrix representing the camera's perspective projection, based on the given `CameraStruct` data.",
             "params": [
               {
                 "name": "data",
-                "type": "CameraStruct"
+                "type_name": "CameraStruct",
+                "description": "3D camera parameters, which are used to compute the perspective projection matrix.\n\n* `getAsMatrix4()` is a method that returns a `Matrix4f` object representing the camera's projection matrix.\n\nThe function then assigns this projection matrix to a variable called `projection`.",
+                "complex_type": true
               }
             ],
-            "skip": false,
-            "docLength": null,
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f object representing the projection matrix as defined by the input `CameraStruct` data.\n\nThe `Matrix4f` object that is returned represents a 4x4 matrix, which encodes the perspective projection transformation. The matrix has the following elements:\n\n* The upper left 3x3 submatrix represents the viewport transform, with the origin at the center of the viewport and the dimensions of the viewport set by the `viewport` field in the `CameraStruct`.\n* The lower right 1x4 submatrix represents the projection transform, which maps the 3D scene coordinates to the image plane. The elements of this submatrix are determined by the `projection` field in the `CameraStruct`.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "CameraStruct camera = new CameraStruct();\ncamera.fov = 45;\ncamera.aspect = 16/9;\ncamera.zNear = 0.1;\ncamera.zFar = 1000;\nMatrix4f projectionMatrix = calculateProjectionMatrix(camera);\n",
+              "description": ""
+            },
+            "name": "calculateProjectionMatrix",
+            "location": {
+              "start": 17,
+              "insert": 17,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
             "length": 4,
-            "comment": {
-              "description": "Generates a projection matrix based on input from the `CameraStruct` class.",
-              "params": [
-                {
-                  "name": "data",
-                  "type": "CameraStruct",
-                  "description": "3D camera information that is used to calculate the projection matrix."
-                }
-              ],
-              "returns": {
-                "type": "Matrix4f",
-                "description": "a Matrix4f object representing the camera's projection matrix."
-              }
-            }
+            "docLength": null
+          },
+          {
+            "id": "36adb1ef-e936-3bb2-844a-4a207b8ee6ba",
+            "ancestors": [
+              "23fb9784-2764-17b1-c241-65de2c25e63c"
+            ],
+            "type": "function",
+            "description": "is a subclass of the Camera Struct class and provides additional functionality for handling 3D camera movements. It has fields for fov, aspect, zNear, and zFar, which are used to calculate the perspective matrix, and a method for getting the perspective matrix as a Matrix4f object.",
+            "name": "CameraStruct3D",
+            "location": {
+              "start": 43,
+              "insert": 43,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 16,
+            "docLength": null
+          },
+          {
+            "id": "9a903596-65cb-aeae-f448-e09260f0b430",
+            "ancestors": [
+              "23fb9784-2764-17b1-c241-65de2c25e63c",
+              "36adb1ef-e936-3bb2-844a-4a207b8ee6ba"
+            ],
+            "type": "function",
+            "description": "initializes a `Matrix4f` object representing a perspective projection matrix with the specified field of view (fov), aspect ratio, near and far distances.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a 4x4 matrix representing a perspective projection matrix.\n\nThe `Matrix4f` object returned by the function is an instance of the Matrix4f class, which represents a 4x4 matrix in homogeneous coordinates.\n\nThe `initPerspective` method used to create the matrix sets the field of view (fov) in radians, the aspect ratio of the image, the near plane distance (zNear), and the far plane distance (zFar). These values determine the perspective projection of the 3D space, where objects appear smaller as they recede into the distance.\n\nThe matrix returned by the function is a representation of the viewing transformation that maps 3D points from the world coordinate system to the screen coordinate system, taking into account the perspective projection.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Camera3D myCam = new Camera3D(90, 16/9, 0.01f, 1000);\nmyCam.adjustToViewport(500, 500);\nMatrix4f projMat = myCam.getAsMatrix4();\n",
+              "description": ""
+            },
+            "name": "getAsMatrix4",
+            "location": {
+              "start": 54,
+              "insert": 54,
+              "offset": "\t",
+              "indent": 2,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
           }
         ]
       }
