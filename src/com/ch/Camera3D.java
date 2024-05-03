@@ -8,7 +8,6 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 public class Camera3D extends Camera {
-	
 	public Camera3D(float fov, float aspect, float zNear, float zFar) {
 		super(new Matrix4f());
 		this.values = new CameraStruct3D(fov, aspect, zNear, zFar);
