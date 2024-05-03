@@ -44,73 +44,42 @@ public class Transform {
 	}
 
 	/**
-	 * takes a `Quaternion` representing an axis and an angle as input, rotates it by
-	 * that angle around the specified axis, and returns the resulting quaternion.
+	 * Rotates a `Vector3f` object by an angle about an arbitrary axis, resulting in a
+	 * new quaternion representation of the rotation.
 	 * 
-	 * @param axis 3D axis of rotation for the object being rotated.
+	 * @param axis 3D vector that defines the rotation axis.
 	 * 
-	 * 	- `axis`: A `Vector3f` object representing the axis of rotation. It contains the
-	 * x, y, and z components of the rotation axis.
-	 * 
-	 * @param angle 3D rotation angle about the specified `axis`.
+	 * @param angle 3D rotation angle of the object being rotated around the specified axis.
 	 */
 	public void rotate(Vector3f axis, float angle) {
 		rot = new Quaternion(axis, angle).mul(rot).normalized();
 	}
 
 	/**
-	 * calculates and returns a rotation matrix that orients the agent's look direction
-	 * towards a given point and up vector in 3D space.
+	 * Computes the rotation required to face a specified point while maintaining a given
+	 * upward direction.
 	 * 
-	 * @param point 3D position of an object that the method is meant to look at.
+	 * @param point 3D position of the point that the code should look at.
 	 * 
-	 * 	- `point`: A 3D vector representing the direction the camera should look at. It
-	 * has three components: x, y, and z.
-	 * 
-	 * @param up 3D direction perpendicular to the line of sight, which is used to calculate
-	 * the rotation needed to look at a point in 3D space.
-	 * 
-	 * 	- `up`: This is a `Vector3f` object representing an upward direction in 3D space.
-	 * It provides information about the direction and magnitude of the upward vector.
+	 * @param up 3D direction perpendicular to the line of sight and used to calculate
+	 * the rotation needed to look at the provided point.
 	 */
 	public void lookAt(Vector3f point, Vector3f up) {
 		rot = getLookAtRotation(point, up);
 	}
 
 	/**
-	 * computes a rotation quaternion that looks at a point `point` from a starting
-	 * position `pos`, while maintaining a specified up direction `up`. The resulting
-	 * quaternion represents the orientation of the camera relative to its starting position.
+	 * Computes a quaternion representation of a rotation that looks at a given point
+	 * from a specified direction. The function takes a point and an up vector as input,
+	 * and returns a quaternion representing the desired rotation.
 	 * 
-	 * @param point 3D position that the look-at rotation is to be applied around, as a
-	 * Vector3f object.
+	 * @param point 3D point that the look-at rotation should be applied to.
 	 * 
-	 * 	- `point`: A `Vector3f` object representing the point in 3D space where the
-	 * rotation is to be calculated relative to the `up` direction. The point's components
-	 * are (x, y, z).
+	 * @param up 3D direction perpendicular to the look-at point, which is used to create
+	 * a rotation matrix that aligns with the local coordinate system of the function.
 	 * 
-	 * @param up 3D axis along which the rotation is applied, which is used to compute
-	 * the quaternion representation of the look-at rotation.
-	 * 
-	 * 1/ The `Vector3f` class is used to represent `up`, which is a 3D vector representing
-	 * the upward direction in 3D space.
-	 * 2/ The `normalized()` method is called on `up` to normalize it, ensuring that its
-	 * magnitude is equal to 1. This is necessary for the rotation matrix to be properly
-	 * formed.
-	 * 3/ The resulting quaternion representation of the rotation is returned as a
-	 * `Quaternion` object.
-	 * 
-	 * @returns a Quaternion representing the rotation needed to look at a point in 3D
-	 * space from a specific position and orientation.
-	 * 
-	 * 	- The output is a Quaternion object, which represents a 3D rotation transformation.
-	 * 	- The Quaternion is created by multiplying a rotation matrix with the normalized
-	 * vector difference between the point and the position, and then scaling it with the
-	 * up vector.
-	 * 	- The rotation matrix is constructed using the dot product of the position and
-	 * up vectors, and then normalizing the result.
-	 * 	- The resulting Quaternion represents the rotation needed to look at the point
-	 * from the position, while maintaining the same orientation as the up vector.
+	 * @returns a quaternion representing the rotation necessary to look at a point in
+	 * space from a specified starting position and orientation.
 	 */
 	public Quaternion getLookAtRotation(Vector3f point, Vector3f up) {
 		return new Quaternion(new Matrix4f().initRotation(point.sub(pos).normalized(), up));
@@ -197,15 +166,11 @@ public class Transform {
 	}
 
 	/**
-	 * sets the `parent` field of the current object to a specified `Transform`.
+	 * Sets the `parent` field of an object to a given `Transform` instance, allowing for
+	 * the inheritance of transform properties and layout management.
 	 * 
-	 * @param parent Transform object to which the current instance will be added as a
-	 * child transform.
-	 * 
-	 * 	- The `Transform` class is the type of the `parent` field, which indicates that
-	 * it is an object of a transformer class.
-	 * 	- The `this.parent` assignment updates the field `parent` to refer to the provided
-	 * `Transform` instance.
+	 * @param parent 3D transform of the parent object to which the current object will
+	 * be attached or moved relative to.
 	 */
 	public void setParent(Transform parent) {
 		this.parent = parent;
@@ -267,29 +232,20 @@ public class Transform {
 	}
 
 	/**
-	 * sets the position of an object to a new value represented as a Vector3f.
+	 * Sets the position of a component or object to the input vector.
 	 * 
-	 * @param pos 3D position of an object or entity to which the method is being applied,
-	 * and it is assigned to the `pos` field of the class instance.
-	 * 
-	 * 	- `this.pos`: This attribute is set to the input vector `pos`, indicating that
-	 * it has been assigned to the instance field `pos`.
-	 * 	- `Vector3f`: The type of the `pos` attribute indicates that it is a 3D vector
-	 * with floating-point values.
+	 * @param pos 3D position of the entity to which the method is being called, and it
+	 * is assigned to the `pos` field of the class.
 	 */
 	public void setPos(Vector3f pos) {
 		this.pos = pos;
 	}
 
 	/**
-	 * adds a vector to the position of an object, updating its position accordingly.
+	 * Updates the position of an object by adding a vector to its current position.
 	 * 
-	 * @param addVec 3D vector to be added to the current position of the object, which
-	 * is then updated through the `setPos()` method.
-	 * 
-	 * 	- `addVec`: A `Vector3f` object that represents a 3D vector with x, y, and z components.
-	 * 	- `x`, `y`, and `z`: The individual components of the vector, which can take on
-	 * any real value between -1 and 1.
+	 * @param addVec 3D vector to be added to the position of the object, and its value
+	 * is used to calculate the new position of the object.
 	 */
 	public void addToPos(Vector3f addVec) { this.setPos(this.getPos().add(addVec)); }
 
@@ -307,18 +263,11 @@ public class Transform {
 	}
 
 	/**
-	 * sets the rotational transformation of an object, storing it as a member variable
-	 * `rot`.
+	 * Sets the rotational orientation of an object by assigning a provided `Quaternion`
+	 * instance to the object's `rot` field.
 	 * 
-	 * @param rotation 3D rotational transformation to be applied to the object being
-	 * manipulated by the `setRot()` method.
-	 * 
-	 * 	- `Quaternion rotation`: This is a complex number object representing a quaternion,
-	 * which is a mathematical construct used to represent 3D rotations. It has four
-	 * components: x, y, z, and w, where x, y, and z represent the real part of the
-	 * quaternion, and w represents its imaginary part.
-	 * 	- `this.rot`: This refers to the current value of the `rot` field in the calling
-	 * object, which is a complex number representing the rotation of the object in 3D space.
+	 * @param rotation 4D quaternion that specifies the rotational transformation to be
+	 * applied to the object's orientation.
 	 */
 	public void setRot(Quaternion rotation) {
 		this.rot = rotation;
@@ -339,15 +288,10 @@ public class Transform {
 	}
 
 	/**
-	 * sets the scale of the `Vector3f` object, which represents a 3D point, to the
-	 * provided value.
+	 * Sets the scaling factor for an object, affecting its size and proportions.
 	 * 
-	 * @param scale 3D scaling factor for the object, which is applied to its position,
-	 * rotation, and size.
-	 * 
-	 * 	- `this.scale`: The scale is assigned to the class instance field `scale`.
-	 * 	- Vector3f: The data type of the `scale` parameter is specified as a vector with
-	 * three elements in the form (x, y, z).
+	 * @param scale 3D scaling factor for the entity, which is applied to its dimensions
+	 * to transform it.
 	 */
 	public void setScale(Vector3f scale) {
 		this.scale = scale;
