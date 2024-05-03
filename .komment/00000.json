@@ -7,7 +7,7 @@
         "description": "",
         "items": [
           {
-            "id": "f8411a7c-48ad-4cf8-b8f3-4ad06c9933a4",
+            "id": "22996fc0-e14e-492a-8e68-17fc08ffdc0f",
             "ancestors": [],
             "type": "function",
             "name": "calculateProjectionMatrix",
@@ -28,153 +28,18 @@
             "docLength": null,
             "length": 4,
             "comment": {
-              "description": "Calculates a perspective projection matrix based on the given camera data.",
+              "description": "Generates a projection matrix based on input from the `CameraStruct` class.",
               "params": [
                 {
                   "name": "data",
                   "type": "CameraStruct",
-                  "description": "3D camera's properties, such as its position, orientation, and field of view, which are used to compute the projection matrix."
+                  "description": "3D camera information that is used to calculate the projection matrix."
                 }
               ],
               "returns": {
                 "type": "Matrix4f",
                 "description": "a Matrix4f object representing the camera's projection matrix."
               }
-            }
-          },
-          {
-            "id": "10fe64a5-6fc9-4aed-a508-edc541690b8a",
-            "ancestors": [],
-            "type": "function",
-            "name": "adjustToViewport",
-            "location": {
-              "offset": "\t",
-              "indent": 1,
-              "insert": 22,
-              "start": 22
-            },
-            "returns": false,
-            "params": [
-              {
-                "name": "width",
-                "type": "int"
-              },
-              {
-                "name": "height",
-                "type": "int"
-              }
-            ],
-            "skip": false,
-            "docLength": null,
-            "length": 10,
-            "comment": {
-              "description": "Updates the camera's matrices to fit a given viewport size and aspect ratio. It sets the camera's aspect ratio and calculates the projection and view matrices, then sets the viewport size using `GL11.glViewport`.",
-              "params": [
-                {
-                  "name": "width",
-                  "type": "int",
-                  "description": "2D viewport width for the adjustment of the 3D camera's projection matrix."
-                },
-                {
-                  "name": "height",
-                  "type": "int",
-                  "description": "vertical size of the viewport in pixels, which is used to calculate the aspect ratio and projection matrix for the 3D scene."
-                }
-              ],
-              "returns": null
-            }
-          },
-          {
-            "id": "4475f321-801e-4c78-a016-af34a00184a7",
-            "ancestors": [],
-            "type": "function",
-            "name": "processInput",
-            "location": {
-              "offset": "\t",
-              "indent": 1,
-              "insert": 50,
-              "start": 50
-            },
-            "returns": false,
-            "params": [
-              {
-                "name": "dt",
-                "type": "float"
-              },
-              {
-                "name": "speed",
-                "type": "float"
-              },
-              {
-                "name": "sens",
-                "type": "float"
-              }
-            ],
-            "skip": false,
-            "docLength": null,
-            "length": 23,
-            "comment": {
-              "description": "Processes mouse and keyboard input to rotate and move an object based on its transform. It also multiplies the movement speed by 10 when the 'LShift' key is pressed.",
-              "params": [
-                {
-                  "name": "dt",
-                  "type": "float",
-                  "description": "time differential since the last frame, and is used to calculate the movement speed of the object based on the keyboard input."
-                },
-                {
-                  "name": "speed",
-                  "type": "float",
-                  "description": "3D movement speed of the game object being processed, which is multiplied by the time elapsed (represented by `dt`) to determine the actual distance moved."
-                },
-                {
-                  "name": "sens",
-                  "type": "float",
-                  "description": "sensitivity of the mouse input, which affects how much the object rotates based on the user's mouse movement."
-                }
-              ],
-              "returns": null
-            }
-          },
-          {
-            "id": "333fc8e4-ed31-4e55-9bee-ceed5f466a1c",
-            "ancestors": [],
-            "type": "function",
-            "name": "move",
-            "location": {
-              "offset": "\t",
-              "indent": 1,
-              "insert": 74,
-              "start": 74
-            },
-            "returns": false,
-            "params": [
-              {
-                "name": "dir",
-                "type": "Vector3f"
-              },
-              {
-                "name": "amt",
-                "type": "float"
-              }
-            ],
-            "skip": false,
-            "docLength": null,
-            "length": 3,
-            "comment": {
-              "description": "Moves the object by a specified distance along a given direction.",
-              "params": [
-                {
-                  "name": "dir",
-                  "type": "Vector3f",
-                  "description": "3D direction of movement, which is added to the current position of the transform entity using the `add()` method, resulting in a new position after the movement has taken place."
-                },
-                {
-                  "name": "amt",
-                  "type": "float",
-                  "description": "3D displacement amount of the object along the specified direction."
-                }
-              ],
-              "returns": null
             }
           }
         ]
