@@ -1,0 +1,824 @@
+[
+  {
+    "name": "Camera3D.java",
+    "path": "src/com/ch/Camera3D.java",
+    "content": {
+      "structured": {
+        "description": "",
+        "items": [
+          {
+            "id": "f8411a7c-48ad-4cf8-b8f3-4ad06c9933a4",
+            "ancestors": [],
+            "type": "function",
+            "name": "calculateProjectionMatrix",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 17,
+              "start": 17
+            },
+            "returns": "Matrix4f",
+            "params": [
+              {
+                "name": "data",
+                "type": "CameraStruct"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 4,
+            "comment": {
+              "description": "Calculates a perspective projection matrix based on the given camera data.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "CameraStruct",
+                  "description": "3D camera's properties, such as its position, orientation, and field of view, which are used to compute the projection matrix."
+                }
+              ],
+              "returns": {
+                "type": "Matrix4f",
+                "description": "a Matrix4f object representing the camera's projection matrix."
+              }
+            }
+          },
+          {
+            "id": "10fe64a5-6fc9-4aed-a508-edc541690b8a",
+            "ancestors": [],
+            "type": "function",
+            "name": "adjustToViewport",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 22,
+              "start": 22
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "width",
+                "type": "int"
+              },
+              {
+                "name": "height",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 10,
+            "comment": {
+              "description": "Updates the camera's matrices to fit a given viewport size and aspect ratio. It sets the camera's aspect ratio and calculates the projection and view matrices, then sets the viewport size using `GL11.glViewport`.",
+              "params": [
+                {
+                  "name": "width",
+                  "type": "int",
+                  "description": "2D viewport width for the adjustment of the 3D camera's projection matrix."
+                },
+                {
+                  "name": "height",
+                  "type": "int",
+                  "description": "vertical size of the viewport in pixels, which is used to calculate the aspect ratio and projection matrix for the 3D scene."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "4475f321-801e-4c78-a016-af34a00184a7",
+            "ancestors": [],
+            "type": "function",
+            "name": "processInput",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 50,
+              "start": 50
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "dt",
+                "type": "float"
+              },
+              {
+                "name": "speed",
+                "type": "float"
+              },
+              {
+                "name": "sens",
+                "type": "float"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 23,
+            "comment": {
+              "description": "Processes mouse and keyboard input to rotate and move an object based on its transform. It also multiplies the movement speed by 10 when the 'LShift' key is pressed.",
+              "params": [
+                {
+                  "name": "dt",
+                  "type": "float",
+                  "description": "time differential since the last frame, and is used to calculate the movement speed of the object based on the keyboard input."
+                },
+                {
+                  "name": "speed",
+                  "type": "float",
+                  "description": "3D movement speed of the game object being processed, which is multiplied by the time elapsed (represented by `dt`) to determine the actual distance moved."
+                },
+                {
+                  "name": "sens",
+                  "type": "float",
+                  "description": "sensitivity of the mouse input, which affects how much the object rotates based on the user's mouse movement."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "333fc8e4-ed31-4e55-9bee-ceed5f466a1c",
+            "ancestors": [],
+            "type": "function",
+            "name": "move",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 74,
+              "start": 74
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "dir",
+                "type": "Vector3f"
+              },
+              {
+                "name": "amt",
+                "type": "float"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Moves the object by a specified distance along a given direction.",
+              "params": [
+                {
+                  "name": "dir",
+                  "type": "Vector3f",
+                  "description": "3D direction of movement, which is added to the current position of the transform entity using the `add()` method, resulting in a new position after the movement has taken place."
+                },
+                {
+                  "name": "amt",
+                  "type": "float",
+                  "description": "3D displacement amount of the object along the specified direction."
+                }
+              ],
+              "returns": null
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Transform.java",
+    "path": "src/com/ch/Transform.java",
+    "content": {
+      "structured": {
+        "description": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation.",
+        "items": [
+          {
+            "id": "48c36e34-d828-5181-0743-7da11d621bd5",
+            "ancestors": [],
+            "type": "function",
+            "description": "is a representation of a transformation in 3D space, with fields for position (pos), rotation (rot), and scale (scale). It also has methods to update the transform based on changes in the position, rotation, or scale, as well as get/setters for each field. Additionally, it provides methods to rotate and look at a point, and gets the transformation matrix that represents the transform.",
+            "name": "Transform",
+            "code": "public class Transform {\n\n\tprivate Transform parent;\n\tprivate Matrix4f parentMatrix;\n\n\tprivate Vector3f pos;\n\tprivate Quaternion rot;\n\tprivate Vector3f scale;\n\n\tprivate Vector3f oldPos;\n\tprivate Quaternion oldRot;\n\tprivate Vector3f oldScale;\n\n\tpublic Transform() {\n\t\tpos = new Vector3f(0, 0, 0);\n\t\trot = new Quaternion(1, 0, 0, 0);\n\t\tscale = new Vector3f(1, 1, 1);\n\t\t\n\t\toldPos = new Vector3f(0, 0, 0);\n\t\toldRot = new Quaternion(1, 0, 0, 0);\n\t\toldScale = new Vector3f(1, 1, 1);\n\n\t\tparentMatrix = new Matrix4f().initIdentity();\n\t}\n\n\tpublic void update() {\n\t\tif (oldPos != null) {\n\t\t\tif (!oldPos.equals(pos))\n\t\t\t\toldPos.set(pos);\n\t\t\tif (!oldRot.equals(rot))\n\t\t\t\toldRot.set(rot);\n\t\t\tif (!oldScale.equals(scale))\n\t\t\t\toldScale.set(scale);\n\t\t} else {\n\t\t\toldPos = new Vector3f().set(pos);\n\t\t\toldRot = new Quaternion().set(rot);\n\t\t\toldScale = new Vector3f().set(scale);\n\t\t}\n\t}\n\n\tpublic void rotate(Vector3f axis, float angle) {\n\t\trot = new Quaternion(axis, angle).mul(rot).normalized();\n\t}\n\n\tpublic void lookAt(Vector3f point, Vector3f up) {\n\t\trot = getLookAtRotation(point, up);\n\t}\n\n\tpublic Quaternion getLookAtRotation(Vector3f point, Vector3f up) {\n\t\treturn new Quaternion(new Matrix4f().initRotation(point.sub(pos).normalized(), up));\n\t}\n\n\tpublic boolean hasChanged() {\n\t\tif (parent != null && parent.hasChanged())\n\t\t\treturn true;\n\n\t\tif (!pos.equals(oldPos))\n\t\t\treturn true;\n\n\t\tif (!rot.equals(oldRot))\n\t\t\treturn true;\n\n\t\tif (!scale.equals(oldScale))\n\t\t\treturn true;\n\n\t\treturn false;\n\t}\n\n\tpublic Matrix4f getTransformation() {\n\t\tMatrix4f translationMatrix = new Matrix4f().initTranslation(pos.getX(), pos.getY(), pos.getZ());\n\t\tMatrix4f rotationMatrix = rot.toRotationMatrix();\n\t\tMatrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), scale.getY(), scale.getZ());\n\n\t\treturn getParentMatrix().mul(translationMatrix.mul(rotationMatrix.mul(scaleMatrix)));\n\t}\n\n\tprivate Matrix4f getParentMatrix() {\n\t\tif (parent != null && parent.hasChanged())\n\t\t\tparentMatrix = parent.getTransformation();\n\n\t\treturn parentMatrix;\n\t}\n\n\tpublic void setParent(Transform parent) {\n\t\tthis.parent = parent;\n\t}\n\n\tpublic Vector3f getTransformedPos() {\n\t\treturn getParentMatrix().transform(pos);\n\t}\n\n\tpublic Quaternion getTransformedRot() {\n\t\tQuaternion parentRotation = new Quaternion(1, 0, 0, 0);\n\n\t\tif (parent != null)\n\t\t\tparentRotation = parent.getTransformedRot();\n\n\t\treturn parentRotation.mul(rot);\n\t}\n\n\tpublic Vector3f getPos() {\n\t\treturn pos;\n\t}\n\n\tpublic void setPos(Vector3f pos) {\n\t\tthis.pos = pos;\n\t}\n\n\tpublic void addToPos(Vector3f addVec) { this.setPos(this.getPos().add(addVec)); }\n\n\tpublic Quaternion getRot() {\n\t\treturn rot;\n\t}\n\n\tpublic void setRot(Quaternion rotation) {\n\t\tthis.rot = rotation;\n\t}\n\n\tpublic Vector3f getScale() {\n\t\treturn scale;\n\t}\n\n\tpublic void setScale(Vector3f scale) {\n\t\tthis.scale = scale;\n\t}\n\t\n\t@Override\n\tpublic String toString() { return \"\";\n\t}\n\n}",
+            "location": {
+              "start": 8,
+              "insert": 8,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 131,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "0b4c0dfb-970d-7991-e94a-a857082abf12",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "updates an object's position, rotation, and scale based on the current values provided, storing the previous values in a temporary vector for future reference.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nmyTransform.setPos(new Vector3f(5, 20, 10));\nmyTransform.setRot(new Quaternion(1, 0, 0, 0).mul(rot).normalized());\nmyTransform.update();\n",
+              "description": "\nThis example would set the position of the transform object to (5, 20, 10) and rotate it by a quarter rotation around the x-axis. The update method is then called to update the oldPos, oldRot, and oldScale variables and mark the transform as having changed."
+            },
+            "name": "update",
+            "code": "public void update() {\n\t\tif (oldPos != null) {\n\t\t\tif (!oldPos.equals(pos))\n\t\t\t\toldPos.set(pos);\n\t\t\tif (!oldRot.equals(rot))\n\t\t\t\toldRot.set(rot);\n\t\t\tif (!oldScale.equals(scale))\n\t\t\t\toldScale.set(scale);\n\t\t} else {\n\t\t\toldPos = new Vector3f().set(pos);\n\t\t\toldRot = new Quaternion().set(rot);\n\t\t\toldScale = new Vector3f().set(scale);\n\t\t}\n\t}",
+            "location": {
+              "start": 33,
+              "insert": 33,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 14,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "c9536185-6ec9-ecb7-f846-16645a00fd9a",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "takes a `Quaternion` representing an axis and an angle as input, rotates it by that angle around the specified axis, and returns the resulting quaternion.",
+            "params": [
+              {
+                "name": "axis",
+                "type_name": "Vector3f",
+                "description": "3D axis of rotation for the object being rotated.\n\n* `axis`: A `Vector3f` object representing the axis of rotation. It contains the x, y, and z components of the rotation axis.",
+                "complex_type": true
+              },
+              {
+                "name": "angle",
+                "type_name": "float",
+                "description": "3D rotation angle about the specified `axis`.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    Transform transform = new Transform();\n    Vector3f axis = new Vector3f(0, 1, 0); // a vector perpendicular to the x-axis\n    float angle = (float) Math.PI / 4; // quarter turn around the x-axis\n    transform.rotate(axis, angle);\n}\n",
+              "description": ""
+            },
+            "name": "rotate",
+            "code": "public void rotate(Vector3f axis, float angle) {\n\t\trot = new Quaternion(axis, angle).mul(rot).normalized();\n\t}",
+            "location": {
+              "start": 48,
+              "insert": 48,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "cbb832e1-35ae-3bbf-5e4b-36ea5e16a1b1",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "calculates and returns a rotation matrix that orients the agent's look direction towards a given point and up vector in 3D space.",
+            "params": [
+              {
+                "name": "point",
+                "type_name": "Vector3f",
+                "description": "3D position of an object that the method is meant to look at.\n\n* `point`: A 3D vector representing the direction the camera should look at. It has three components: x, y, and z.",
+                "complex_type": true
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D direction perpendicular to the line of sight, which is used to calculate the rotation needed to look at a point in 3D space.\n\n* `up`: This is a `Vector3f` object representing an upward direction in 3D space. It provides information about the direction and magnitude of the upward vector.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\nVector3f point = new Vector3f(5, 6, 7);\nVector3f up = new Vector3f(1, 0, 0);\ntransform.lookAt(point, up);\n",
+              "description": "\nIn this example, the method lookAt is called on a Transform object with two arguments: a point in space and an \"up\" vector. The point is used to calculate the direction that the transform should face, and the \"up\" vector is used to determine the orientation of the transform's rotation."
+            },
+            "name": "lookAt",
+            "code": "public void lookAt(Vector3f point, Vector3f up) {\n\t\trot = getLookAtRotation(point, up);\n\t}",
+            "location": {
+              "start": 52,
+              "insert": 52,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "4be8e626-16c6-80a7-ef4d-4a381aeef2a9",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "computes a rotation quaternion that looks at a point `point` from a starting position `pos`, while maintaining a specified up direction `up`. The resulting quaternion represents the orientation of the camera relative to its starting position.",
+            "params": [
+              {
+                "name": "point",
+                "type_name": "Vector3f",
+                "description": "3D position that the look-at rotation is to be applied around, as a Vector3f object.\n\n* `point`: A `Vector3f` object representing the point in 3D space where the rotation is to be calculated relative to the `up` direction. The point's components are (x, y, z).",
+                "complex_type": true
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D axis along which the rotation is applied, which is used to compute the quaternion representation of the look-at rotation.\n\n1. The `Vector3f` class is used to represent `up`, which is a 3D vector representing the upward direction in 3D space.\n2. The `normalized()` method is called on `up` to normalize it, ensuring that its magnitude is equal to 1. This is necessary for the rotation matrix to be properly formed.\n3. The resulting quaternion representation of the rotation is returned as a `Quaternion` object.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a Quaternion representing the rotation needed to look at a point in 3D space from a specific position and orientation.\n\n* The output is a Quaternion object, which represents a 3D rotation transformation.\n* The Quaternion is created by multiplying a rotation matrix with the normalized vector difference between the point and the position, and then scaling it with the up vector.\n* The rotation matrix is constructed using the dot product of the position and up vectors, and then normalizing the result.\n* The resulting Quaternion represents the rotation needed to look at the point from the position, while maintaining the same orientation as the up vector.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector3f point = new Vector3f(1, 2, 3);\nVector3f up = new Vector3f(0, 1, 0);\nQuaternion rotation = transform.getLookAtRotation(point, up);\n",
+              "description": ""
+            },
+            "name": "getLookAtRotation",
+            "code": "public Quaternion getLookAtRotation(Vector3f point, Vector3f up) {\n\t\treturn new Quaternion(new Matrix4f().initRotation(point.sub(pos).normalized(), up));\n\t}",
+            "location": {
+              "start": 56,
+              "insert": 56,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "2f443164-b025-5cb9-6a4d-d58d1c6e6b92",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "evaluates whether an object has changed by checking its parent, position, rotation, and scale values against their previous states. If any of these values have changed, the function returns `true`. Otherwise, it returns `false`.",
+            "params": [],
+            "returns": {
+              "type_name": "boolean",
+              "description": "a boolean value indicating whether any of the object's properties have changed.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "// Create a Transform object and set its position, rotation, and scale\nTransform transform = new Transform();\ntransform.setPos(new Vector3f(1, 2, 3));\ntransform.setRot(new Quaternion(0, 1, 0, 0));\ntransform.setScale(new Vector3f(2, 2, 2));\n\n// Update the transform's old position, rotation, and scale\ntransform.update();\n\n// Check if the transform has changed since its last update\nif (transform.hasChanged()) {\n    System.out.println(\"Transform has changed!\");\n} else {\n    System.out.println(\"Transform has not changed.\");\n}\n",
+              "description": ""
+            },
+            "name": "hasChanged",
+            "code": "public boolean hasChanged() {\n\t\tif (parent != null && parent.hasChanged())\n\t\t\treturn true;\n\n\t\tif (!pos.equals(oldPos))\n\t\t\treturn true;\n\n\t\tif (!rot.equals(oldRot))\n\t\t\treturn true;\n\n\t\tif (!scale.equals(oldScale))\n\t\t\treturn true;\n\n\t\treturn false;\n\t}",
+            "location": {
+              "start": 60,
+              "insert": 60,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 15,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "ff6deb26-6965-8f86-0d4f-93c2911bdb99",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "computes a transformation matrix by multiplying the parent matrix, translation, rotation, and scale matrices.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a transformed matrix representing a 3D transformation of a position, rotation, and scale.\n\nThe `getTransformation` function returns a Matrix4f object, which represents a 4x4 transformation matrix. The matrix is constructed by multiplying the parent matrix, the translation matrix, the rotation matrix, and the scale matrix. Each of these matrices has its own properties and attributes, such as the translation vector, rotation angle, and scale factors.\n\nThe `Matrix4f` class represents a 4x4 transformation matrix, which is a fundamental data structure in computer graphics and game development. It provides methods for multiplying two matrices, scaling a matrix, and converting between matrix representation formats.\n\nIn the returned matrix, the translation vector represents the position of the transformed object relative to its original position. The rotation angle specifies the amount of rotation around the origin, while the scale factors determine the size and shape of the transformed object.\n\nOverall, the `getTransformation` function returns a fully-defined transformation matrix that can be used to transform objects in 3D space.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nmyTransform.setPos(new Vector3f(1, 2, 3));\nmyTransform.setRot(new Quaternion(0, 1, 0, 0));\nmyTransform.setScale(new Vector3f(4, 5, 6));\nmyTransform.update();\nMatrix4f transformation = myTransform.getTransformation();\n",
+              "description": "\nIn this example, we create a new Transform object and set its position, rotation, and scale using the appropriate methods. We then call the update() method to update the transform's internal state. Finally, we retrieve the transformation matrix using the getTransformation() method and store it in the transformation variable."
+            },
+            "name": "getTransformation",
+            "code": "public Matrix4f getTransformation() {\n\t\tMatrix4f translationMatrix = new Matrix4f().initTranslation(pos.getX(), pos.getY(), pos.getZ());\n\t\tMatrix4f rotationMatrix = rot.toRotationMatrix();\n\t\tMatrix4f scaleMatrix = new Matrix4f().initScale(scale.getX(), scale.getY(), scale.getZ());\n\n\t\treturn getParentMatrix().mul(translationMatrix.mul(rotationMatrix.mul(scaleMatrix)));\n\t}",
+            "location": {
+              "start": 76,
+              "insert": 76,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "9cc0a8fe-9601-04b3-e44d-e86a0e08cec7",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "retrieves and returns the transformation matrix of its parent node in a hierarchical tree structure, taking into account any changes made to the parent node's transformation.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f representation of the parent transformation matrix.\n\n* The `parentMatrix` variable is of type `Matrix4f`, which represents a 4D transformation matrix in the form of a homogeneous quaternion.\n* The matrix contains the transformation information from the parent object to the current object.\n* If the `parent` variable is not null and has changed, the matrix will be set to the transformed value of the parent object's transformation.\n\nIn summary, the `getParentMatrix` function returns the transformation matrix representing the relationship between the current object and its parent object.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\n// Set the parent transform's transformation\nmyTransform.setParent(new Transform());\n// Get the parent transform's transformation and set it to the child transform\nmyTransform.getParent().getTransformation();\n",
+              "description": ""
+            },
+            "name": "getParentMatrix",
+            "code": "private Matrix4f getParentMatrix() {\n\t\tif (parent != null && parent.hasChanged())\n\t\t\tparentMatrix = parent.getTransformation();\n\n\t\treturn parentMatrix;\n\t}",
+            "location": {
+              "start": 84,
+              "insert": 84,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 6,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "4b109619-a240-8fa5-d244-829cbe7a24fa",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "sets the `parent` field of the current object to a specified `Transform`.",
+            "params": [
+              {
+                "name": "parent",
+                "type_name": "Transform",
+                "description": "Transform object to which the current instance will be added as a child transform.\n\n* The `Transform` class is the type of the `parent` field, which indicates that it is an object of a transformer class.\n* The `this.parent` assignment updates the field `parent` to refer to the provided `Transform` instance.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform parent = new Transform();\nparent.setPos(new Vector3f(1, 2, 3));\nparent.setRot(new Quaternion(0, 1, 0, 0));\nparent.setScale(new Vector3f(2, 2, 2));\n\nTransform child = new Transform();\nchild.setParent(parent);\nchild.setPos(new Vector3f(4, 5, 6));\nchild.setRot(new Quaternion(1, 0, 0, 0));\nchild.setScale(new Vector3f(2, 2, 2));\n\nparent.update();\nchild.update();\n\nMatrix4f parentTransformation = parent.getTransformation();\nMatrix4f childTransformation = child.getTransformation();\n",
+              "description": "\nThe parent object is set with a position, rotation, and scale. The child object inherits these properties through the setParent method. Then, the update() method of both objects is called to update the internal transformation matrices. Finally, the transformation matrices are retrieved and printed out for each object."
+            },
+            "name": "setParent",
+            "code": "public void setParent(Transform parent) {\n\t\tthis.parent = parent;\n\t}",
+            "location": {
+              "start": 91,
+              "insert": 91,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "f4158a2a-e7d9-b0ba-e449-9b93f580c17e",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "takes a position vector as input and returns its transformed version using the matrix provided by the `getParentMatrix` function.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a transformed position vector.\n\n* The output is a `Vector3f` object representing the transformed position of the entity.\n* The transformation is applied using the `transform` method of the parent matrix, which represents the transform of the entity's parent component.\n* The resulting position vector is in the local space of the entity's parent component, taking into account any transformations applied to it.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Example {\n    public static void main(String[] args) {\n        Transform transform = new Transform();\n        Vector3f pos = new Vector3f(); //some position vector\n        Vector3f transformedPos = transform.getTransformedPos(pos);\n        System.out.println(\"The transformed position is: \" + transformedPos);\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getTransformedPos",
+            "code": "public Vector3f getTransformedPos() {\n\t\treturn getParentMatrix().transform(pos);\n\t}",
+            "location": {
+              "start": 95,
+              "insert": 95,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "d4a97b96-5cf5-249e-2c46-108589a3b206",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "takes a `Quaternion` object `parentRotation` and multiplies it by another `Quaternion` object `rot`, returning the transformed rotation.",
+            "params": [],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a transformed quaternion representing the rotation of the parent object based on the provided rotational angle.\n\n1. Quaternion structure: The returned value is a Quaternion object, which represents a 4D vector in mathematical notation (w, x, y, z).\n2. Parent rotation: The parent rotation is applied to the input rotation before combining them using multiplication. This allows for chaining multiple transformations together.\n3. Rotation combination: The resulting quaternion represents the composition of the input rotation and the parent rotation. It can be used to represent complex rotations by combining multiple smaller rotations.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Transform transform = new Transform();\n        \n        // Set the parent of the transform to another transform\n        Transform parent = new Transform();\n        transform.setParent(parent);\n        \n        // Set the position, rotation and scale of the transform\n        transform.setPos(new Vector3f(1, 2, 3));\n        transform.setRot(new Quaternion(0, 1, 0, 0));\n        transform.setScale(new Vector3f(2, 3, 4));\n        \n        // Get the transformed rotation of the transform\n        Quaternion rot = transform.getTransformedRot();\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getTransformedRot",
+            "code": "public Quaternion getTransformedRot() {\n\t\tQuaternion parentRotation = new Quaternion(1, 0, 0, 0);\n\n\t\tif (parent != null)\n\t\t\tparentRotation = parent.getTransformedRot();\n\n\t\treturn parentRotation.mul(rot);\n\t}",
+            "location": {
+              "start": 99,
+              "insert": 99,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "bb4bc1ec-f8bc-f2bc-5741-54844238e27b",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "returns a reference to the position of an object in 3D space, represented as a Vector3f object.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a `Vector3f` object containing the position of the entity.\n\n* `pos`: A `Vector3f` object representing the position of the entity. It contains the x, y, and z coordinates of the position in a floating-point format.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class GameObject {\n    private Transform transform;\n\n    public Vector3f GetPosition() {\n        return this.transform.getPos();\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getPos",
+            "code": "public Vector3f getPos() {\n\t\treturn pos;\n\t}",
+            "location": {
+              "start": 108,
+              "insert": 108,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "61d9839c-e903-129d-7347-1279455e568a",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "sets the position of an object to a new value represented as a Vector3f.",
+            "params": [
+              {
+                "name": "pos",
+                "type_name": "Vector3f",
+                "description": "3D position of an object or entity to which the method is being applied, and it is assigned to the `pos` field of the class instance.\n\n* `this.pos`: This attribute is set to the input vector `pos`, indicating that it has been assigned to the instance field `pos`.\n* `Vector3f`: The type of the `pos` attribute indicates that it is a 3D vector with floating-point values.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Transform myTransform = new Transform();\n        Vector3f pos = new Vector3f(1, 2, 3);\n        myTransform.setPos(pos);\n    }\n}\n",
+              "description": ""
+            },
+            "name": "setPos",
+            "code": "public void setPos(Vector3f pos) {\n\t\tthis.pos = pos;\n\t}",
+            "location": {
+              "start": 112,
+              "insert": 112,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "ba609a51-f7d6-34b6-a745-45778b8ea9f6",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "adds a vector to the position of an object, updating its position accordingly.",
+            "params": [
+              {
+                "name": "addVec",
+                "type_name": "Vector3f",
+                "description": "3D vector to be added to the current position of the object, which is then updated through the `setPos()` method.\n\n* `addVec`: A `Vector3f` object that represents a 3D vector with x, y, and z components.\n* `x`, `y`, and `z`: The individual components of the vector, which can take on any real value between -1 and 1.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\nVector3f addVec = new Vector3f(1, 2, 3);\ntransform.addToPos(addVec);\n",
+              "description": ""
+            },
+            "name": "addToPos",
+            "code": "public void addToPos(Vector3f addVec) { this.setPos(this.getPos().add(addVec)); }",
+            "location": {
+              "start": 116,
+              "insert": 116,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 1,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "e67595ce-3f9b-e4a1-3049-fdf53fe70be8",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "retrieves a quaternion representation of the current rotation of an object.",
+            "params": [],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a Quaternion object representing the rotation of the game object.\n\n* `rot`: A Quaternion object representing the rotation of the entity.\n* Type: Quaternion\n* Attributes: Rotation angle in degrees.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform(); //create a new instance of the Transform class\nQuaternion rotation = transform.getRot(); //get the current rotation of the transform object\nSystem.out.println(rotation); //print out the rotation values to the console\n",
+              "description": ""
+            },
+            "name": "getRot",
+            "code": "public Quaternion getRot() {\n\t\treturn rot;\n\t}",
+            "location": {
+              "start": 118,
+              "insert": 118,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "4cd29e0a-daef-9281-d441-3f8c0f782223",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "sets the rotational transformation of an object, storing it as a member variable `rot`.",
+            "params": [
+              {
+                "name": "rotation",
+                "type_name": "Quaternion",
+                "description": "3D rotational transformation to be applied to the object being manipulated by the `setRot()` method.\n\n* `Quaternion rotation`: This is a complex number object representing a quaternion, which is a mathematical construct used to represent 3D rotations. It has four components: x, y, z, and w, where x, y, and z represent the real part of the quaternion, and w represents its imaginary part.\n* `this.rot`: This refers to the current value of the `rot` field in the calling object, which is a complex number representing the rotation of the object in 3D space.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform t = new Transform();\nQuaternion q = new Quaternion(1, 0, 0, 0);\nt.setRot(q);\n",
+              "description": "\nThis is because the Transform class has a field \"rot\" of type Quaternion, and this method allows us to set the value of that field. The example uses the default constructor for both the Transform class and the Quaternion class, and it creates an instance of the Transform class named t and sets its rotation using the setRot method with a Quaternion instance named q as a parameter."
+            },
+            "name": "setRot",
+            "code": "public void setRot(Quaternion rotation) {\n\t\tthis.rot = rotation;\n\t}",
+            "location": {
+              "start": 122,
+              "insert": 122,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "97fb262f-10cd-8b91-9a49-33cc391e901a",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "returns a `Vector3f` object representing the scale of the component it belongs to.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a `Vector3f` object containing the scale value.\n\n* `scale`: A `Vector3f` object that represents the scale of the entity.\n* Type: `Vector3f`\n* Attributes: Three float values representing the x, y, and z components of the scale.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n\tpublic static void main(String[] args) {\n\t\tTransform transform = new Transform();\n\t\ttransform.setPos(new Vector3f(1, 2, 3));\n\t\ttransform.setRot(new Quaternion());\n\t\ttransform.setScale(new Vector3f(2, 2, 2));\n\t\t\n\t\tVector3f scale = transform.getScale();\n\t\tSystem.out.println(scale); // Output: (2, 2, 2)\n\t}\n}\n",
+              "description": ""
+            },
+            "name": "getScale",
+            "code": "public Vector3f getScale() {\n\t\treturn scale;\n\t}",
+            "location": {
+              "start": 126,
+              "insert": 126,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "ebee3f43-d166-b18c-b44b-37a9d1a94f9d",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "sets the scale of the `Vector3f` object, which represents a 3D point, to the provided value.",
+            "params": [
+              {
+                "name": "scale",
+                "type_name": "Vector3f",
+                "description": "3D scaling factor for the object, which is applied to its position, rotation, and size.\n\n* `this.scale`: The scale is assigned to the class instance field `scale`.\n* Vector3f: The data type of the `scale` parameter is specified as a vector with three elements in the form (x, y, z).",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\nVector3f scale = new Vector3f(2, 4, 8);\ntransform.setScale(scale);\n",
+              "description": ""
+            },
+            "name": "setScale",
+            "code": "public void setScale(Vector3f scale) {\n\t\tthis.scale = scale;\n\t}",
+            "location": {
+              "start": 130,
+              "insert": 130,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          },
+          {
+            "id": "82c02928-12b3-14a6-974c-71ada2b1d90e",
+            "ancestors": [
+              "48c36e34-d828-5181-0743-7da11d621bd5"
+            ],
+            "type": "function",
+            "description": "returns an empty string, indicating that it does not provide any information or value when called.",
+            "params": [],
+            "returns": {
+              "type_name": "empty",
+              "description": "an empty string.\n\n* The output is a string with an empty value (`\"\"`).\n* The length of the output string is 0, indicating that it contains no characters.\n* The output does not have any special features or attributes, such as formatting or encoding.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "@Override\n\tpublic String toString() {\n\t\treturn \"Transform{\" +\n\t\t\t\"pos=\" + pos +\n\t\t\t\", rot=\" + rot +\n\t\t\t\", scale=\" + scale +\n\t\t\t'}';\n\t}\n",
+              "description": ""
+            },
+            "name": "toString",
+            "code": "@Override\n\tpublic String toString() { return \"\";\n\t}",
+            "location": {
+              "start": 134,
+              "insert": 134,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null,
+            "doc": "a `Transform` class that represents a transformation in 3D space. The class has several methods for rotating and translating a 3D object, as well as a method for getting the transformed position and rotation of an object. The code also includes a high-level summary of what all of the above code does.\n\nHere is a brief summary of the main functionality of the code:\n\n* The `Transform` class takes in a parent transformation and creates a new transformation instance with its own pos, rot, and scale variables.\n* The `update()` method is called repeatedly to update the transformation based on changes to the object's position, rotation, and scale.\n* The `rotate()` method allows the user to rotate the object around a specific axis by passing in the axis and angle of rotation as arguments.\n* The `lookAt()` method allows the user to look at a specific point in 3D space by passing in the point and an up vector as arguments.\n* The `getTransformation()` method returns the transformation matrix for the object, which can be used to translate, rotate, and scale the object.\n* The `setParent()` method allows the user to set the parent transformation of the current transformation."
+          }
+        ]
+      }
+    }
+  }
+]
