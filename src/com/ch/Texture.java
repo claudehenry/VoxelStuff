@@ -27,10 +27,11 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * is used to load and manage textures in a graphics program. It provides methods for
- * binding the texture to a specific sampler slot and getting the ID of the loaded
- * texture. The loadTexture method takes a file path as input and returns the ID of
- * the loaded texture.
+ * in this code loads and manages textures for use in a graphics pipeline. It takes
+ * a filename as its constructor parameter, loads the texture from the file using
+ * `ImageIO.read()`, and then binds the texture to the GPU using `glBindTexture()`.
+ * The class also provides methods for binding the texture to specific sampler slots
+ * (`bind()` and `bind(int)`) and returning the ID of the loaded texture (`getID()`).
  */
 public class Texture {
 
@@ -44,18 +45,18 @@ public class Texture {
 
 
 	/**
-	 * 0 in the code calls the `bind` method with the argument 0, which is used to bind
-	 * a listener to an event.
+	 * 0 is called, performing an operation related to binding.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * sets the active texture slot to a specific index (0-31) and binds a texture ID to
-	 * that slot using the `glBindTexture()` method.
+	 * sets the active texture slot to a specific index (0-31) and binds a texture using
+	 * the specified slot and ID.
 	 * 
-	 * @param samplerSlot 0-based index of a texture slot in which to bind a texture handle.
+	 * @param samplerSlot 0-based index of a texture slot that the function binds to the
+	 * current GL context, with valid values ranging from 0 to 31.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -64,39 +65,24 @@ public class Texture {
 	}
 
 	/**
-	 * returns the current ID value of an object.
+	 * retrieves the value of a class instance field `id`.
 	 * 
-	 * @returns an integer value representing the ID of the object.
+	 * @returns an integer representing the ID of the object.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * loads a 2D texture from a file and returns the generated texture ID. It reads the
-	 * image data, creates a ByteBuffer for the pixel data, and passes it to the GL_TEXTURE_2D
-	 * texture object using the `glTexImage2D` method. The function also generates mipmaps
-	 * using the `glGenerateMipmap` method.
+	 * loads an image file into a texture object, using ImageIO to read the image and
+	 * GL11 to create and bind the texture. It then sets texture wrapping and filtering
+	 * parameters and calls `glTexImage2D` to upload the image data to the GPU. Finally,
+	 * it generates mipmap levels and sets the texture's minimum filter to linear-mipmap
+	 * linear.
 	 * 
-	 * @param fileName file path of the image to be loaded as a texture.
+	 * @param fileName name of the texture file to be loaded and read by the function.
 	 * 
-	 * @returns a texture ID generated using GL_TEXTURE_2D.
-	 * 
-	 * 	- The output is an integer, which represents the ID of the generated texture.
-	 * 	- The ID is generated using the `GL11.glGenTextures()` function.
-	 * 	- The texture is created as a 2D texture, with the `GL_TEXTURE_2D` target.
-	 * 	- The texture has an RGBA8 internal format, which means it stores each pixel as
-	 * a 32-bit value, representing the red, green, blue, and alpha channels.
-	 * 	- The texture is repeatable in both the x and y directions, with the `GL_REPEAT`
-	 * texture wrap mode.
-	 * 	- The texture has a linear filter, with the `GL_LINEAR` minification and magnification
-	 * filters.
-	 * 	- A mipmap is generated using the `GL30.glGenerateMipmap()` function, which creates
-	 * a pyramid of sub-textures at different levels of detail.
-	 * 	- The mipmap has a linear filter, with the `GL_LINEAR_MIPMAP_LINEAR` texture wrap
-	 * mode.
-	 * 	- The texture also has a texture lod bias of -0.6, which controls the level of
-	 * detail in the mipmap.
+	 * @returns an integer identifier of a generated texture.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
