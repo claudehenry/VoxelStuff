@@ -739,5 +739,152 @@
         ]
       }
     }
+  },
+  {
+    "name": "Texture.java",
+    "path": "src/com/ch/Texture.java",
+    "content": {
+      "structured": {
+        "description": "A class called `Texture` that handles loading and binding textures in an OpenGL context. The class has several methods: `bind()` binds the texture to a specific texture slot, `bind(int samplerSlot)` binds the texture to a specific slot, `getID()` returns the ID of the texture, and `loadTexture(String fileName)` loads a texture from a file and binds it to the context.",
+        "items": [
+          {
+            "id": "d5c25e73-3312-f5ba-9a41-b98229e9c400",
+            "ancestors": [],
+            "type": "function",
+            "description": "is used to load and manage textures in a graphics program. It provides methods for binding the texture to a specific sampler slot and getting the ID of the loaded texture. The loadTexture method takes a file path as input and returns the ID of the loaded texture.",
+            "name": "Texture",
+            "location": {
+              "start": 29,
+              "insert": 29,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 75,
+            "docLength": null
+          },
+          {
+            "id": "ca00e44e-fc96-17a5-d44e-e94111206bf3",
+            "ancestors": [
+              "d5c25e73-3312-f5ba-9a41-b98229e9c400"
+            ],
+            "type": "function",
+            "description": "0 in the code calls the `bind` method with the argument 0, which is used to bind a listener to an event.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "public void bind() {\n\tbind(0);\n}\n",
+              "description": ""
+            },
+            "name": "bind",
+            "location": {
+              "start": 40,
+              "insert": 40,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "e061fab7-bdff-1ea3-8944-92162594dce1",
+            "ancestors": [
+              "d5c25e73-3312-f5ba-9a41-b98229e9c400"
+            ],
+            "type": "function",
+            "description": "sets the active texture slot to a specific index (0-31) and binds a texture ID to that slot using the `glBindTexture()` method.",
+            "params": [
+              {
+                "name": "samplerSlot",
+                "type_name": "int",
+                "description": "0-based index of a texture slot in which to bind a texture handle.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "int samplerSlot = 0;\nTexture texture = new Texture(\"texture.png\");\ntexture.bind(samplerSlot);\n",
+              "description": ""
+            },
+            "name": "bind",
+            "location": {
+              "start": 44,
+              "insert": 44,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "33f4d5fa-9b09-1cb6-5743-2d9937b047be",
+            "ancestors": [
+              "d5c25e73-3312-f5ba-9a41-b98229e9c400"
+            ],
+            "type": "function",
+            "description": "returns the current ID value of an object.",
+            "params": [],
+            "returns": {
+              "type_name": "int",
+              "description": "an integer value representing the ID of the object.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Texture myTex = new Texture(\"textureName\");\nint id = myTex.getID();\n",
+              "description": ""
+            },
+            "name": "getID",
+            "location": {
+              "start": 50,
+              "insert": 50,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "e06e559c-7be4-a0b4-7f46-f80cd38d38c3",
+            "ancestors": [
+              "d5c25e73-3312-f5ba-9a41-b98229e9c400"
+            ],
+            "type": "function",
+            "description": "loads a 2D texture from a file and returns the generated texture ID. It reads the image data, creates a ByteBuffer for the pixel data, and passes it to the GL_TEXTURE_2D texture object using the `glTexImage2D` method. The function also generates mipmaps using the `glGenerateMipmap` method.",
+            "params": [
+              {
+                "name": "fileName",
+                "type_name": "String",
+                "description": "file path of the image to be loaded as a texture.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "integer",
+              "description": "a texture ID generated using GL_TEXTURE_2D.\n\n* The output is an integer, which represents the ID of the generated texture.\n* The ID is generated using the `GL11.glGenTextures()` function.\n* The texture is created as a 2D texture, with the `GL_TEXTURE_2D` target.\n* The texture has an RGBA8 internal format, which means it stores each pixel as a 32-bit value, representing the red, green, blue, and alpha channels.\n* The texture is repeatable in both the x and y directions, with the `GL_REPEAT` texture wrap mode.\n* The texture has a linear filter, with the `GL_LINEAR` minification and magnification filters.\n* A mipmap is generated using the `GL30.glGenerateMipmap()` function, which creates a pyramid of sub-textures at different levels of detail.\n* The mipmap has a linear filter, with the `GL_LINEAR_MIPMAP_LINEAR` texture wrap mode.\n* The texture also has a texture lod bias of -0.6, which controls the level of detail in the mipmap.",
+              "complex_type": true
+            },
+            "name": "loadTexture",
+            "location": {
+              "start": 54,
+              "insert": 54,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 48,
+            "docLength": null
+          }
+        ]
+      }
+    }
   }
 ]
