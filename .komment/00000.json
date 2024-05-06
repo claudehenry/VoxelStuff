@@ -235,5 +235,608 @@
         ]
       }
     }
+  },
+  {
+    "name": "Transform.java",
+    "path": "src/com/ch/Transform.java",
+    "content": {
+      "structured": {
+        "description": "a `Transform` class that represents a 3D transformation in space. It has several methods for rotating and translating objects in 3D space, as well as a `getTransformedPos()` method for getting the transformed position of an object, and a `setPos()` method for setting the position of an object. The code also includes a `getTransformedRot()` method for getting the transformed rotation of an object, and a `setRot()` method for setting the rotation of an object. Additionally, the code includes a `getScale()` method for getting the scale of an object, and a `setScale()` method for setting the scale of an object. The code uses the `Matrix4f` and `Quaternion` packages for performing matrix multiplication and quaternion operations.",
+        "diagram": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"];\n    \n    subgraph cluster_0 {\n        label=\"math\"\n        color=\"#33363A\"\n        Quaternion\n        Vector3f\n        Matrix4f\n    }\n    subgraph cluster_main {\n        // style=filled;\n        color=\"#00000000\"; \n        Transform [style=filled,color=\"#26de81\",shape=rectangle, fontname=\"Courier New\"];\n        label = \"\"\n    }\n    Camera\n    Vector3f -> Transform \n    Transform -> Transform \n    Quaternion -> Transform \n    Transform -> Quaternion \n    Transform -> Matrix4f \n    Camera -> Transform \n}\n",
+        "items": [
+          {
+            "id": "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7",
+            "ancestors": [],
+            "type": "function",
+            "description": "has several methods for updating and manipulating its position, rotation, and scale. It also has a parent reference and methods to get and set these properties. Additionally, it has a hasChanged() method to check if any of the properties have changed.",
+            "name": "Transform",
+            "location": {
+              "start": 7,
+              "insert": 7,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 131,
+            "docLength": null
+          },
+          {
+            "id": "d2362145-91ea-03aa-6a4a-1238919e6ca0",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "updates the positions, rotations and scales of an object based on the provided values, storing the previous values for future updates.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Transform transform = new Transform();\n\n        // Set the position, rotation, and scale of the transform\n        transform.setPos(new Vector3f(1, 2, 3));\n        transform.setRot(new Quaternion(0, 1, 0, 0));\n        transform.setScale(new Vector3f(4, 5, 6));\n\n        // Update the transform\n        transform.update();\n    }\n}\n",
+              "description": "\nIn this example, we create a new instance of the Transform class and set its position, rotation, and scale using the setPos(), setRot(), and setScale() methods respectively. After that, we call the update() method to update the transform's internal state."
+            },
+            "name": "update",
+            "location": {
+              "start": 32,
+              "insert": 32,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 14,
+            "docLength": null
+          },
+          {
+            "id": "f322fe32-836e-f790-9143-12977d09f632",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "rotates a 3D vector by an angle around a specified axis, using quaternions to perform the rotation and normalize the result.",
+            "params": [
+              {
+                "name": "axis",
+                "type_name": "Vector3f",
+                "description": "3D axis of rotation for the transformation.\n\n* `axis`: The axis of rotation, which can be represented as a 3D vector in homogeneous form (x, y, z, w).\n* `angle`: The angle of rotation around the specified axis, represented as a float value.",
+                "complex_type": true
+              },
+              {
+                "name": "angle",
+                "type_name": "float",
+                "description": "3D rotation angle about the specified `axis`.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\nVector3f axis = new Vector3f(0, 1, 0); // rotate around the Y-axis\nfloat angle = (float) Math.toRadians(90); // rotate by 90 degrees in radians\ntransform.rotate(axis, angle);\n",
+              "description": "\nIn this example, we create a new instance of Transform and set its rotation to the identity matrix using the constructor. We then define an axis (Y-axis) and an angle (90 degrees) to rotate around that axis. We pass these values to the rotate() method which updates the quaternion representing the transform's rotation by rotating it around the specified axis by the given angle. Finally, we get the updated transformation matrix using the getTransformation() method and print its elements for debugging purposes."
+            },
+            "name": "rotate",
+            "location": {
+              "start": 47,
+              "insert": 47,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "58e14268-97b8-5686-cb4b-f09422584c81",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "computes the rotation required to face a given point while maintaining a specified up direction.",
+            "params": [
+              {
+                "name": "point",
+                "type_name": "Vector3f",
+                "description": "3D position that the camera should look at.\n\n* `point`: A `Vector3f` object that represents the position in 3D space where the camera should look.",
+                "complex_type": true
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D vector pointing upwards relative to the object's position, which is used to calculate the rotation necessary to look at a given point from the object's perspective.\n\n* The `Vector3f` class represents a 3D vector with floating-point values.\n* The `getLookAtRotation()` method computes the rotation required to look at a specified point from a particular orientation, as represented by the input `up`.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Vector3f point = new Vector3f(0, 0, 1); // The object's position in space\nVector3f up = new Vector3f(0, 1, 0); // An axis that is \"up\" relative to the object\nTransform transform = new Transform();\ntransform.lookAt(point, up);\n",
+              "description": ""
+            },
+            "name": "lookAt",
+            "location": {
+              "start": 51,
+              "insert": 51,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "7a5dd1e4-c247-5895-b844-75ab2f2f3d23",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "computes a rotation quaternion that looks at a given point from a specified up direction. The rotation is computed using the cross product and normalization of the vector difference between the point and the position, and the up vector.",
+            "params": [
+              {
+                "name": "point",
+                "type_name": "Vector3f",
+                "description": "3D position that the look-at rotation is applied to.\n\n* `point`: A `Vector3f` object representing the point in 3D space that the rotation should be applied to. Its components are (x, y, z).",
+                "complex_type": true
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D vector that defines the \"up\" direction for the rotation, which is used to calculate the quaternion representation of the look-at rotation.\n\n* `point`: The point in 3D space that the rotation is centered around. (A Vector3f object)\n* `up`: A reference to a Vector3f object representing the up direction of the look-at rotation. This can be used to determine the orientation of the rotation relative to the camera's coordinate system.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a quaternion representation of the rotation from the camera's current position to look at a point in the scene.\n\n* The Quaternion object represents a rotation matrix that rotates the vector `pos` by the angle subtended by the line connecting `pos` and `up`, around the axis defined by `up`.\n* The rotation is counterclockwise from the positive x-axis.\n* The resulting quaternion has a magnitude of 1, which means that it represents a rotation rather than a scale or translation.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n\tVector3f point = new Vector3f(1, 0, 0); // a point in 3D space\n\tVector3f up = new Vector3f(0, 1, 0); // an \"up\" vector for the rotation matrix\n\tTransform transform = new Transform(); // a transform object that has position and rotation properties\n\tQuaternion quaternion = transform.getLookAtRotation(point, up); // returns the rotation quaternion to look at point from the current position of the transform\n}\n",
+              "description": ""
+            },
+            "name": "getLookAtRotation",
+            "location": {
+              "start": 55,
+              "insert": 55,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "e4dacf7c-602b-ceb8-2d42-72915dfd5fda",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "checks if any of the object's properties have changed by comparing them to their previous values. If any property has changed, the function returns `true`, otherwise it returns `false`.",
+            "params": [],
+            "returns": {
+              "type_name": "boolean",
+              "description": "a boolean value indicating whether any of the object's properties have changed.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(1, 2, 3));\ntransform.rotate(new Vector3f(0, 1, 0), Math.PI);\ntransform.setScale(new Vector3f(4, 5, 6));\n\nif (transform.hasChanged()) {\n    // do something with the changed transform\n}\n",
+              "description": ""
+            },
+            "name": "hasChanged",
+            "location": {
+              "start": 59,
+              "insert": 59,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 15,
+            "docLength": null
+          },
+          {
+            "id": "1f59d96f-7982-0996-e44d-325182e7f55b",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "computes and returns a transformation matrix based on the position, rotation, and scale of an object, using the parent matrix of the object as the basis for computation.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a transformed matrix representing the combination of translation, rotation, and scaling of the entity.\n\nThe returned matrix is a product of three matrices: `getParentMatrix()`, `translationMatrix`, and `rotationMatrix`. The `getParentMatrix()` represents the overall transformation, while `translationMatrix` and `rotationMatrix` represent the translation and rotation components, respectively.\n\nThe multiplication of these matrices results in a 4x4 homogeneous transformation matrix, which includes both translation and rotation components. This means that the returned matrix can be used to transform points in 3D space using linear algebra operations.\n\nThe elements of the returned matrix represent the transformation coefficients for each dimension (x, y, z, and w), where w is the fourth component representing the scaling factor. The elements are arranged in a column-major order, following the convention used in most 3D graphics libraries.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(1, 2, 3));\ntransform.setRot(new Quaternion());\ntransform.setScale(new Vector3f(0.5f, 0.5f, 0.5f));\n\nMatrix4f transformation = transform.getTransformation();\n",
+              "description": "\nThe example creates a new Transform object and sets its position, rotation, and scale using the setPos(), setRot(), and setScale() methods respectively. Then it gets the transformation matrix of the transform using the getTransformation() method. The resulting transformation matrix can then be used to transform objects in 3D space relative to the transform's position, rotation, and scale."
+            },
+            "name": "getTransformation",
+            "location": {
+              "start": 75,
+              "insert": 75,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "1b235ebe-22a5-4aad-0640-832addbfc764",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "retrieves and caches the transformation matrix of its parent component, updating it if necessary based on changes to the parent.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f representation of the parent transformation matrix.\n\n* The `parentMatrix` variable is of type `Matrix4f`.\n* It represents the transformation matrix of the parent node in the hierarchical tree structure.\n* If the `parent` field is not null and has changed, the matrix is returned as a result of the function.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Transform t = new Transform();\n        Matrix4f parentMatrix = t.getParentMatrix();\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getParentMatrix",
+            "location": {
+              "start": 83,
+              "insert": 83,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 6,
+            "docLength": null
+          },
+          {
+            "id": "1931e0a2-6312-b391-cf45-1047a7eabe26",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "sets the parent transformation of an object, which is a reference to another transformation that controls its position and rotation in the 3D space.",
+            "params": [
+              {
+                "name": "parent",
+                "type_name": "Transform",
+                "description": "Transform object to which the current instance will be added as a child transformation.\n\n* `Transform parent`: This is a reference to an object of type `Transform`, which represents a 3D transformation matrix.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform parent = new Transform();\nTransform child = new Transform();\nchild.setParent(parent);\n",
+              "description": "\nIn this example, a parent transform and child transform are created. The child's parent property is then set to the parent using the setParent method."
+            },
+            "name": "setParent",
+            "location": {
+              "start": 90,
+              "insert": 90,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "9a7ba490-7365-b8b8-6c4f-26f72fdb0890",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "computes the transformed position of an object by multiplying its original position with the matrix provided by its parent node.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a transformed position vector in 3D space.\n\n* The `Vector3f` object represents a 3D position with x, y, and z components, which have decimal values between -10 and 10 inclusive.\n* The transformation is applied using the `getParentMatrix()` method, which returns a matrix object representing a 4x4 transformation matrix.\n* The `transform()` method of the matrix object takes a `Vector3f` argument and applies the transformation to it, resulting in a new position vector that represents the transformed coordinate.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(1, 2, 3));\ntransform.rotate(Vector3f.Y_AXIS, 90);\nSystem.out.println(transform.getTransformedPos()); // Output: (2, -1, 3)\n",
+              "description": ""
+            },
+            "name": "getTransformedPos",
+            "location": {
+              "start": 94,
+              "insert": 94,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "14c02ae8-d013-ef81-1245-f15142087fe2",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "takes a `Quaternion` object `parentRotation` and multiplies it by another `Quaternion` object `rot`, returning the transformed rotation.",
+            "params": [],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a transformed quaternion representation of the parent rotation multiplied by the provided rotation quaternion.\n\n* The Quaternion object represents a 3D rotation transformation that is the result of multiplying the parent rotation with the rot vector.\n* The Quaternion object has four components: x, y, z, and w, where x, y, and z represent the axis of rotation, and w represents the angle of rotation around those axes.\n* The returned Quaternion object is a transformed version of the parent rotation, which means that it encodes the rotation of the parent object followed by the rotation of the rot vector.\n* The resulting Quaternion object can be used for further transformations or other mathematical operations involving 3D rotations.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "// assume transform1 and transform2 are instances of the Transform class\nQuaternion transformedRotation = transform1.getTransformedRot().mul(transform2.getTransformedRot());\n",
+              "description": ""
+            },
+            "name": "getTransformedRot",
+            "location": {
+              "start": 98,
+              "insert": 98,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "4793c1c8-fd22-e788-c94d-97628917d319",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "returns the position of an object in a three-dimensional space, represented by a `Vector3f` instance.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a `Vector3f` object representing the position of the game entity.\n\nThe `Vector3f` object returned represents the position of an object in 3D space, with each component representing the value of the corresponding coordinate (x, y, and z) as a floating-point number.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Example {\n    public static void main(String[] args) {\n        Transform transform = new Transform();\n        Vector3f pos = transform.getPos();\n        System.out.println(\"Transform's Position: \" + pos);\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getPos",
+            "location": {
+              "start": 107,
+              "insert": 107,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "37dde35b-7eb1-2ba9-0140-91ddc53a08e9",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "sets the position of an object, represented by a `Vector3f` object, to a new value.",
+            "params": [
+              {
+                "name": "pos",
+                "type_name": "Vector3f",
+                "description": "3D position of an object in the function `setPos()`.\n\n* `fX`: A 32-bit floating-point number representing the x-coordinate of the position.\n* `fY`: A 32-bit floating-point number representing the y-coordinate of the position.\n* `fZ`: A 32-bit floating-point number representing the z-coordinate of the position.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();  // Create a new instance of the Transform class\nVector3f pos = new Vector3f(1,2,3);     // Initialize a vector3f object with x, y and z values.\nmyTransform.setPos(pos);                // Set the position of this transform to the given vector3f object.\n",
+              "description": ""
+            },
+            "name": "setPos",
+            "location": {
+              "start": 111,
+              "insert": 111,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "7984ea52-ec8c-e695-bf4b-6d0240a73f66",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "adds a vector to the position component of an object.",
+            "params": [
+              {
+                "name": "addVec",
+                "type_name": "Vector3f",
+                "description": "3D vector to be added to the current position of the object.\n\n* `Vector3f` is a class in Java for representing 3D vectors.\n* `setPos()` is a method that sets the position of an object.\n* `add()` is a method that adds two vectors and returns their sum.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform(); \nVector3f myVector = new Vector3f(5, 10, 20);\nmyTransform.addToPos(myVector);\n",
+              "description": "\nHere, we create a new instance of the Transform class called myTransform and then create a new vector of type Vector3f called myVector with values (5, 10, 20). Then, we use the addToPos method to add the vector myVector to the position of the transform myTransform. The position of the transform will now be (5, 10, 20) + (5, 10, 20) = (10, 20, 40)."
+            },
+            "name": "addToPos",
+            "location": {
+              "start": 115,
+              "insert": 115,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 1,
+            "docLength": null
+          },
+          {
+            "id": "c83553e7-fdf1-9398-3d44-28fa4a37bdb9",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "returns a `Quaternion` object representing the rotation component of its caller.",
+            "params": [],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a `Quaternion` object representing the rotation of the object.\n\n* The `getRot` function returns a Quaternion object representing the rotation of the game object.\n* The Quaternion object has four attributes: x, y, z, and w, which represent the real and imaginary parts of the quaternion in a specific order.\n* Each attribute represents a component of the rotation, with values between -1 and 1 that can be combined to create complex rotations.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nQuaternion myQuat = myTransform.getRot();\n",
+              "description": ""
+            },
+            "name": "getRot",
+            "location": {
+              "start": 117,
+              "insert": 117,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "55a4ec9e-8789-7aa1-df41-38f19edf97fe",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "sets the rotational transformation of an object by assigning a Quaternion value to the `rot` field of the class.",
+            "params": [
+              {
+                "name": "rotation",
+                "type_name": "Quaternion",
+                "description": "3D rotational transformation to be applied to the object being manipulated by the `setRot()` method.\n\n* Quaternion is the class that represents rotation in 3D space.\n* The `rot` field is assigned with the given `rotation`.\n* The `rotation` parameter can have various attributes such as x, y, and z components representing the angle of rotation around each axis, respectively.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nQuaternion rotation = new Quaternion(1, 0, 0, 0);\nmyTransform.setRot(rotation);\n",
+              "description": ""
+            },
+            "name": "setRot",
+            "location": {
+              "start": 121,
+              "insert": 121,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "4ae6208e-cda8-a697-8346-1620371bd07b",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "returns the current scale value of the object.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a `Vector3f` object representing the current scale of the game object.\n\nThe `Vector3f` object `scale` is returned as the output of the function. It represents the scale factor for the current GameObject, which can be used to adjust its size and position in the game world. The vector components represent the x, y, and z values of the scale factor, respectively.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setScale(new Vector3f(2, 2, 2));\nSystem.out.println(transform.getScale()); // Output: (2, 2, 2)\n",
+              "description": ""
+            },
+            "name": "getScale",
+            "location": {
+              "start": 125,
+              "insert": 125,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "f43f6547-89b2-14b5-1a46-896d830aabec",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "sets the `scale` field of the object to the provided vector.",
+            "params": [
+              {
+                "name": "scale",
+                "type_name": "Vector3f",
+                "description": "3D scaling factor for the object, which is applied to its size and position components.\n\n* `this.scale = scale;` - The `scale` field is assigned the value of the input parameter.\n* `scale` - A `Vector3f` object representing a 3D vector with three components (x, y, and z) representing the scalar values for each component in the range of -1 to 1.",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform myObject = new Transform();\nmyObject.setScale(new Vector3f(2, 2, 2));\n",
+              "description": ""
+            },
+            "name": "setScale",
+            "location": {
+              "start": 129,
+              "insert": 129,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "77ef8eb5-e687-95a6-ea40-9df4934fd558",
+            "ancestors": [
+              "fb8b03ed-15d1-ebb4-5546-ad8977bb25e7"
+            ],
+            "type": "function",
+            "description": "returns an empty string, indicating that the object it is called on has no meaningful representation as a string.",
+            "params": [],
+            "returns": {
+              "type_name": "empty",
+              "description": "an empty string.\n\n* The output is an empty string.\n* This indicates that the `toString` function does not return any meaningful information or data.\n* It simply returns an empty string to indicate that the object it represents has no additional details or attributes beyond its basic type and identity.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(0, 0, 0));\ntransform.setRot(new Quaternion(1, 0, 0, 0));\ntransform.setScale(new Vector3f(1, 1, 1));\n\nString s = transform.toString(); // Returns a string representation of the Transform object, e.g. \"Transform{pos=Vector3f{x=0.0, y=0.0, z=0.0}, rot=Quaternion{w=1.0, x=0.0, y=0.0, z=0.0}, scale=Vector3f{x=1.0, y=1.0, z=1.0}}\"\n",
+              "description": ""
+            },
+            "name": "toString",
+            "location": {
+              "start": 133,
+              "insert": 133,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
   }
 ]
