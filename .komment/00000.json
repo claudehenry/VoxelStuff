@@ -838,5 +838,136 @@
         ]
       }
     }
+  },
+  {
+    "name": "Model.java",
+    "path": "src/com/ch/Model.java",
+    "content": {
+      "structured": {
+        "description": "",
+        "items": [
+          {
+            "id": "d23e3900-87f1-41f2-8c52-bc6e2d27caae",
+            "ancestors": [],
+            "type": "function",
+            "name": "load",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 46,
+              "start": 46
+            },
+            "returns": "Model",
+            "params": [
+              {
+                "name": "vertices",
+                "type": "float[]"
+              },
+              {
+                "name": "indices",
+                "type": "int[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Loads a 3D model from an array of vertices and an array of indices, creates a Vertex Array Object (VAO), stores the indices and vertices data, unbinds the VAO, and returns a new Model object.",
+              "params": [
+                {
+                  "name": "vertices",
+                  "type": "float[]",
+                  "description": "3D vertices data for the model being loaded."
+                },
+                {
+                  "name": "indices",
+                  "type": "int[]",
+                  "description": "3D coordinates of the vertices that make up the model, which are stored in an array for efficient access and rendering."
+                }
+              ],
+              "returns": {
+                "type": "Model",
+                "description": "a `Model` object containing the loaded data."
+              }
+            }
+          },
+          {
+            "id": "e104ec21-ac4d-4b75-b596-19a39c159c12",
+            "ancestors": [],
+            "type": "function",
+            "name": "storeData",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 61,
+              "start": 61
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "attrib",
+                "type": "int"
+              },
+              {
+                "name": "data",
+                "type": "float[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Generates a new VBO, binds it and copies the input data to it, then sets vertex attrib pointers for the data.",
+              "params": [
+                {
+                  "name": "attrib",
+                  "type": "int",
+                  "description": "2D vertex attribute index for the data stored in the VBO."
+                },
+                {
+                  "name": "data",
+                  "type": "float[]",
+                  "description": "3D data to be stored in a vertex buffer object (VBO)."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "ae3a7d1e-0364-49b2-9a54-c194ada8521b",
+            "ancestors": [],
+            "type": "function",
+            "name": "storeIndices",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 70,
+              "start": 70
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "indices",
+                "type": "int[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 5,
+            "comment": {
+              "description": "Generates a new buffer object and binds it to an element array buffer slot, then stores the provided integer array in the buffer using the `GL_STATIC_DRAW` mode.",
+              "params": [
+                {
+                  "name": "indices",
+                  "type": "int[]",
+                  "description": "3D vertices' indices of an object to be rendered as a mesh when passed to the `storeIndices()` function."
+                }
+              ],
+              "returns": null
+            }
+          }
+        ]
+      }
+    }
   }
 ]
