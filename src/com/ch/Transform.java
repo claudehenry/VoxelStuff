@@ -5,7 +5,6 @@ import com.ch.math.Quaternion;
 import com.ch.math.Vector3f;
 
 public class Transform {
-
 	private Transform parent;
 	private Matrix4f parentMatrix;
 
