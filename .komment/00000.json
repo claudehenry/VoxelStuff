@@ -1,0 +1,307 @@
+[
+  {
+    "name": "Transform.java",
+    "path": "src/com/ch/Transform.java",
+    "content": {
+      "structured": {
+        "description": "",
+        "items": [
+          {
+            "id": "f1f563ff-4ad1-4cdb-9170-1f9bb9c92e88",
+            "ancestors": [],
+            "type": "function",
+            "name": "rotate",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 47,
+              "start": 47
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "axis",
+                "type": "Vector3f"
+              },
+              {
+                "name": "angle",
+                "type": "float"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Takes a rotation axis and an angle as input and returns a normalized quaternion representing the rotated state.",
+              "params": [
+                {
+                  "name": "axis",
+                  "type": "Vector3f",
+                  "description": "3D vector that defines the rotation axis for the rotation operation."
+                },
+                {
+                  "name": "angle",
+                  "type": "float",
+                  "description": "3D rotation angle around the axis provided by `axis`."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "355f8e1d-5a8f-4770-bb45-465977729e00",
+            "ancestors": [],
+            "type": "function",
+            "name": "lookAt",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 51,
+              "start": 51
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "point",
+                "type": "Vector3f"
+              },
+              {
+                "name": "up",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Computes and sets the rotation required to face a specified point while maintaining a specified up direction.",
+              "params": [
+                {
+                  "name": "point",
+                  "type": "Vector3f",
+                  "description": "3D position of the object that the function is called on, which is used to calculate the rotation needed to look at the specified point."
+                },
+                {
+                  "name": "up",
+                  "type": "Vector3f",
+                  "description": "3D direction of the \"up\" vector relative to the current view orientation, which is used to calculate the look-at rotation."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "966bf0f3-ce1d-4df5-82d9-3e4a64e14e54",
+            "ancestors": [],
+            "type": "function",
+            "name": "getLookAtRotation",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 55,
+              "start": 55
+            },
+            "returns": "Quaternion",
+            "params": [
+              {
+                "name": "point",
+                "type": "Vector3f"
+              },
+              {
+                "name": "up",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Computes a quaternion representing the rotation from the object's current position to look at a point `point` and aligned with the `up` direction.",
+              "params": [
+                {
+                  "name": "point",
+                  "type": "Vector3f",
+                  "description": "3D point around which to rotate the look-at axis."
+                },
+                {
+                  "name": "up",
+                  "type": "Vector3f",
+                  "description": "3D direction of the \"up\" vector relative to the object's orientation, which is used to compute the rotation quaternion that looks at the `point` parameter."
+                }
+              ],
+              "returns": {
+                "type": "Quaternion",
+                "description": "a quaternion representation of the rotation required to face the given point `point` while looking along the direction of the vector `up`."
+              }
+            }
+          },
+          {
+            "id": "3d7445b5-6573-4443-a82b-86fbe7addeff",
+            "ancestors": [],
+            "type": "function",
+            "name": "setParent",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 90,
+              "start": 90
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "parent",
+                "type": "Transform"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the `Transform` instance variable `parent`.",
+              "params": [
+                {
+                  "name": "parent",
+                  "type": "Transform",
+                  "description": "3D transform of the parent object to which the current object will be attached or moved relative to."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "9485b37f-ff72-4256-9773-55f06b4fd7d7",
+            "ancestors": [],
+            "type": "function",
+            "name": "setPos",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 111,
+              "start": 111
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "pos",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the position of an object to a specified value.",
+              "params": [
+                {
+                  "name": "pos",
+                  "type": "Vector3f",
+                  "description": "3D position of an object to which the `setPos()` method is being applied."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "4c2006d0-874b-4955-a92c-004d5248568f",
+            "ancestors": [],
+            "type": "function",
+            "name": "addToPos",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 115,
+              "start": 115
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "addVec",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 1,
+            "comment": {
+              "description": "Adds a specified vector to the position of an object, updating its position to be the sum of its current position and the input vector.",
+              "params": [
+                {
+                  "name": "addVec",
+                  "type": "Vector3f",
+                  "description": "3D vector to be added to the object's current position."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "fe6224e4-a295-47da-9be9-e7f916401d33",
+            "ancestors": [],
+            "type": "function",
+            "name": "setRot",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 121,
+              "start": 121
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "rotation",
+                "type": "Quaternion"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the `rot` field of its receiver to a provided `Quaternion` value.",
+              "params": [
+                {
+                  "name": "rotation",
+                  "type": "Quaternion",
+                  "description": "4D quaternion that defines the rotational transformation to be applied to the object, and it is assigned to the `rot` field of the class."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "1c4b0d37-33b9-4f18-a94a-6547a8a528a2",
+            "ancestors": [],
+            "type": "function",
+            "name": "setScale",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 129,
+              "start": 129
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "scale",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the scale factor for a GameObject. It takes a `Vector3f` parameter representing the new scale value and updates the object's scale accordingly.",
+              "params": [
+                {
+                  "name": "scale",
+                  "type": "Vector3f",
+                  "description": "3D vector of the object's scale."
+                }
+              ],
+              "returns": null
+            }
+          }
+        ]
+      }
+    }
+  }
+]
