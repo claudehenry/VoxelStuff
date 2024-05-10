@@ -5,6 +5,7 @@ import com.ch.math.Quaternion;
 import com.ch.math.Vector3f;
 
 public class Transform {
+	
 	private Transform parent;
 	private Matrix4f parentMatrix;
 
@@ -43,14 +44,44 @@ public class Transform {
 		}
 	}
 
+	/**
+	 * Takes a rotation axis and an angle as input and returns a normalized quaternion
+	 * representing the rotated state.
+	 * 
+	 * @param axis 3D vector that defines the rotation axis for the rotation operation.
+	 * 
+	 * @param angle 3D rotation angle around the axis provided by `axis`.
+	 */
 	public void rotate(Vector3f axis, float angle) {
 		rot = new Quaternion(axis, angle).mul(rot).normalized();
 	}
 
+	/**
+	 * Computes and sets the rotation required to face a specified point while maintaining
+	 * a specified up direction.
+	 * 
+	 * @param point 3D position of the object that the function is called on, which is
+	 * used to calculate the rotation needed to look at the specified point.
+	 * 
+	 * @param up 3D direction of the "up" vector relative to the current view orientation,
+	 * which is used to calculate the look-at rotation.
+	 */
 	public void lookAt(Vector3f point, Vector3f up) {
 		rot = getLookAtRotation(point, up);
 	}
 
+	/**
+	 * Computes a quaternion representing the rotation from the object's current position
+	 * to look at a point `point` and aligned with the `up` direction.
+	 * 
+	 * @param point 3D point around which to rotate the look-at axis.
+	 * 
+	 * @param up 3D direction of the "up" vector relative to the object's orientation,
+	 * which is used to compute the rotation quaternion that looks at the `point` parameter.
+	 * 
+	 * @returns a quaternion representation of the rotation required to face the given
+	 * point `point` while looking along the direction of the vector `up`.
+	 */
 	public Quaternion getLookAtRotation(Vector3f point, Vector3f up) {
 		return new Quaternion(new Matrix4f().initRotation(point.sub(pos).normalized(), up));
 	}
@@ -86,6 +117,12 @@ public class Transform {
 		return parentMatrix;
 	}
 
+	/**
+	 * Sets the `Transform` instance variable `parent`.
+	 * 
+	 * @param parent 3D transform of the parent object to which the current object will
+	 * be attached or moved relative to.
+	 */
 	public void setParent(Transform parent) {
 		this.parent = parent;
 	}
@@ -107,16 +144,33 @@ public class Transform {
 		return pos;
 	}
 
+	/**
+	 * Sets the position of an object to a specified value.
+	 * 
+	 * @param pos 3D position of an object to which the `setPos()` method is being applied.
+	 */
 	public void setPos(Vector3f pos) {
 		this.pos = pos;
 	}
 
+	/**
+	 * Adds a specified vector to the position of an object, updating its position to be
+	 * the sum of its current position and the input vector.
+	 * 
+	 * @param addVec 3D vector to be added to the object's current position.
+	 */
 	public void addToPos(Vector3f addVec) { this.setPos(this.getPos().add(addVec)); }
 
 	public Quaternion getRot() {
 		return rot;
 	}
 
+	/**
+	 * Sets the `rot` field of its receiver to a provided `Quaternion` value.
+	 * 
+	 * @param rotation 4D quaternion that defines the rotational transformation to be
+	 * applied to the object, and it is assigned to the `rot` field of the class.
+	 */
 	public void setRot(Quaternion rotation) {
 		this.rot = rotation;
 	}
@@ -125,6 +179,12 @@ public class Transform {
 		return scale;
 	}
 
+	/**
+	 * Sets the scale factor for a GameObject. It takes a `Vector3f` parameter representing
+	 * the new scale value and updates the object's scale accordingly.
+	 * 
+	 * @param scale 3D vector of the object's scale.
+	 */
 	public void setScale(Vector3f scale) {
 		this.scale = scale;
 	}

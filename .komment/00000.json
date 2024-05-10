@@ -1,0 +1,678 @@
+[
+  {
+    "name": "Transform.java",
+    "path": "src/com/ch/Transform.java",
+    "content": {
+      "structured": {
+        "description": "",
+        "items": [
+          {
+            "id": "f1f563ff-4ad1-4cdb-9170-1f9bb9c92e88",
+            "ancestors": [],
+            "type": "function",
+            "name": "rotate",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 47,
+              "start": 47
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "axis",
+                "type": "Vector3f"
+              },
+              {
+                "name": "angle",
+                "type": "float"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Takes a rotation axis and an angle as input and returns a normalized quaternion representing the rotated state.",
+              "params": [
+                {
+                  "name": "axis",
+                  "type": "Vector3f",
+                  "description": "3D vector that defines the rotation axis for the rotation operation."
+                },
+                {
+                  "name": "angle",
+                  "type": "float",
+                  "description": "3D rotation angle around the axis provided by `axis`."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "355f8e1d-5a8f-4770-bb45-465977729e00",
+            "ancestors": [],
+            "type": "function",
+            "name": "lookAt",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 51,
+              "start": 51
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "point",
+                "type": "Vector3f"
+              },
+              {
+                "name": "up",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Computes and sets the rotation required to face a specified point while maintaining a specified up direction.",
+              "params": [
+                {
+                  "name": "point",
+                  "type": "Vector3f",
+                  "description": "3D position of the object that the function is called on, which is used to calculate the rotation needed to look at the specified point."
+                },
+                {
+                  "name": "up",
+                  "type": "Vector3f",
+                  "description": "3D direction of the \"up\" vector relative to the current view orientation, which is used to calculate the look-at rotation."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "966bf0f3-ce1d-4df5-82d9-3e4a64e14e54",
+            "ancestors": [],
+            "type": "function",
+            "name": "getLookAtRotation",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 55,
+              "start": 55
+            },
+            "returns": "Quaternion",
+            "params": [
+              {
+                "name": "point",
+                "type": "Vector3f"
+              },
+              {
+                "name": "up",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Computes a quaternion representing the rotation from the object's current position to look at a point `point` and aligned with the `up` direction.",
+              "params": [
+                {
+                  "name": "point",
+                  "type": "Vector3f",
+                  "description": "3D point around which to rotate the look-at axis."
+                },
+                {
+                  "name": "up",
+                  "type": "Vector3f",
+                  "description": "3D direction of the \"up\" vector relative to the object's orientation, which is used to compute the rotation quaternion that looks at the `point` parameter."
+                }
+              ],
+              "returns": {
+                "type": "Quaternion",
+                "description": "a quaternion representation of the rotation required to face the given point `point` while looking along the direction of the vector `up`."
+              }
+            }
+          },
+          {
+            "id": "3d7445b5-6573-4443-a82b-86fbe7addeff",
+            "ancestors": [],
+            "type": "function",
+            "name": "setParent",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 90,
+              "start": 90
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "parent",
+                "type": "Transform"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the `Transform` instance variable `parent`.",
+              "params": [
+                {
+                  "name": "parent",
+                  "type": "Transform",
+                  "description": "3D transform of the parent object to which the current object will be attached or moved relative to."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "9485b37f-ff72-4256-9773-55f06b4fd7d7",
+            "ancestors": [],
+            "type": "function",
+            "name": "setPos",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 111,
+              "start": 111
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "pos",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the position of an object to a specified value.",
+              "params": [
+                {
+                  "name": "pos",
+                  "type": "Vector3f",
+                  "description": "3D position of an object to which the `setPos()` method is being applied."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "4c2006d0-874b-4955-a92c-004d5248568f",
+            "ancestors": [],
+            "type": "function",
+            "name": "addToPos",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 115,
+              "start": 115
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "addVec",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 1,
+            "comment": {
+              "description": "Adds a specified vector to the position of an object, updating its position to be the sum of its current position and the input vector.",
+              "params": [
+                {
+                  "name": "addVec",
+                  "type": "Vector3f",
+                  "description": "3D vector to be added to the object's current position."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "fe6224e4-a295-47da-9be9-e7f916401d33",
+            "ancestors": [],
+            "type": "function",
+            "name": "setRot",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 121,
+              "start": 121
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "rotation",
+                "type": "Quaternion"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the `rot` field of its receiver to a provided `Quaternion` value.",
+              "params": [
+                {
+                  "name": "rotation",
+                  "type": "Quaternion",
+                  "description": "4D quaternion that defines the rotational transformation to be applied to the object, and it is assigned to the `rot` field of the class."
+                }
+              ],
+              "returns": null
+            }
+          },
+          {
+            "id": "1c4b0d37-33b9-4f18-a94a-6547a8a528a2",
+            "ancestors": [],
+            "type": "function",
+            "name": "setScale",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 129,
+              "start": 129
+            },
+            "returns": false,
+            "params": [
+              {
+                "name": "scale",
+                "type": "Vector3f"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Sets the scale factor for a GameObject. It takes a `Vector3f` parameter representing the new scale value and updates the object's scale accordingly.",
+              "params": [
+                {
+                  "name": "scale",
+                  "type": "Vector3f",
+                  "description": "3D vector of the object's scale."
+                }
+              ],
+              "returns": null
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Util.java",
+    "path": "src/com/ch/Util.java",
+    "content": {
+      "structured": {
+        "description": "",
+        "items": [
+          {
+            "id": "33a33db6-8711-40dc-87de-64c3a80932a0",
+            "ancestors": [],
+            "type": "function",
+            "name": "createFloatBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 12,
+              "start": 12
+            },
+            "returns": "FloatBuffer",
+            "params": [
+              {
+                "name": "size",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Creates a new FloatBuffer with the specified size using the `BufferUtils` class.",
+              "params": [
+                {
+                  "name": "size",
+                  "type": "int",
+                  "description": "number of elements to be stored in the `FloatBuffer`."
+                }
+              ],
+              "returns": {
+                "type": "FloatBuffer",
+                "description": "a `FloatBuffer` object of the specified size."
+              }
+            }
+          },
+          {
+            "id": "fa07ea77-6439-4317-850b-40a13c0f8179",
+            "ancestors": [],
+            "type": "function",
+            "name": "createIntBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 16,
+              "start": 16
+            },
+            "returns": "IntBuffer",
+            "params": [
+              {
+                "name": "size",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Creates an `IntBuffer` object with the specified size.",
+              "params": [
+                {
+                  "name": "size",
+                  "type": "int",
+                  "description": "number of elements to be stored in the `IntBuffer`."
+                }
+              ],
+              "returns": {
+                "type": "IntBuffer",
+                "description": "an `IntBuffer` instance representing a buffer of integers with the specified size."
+              }
+            }
+          },
+          {
+            "id": "0b8f2ab1-2d49-424d-b343-bc1a11e8289b",
+            "ancestors": [],
+            "type": "function",
+            "name": "createByteBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 20,
+              "start": 20
+            },
+            "returns": "ByteBuffer",
+            "params": [
+              {
+                "name": "size",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Creates a new instance of a `ByteBuffer`.",
+              "params": [
+                {
+                  "name": "size",
+                  "type": "int",
+                  "description": "integer amount of memory to be allocated for the ByteBuffer."
+                }
+              ],
+              "returns": {
+                "type": "ByteBuffer",
+                "description": "a byte buffer instance created from a specified size using `BufferUtils`."
+              }
+            }
+          },
+          {
+            "id": "c87ef888-c504-43eb-a632-b52150091f7b",
+            "ancestors": [],
+            "type": "function",
+            "name": "createFlippedBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 24,
+              "start": 24
+            },
+            "returns": "IntBuffer",
+            "params": [
+              {
+                "name": "values",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 7,
+            "comment": {
+              "description": "Creates an `IntBuffer` instance containing the specified `int` values and flips it for processing.",
+              "params": [
+                {
+                  "name": "values",
+                  "type": "int",
+                  "description": "1D array of integers that will be converted into an IntBuffer by the `createFlippedBuffer()` method."
+                }
+              ],
+              "returns": {
+                "type": "IntBuffer",
+                "description": "an IntBuffer containing the input values in a flipped state."
+              }
+            }
+          },
+          {
+            "id": "079ddfb4-0e93-4125-b54c-a5141abe91e8",
+            "ancestors": [],
+            "type": "function",
+            "name": "createFlippedBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 32,
+              "start": 32
+            },
+            "returns": "FloatBuffer",
+            "params": [
+              {
+                "name": "values",
+                "type": "float"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 7,
+            "comment": {
+              "description": "Creates a new `FloatBuffer` object from an array of floating-point values, stores the values in the buffer, and flips the buffer for efficient reading.",
+              "params": [
+                {
+                  "name": "values",
+                  "type": "float",
+                  "description": "floating-point values to be stored in the created `FloatBuffer`."
+                }
+              ],
+              "returns": {
+                "type": "FloatBuffer",
+                "description": "a flipped FloatBuffer containing the input values."
+              }
+            }
+          },
+          {
+            "id": "bdcb1bed-ad60-48c0-87d0-b0b26865a92e",
+            "ancestors": [],
+            "type": "function",
+            "name": "removeEmptyStrings",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 90,
+              "start": 90
+            },
+            "returns": "String[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "String[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 12,
+            "comment": {
+              "description": "Removes empty strings from an array of strings and returns a new array with the non-empty strings.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "String[]",
+                  "description": "0-length array of strings that is to be filtered for empty strings, with the resulting non-empty strings stored in a new array returned by the function."
+                }
+              ],
+              "returns": {
+                "type": "String[]",
+                "description": "an array of non-empty strings."
+              }
+            }
+          },
+          {
+            "id": "3d351863-afe6-47cf-9bb9-48cb3e95b055",
+            "ancestors": [],
+            "type": "function",
+            "name": "toIntArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 103,
+              "start": 103
+            },
+            "returns": "int[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "Integer[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Converts an `Integer[]` input to an `int[]` output, copying the values of the input array to the output array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "Integer[]",
+                  "description": "1D array of integers that is converted to an int array by the `toIntArray()` method."
+                }
+              ],
+              "returns": {
+                "type": "int[]",
+                "description": "an integer array containing the same values as the input array of integers."
+              }
+            }
+          },
+          {
+            "id": "b8d5d591-1480-418b-9191-05a9ee8e66fe",
+            "ancestors": [],
+            "type": "function",
+            "name": "toIntArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 112,
+              "start": 112
+            },
+            "returns": "int[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "List<Integer>"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Converts a `List<Integer>` to an `int[]` array, by using a `for` loop to iterate over the list and assign each element to a corresponding index in the array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "List<Integer>",
+                  "description": "list of integers that will be converted to an integer array by the `toIntArray()` method."
+                }
+              ],
+              "returns": {
+                "type": "int[]",
+                "description": "an integer array containing the elements of the provided list."
+              }
+            }
+          },
+          {
+            "id": "977da215-a515-4ae3-98e0-d756341b0e97",
+            "ancestors": [],
+            "type": "function",
+            "name": "toFloatArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 121,
+              "start": 121
+            },
+            "returns": "float[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "Float[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Creates a new array of floats containing the same values as the given Float array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "Float[]",
+                  "description": "0-based integer array of floating-point values to be converted into a corresponding 0-based float array."
+                }
+              ],
+              "returns": {
+                "type": "float[]",
+                "description": "an array of float values, containing the same values as the input `data` array."
+              }
+            }
+          },
+          {
+            "id": "aa831554-d148-4243-bdfd-9745dd25c41e",
+            "ancestors": [],
+            "type": "function",
+            "name": "toFloatArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 130,
+              "start": 130
+            },
+            "returns": "float[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "List<Float>"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Converts a `List<Float>` data collection into an array of floating-point values, by utilizing its `size()` and `get()` methods to iterate through the list and assign each element to its corresponding position in the array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "List<Float>",
+                  "description": "list of floating-point numbers that are converted into an array of the same size."
+                }
+              ],
+              "returns": {
+                "type": "float[]",
+                "description": "an array of `float` values representing the input list of `Float` values."
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+]
