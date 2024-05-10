@@ -303,5 +303,376 @@
         ]
       }
     }
+  },
+  {
+    "name": "Util.java",
+    "path": "src/com/ch/Util.java",
+    "content": {
+      "structured": {
+        "description": "",
+        "items": [
+          {
+            "id": "33a33db6-8711-40dc-87de-64c3a80932a0",
+            "ancestors": [],
+            "type": "function",
+            "name": "createFloatBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 12,
+              "start": 12
+            },
+            "returns": "FloatBuffer",
+            "params": [
+              {
+                "name": "size",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Creates a new FloatBuffer with the specified size using the `BufferUtils` class.",
+              "params": [
+                {
+                  "name": "size",
+                  "type": "int",
+                  "description": "number of elements to be stored in the `FloatBuffer`."
+                }
+              ],
+              "returns": {
+                "type": "FloatBuffer",
+                "description": "a `FloatBuffer` object of the specified size."
+              }
+            }
+          },
+          {
+            "id": "fa07ea77-6439-4317-850b-40a13c0f8179",
+            "ancestors": [],
+            "type": "function",
+            "name": "createIntBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 16,
+              "start": 16
+            },
+            "returns": "IntBuffer",
+            "params": [
+              {
+                "name": "size",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Creates an `IntBuffer` object with the specified size.",
+              "params": [
+                {
+                  "name": "size",
+                  "type": "int",
+                  "description": "number of elements to be stored in the `IntBuffer`."
+                }
+              ],
+              "returns": {
+                "type": "IntBuffer",
+                "description": "an `IntBuffer` instance representing a buffer of integers with the specified size."
+              }
+            }
+          },
+          {
+            "id": "0b8f2ab1-2d49-424d-b343-bc1a11e8289b",
+            "ancestors": [],
+            "type": "function",
+            "name": "createByteBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 20,
+              "start": 20
+            },
+            "returns": "ByteBuffer",
+            "params": [
+              {
+                "name": "size",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 3,
+            "comment": {
+              "description": "Creates a new instance of a `ByteBuffer`.",
+              "params": [
+                {
+                  "name": "size",
+                  "type": "int",
+                  "description": "integer amount of memory to be allocated for the ByteBuffer."
+                }
+              ],
+              "returns": {
+                "type": "ByteBuffer",
+                "description": "a byte buffer instance created from a specified size using `BufferUtils`."
+              }
+            }
+          },
+          {
+            "id": "c87ef888-c504-43eb-a632-b52150091f7b",
+            "ancestors": [],
+            "type": "function",
+            "name": "createFlippedBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 24,
+              "start": 24
+            },
+            "returns": "IntBuffer",
+            "params": [
+              {
+                "name": "values",
+                "type": "int"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 7,
+            "comment": {
+              "description": "Creates an `IntBuffer` instance containing the specified `int` values and flips it for processing.",
+              "params": [
+                {
+                  "name": "values",
+                  "type": "int",
+                  "description": "1D array of integers that will be converted into an IntBuffer by the `createFlippedBuffer()` method."
+                }
+              ],
+              "returns": {
+                "type": "IntBuffer",
+                "description": "an IntBuffer containing the input values in a flipped state."
+              }
+            }
+          },
+          {
+            "id": "079ddfb4-0e93-4125-b54c-a5141abe91e8",
+            "ancestors": [],
+            "type": "function",
+            "name": "createFlippedBuffer",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 32,
+              "start": 32
+            },
+            "returns": "FloatBuffer",
+            "params": [
+              {
+                "name": "values",
+                "type": "float"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 7,
+            "comment": {
+              "description": "Creates a new `FloatBuffer` object from an array of floating-point values, stores the values in the buffer, and flips the buffer for efficient reading.",
+              "params": [
+                {
+                  "name": "values",
+                  "type": "float",
+                  "description": "floating-point values to be stored in the created `FloatBuffer`."
+                }
+              ],
+              "returns": {
+                "type": "FloatBuffer",
+                "description": "a flipped FloatBuffer containing the input values."
+              }
+            }
+          },
+          {
+            "id": "bdcb1bed-ad60-48c0-87d0-b0b26865a92e",
+            "ancestors": [],
+            "type": "function",
+            "name": "removeEmptyStrings",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 90,
+              "start": 90
+            },
+            "returns": "String[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "String[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 12,
+            "comment": {
+              "description": "Removes empty strings from an array of strings and returns a new array with the non-empty strings.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "String[]",
+                  "description": "0-length array of strings that is to be filtered for empty strings, with the resulting non-empty strings stored in a new array returned by the function."
+                }
+              ],
+              "returns": {
+                "type": "String[]",
+                "description": "an array of non-empty strings."
+              }
+            }
+          },
+          {
+            "id": "3d351863-afe6-47cf-9bb9-48cb3e95b055",
+            "ancestors": [],
+            "type": "function",
+            "name": "toIntArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 103,
+              "start": 103
+            },
+            "returns": "int[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "Integer[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Converts an `Integer[]` input to an `int[]` output, copying the values of the input array to the output array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "Integer[]",
+                  "description": "1D array of integers that is converted to an int array by the `toIntArray()` method."
+                }
+              ],
+              "returns": {
+                "type": "int[]",
+                "description": "an integer array containing the same values as the input array of integers."
+              }
+            }
+          },
+          {
+            "id": "b8d5d591-1480-418b-9191-05a9ee8e66fe",
+            "ancestors": [],
+            "type": "function",
+            "name": "toIntArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 112,
+              "start": 112
+            },
+            "returns": "int[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "List<Integer>"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Converts a `List<Integer>` to an `int[]` array, by using a `for` loop to iterate over the list and assign each element to a corresponding index in the array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "List<Integer>",
+                  "description": "list of integers that will be converted to an integer array by the `toIntArray()` method."
+                }
+              ],
+              "returns": {
+                "type": "int[]",
+                "description": "an integer array containing the elements of the provided list."
+              }
+            }
+          },
+          {
+            "id": "977da215-a515-4ae3-98e0-d756341b0e97",
+            "ancestors": [],
+            "type": "function",
+            "name": "toFloatArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 121,
+              "start": 121
+            },
+            "returns": "float[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "Float[]"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Creates a new array of floats containing the same values as the given Float array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "Float[]",
+                  "description": "0-based integer array of floating-point values to be converted into a corresponding 0-based float array."
+                }
+              ],
+              "returns": {
+                "type": "float[]",
+                "description": "an array of float values, containing the same values as the input `data` array."
+              }
+            }
+          },
+          {
+            "id": "aa831554-d148-4243-bdfd-9745dd25c41e",
+            "ancestors": [],
+            "type": "function",
+            "name": "toFloatArray",
+            "location": {
+              "offset": "\t",
+              "indent": 1,
+              "insert": 130,
+              "start": 130
+            },
+            "returns": "float[]",
+            "params": [
+              {
+                "name": "data",
+                "type": "List<Float>"
+              }
+            ],
+            "skip": false,
+            "docLength": null,
+            "length": 8,
+            "comment": {
+              "description": "Converts a `List<Float>` data collection into an array of floating-point values, by utilizing its `size()` and `get()` methods to iterate through the list and assign each element to its corresponding position in the array.",
+              "params": [
+                {
+                  "name": "data",
+                  "type": "List<Float>",
+                  "description": "list of floating-point numbers that are converted into an array of the same size."
+                }
+              ],
+              "returns": {
+                "type": "float[]",
+                "description": "an array of `float` values representing the input list of `Float` values."
+              }
+            }
+          }
+        ]
+      }
+    }
   }
 ]
