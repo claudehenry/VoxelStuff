@@ -41,6 +41,9 @@ public class Texture {
 		bind(0);
 	}
 
+	/**
+	 * @param samplerSlot
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
@@ -51,6 +54,15 @@ public class Texture {
 		return id;
 	}
 
+	/**
+	 * Reads an image file, converts it to a texture buffer, and loads it into OpenGL as
+	 * a 2D texture using the `glGenTextures`, `glBindTexture`, `glTexParameteri`,
+	 * `glTexImage2D`, and `glGenerateMipmap` functions.
+	 * 
+	 * @param fileName filename of the image to be loaded as a texture.
+	 * 
+	 * @returns a handle to a GL_TEXTURE_2D texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
