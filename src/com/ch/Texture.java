@@ -26,6 +26,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * provides functionality for loading and managing textures in a 3D graphics context.
+ * It allows for binding the texture to a specific slot in the graphics pipeline and
+ * provides methods for loading textures from files. The loadTexture method takes a
+ * file path as an argument and returns the ID of the loaded texture.
+ */
 public class Texture {
 
 	private int id;
@@ -37,12 +43,20 @@ public class Texture {
 	}
 
 
+	/**
+	 * 0 is called, performing an action related to the binding of something.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * @param samplerSlot
+	 * sets the active texture slot to a specific index (0-31) and binds a texture ID to
+	 * that slot using the `glBindTexture()` method.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot in the GPU, with values ranging
+	 * from 0 to 31, which is used to select and bind a specific texture to the current
+	 * rendering operation.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -50,18 +64,40 @@ public class Texture {
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * returns the `id` variable's value.
+	 * 
+	 * @returns an integer value representing the ID of the object.
+	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * Reads an image file, converts it to a texture buffer, and loads it into OpenGL as
-	 * a 2D texture using the `glGenTextures`, `glBindTexture`, `glTexParameteri`,
-	 * `glTexImage2D`, and `glGenerateMipmap` functions.
+	 * loads a texture from an image file and returns the ID of the generated texture.
+	 * It reads the image using ImageIO, converts it to a buffer, and then uses GL11 to
+	 * create a texture and apply filtering and mipmapping.
 	 * 
-	 * @param fileName filename of the image to be loaded as a texture.
+	 * @param fileName 2D image file to be loaded and converted into a texture.
 	 * 
-	 * @returns a handle to a GL_TEXTURE_2D texture.
+	 * @returns an integer representing the ID of the generated texture.
+	 * 
+	 * 	- `id`: This is an integer value representing the ID of the generated texture.
+	 * 	- `image`: This is a `BufferedImage` object containing the loaded texture data.
+	 * 	- `hasAlpha`: This is a boolean value indicating whether the texture has alpha
+	 * channel or not.
+	 * 	- `pixels`: This is an array of integers containing the pixel values of the texture.
+	 * 	- `width`: This is an integer value representing the width of the texture.
+	 * 	- `height`: This is an integer value representing the height of the texture.
+	 * 	- `buffer`: This is a `ByteBuffer` object containing the loaded texture data.
+	 * 
+	 * The function returns the ID of the generated texture, which can be used to reference
+	 * the texture in subsequent OpenGL operations. The `image` variable contains the
+	 * loaded texture data, and the `hasAlpha` variable indicates whether the texture has
+	 * an alpha channel or not. The `pixels` array contains the pixel values of the
+	 * texture, and the `width` and `height` variables represent the dimensions of the
+	 * texture. Finally, the `buffer` variable contains the loaded texture data in a
+	 * `ByteBuffer` format.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
