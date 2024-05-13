@@ -1,0 +1,1133 @@
+[
+  {
+    "name": "Main.java",
+    "path": "src/com/ch/Main.java",
+    "content": {
+      "structured": {
+        "description": "A 3D rendering engine with a basic scene consisting of a camera, a shader, and a cube texture. The engine initializes display and GL capabilities, sets up the camera and shader, loads a cube texture, and renders the scene.",
+        "items": [
+          {
+            "id": "5250164b-5ad7-bab8-d04e-3c05b986ae6e",
+            "ancestors": [],
+            "type": "function",
+            "description": "in this Java program implements a 3D graphics rendering engine using the OpenGL API. It sets up a camera, loads a shader and a texture, and creates a world object to render 3D chunks. The loop method updates the camera position, renders the scene, and displays the frame rate. The update method processes input events and updates the world position based on the input. The render method draws the 3D chunks using the shader and texture.",
+            "name": "Main",
+            "location": {
+              "start": 15,
+              "insert": 15,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 122,
+            "docLength": null
+          },
+          {
+            "id": "7a5963ce-eff1-15b6-5c40-d97d9a3e8248",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "initializes display and GL libraries, loops, and exits with a successful status code (0).",
+            "params": [
+              {
+                "name": "args",
+                "type_name": "String[]",
+                "description": "1 or more command line arguments passed to the program by the user, which are used to initialize and configure the graphical interface and loop.\n\n* `String[] args`: An array of strings that contains the command-line arguments passed to the program.\n* Length: The number of elements in the `args` array, which is equal to the number of command-line arguments passed to the program.\n* Elements: Each element in the `args` array represents a separate command-line argument passed to the program.",
+                "complex_type": true
+              }
+            ],
+            "name": "main",
+            "location": {
+              "start": 17,
+              "insert": 17,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "764ec988-2a15-b38b-0246-debec6afe209",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "sets up a display window with a resolution of 1920x1080, enables vsync, and prints the version of GL to the console.",
+            "params": [],
+            "name": "initDisplay",
+            "location": {
+              "start": 32,
+              "insert": 32,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": null
+          },
+          {
+            "id": "c1313996-023b-399e-054a-92f9b9f669c3",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "initializes the OpenGL context for a 3D graphics application. It sets up the camera, loads a texture, and creates a world object.",
+            "params": [],
+            "name": "initGL",
+            "location": {
+              "start": 43,
+              "insert": 43,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 41,
+            "docLength": null
+          },
+          {
+            "id": "a69f69c8-ddf5-fb9f-ca40-7207a6d67df3",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "updates a display's title and renders an image using the GL11 API every time the condition `!Display.isCloseRequested()` or `!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)` is met, until the condition `Display.isCloseRequested()` is met.",
+            "params": [],
+            "name": "loop",
+            "location": {
+              "start": 85,
+              "insert": 85,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 21,
+            "docLength": null
+          },
+          {
+            "id": "e6996064-02be-67ab-094c-3b6aa446e599",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "updates the position of an object (`w`) based on input provided by a component (`c`). The update is performed using the transform's position and the input value multiplied by a constant.",
+            "params": [
+              {
+                "name": "dt",
+                "type_name": "float",
+                "description": "time step value used to update the object's position and state in the simulation.",
+                "complex_type": false
+              }
+            ],
+            "name": "update",
+            "location": {
+              "start": 107,
+              "insert": 107,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "f8bdb312-bc2a-17a4-4b44-35fd388b34b0",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "renders a 3D scene using a shader and models. It sets up the uniforms for the shader, binds the model matrices, and draws the models.",
+            "params": [],
+            "name": "render",
+            "location": {
+              "start": 112,
+              "insert": 112,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          },
+          {
+            "id": "422aa641-336a-c78c-c44c-ad66040a9521",
+            "ancestors": [
+              "5250164b-5ad7-bab8-d04e-3c05b986ae6e"
+            ],
+            "type": "function",
+            "description": "terminates the Java process with the specified exit status.",
+            "params": [
+              {
+                "name": "status",
+                "type_name": "int",
+                "description": "exit code that the `System.exit()` method will use to terminate the application.",
+                "complex_type": false
+              }
+            ],
+            "name": "exit",
+            "location": {
+              "start": 133,
+              "insert": 133,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Vector2f.java",
+    "path": "src/com/ch/math/Vector2f.java",
+    "content": {
+      "structured": {
+        "description": "A `Vector2f` class that represents 2D vectors in mathematical terms. It contains various methods and properties for manipulating and transforming these vectors, including length, maximum value, dot product, normalization, cross product, rotation, addition, subtraction, multiplication, division, absolute value, string representation, setter methods for x and y components, and a method to convert the vector to a 3D vector.",
+        "items": [
+          {
+            "id": "23e131e1-ff3a-4c80-c04e-f6703d3db4ca",
+            "ancestors": [],
+            "type": "function",
+            "description": "is a mathematical representation of a point in 2D space with two components (x and y). It provides various methods for manipulating and calculating distances, angles, and ratios between points in 2D space.",
+            "name": "Vector2f",
+            "location": {
+              "start": 3,
+              "insert": 3,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 123,
+            "docLength": null
+          },
+          {
+            "id": "531f2d82-2a66-fbb6-eb4f-8f0337b0d076",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "calculates the Euclidean distance between a point and the origin, based on the coordinates of the point.",
+            "params": [],
+            "returns": {
+              "type_name": "float",
+              "description": "the square root of the sum of the squares of the `x` and `y` coordinates.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vec = new Vector2f(3.0, 4.0); // create a vector with components 3.0 and 4.0\nSystem.out.println(\"Length of vector is \" + vec.length()); // output the length of the vector\n// Output: Length of vector is 5.0 (the square root of 9 + 16)\n",
+              "description": ""
+            },
+            "name": "length",
+            "location": {
+              "start": 12,
+              "insert": 12,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "b2cb3a54-6837-348b-bc48-9617a9872cc3",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "computes the maximum value of its two arguments, `x` and `y`, and returns it as a float value.",
+            "params": [],
+            "returns": {
+              "type_name": "float",
+              "description": "the larger of the two input values, `x` and `y`, represented as a floating-point number.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f v1 = new Vector2f(3, 4);\nfloat maxValue = v1.max(); // output: 4\n",
+              "description": ""
+            },
+            "name": "max",
+            "location": {
+              "start": 16,
+              "insert": 16,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "127f7ea2-c0cf-09a9-1047-a27cfbce9105",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "computes the dot product of a `Vector2f` instance `r` and the current instance, returning the result as a float value.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector that dot product is being calculated with.\n\n* `x`: The real value of the first component of `r`.\n* `y`: The real value of the second component of `r`.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "float",
+              "description": "a floating-point number representing the dot product of the input `Vector2f` and the component values of the function.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector1 = new Vector2f(0, 0);\nVector2f vector2 = new Vector2f(3, 4);\nfloat result = vector1.dot(vector2);\n",
+              "description": ""
+            },
+            "name": "dot",
+            "location": {
+              "start": 20,
+              "insert": 20,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "0cae79a5-6afe-6091-6445-4c5ad793b4e5",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "normalizes a `Vector2f` object by dividing its components by the object's magnitude, resulting in a unitized vector.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` instance with scaled X and Y components based on the vector's length.\n\n* The output is a `Vector2f` object representing a normalized version of the original vector.\n* The x-component of the output is calculated as the original x-component divided by the length of the original vector.\n* The y-component of the output is calculated as the original y-component divided by the length of the original vector.\n\nThe output has a length of 1, indicating that it is a unit vector in the original coordinate system.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f myVector = new Vector2f(3, 4);\nVector2f norm = myVector.normalize();\nSystem.out.println(\"Normalized vector: \" + norm);\n",
+              "description": "\nThe output would be: Normalized vector: (0.6, 0.8)."
+            },
+            "name": "normalized",
+            "location": {
+              "start": 24,
+              "insert": 24,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "d5a90445-32e8-e996-6646-c5445aa57e64",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "computes the vector product of two vectors in the form of a single float value, where the output is equal to the product of the x-component of one vector and the y-component of the other vector, minus the product of the x-component of both vectors.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector that is being multiplied with the `x` and `y` components of the input `Vector2f` object to produce the output value.\n\n* `x`: The real part of the complex number `r`.\n* `y`: The imaginary part of the complex number `r`.\n* `getY()` and `getX()`: Methods used to retrieve the values of `y` and `x`, respectively, from the deserialized input `r`.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "float",
+              "description": "a scalar value representing the cross product of two vectors in polar coordinates.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "import com.ch.math.Vector2f;\n\npublic class Example {\n    public static void main(String[] args) {\n        Vector2f a = new Vector2f(10, 4);\n        Vector2f b = new Vector2f(7, -3);\n        System.out.println(\"The cross product is \" + a.cross(b));\n    }\n}\n",
+              "description": ""
+            },
+            "name": "cross",
+            "location": {
+              "start": 30,
+              "insert": 30,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "6b2b4ebe-1b34-7eb8-aa44-410d8378621a",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "interpolates a Vector2f value between two given values, using a linear interpolation based on the `lerpFactor`.",
+            "params": [
+              {
+                "name": "dest",
+                "type_name": "Vector2f",
+                "description": "2D position to which the object will be interpolated between its current position and the specified `lerpFactor`.\n\n`dest`: A `Vector2f` instance representing the destination point. It has two components, x and y, representing the coordinates of the point in the 2D space.",
+                "complex_type": true
+              },
+              {
+                "name": "lerpFactor",
+                "type_name": "float",
+                "description": "factor by which the current position is to be interpolated towards the `dest` position.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` object representing the interpolation of the input `Vector2f` and the destination `Vector2f`.\n\nThe returned value is a `Vector2f` object that represents the interpolated position between the input `this` and the destination `dest`. The interpolation is performed using the `sub`, `mul`, and `add` methods.\n\nThe `sub` method is used to subtract the `this` position from the `dest` position, resulting in a vector representation of the difference between the two positions.\n\nThe `mul` method is used to multiply the result of the subtraction by the `lerpFactor`, which determines the interpolation weight between the two positions.\n\nFinally, the `add` method is used to add the interpolated position to the `this` position, resulting in the final interpolated position that is returned as the output of the `lerp` function.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f v1 = new Vector2f(0, 0);\nVector2f v2 = new Vector2f(10, 10);\nfloat lerpFactor = 0.5;\nv2.lerp(v1, lerpFactor).toString(); // Output: (5.0 5.0)\n",
+              "description": ""
+            },
+            "name": "lerp",
+            "location": {
+              "start": 34,
+              "insert": 34,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "3cab8560-5206-33bf-4845-667228fc6274",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "takes a float argument representing the angle of rotation and returns a new `Vector2f` instance with its x-coordinate rotated by the specified angle and its y-coordinate unchanged.",
+            "params": [
+              {
+                "name": "angle",
+                "type_name": "float",
+                "description": "angle of rotation in radians, which is used to calculate the cosine and sine values that are applied to the `x` and `y` components of the returned `Vector2f` object.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` object with the x and y components rotated by the specified angle.\n\nThe output is a `Vector2f` object, which represents a 2D point with x and y components. The x and y components of the output are calculated using the angle passed as a parameter, which is represented in radians. Specifically, the x component is equal to the original x coordinate multiplied by the cosine of the angle, while the y component is equal to the original y coordinate multiplied by the sine of the angle.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    Vector2f v1 = new Vector2f(10, 2);\n    float angle = 45;\n    \n    Vector2f result = v1.rotate(angle);\n    \n    System.out.println(\"Rotated vector: \" + result);\n}\n",
+              "description": ""
+            },
+            "name": "rotate",
+            "location": {
+              "start": 38,
+              "insert": 38,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "2927835c-6f1f-848b-834d-147c47f61437",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "adds two `Vector2f` objects and returns a new object with the sum of their x and y components.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector to be added to the current vector.\n\n`x`: The x-coordinate of the vector.\n`y`: The y-coordinate of the vector.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` object representing the sum of the input vector and the given vector.\n\n* The returned vector has an x-component that is the sum of the x-components of the two input vectors.\n* The returned vector has a y-component that is the sum of the y-components of the two input vectors.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f v1 = new Vector2f(3, 4);\nVector2f v2 = new Vector2f(5, 6);\nVector2f v3 = v1.add(v2); // Returns a new Vector2f object with the sum of the two vectors as its components. In this case, (8, 10).\n",
+              "description": ""
+            },
+            "name": "add",
+            "location": {
+              "start": 46,
+              "insert": 46,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "42621980-ee3d-1f98-7646-be6dce8a3ac0",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "adds a scalar value to the existing vector components, resulting in a new vector with updated coordinates.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "float",
+                "description": "2D vector to be added to the current vector representation of the class.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` object representing the sum of the original vector and the given float value.\n\n* The return type is `Vector2f`, which represents a 2D vector with two components (x and y).\n* The expression `x + r` computes the new x-component of the vector, where `r` is a float value.\n* Similarly, the expression `y + r` computes the new y-component of the vector.\n\nAs a result, the returned output has two components that represent the sum of the original vector's x and y components with the input float value `r`.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vec1 = new Vector2f(2, 4);\nfloat r = 3;\nVector2f vec2 = vec1.add(r);\nSystem.out.println(vec2);\n",
+              "description": "\nIn this example, the method add is called on an instance of a vector class Vector2f with parameter r of type float. The resulting vector is then printed to the console."
+            },
+            "name": "add",
+            "location": {
+              "start": 50,
+              "insert": 50,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "797bb28b-f4a6-8ab9-3940-b6ba1a004c0e",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "adds a float value to the `x` and `y` components of an existing `Vector2f` object, returning a new `Vector2f` object with the updated values.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "float",
+                "description": "2D position to add to the existing position of the vector.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "float",
+                "description": "2nd component of the resulting vector, which is calculated by adding it to the current value of the `y` component of the `this` object.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` instance representing the sum of the input `x` and `y` values.\n\nThe returned Vector2f object represents the sum of the current instance's x-coordinate and the input argument x, and the sum of the current instance's y-coordinate and the input argument y. Therefore, the x-coordinate and y-coordinate of the returned object will be equal to the sum of the corresponding coordinates of the current instance and the input arguments.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vec1 = new Vector2f(3, 4); // (x, y)\nvec1.add(5, 6);                    // returns a new vector with (8, 10)\n",
+              "description": ""
+            },
+            "name": "add",
+            "location": {
+              "start": 54,
+              "insert": 54,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "2d9a98d7-18e4-5d92-0d48-6f57808a615d",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "takes a `Vector2f` argument `r` and returns a new `Vector2f` instance representing the difference between the current vector's coordinates and those of the provided vector.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector that the function subtracts from the input vector `x` and `y`.\n\n* `x`: an integer value representing the x-coordinate of the input vector.\n* `y`: an integer value representing the y-coordinate of the input vector.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new vector with the difference between the input vector's coordinates and the reference vector's coordinates.\n\nThe returned vector has two components, representing the difference between the original vector's components and the input parameter's components. Specifically, the x-component is equal to the original vector's x-component minus the input parameter's x-component, while the y-component is equal to the original vector's y-component minus the input parameter's y-component.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector = new Vector2f(3, 5);\nVector2f subvector = new Vector2f(7, 10);\n\nvector.sub(subvector); // returns a new Vector2f object with values (x = -4, y = -5)\n",
+              "description": ""
+            },
+            "name": "sub",
+            "location": {
+              "start": 58,
+              "insert": 58,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "9b858ea0-289f-f481-cd4d-40f35ec35002",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "takes a single floating-point argument `r` and returns a new `Vector2f` object representing the difference between the current vector's coordinates and `r`.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "float",
+                "description": "2D vector to subtract from the current vector.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` instance representing the difference between the original vector and the given value.\n\nThe `Vector2f` object returned by the function has two components: `x` and `y`. The `x` component represents the difference between the original vector's `x` coordinate and the input `r`, while the `y` component represents the difference between the original vector's `y` coordinate and the input `r`.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n\tVector2f vector2f = new Vector2f(10, 5);\n\tfloat r = 2;\n\n\tvector2f.sub(r);\n}\n",
+              "description": "\nIn this example, the value of r is a float with the value of 2, and it is subtracted from the values of x and y in vector2f. The resulting vector2f would have the values (8, 3)."
+            },
+            "name": "sub",
+            "location": {
+              "start": 62,
+              "insert": 62,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "9822891c-4935-53be-ce4c-0e33b874c250",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "multiplies a `Vector2f` object by another `Vector2f` object, returning a new `Vector2f` object with the product of the two values.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector that the method will multiply with the original vector.\n\nThe `Vector2f` class represents a 2D vector in homogeneous coordinates, with two components: `x` and `y`. The `r` object is also an instance of `Vector2f`, which means it has the same components as the input to the `mul` function.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new vector with the product of the input vector's x and y components multiplied by the corresponding values of the given vector.\n\nThe `Vector2f` object returned by the function represents the product of the current vector and the given vector `r`. The product is computed as the sum of the products of the corresponding components of the vectors. Specifically, the output has the same x-component as the product of the current vector's x-component and the given vector's x-component, and the same y-component as the product of the current vector's y-component and the given vector's y-component.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f v = new Vector2f(10, 5);\nVector2f v2 = new Vector2f(3, 2);\nv.mul(v2) // returns a new Vector2f with x=30 and y=10\n",
+              "description": ""
+            },
+            "name": "mul",
+            "location": {
+              "start": 66,
+              "insert": 66,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "256f98b8-1470-c78e-6140-27fec781281b",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "multiplies the `Vector2f` instance x and y by a float value r and returns a new `Vector2f` instance with the product.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "float",
+                "description": "scaling factor applied to the vector's x and y components.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` instance with the product of the `x` and `y` components of the input vector multiplied by the scalar value `r`.\n\n* The output is a `Vector2f` object, which represents a 2D vector in homogeneous coordinates.\n* The x-component and y-component of the output are calculated by multiplying the corresponding components of the input `Vector2f` object with the scalar value `r`.\n* The resulting vector has the same direction as the input vector, but its magnitude is equal to the product of the input vector's magnitude and the scalar value `r`.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n\tpublic static void main(String[] args) {\n\t\tVector2f v1 = new Vector2f(3, 4);\n\t\tfloat r = 5;\n\t\tVector2f result = v1.mul(r);\n        System.out.println(\"Result: \" + result); // Outputs (15 20)\n\t}\n}\n",
+              "description": ""
+            },
+            "name": "mul",
+            "location": {
+              "start": 70,
+              "insert": 70,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "f8c9e9cc-e4a1-1ba8-1049-45d5100cd64a",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "takes a `Vector2f` argument `r` and returns a new `Vector2f` with the values of `x` and `y` divided by the corresponding values of `r`.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "vector that the method will divide the current vector by.\n\n* `x`: The x-coordinate of the input vector.\n* `y`: The y-coordinate of the input vector.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a vector with the same x-coordinate as the input vector, scaled by the reciprocal of the x-coordinate of the argument vector.\n\n* The returned vector has the same magnitude as the original input vector `r`.\n* The x-component of the returned vector is equal to the original x-component divided by the x-component of `r`, while the y-component is equal to the original y-component divided by the y-component of `r`.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector1 = new Vector2f(3, 4); // The values in the brackets are the x and y values respectively\nVector2f vector2 = new Vector2f(5, 6); // These values are not important for this example. They can be any value as long as they are used correctly.\nvector1.div(vector2); // This will return a new Vector2f object with the x and y values of vector1 divided by the x and y values of vector2\n",
+              "description": ""
+            },
+            "name": "div",
+            "location": {
+              "start": 74,
+              "insert": 74,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "378de0ec-36c5-f0a6-6942-574c1182c0c2",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "takes a single float argument `r` and returns a new `Vector2f` instance with x and y components scaled by the ratio of `r`.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "float",
+                "description": "scalar value used to divide the vector's x and y components.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a vector with the x and y coordinates scaled by the input parameter `r`.\n\nThe returned output is a `Vector2f` object, which represents a 2D point with x and y components.\n\nThe x component of the output is equal to the `x` component of the input vector divided by the input value `r`.\n\nThe y component of the output is equal to the `y` component of the input vector divided by the input value `r`.\n\nOverall, the function reduces the magnitude of the input vector by a specified factor, resulting in a smaller 2D point.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector = new Vector2f(10, 20);\nfloat r = 5;\n\nVector2f result = vector.div(r);\n\nSystem.out.println(\"Result: \" + result); // Output: Result: (2, 4)\n",
+              "description": ""
+            },
+            "name": "div",
+            "location": {
+              "start": 78,
+              "insert": 78,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "3485770f-1001-b18b-5c4c-7ac2dded6a23",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "returns a new `Vector2f` object with the absolute value of its input components.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a new `Vector2f` object containing the absolute values of its input components.\n\n* The returned Vector2f object represents the absolute value of the original Vector2f object's x and y components.\n* The Vector2f class in Java has two components, x and y, which represent the coordinates of a 2D point.\n* The `Math.abs()` method calculates the absolute value of a double value, returning its magnitude without considering its sign.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f v = new Vector2f(-1, -3);\nVector2f result = v.abs();\nSystem.out.println(result); // Outputs (1, 3)\n",
+              "description": ""
+            },
+            "name": "abs",
+            "location": {
+              "start": 82,
+              "insert": 82,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "1f5ca17c-125b-b6a9-444b-df91432690c4",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "returns a string representation of an object by concatenating two values, `x` and `y`.",
+            "params": [],
+            "returns": {
+              "type_name": "String",
+              "description": "a string representation of the given coordinates, consisting of the values of `x` and `y` separated by a space.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector = new Vector2f(5, 3);\nSystem.out.println(vector.toString()); // prints (5 3)\n",
+              "description": ""
+            },
+            "name": "toString",
+            "location": {
+              "start": 86,
+              "insert": 86,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "e903ffe9-4e3d-c488-f147-23781b17ae6d",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "updates the `x` and `y` properties of the `Vector2f` object to the provided values, returning the updated object reference.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "float",
+                "description": "2D coordinate of the vector's point where the set operation should occur.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "float",
+                "description": "2D coordinate value that updates the `y` component of the `Vector2f` object.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "instance",
+              "description": "a reference to the same `Vector2f` instance with updated `x` and `y` values.\n\nThe `Vector2f` object is updated with the new values of `x` and `y`.\n\nAfter updating the values, the returned output is the same `Vector2f` object that was passed as an argument to the function.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class TestVector2f {\n\tpublic static void main(String[] args) {\n\t\tfloat x = 1.0;\n\t\tfloat y = 2.0;\n\t\tVector2f v = new Vector2f();\n\t\tv.set(x, y);\n\t}\n}\n",
+              "description": ""
+            },
+            "name": "set",
+            "location": {
+              "start": 90,
+              "insert": 90,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "36e3d7e8-3c4c-7fad-9c4b-af3cce900f5f",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "sets the x and y components of a vector to the corresponding values of an argument vector.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector that contains the new values for the `x` and `y` components of the `Vector2f` object, which are then set to those values in the function.\n\n* `getX()` and `getY()`: These methods return the x-coordinate and y-coordinate of the vector, respectively.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Vector2f",
+              "description": "a reference to the original vector with the x and y components updated.\n\nThe method `set(r.getX(), r.getY());` sets the x-coordinate and y-coordinate of the vector to the corresponding values in the input vector `r`. The method returns a reference to the same vector object, indicating that the original object is unchanged.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector = new Vector2f(1, 2);\nvector.set(new Vector2f(3, 4));\nSystem.out.println(vector); // Outputs (3, 4)\n",
+              "description": ""
+            },
+            "name": "set",
+            "location": {
+              "start": 96,
+              "insert": 96,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "a26cb9bf-771f-6790-c346-f898520d31c6",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "converts a `Vector2f` instance into a `Vector3f` instance by adding a third component representing the z-value to be zero.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a new `Vector3f` instance representing the point (x, y, 0) in 3D space.\n\n* The `x`, `y`, and `z` values represent the coordinates of the 3D vector in the range of -1 to 1.\n* The vector is a `Vector3f` object, which can be used for various mathematical operations related to 3D vectors.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    Vector2f vector = new Vector2f(1, 0);\n    Vector3f threeDVector = vector.as3DVector();\n}\n",
+              "description": "\nIn the above example, a Vector2f object is created with values for x and y coordinates of (1, 0) respectively. The as3DVector() method is called on this Vector2f instance to create a new 3D vector with a third coordinate of 0. This new Vector3f object is then stored in the threeDVector variable.\nNote:\nIt's important to note that the method as3DVector() returns a new object, it doesn't change the state of the existing Vector2f object."
+            },
+            "name": "as3DVector",
+            "location": {
+              "start": 101,
+              "insert": 101,
+              "offset": " ",
+              "indent": 4,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "78b96912-5bdb-a989-e949-ccfc99cccf6b",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "returns the value of the `x` field.",
+            "params": [],
+            "returns": {
+              "type_name": "float",
+              "description": "a floating-point value representing the variable `x`.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Vector2f myVector = new Vector2f(1, 3);\n        System.out.println(myVector.getX());\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getX",
+            "location": {
+              "start": 105,
+              "insert": 105,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "83592c96-ce74-1ebc-d143-beddf3b704bc",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "sets the value of the `x` field of the object to which it belongs.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "float",
+                "description": "Float value that will be assigned to the member field `x` of the object on which the `setX()` method is called.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Vector2f myVector = new Vector2f();\nmyVector.setX(10); // sets x to 10\nSystem.out.println(myVector);\n// prints (10, 0)\n",
+              "description": ""
+            },
+            "name": "setX",
+            "location": {
+              "start": 109,
+              "insert": 109,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "3636baf3-fac2-0d97-c047-1539dcaa0c4f",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "retrieves the value of the `y` field, which is a `float` variable, and returns its value.",
+            "params": [],
+            "returns": {
+              "type_name": "float",
+              "description": "the value of the `y` field, which is a `float` variable.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector = new Vector2f(10, 20);\nfloat yCoordinate = vector.getY();\nSystem.out.println(yCoordinate);\n// Output: 20\n",
+              "description": ""
+            },
+            "name": "getY",
+            "location": {
+              "start": 113,
+              "insert": 113,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "f1d7575a-4b06-6a9b-414a-d6c1b3e8581c",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "sets the value of the object's `y` field to the input parameter `y`.",
+            "params": [
+              {
+                "name": "y",
+                "type_name": "float",
+                "description": "2D coordinate of a point to which the `setY()` method will assign the value passed as argument.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Vector2f vector = new Vector2f(3, 4);\nvector.setY(5); // Set the y-component to 5\nSystem.out.println(vector); // Outputs (3, 5)\n",
+              "description": ""
+            },
+            "name": "setY",
+            "location": {
+              "start": 117,
+              "insert": 117,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "487973c8-791d-1e9d-e341-c55af752b7c3",
+            "ancestors": [
+              "23e131e1-ff3a-4c80-c04e-f6703d3db4ca"
+            ],
+            "type": "function",
+            "description": "compares the object reference `this` with another `Vector2f` object `r`. It returns a boolean value indicating whether the x- and y-components of `this` are equal to the corresponding components of `r`.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector2f",
+                "description": "2D vector to compare with the current vector.\n\n* `x`: represents the x-coordinate of the vector.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "boolean",
+              "description": "a boolean value indicating whether the vector's x and y coordinates are equal to those of the provided vector.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    Vector2f v1 = new Vector2f(5, 5);\n    Vector2f v2 = new Vector2f(7, 7);\n\n    if (v1.equals(v2)) {\n        System.out.println(\"Vectors are equal.\");\n    } else {\n        System.out.println(\"Vectors are not equal.\");\n    }\n}\n",
+              "description": ""
+            },
+            "name": "equals",
+            "location": {
+              "start": 121,
+              "insert": 121,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  }
+]

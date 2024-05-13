@@ -12,8 +12,30 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * in this Java program implements a 3D graphics rendering engine using the OpenGL
+ * API. It sets up a camera, loads a shader and a texture, and creates a world object
+ * to render 3D chunks. The loop method updates the camera position, renders the
+ * scene, and displays the frame rate. The update method processes input events and
+ * updates the world position based on the input. The render method draws the 3D
+ * chunks using the shader and texture.
+ */
 public class Main {
 	
+	/**
+	 * initializes display and GL libraries, loops, and exits with a successful status
+	 * code (0).
+	 * 
+	 * @param args 1 or more command line arguments passed to the program by the user,
+	 * which are used to initialize and configure the graphical interface and loop.
+	 * 
+	 * 	- `String[] args`: An array of strings that contains the command-line arguments
+	 * passed to the program.
+	 * 	- Length: The number of elements in the `args` array, which is equal to the number
+	 * of command-line arguments passed to the program.
+	 * 	- Elements: Each element in the `args` array represents a separate command-line
+	 * argument passed to the program.
+	 */
 	public static void main(String[] args) {
 		initDisplay();
 		initGL();
@@ -29,6 +51,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * sets up a display window with a resolution of 1920x1080, enables vsync, and prints
+	 * the version of GL to the console.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -40,6 +66,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * initializes the OpenGL context for a 3D graphics application. It sets up the camera,
+	 * loads a texture, and creates a world object.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -82,6 +112,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * updates a display's title and renders an image using the GL11 API every time the
+	 * condition `!Display.isCloseRequested()` or `!Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)`
+	 * is met, until the condition `Display.isCloseRequested()` is met.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -104,11 +139,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * updates the position of an object (`w`) based on input provided by a component
+	 * (`c`). The update is performed using the transform's position and the input value
+	 * multiplied by a constant.
+	 * 
+	 * @param dt time step value used to update the object's position and state in the simulation.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * renders a 3D scene using a shader and models. It sets up the uniforms for the
+	 * shader, binds the model matrices, and draws the models.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -130,6 +176,12 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * terminates the Java process with the specified exit status.
+	 * 
+	 * @param status exit code that the `System.exit()` method will use to terminate the
+	 * application.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}
