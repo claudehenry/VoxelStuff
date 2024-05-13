@@ -1,14 +1,15 @@
 {
   "meta": {
     "version": "1",
-    "updated_at": "2024-05-13T12:18:13.998Z",
+    "updated_at": "2024-05-13T20:07:07.996Z",
     "created_at": "2024-05-13T12:23:35.771Z",
     "pipelines": []
   },
   "lookup": [
     [
       "src/com/ch/Main.java",
-      "src/com/ch/math/Vector2f.java"
+      "src/com/ch/math/Vector2f.java",
+      "src/com/ch/Model.java"
     ]
   ]
 }
