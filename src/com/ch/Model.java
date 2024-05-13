@@ -76,5 +76,4 @@ public class Model {
 	private static void unbindVAO() {
 		GL30.glBindVertexArray(0);
 	}
-	
 }
