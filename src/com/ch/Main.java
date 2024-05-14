@@ -12,8 +12,25 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * in the provided code is responsible for handling the rendering of a 3D scene using
+ * the Java OpenGL API. It sets up the OpenGL context, loads a shader and a texture,
+ * and creates a camera and world objects. The loop function updates the position of
+ * the camera and renders the scene using the shader and texture. The program also
+ * includes an exit function to shut down the application.
+ */
 public class Main {
 	
+	/**
+	 * initializes displays and graphics libraries, enters an event-processing loop, and
+	 * then exits with a status code of 0.
+	 * 
+	 * @param args 0 or more command line arguments passed to the `main()` function when
+	 * the program is started, which are ignored and have no effect on the program's execution.
+	 * 
+	 * 	- Length: 0 (since it's an array of strings)
+	 * 	- Elements: null or empty array (depending on how the program was launched)
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +47,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * sets up a display mode with resolution 1920x1080, creates a GL context with forward
+	 * compatibility and VSync enabled, and prints the current GL version to the console.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +62,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * sets up the GL environment for rendering a 3D world. It initializes the camera,
+	 * loads a shader, and creates a texture and vertices for a 3D model.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +108,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * initializes a timer, enters an infinite while loop that checks if the display is
+	 * closed or the escape key is pressed. If not, it updates the timer and displays
+	 * information about FPS, memory usage, and rendering.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +135,23 @@ public class Main {
 		
 	}
 	
+	/**
+	 * updates the position of an object `w` based on input from a component `c` and a
+	 * time increment `dt`.
+	 * 
+	 * @param dt time step or elapsed time since the last update, which is used to calculate
+	 * the position of the object in the world space.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * renders a 3D scene using a shader program and a model. It sets up the rendering
+	 * pipeline, binds the model, applies transformations to the view and projection
+	 * matrices, and then draws the model.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +173,12 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * terminates the Java process with a specified exit code.
+	 * 
+	 * @param status value to be passed to the `System.exit()` method, indicating the
+	 * exit status of the program.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}
