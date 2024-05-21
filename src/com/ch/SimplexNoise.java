@@ -40,6 +40,14 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 {2,0,1,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,0,1,2},{3,0,2,1},{0,0,0,0},{3,1,2,0},
 	 {2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}};
 	 // This method is a *lot* faster than using (int)Math.floor(x)
+		/**
+		 * Returns the integer nearest to a given double value, rounding down if positive and
+		 * up if negative.
+		 * 
+		 * @param x floating-point value for which the fast floor function is calculated.
+		 * 
+		 * @returns an integer value rounded from a given double value.
+		 */
 	 private static int fastfloor(double x) {
 	 return x>0 ? (int)x : (int)x-1;
 	 }
@@ -50,6 +58,19 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 private static double dot(int g[], double x, double y, double z, double w) {
 	 return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 	 // 2D simplex noise
+		/**
+		 * Generates high-quality noise values for a given x and y coordinates, based on a
+		 * triangular simplex hash. It calculates the contribution from each of the three
+		 * simplex corners, then adds them to obtain the final noise value.
+		 * 
+		 * @param xin 2D coordinates of the point where noise is being generated.
+		 * 
+		 * @param yin 2D coordinate of the point where the noise is being evaluated, and it
+		 * is used to compute the unskewed distance from the simplex cell origin.
+		 * 
+		 * @returns a value between -1 and 1 that represents a random noise value in the given
+		 * input space.
+		 */
 	 public static double noise(double xin, double yin) {
 	 double n0, n1, n2; // Noise contributions from the three corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -105,6 +126,23 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 70.0 * (n0 + n1 + n2);
 	 }
 	 // 3D simplex noise
+		/**
+		 * Generates a noise value for a given point in 3D space based on a simplex-based
+		 * algorithm. It takes three double arguments (x, y, z) and returns a double value
+		 * within [-1, 1].
+		 * 
+		 * @param xin 3D coordinate of the point in space where the noise is being evaluated,
+		 * and it is used to calculate the skew factor `F3` and the offset `X0` for the simplex
+		 * shape.
+		 * 
+		 * @param yin 2D input value for the Y component of the 3D noise generation.
+		 * 
+		 * @param zin 3D coordinate of the cell center, which is used to calculate the skew
+		 * factor and the hashed gradient indices for the simplex shape calculation.
+		 * 
+		 * @returns a scaled noise value between [-1, 1], calculated using the Hashed Gradient
+		 * Noise method.
+		 */
 	 public static double noise(double xin, double yin, double zin) {
 	 double n0, n1, n2, n3; // Noise contributions from the four corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -187,6 +225,27 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 32.0*(n0 + n1 + n2 + n3);
 	 }
 	 // 4D simplex noise
+		/**
+		 * Generates a noise signal in 4D space, based on a set of simplex corners and
+		 * gradients. It calculates contributions from each corner and scales them to produce
+		 * a value between -1 and 1.
+		 * 
+		 * @param x 4D space coordinate x and is used to calculate the contribution from the
+		 * five simplex corners.
+		 * 
+		 * @param y 2D coordinate of the point in the 4D space, which is skewed and unskewed
+		 * to determine its position within one of the 24 possible simplices.
+		 * 
+		 * @param z 4D space coordinate, which is used to determine the location of the simplex
+		 * corner in question.
+		 * 
+		 * @param w 4th dimension of the noise function, which is used to compute the
+		 * contribution from the fifth simplex corner in the formula for `n0`, `n1`, `n2`,
+		 * `n3`, and `n4`.
+		 * 
+		 * @returns a scalar value between -1 and 1, representing the noise contribution from
+		 * a set of five corners in a 4D simplex.
+		 */
 	 double noise(double x, double y, double z, double w) {
 
 	 // The skewing and unskewing factors are hairy again for the 4D case
@@ -212,7 +271,7 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 // To find out which of the 24 possible simplices we're in, we need to
 	 // determine the magnitude ordering of x0, y0, z0 and w0.
 	 // The method below is a good way of finding the ordering of x,y,z,w and
-	 // then find the correct traversal order for the simplex we’re in.
+	 // then find the correct traversal order for the simplex weÂ’re in.
 	 // First, six pair-wise comparisons are performed between each possible pair
 	 // of the four coordinates, and the results are used to add up binary bits
 	 // for an integer index.

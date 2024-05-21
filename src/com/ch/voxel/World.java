@@ -21,6 +21,10 @@ public class World {
 		gen();
 	}
 	
+	/**
+	 * Iterates over a 3D grid of chunks, creating new chunks at each iteration and
+	 * updating their blocks and models.
+	 */
 	private void gen() {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
@@ -31,6 +35,21 @@ public class World {
 				}
 	}
 
+	/**
+	 * Updates the position of an object based on its x, y, and z coordinates, comparing
+	 * them to those of a reference object. It then generates new chunks if necessary and
+	 * updates the chunks' positions accordingly.
+	 * 
+	 * @param x 2D coordinate of the chunk being updated, which is used to determine
+	 * whether any changes have occurred and whether the update logic should be executed.
+	 * 
+	 * @param y 2D coordinate of the position to be updated, and it is used to determine
+	 * the corresponding chunk and block within that chunk.
+	 * 
+	 * @param z 3rd dimension of the chunk position and is used to calculate the difference
+	 * between the current chunk's position and the specified position, which determines
+	 * whether the chunk needs to be updated or not.
+	 */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
 		final int _y = 0;//(int) (y / Chunk.CHUNK_SIZE);
@@ -215,6 +234,16 @@ public class World {
 		/* welp... this logic sure looks aweful */
 	}
 
+	/**
+	 * Takes a shader object `s`, a camera object `c`, and renders 3D objects represented
+	 * by chunks within a 2D space, using the shader's uniforms to colorize the objects.
+	 * 
+	 * @param s 3D rendering shader object that is being rendered, and it is used to set
+	 * the uniform values for the shader's color and modelview projection matrix.
+	 * 
+	 * @param c 3D camera object used to render the scene, and it is used to calculate
+	 * the view-projection matrix that is applied to the 3D model objects in the scene.
+	 */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)

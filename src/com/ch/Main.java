@@ -12,8 +12,28 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * in the provided Java file contains various methods for initializing displays and
+ * GL contexts, updating and rendering a 3D world, and exiting the program. The class
+ * also includes instances of a `Camera3D`, `Shader`, `Texture`, and `World` object,
+ * which are used to render the 3D scene.
+ */
 public class Main {
 	
+	/**
+	 * initializes display and GL components, enters an infinite loop to render graphics,
+	 * and then exits with a successful exit code of 0.
+	 * 
+	 * @param args program's command-line arguments passed from the operating system or
+	 * user, which are ignored in this case and have no effect on the program's execution.
+	 * 
+	 * 	- `String[] args`: This represents an array of strings containing the command-line
+	 * arguments passed to the program during execution.
+	 * 	- Length: The number of elements in the `args` array, which can be retrieved using
+	 * the `length` property.
+	 * 	- Elements: Each element in the array represents a separate argument passed to
+	 * the program, which can be accessed using the corresponding index (e.g., `args[0]`).
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +50,11 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * initializes the display settings for a Java application, including setting the
+	 * screen resolution and enabling VSync. It also prints the GL version number using
+	 * `GL11.glGetString()`.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +66,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * initializes OpenFL's GL renderer by setting up a camera, loading a shader, creating
+	 * textures, and defining vertices and indices for rendering a 3D scene.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +112,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * initiates a timer, enters an infinite loop while a close request is not received
+	 * and the escape key is not pressed. It updates and displays the frame rate, memory
+	 * usage, and renders the game environment using OpenGL.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +139,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * updates the position of an object (w) based on input from a component (c) and time
+	 * (dt).
+	 * 
+	 * @param dt Δt (time step) used to advance the simulation.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * performs rendering operations on a 3D model using a shader program. It sets up the
+	 * view and projection matrices, applies transformations to the model matrix, and
+	 * draws the model.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +176,12 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * terminates the Java process with a specified exit status.
+	 * 
+	 * @param status 0-based exit code that the `System.exit()` method will use to terminate
+	 * the Java process.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}

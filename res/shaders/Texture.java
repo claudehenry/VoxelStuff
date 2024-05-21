@@ -27,6 +27,13 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * in Java provides a simple way to handle textures in a game engine. It takes a file
+ * path as a constructor argument and loads the texture data from the file using
+ * ImageIO. The loaded texture data is then bound to a specific texture slot using
+ * the bind() method. The ID of the loaded texture can be retrieved using the getID()
+ * method.
+ */
 public class Texture {
 	
 	private String fileName;
@@ -37,24 +44,56 @@ public class Texture {
 		this.id = Texture.loadTexture(fileName);
 	}
 
+	/**
+	 * is a Java override that lacks any functionality, as it does not perform any
+	 * operations or assign any values. It is typically used to prevent unused resources
+	 * from being deleted or released when an object is garbage collected.
+	 */
 	@Override
 	protected void finalize() {
 	}
 
+	/**
+	 * binds an interface to a specific implementation, with the parameter `bind(int
+	 * index)` indicating the position of the interface in the bound list.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * specifies which texture unit to use for rendering purposes by assigning it a
+	 * specific slot number (between 0 and 31) and subsequently referencing its ID using
+	 * `glBindTexture`.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot in the GPU, with values ranging
+	 * from 0 to 31, which the function uses to select and bind the corresponding texture
+	 * to the current texture mapping operation.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * returns the `id` variable, which represents a unique identifier for an object or
+	 * entity.
+	 * 
+	 * @returns the value of the `id` field.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * loads an image file into a texture object in OpenGL, handling alpha channel and
+	 * wrapping behavior. It returns the ID of the generated texture.
+	 * 
+	 * @param fileName name of the file containing the image data to be loaded as a texture.
+	 * 
+	 * @returns an integer ID representing a textured OpenGL buffer.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
