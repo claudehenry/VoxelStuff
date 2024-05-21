@@ -8,13 +8,13 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 /**
- * is an extension of the Camera class that provides additional functionality for
- * manipulating a camera's position and orientation in 3D space. It includes a
- * calculateProjectionMatrix method, which calculates the camera's projection matrix
- * based on its fov, aspect, zNear, and zFar parameters. The class also has a
- * adjustToViewport method that adjusts the camera's projection matrix based on the
- * viewport dimensions, and a processInput method that processes input events such
- * as mouse movements and keyboard shortcuts to move the camera around.
+ * is an extension of the Camera Class that includes additional functionality for
+ * handling 3D camera inputs and calculations. It has a constructor that takes fov,
+ * aspect, zNear, and zFar parameters to initialize the camera's projection matrix.
+ * The class also has a method adjustToViewport that adjusts the camera's projection
+ * matrix based on the viewport dimensions. Additionally, the class has a protected
+ * inner class CameraStruct3D that contains the camera's projection matrix, which is
+ * used in the calculateProjectionMatrix method.
  */
 public class Camera3D extends Camera {
 
@@ -25,31 +25,20 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * calculates a 4x4 matrix representing a perspective projection, based on the input
-	 * `CameraStruct` data.
+	 * calculates a projection matrix based on input data from a `CameraStruct`.
 	 * 
-	 * @param data 3D camera structure containing the parameters for calculating the
-	 * projection matrix.
+	 * @param data 3D camera information that is used to calculate the projection matrix.
 	 * 
-	 * 	- `projection`: The input `data` contains a 4x4 matrix representation of the
-	 * camera's projection parameters.
-	 * 	- `getAsMatrix4()`: This method returns the `data` object as a 4x4 matrix representation.
+	 * 	- `getAsMatrix4()` is an instance method that returns a `Matrix4f` object
+	 * representing the 4x4 homogeneous transformation matrix for the camera.
 	 * 
-	 * @returns a Matrix4f object representing the camera's projection matrix.
+	 * @returns a Matrix4f object representing the projection matrix based on the provided
+	 * camera data.
 	 * 
-	 * The output is a `Matrix4f` object representing a 4x4 matrix. This matrix contains
-	 * the projection parameters in the form of homogeneous coordinates, where each element
-	 * represents a value between 0 and 1 that determines the perspective projection of
-	 * a 3D point on the image plane.
-	 * 
-	 * The matrix has four rows, each representing a different component of the projection
-	 * transformation: translation, rotation, scaling, and shearing. Each row is a 4x1
-	 * vector containing the corresponding values for that component.
-	 * 
-	 * The matrix elements are arranged in a specific order, with the upper-left element
-	 * being the translation vector, followed by the rotation, scaling, and shearing
-	 * vectors in the correct order. This arrangement allows for efficient computation
-	 * of the perspective projection of a 3D point on the image plane using the matrix.
+	 * The `Matrix4f` object that is returned represents the projection matrix in 3D
+	 * space. It contains the necessary values for transforming 3D points and vectors
+	 * into screen coordinates. The matrix has four rows and four columns, with each
+	 * element representing a value in the range of -1 to 1.
 	 */
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
@@ -57,12 +46,13 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * adjusts a 3D object's projection and view matrices to fit within the specified
-	 * width and height of the viewport.
+	 * adjusts the camera's projection and view matrices to fit within the specified width
+	 * and height of the viewport, while maintaining the aspect ratio of the scene.
 	 * 
 	 * @param width 2D viewport width.
 	 * 
-	 * @param height 2D screen size of the viewport into which the 3D scene will be rendered.
+	 * @param height vertical dimension of the viewport for which the camera's projection
+	 * and view matrices are calculated.
 	 */
 	@Override
 	public void adjustToViewport(int width, int height) {
@@ -76,11 +66,10 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * is a custom implementation of the Camera Struct in Java, which extends the basic
-	 * Camera Struct with additional functionality for handling perspective projection
-	 * and viewport adjustments. The class provides a Matrix4f object for representing
-	 * the camera's projection matrix, and offers methods for calculating the matrix based
-	 * on the camera's parameters and adjusting it to the viewport size.
+	 * is an extension of the CameraStruct class and provides additional functionality
+	 * for handling 3D camera movements. It has fields for fov, aspect, zNear, and zFar,
+	 * which are used to calculate the camera's perspective matrix. The class also provides
+	 * a method for getting the camera's perspective matrix as a Matrix4f object.
 	 */
 	protected class CameraStruct3D extends CameraStruct {
 
@@ -94,18 +83,18 @@ public class Camera3D extends Camera {
 		}
 
 		/**
-		 * returns a matrix representing a perspective projection, where the field of view
-		 * (fov), aspect ratio, near and far distances are set.
+		 * initializes a `Matrix4f` object with a perspective projection matrix based on field
+		 * of view (`fov`), aspect ratio, near and far z-coordinates.
 		 * 
-		 * @returns a matrix representing a perspective projection with field of view (FOV),
-		 * aspect ratio, near and far distances.
+		 * @returns a 4x4 matrix representing a perspective projection.
 		 * 
-		 * 	- `fov`: The field of view (FOV) of the matrix, representing the angle of the
-		 * perspective projection in radians.
-		 * 	- `aspect`: The aspect ratio of the viewport, which determines how much the matrix
-		 * stretches or shrinks the image along the x and y axes.
-		 * 	- `zNear` and `zFar`: The near and far clipping planes of the matrix, used to
-		 * restrict the region of space that is visible in the projection.
+		 * 	- The `Matrix4f` object returned represents a 4x4 matrix with elements representing
+		 * homogeneous coordinates.
+		 * 	- The matrix is initialized using the `initPerspective` method, which sets the
+		 * field of view (fov), aspect ratio (aspect), near clip plane (zNear), and far clip
+		 * plane (zFar) values.
+		 * 	- The resulting matrix is a perspective projection matrix, used to transform 3D
+		 * points into screen coordinates for rendering purposes.
 		 */
 		public Matrix4f getAsMatrix4() {
 			return new Matrix4f().initPerspective(fov, aspect, zNear, zFar);
@@ -114,18 +103,19 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * processes input from the mouse and keyboard, rotating and moving a transform based
-	 * on user input.
+	 * processes input from the keyboard and mouse, applying rotations to an object's
+	 * transform based on user input, and moving the object along a direction based on
+	 * the keyboard inputs.
 	 * 
-	 * @param dt time step, which is used to calculate the movement of the object based
-	 * on its speed and sensitivity.
+	 * @param dt time step of the simulation, which is used to calculate the movement of
+	 * the object based on its velocity.
 	 * 
-	 * @param speed 3D movement speed of the object being controlled, and it is multiplied
-	 * by the time interval `dt` to determine the distance traveled during that time.
+	 * @param speed 3D movement speed of the object being controlled by the player, and
+	 * it is multiplied by the time interval `dt` to determine the total distance traveled
+	 * during that time.
 	 * 
-	 * @param sens sensitivity of the character's movement in response to user input,
-	 * which affects the amount of rotation applied to the character's position when the
-	 * shift key is pressed.
+	 * @param sens sensitivity of the movement, which determines how much the object will
+	 * move based on the user's input.
 	 */
 	public void processInput(float dt, float speed, float sens) {
 
@@ -152,16 +142,17 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * moves a transform's position by a specified amount in a given direction, using the
-	 * object's getTransform() method to access its transformation matrix and perform the
-	 * translation.
+	 * updates the position of an object by adding a directional vector multiplied by a
+	 * scalar amount to its current position.
 	 * 
-	 * @param dir 3D direction in which the object should be moved, with its x, y, and z
-	 * components multiplied by the specified amount (`amt`).
+	 * @param dir 3D direction in which the object should be moved, with the magnitude
+	 * of the movement specified by the `amt` parameter.
 	 * 
-	 * 	- `dir`: A Vector3f object representing a 3D direction, with components in x, y,
-	 * and z directions.
-	 * 	- `amt`: An integer value representing the amount to move along the specified direction.
+	 * 	- `dir`: A `Vector3f` object representing the direction of movement. It has three
+	 * components: x, y, and z, which correspond to the horizontal, vertical, and forward
+	 * motion, respectively.
+	 * 	- `amt`: An integer value representing the amount of movement to be applied in
+	 * the specified direction.
 	 * 
 	 * @param amt amount of movement to be applied to the object's position along the
 	 * specified direction.
