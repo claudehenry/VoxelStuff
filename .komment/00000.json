@@ -319,5 +319,302 @@
         ]
       }
     }
+  },
+  {
+    "name": "Model.java",
+    "path": "src/com/ch/Model.java",
+    "content": {
+      "structured": {
+        "description": "a class `Model` that represents a 3D model in an OpenGL context. It provides a constructor to set the vertex array object (VAO) and the number of vertices, and a method `draw()` to render the model. The `enableAttribs()` and `disableAttribs()` methods enable and disable specific vertex attributes, respectively. The `getVAO()` and `getSize()` methods provide accessors for the VAO and size, respectively. Additionally, the code provides a factory method `load()` to load a 3D model from an array of vertices and an array of indices.",
+        "diagram": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"];\n    \n    subgraph cluster_0 {\n        label=\"voxel\"\n        color=\"#33363A\"\n        Chunk\n    }\n    subgraph cluster_main {\n        // style=filled;\n        color=\"#00000000\"; \n        Model [style=filled,color=\"#26de81\",shape=rectangle, fontname=\"Courier New\"];\n        label = \"\"\n    }\n    Model -> Model \n    Chunk -> Model \n}\n",
+        "items": [
+          {
+            "id": "76049636-c385-01a0-484f-dba0019c82ae",
+            "ancestors": [],
+            "type": "function",
+            "description": "is used to handle vertex and index buffer data for rendering 3D models in OpenGL. It provides methods for binding and unbinding Vertex Array Objects (VAOs) and Element Array Buffers (EABs), as well as storing vertex and index data and enabling/disabling vertex attributtes. The class also provides a way to load pre-defined model data from an array of vertices and indices.",
+            "name": "Model",
+            "location": {
+              "start": 8,
+              "insert": 8,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 73,
+            "docLength": null
+          },
+          {
+            "id": "2153206d-d92a-71bd-dd48-33c18b898e7d",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "binds a vertex array object, enables vertex attributes for position and texture coord, draws triangles using `glDrawElements`, disables vertex attributes, and unbinds the vertex array object.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "Model model = Model.load(vertices, indices);\nmodel.draw();\n",
+              "description": ""
+            },
+            "name": "draw",
+            "location": {
+              "start": 17,
+              "insert": 17,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": null
+          },
+          {
+            "id": "b6c1821e-a036-5787-584f-90799f18d9a0",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "enables two vertex attributes in a GL context using `glEnableVertexAttribArray`.",
+            "params": [],
+            "name": "enableAttribs",
+            "location": {
+              "start": 28,
+              "insert": 28,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "e734c1d6-32d7-8eb6-3a42-f83d96698eea",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "disables both vertex attribute arrays for a specific GL context.",
+            "params": [],
+            "name": "disableAttribs",
+            "location": {
+              "start": 33,
+              "insert": 33,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "2774bf53-3b72-1d8f-9246-63007ee34fdc",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "returns the value of the variable `vao`.",
+            "params": [],
+            "returns": {
+              "type_name": "int",
+              "description": "an integer value representing the VAO.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Model model = Model.load(vertices, indices);\nmodel.getVAO(); // returns the VAO value\n",
+              "description": ""
+            },
+            "name": "getVAO",
+            "location": {
+              "start": 38,
+              "insert": 38,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "0ee6bdae-436d-08a7-c14e-3cc2cd317db9",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "retrieves the value of a field named `size`.",
+            "params": [],
+            "returns": {
+              "type_name": "int",
+              "description": "the value of the `size` field.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Model model = Model.load(float[] vertices, int[] indices);\nint size = model.getSize();\nSystem.out.println(\"Number of vertices: \" + size);\n",
+              "description": ""
+            },
+            "name": "getSize",
+            "location": {
+              "start": 42,
+              "insert": 42,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "c2e913ba-2c42-07a1-6243-7c5fdf7a44e3",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "loads a 3D model from an array of vertices and an array of indices. It creates a Vertex Array Object (VAO), stores the indices, and then binds and unbinds the VAO. Finally, it returns a `Model` object representing the loaded model.",
+            "params": [
+              {
+                "name": "vertices",
+                "type_name": "float[]",
+                "description": "3D geometric data of the model to be loaded, which is stored in an array of floating-point values.\n\n* `vertices`: An array of floating-point values representing the 3D vertices of a model.\n* `indices`: An array of integers representing the indices of the vertices in the model.",
+                "complex_type": true
+              },
+              {
+                "name": "indices",
+                "type_name": "int[]",
+                "description": "3D model's vertex indices, which are used to bind the vertices of the model to its corresponding geometry in the graphics pipeline.\n\n* `indices`: An `int[]` array containing the indices of the vertices in the model.\n* `v_count`: The number of vertices in the model, which can be calculated by summing up the lengths of all the `indices` arrays.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Model",
+              "description": "a `Model` object representing the loaded 3D model.\n\n* `Model`: This is the type of the output, which is an instance of the `Model` class.\n* `vao`: This is an integer variable representing the VAO (Vertex Array Object) handle created by the function.\n* `v_count`: This is an integer variable representing the number of vertices in the model.",
+              "complex_type": true
+            },
+            "name": "load",
+            "location": {
+              "start": 46,
+              "insert": 46,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "c1e3b677-519c-828d-c946-03fe4a72ca51",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "generates a new vertex array object (Vao) and binds it to the current context, allowing for its use in rendering graphics.",
+            "params": [],
+            "returns": {
+              "type_name": "int",
+              "description": "an integer value representing the unique vertex array object (VAO) created.",
+              "complex_type": false
+            },
+            "name": "createVAO",
+            "location": {
+              "start": 55,
+              "insert": 55,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "ce552280-47c5-62aa-0c4e-9382f4ee25d6",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "stores floating-point array data into a buffer object and sets vertex attributes for rendering.",
+            "params": [
+              {
+                "name": "attrib",
+                "type_name": "int",
+                "description": "3D vertex attribute index that stores the data for the current buffer in the GPU's memory.",
+                "complex_type": false
+              },
+              {
+                "name": "data",
+                "type_name": "float[]",
+                "description": "2D array of floating-point values that will be stored in the vertex buffer object (VBO).\n\n* `data`: An array of 4 float values representing vertex data.\n* `attrib`: An integer representing the attribute index to which the vertex data will be mapped. There are two attribute indices in total, assigned using the `GL20.glVertexAttribPointer()` method.\n* `vbo`: A buffer object handle generated by `GL15.glGenBuffers()`. The buffer is bound using `GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)` and data is transferred to it using `GL15.glBufferData(GL15.GL_ARRAY_BUFFER, Util.createFlippedBuffer(data), GL15.GL_STATIC_DRAW)`.",
+                "complex_type": true
+              }
+            ],
+            "name": "storeData",
+            "location": {
+              "start": 61,
+              "insert": 61,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "c4c8ef6e-99fb-d484-6f4c-f021ff2d6b73",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "genrates a new buffer object and binds it to an element array buffer, then stores the provided integer array data in the buffer using the `glBufferData` method.",
+            "params": [
+              {
+                "name": "indices",
+                "type_name": "int[]",
+                "description": "3D indices of the vertices of a geometric shape, which are stored in a buffer for later use in rendering.\n\n* `indices` is an integer array representing a buffer containing indices for an element array buffer.\n* The length of the array is specified by the size of the `indices` array, which is a variable passed as a parameter to the function.\n* Each element in the `indices` array represents an index into a buffer for an element array, with each index being an integer value between 0 and the total number of elements in the buffer - 1, inclusive.",
+                "complex_type": true
+              }
+            ],
+            "name": "storeIndices",
+            "location": {
+              "start": 70,
+              "insert": 70,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "255b1fb7-3dbd-178a-9f48-390cac8e79b5",
+            "ancestors": [
+              "76049636-c385-01a0-484f-dba0019c82ae"
+            ],
+            "type": "function",
+            "description": "binds a vertex array object (VAO) using the `GL30.glBindVertexArray()` method, setting it to null.",
+            "params": [],
+            "name": "unbindVAO",
+            "location": {
+              "start": 76,
+              "insert": 76,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
   }
 ]
