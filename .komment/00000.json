@@ -4,14 +4,14 @@
     "path": "src/com/ch/Shader.java",
     "content": {
       "structured": {
-        "description": "A `Shader` class that loads and manages OpenGL shaders. It provides methods for binding the program, uniform floats, and matrices, as well as loading and validating the shaders. The code also includes utility methods for retrieving information about the shaders and programs.",
-        "diagram": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"]\n    \n    subgraph cluster_1 {\n        label=\"opengl\"\n        color=\"#33363A\"\n        glGetShaderInfoLog [label=\"org.lwjgl.opengl.GL20.glGetShaderInfoLog\", style=\"rounded,filled\"]\n        glGetProgrami [label=\"org.lwjgl.opengl.GL20.glGetProgrami\", style=\"rounded,filled\"]\n        GL_VALIDATE_STATUS [label=\"org.lwjgl.opengl.GL20.GL_VALIDATE_STATUS\", style=\"rounded,filled\"]\n        GL_LINK_STATUS [label=\"org.lwjgl.opengl.GL20.GL_LINK_STATUS\", style=\"rounded,filled\"]\n        GL_COMPILE_STATUS [label=\"org.lwjgl.opengl.GL20.GL_COMPILE_STATUS\", style=\"rounded,filled\"]\n        glGetProgramInfoLog [label=\"org.lwjgl.opengl.GL20.glGetProgramInfoLog\", style=\"rounded,filled\"]\n        glGetShaderi [label=\"org.lwjgl.opengl.GL20.glGetShaderi\", style=\"rounded,filled\"]\n    }\n    FileInputStream [label=\"java.io.FileInputStream\", style=\"rounded,filled\"]\n    InputStream [label=\"java.io.InputStream\", style=\"rounded,filled\"]\n    World []\n    Matrix4f []\n    IOException [label=\"java.io.IOException\", style=\"rounded,filled\"]\n    GL20 [label=\"org.lwjgl.opengl.GL20\", style=\"rounded,filled\"]\n    subgraph cluster_main {\n        // style=filled\n        color=\"#00000000\"\n        Shader [] [fontsize=\"20pt\",style=filled,color=\"#26de81\",shape=square, fontname=\"Courier New\"]\n        label = \"\"\n    }\n    Shader -> glGetShaderi [style=\"dashed\"]\n    Matrix4f -> Shader [penwidth=1]\n    Shader -> GL_VALIDATE_STATUS [style=\"dashed\"]\n    Shader -> glGetProgramInfoLog [style=\"dashed\"]\n    Shader -> InputStream [style=\"dashed\"]\n    Shader -> glGetProgrami [style=\"dashed\"]\n    Shader -> Matrix4f [style=\"dashed\"]\n    World -> Shader [style=\"dashed\"]\n    Shader -> FileInputStream [style=\"dashed\"]\n    Shader -> GL_LINK_STATUS [style=\"dashed\"]\n    Shader -> glGetShaderInfoLog [style=\"dashed\"]\n    Shader -> IOException [style=\"dashed\"]\n    Shader -> World [penwidth=1]\n    Shader -> GL_COMPILE_STATUS [style=\"dashed\"]\n    Shader -> GL20 [style=\"dashed\"]\n}\n",
+        "description": "A `Shader` class that loads and manages shaders for a 3D graphics pipeline. The class provides methods to bind and unbind shaders, as well as uniform and matrix uniform functions. Additionally, it includes methods to validate and link shaders. The code uses the `GL20` package to interact with the OpenGL API.",
+        "diagram": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"]\n    \n    FileInputStream [label=\"java.io.FileInputStream\", style=\"rounded,filled\"]\n    glGetProgrami [label=\"org.lwjgl.opengl.GL20.glGetProgrami\", style=\"rounded,filled\"]\n    glGetShaderi [label=\"org.lwjgl.opengl.GL20.glGetShaderi\", style=\"rounded,filled\"]\n    IOException [label=\"java.io.IOException\", style=\"rounded,filled\"]\n    World []\n    glGetProgramInfoLog [label=\"org.lwjgl.opengl.GL20.glGetProgramInfoLog\", style=\"rounded,filled\"]\n    InputStream [label=\"java.io.InputStream\", style=\"rounded,filled\"]\n    GL_LINK_STATUS [label=\"org.lwjgl.opengl.GL20.GL_LINK_STATUS\", style=\"rounded,filled\"]\n    GL_VALIDATE_STATUS [label=\"org.lwjgl.opengl.GL20.GL_VALIDATE_STATUS\", style=\"rounded,filled\"]\n    GL20 [label=\"org.lwjgl.opengl.GL20\", style=\"rounded,filled\"]\n    glGetShaderInfoLog [label=\"org.lwjgl.opengl.GL20.glGetShaderInfoLog\", style=\"rounded,filled\"]\n    GL_COMPILE_STATUS [label=\"org.lwjgl.opengl.GL20.GL_COMPILE_STATUS\", style=\"rounded,filled\"]\n    subgraph cluster_main {\n        // style=filled\n        color=\"#00000000\"\n        Shader [] [fontsize=\"20pt\",style=filled,color=\"#26de81\",shape=square, fontname=\"Courier New\"]\n        label = \"\"\n    }\n    Matrix4f []\n    Shader -> IOException [style=\"dashed\"]\n    Shader -> FileInputStream [style=\"dashed\"]\n    Shader -> glGetShaderInfoLog [style=\"dashed\"]\n    Shader -> glGetProgrami [style=\"dashed\"]\n    Shader -> World [penwidth=1]\n    Shader -> glGetShaderi [style=\"dashed\"]\n    Shader -> InputStream [style=\"dashed\"]\n    Matrix4f -> Shader [penwidth=1]\n    Shader -> GL20 [style=\"dashed\"]\n    Shader -> Matrix4f [style=\"dashed\"]\n    Shader -> GL_LINK_STATUS [style=\"dashed\"]\n    Shader -> glGetProgramInfoLog [style=\"dashed\"]\n    World -> Shader [style=\"dashed\"]\n    Shader -> GL_VALIDATE_STATUS [style=\"dashed\"]\n    Shader -> GL_COMPILE_STATUS [style=\"dashed\"]\n}\n",
         "items": [
           {
-            "id": "44de077b-64f8-049d-4f44-f920d83fad94",
+            "id": "1cc92703-61f2-5ca1-bd46-508ae338cdf2",
             "ancestors": [],
             "type": "function",
-            "description": "from the file provides a framework for creating and managing shaders in OpenGL. It allows for uniform and matrix operations, as well as validation of the program. The class provides methods for binding the program, getting the location of uniforms and matrices, and loading shaders.",
+            "description": "has a constructor that takes an integer program ID and provides methods to bind the program, get the program ID, and set uniform values for floating-point and matrix4f data types. Additionally, there are methods to load vertex and fragment shaders and validate the program.",
             "name": "Shader",
             "location": {
               "start": 19,
@@ -25,16 +25,16 @@
             "docLength": null
           },
           {
-            "id": "a032f498-81f1-7c87-0749-ce6b0bb9fd60",
+            "id": "0f138127-5c93-da8f-0144-8dfcff228c23",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "glues a program to a specific OpenGL context, enabling its use for rendering.",
+            "description": "glues a program to a specific GL context, enabling its use for rendering operations.",
             "params": [],
             "usage": {
               "language": "java",
-              "code": "public static void main(String[] args) {\n\t// ...\n\tShader shader = Shader.loadShader(\"shaders/myShader\");\n\tshader.bind();\n}\n",
+              "code": "public static void main(String[] args) {\n\t\tShader shader = Shader.loadShader(\"shaders/basic\");\n\t\tshader.bind();\n}\n",
               "description": ""
             },
             "name": "bind",
@@ -50,21 +50,21 @@
             "docLength": null
           },
           {
-            "id": "f6a3d007-6397-b6b4-9040-ac20804f59af",
+            "id": "c89ec57e-a8ef-9fa6-f242-f2fd277df15f",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "returns the value of the `program` field of an object.",
+            "description": "retrieves the value of the `program` field of the current instance.",
             "params": [],
             "returns": {
               "type_name": "int",
-              "description": "the value of the `program` field.",
+              "description": "an integer value representing the program.",
               "complex_type": false
             },
             "usage": {
               "language": "java",
-              "code": "public class ShaderTest {\n\tpublic static void main(String[] args) {\n\t\tShader shader = new Shader();\n\t\tshader.bind();\n\t\tint program = shader.getProgram();\n\t}\n}\n",
+              "code": "public int program;\n// ...\nprogram = loadShader(\"shaders/basic\"); // This loads the shader into program\n\nif(program != 0) {\n\tSystem.out.println(\"Shader loaded successfully!\");\n} else {\n\tSystem.err.println(\"Failed to load shader\");\n}\n",
               "description": ""
             },
             "name": "getProgram",
@@ -80,24 +80,24 @@
             "docLength": null
           },
           {
-            "id": "a4ffa26f-3979-75bb-f34c-1dd29984ddd1",
+            "id": "fc4fab0a-aba9-888e-1c48-6917380a795c",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "is a utility method that sets a uniform float value for a specified location in a GL context, based on the length of the input array of values.",
+            "description": "takes a string name and an array of float values, and uses the `glUniformf()` method to set the corresponding uniform value(s) in the current GL context. The length of the input array determines which `glUniformf()` method is called, with longer arrays using more parameters.",
             "params": [
               {
                 "name": "name",
                 "type_name": "String",
-                "description": "name of the uniform location being set.",
+                "description": "name of the uniform location in the GL context, which is used to determine the appropriate OpenGL function to call for the specified number of float values.",
                 "complex_type": false
               }
             ],
             "usage": {
               "language": "java",
-              "code": "float[] values = new float[]{0.5, 0.25, 0.75};\nshader.uniformf(\"myFloat\", values);\n",
-              "description": ""
+              "code": "public static void main(String[] args) {\n    Shader shader = new Shader(0); // Initialize the shader\n    shader.bind(); // Bind the shader to be the current shader in use\n    \n    float vals = 1; // Set a single value for the uniform variable \"name\"\n    shader.uniformf(\"name\", vals); // Send the values to the shader for updating\n}\n",
+              "description": "\nThis will send the value 1 to the uniform variable \"name\" in the shader."
             },
             "name": "uniformf",
             "location": {
@@ -112,30 +112,30 @@
             "docLength": null
           },
           {
-            "id": "29ce103f-6bf9-5aad-5d40-aa5eb912c731",
+            "id": "0da68ca6-8371-339e-fe47-1b2b9702b09a",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "sets a 4x4 matrix as a uniform variable in the current GL context using the `glUniformMatrix4` method. The matrix data is provided by the `mat` parameter and is stored in a flipped buffer for efficient access on some GPUs.",
+            "description": "sets a 4x4 uniform matrix value using the `glUniformMatrix4` method from the OpenGL API. The matrix data is passed as a parameter and flipped before being stored in the GPU's memory location.",
             "params": [
               {
                 "name": "name",
                 "type_name": "String",
-                "description": "0-based index of a uniform buffer object for which the matrix is being set.",
+                "description": "0-based index of the uniform location where the matrix will be stored in the GPU memory.",
                 "complex_type": false
               },
               {
                 "name": "mat",
                 "type_name": "Matrix4f",
-                "description": "4x4 floating-point matrix to be uniformed.\n\n* `name`: A string parameter representing the uniform name.\n* `mat`: An instance of `Matrix4f`, which is a matrix with 16 double-precision floating-point elements representing the 4x4 homogeneous transformation matrix.\n* `getLocation(name)`: Returns an integer indicating the location in the shader where the uniform should be stored.\n* `false`: A boolean parameter indicating whether the uniform should be passed as a 32-bit floating-point value or as a binary buffer.",
+                "description": "4x4 matrix to be uniformed and is passed as an instance of the `Matrix4f` class.\n\n* `getLocation(name)` is used to retrieve the location of a uniform buffer in the current program state.\n* `GL20.glUniformMatrix4()` is a method that sets a 4x4 matrix as a uniform variable in the currently active program.\n* `false` indicates that the matrix should be stored in row-major order, which is the default for GL matrices.\n* `Util.createFlippedBuffer(mat.getLinearData())` creates a new buffer containing the matrix data in row-major order, and returns it as a flipped copy of the original matrix.",
                 "complex_type": true
               }
             ],
             "usage": {
               "language": "java",
-              "code": "Matrix4f myMatrix = new Matrix4f();\nmyMatrix.set(0, 0, 1.0);\nmyMatrix.set(1, 1, 2.0);\nmyMatrix.set(2, 2, 3.0);\nmyMatrix.set(3, 3, 4.0);\n\nShader myShader = new Shader();\nmyShader.uniformMat4(\"Matrices\", myMatrix);\n",
-              "description": ""
+              "code": "Matrix4f matrix = new Matrix4f(); // Create a new matrix object\nmatrix.set(1, 2, 3, 4);\nshader.uniformMat4(\"myUniform\", matrix);\n",
+              "description": "\nIn this example, the `unifromMat4` method is being used to set the value of a uniform named \"myUniform\" in a shader program. The first parameter passed into the method is the name of the uniform as a string, and the second parameter is an instance of the Matrix4f class. This method will automatically create a flipped buffer using the `Util.createFlippedBuffer` method and pass it to the `GL20.glUniformMatrix4` function, which will then update the value of the uniform in the shader program with the specified matrix data."
             },
             "name": "unifromMat4",
             "location": {
@@ -150,28 +150,28 @@
             "docLength": null
           },
           {
-            "id": "a2621510-142d-8db1-5549-9f8036f5d930",
+            "id": "559c3b9e-bd14-6b94-3244-0bd53e483bca",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "returns the location of a uniform in a program using the `GL20` class.",
+            "description": "retrieves the location of a uniform named `name` within a program's shader, using the `GL20` class to interact with the GPU.",
             "params": [
               {
                 "name": "name",
                 "type_name": "String",
-                "description": "name of the uniform location to retrieve in the OpenGL program.",
+                "description": "0-based index of the uniform location to retrieve in the program's uniform buffer objects.",
                 "complex_type": false
               }
             ],
             "returns": {
               "type_name": "int",
-              "description": "an integer representing the location of a uniform in a GPU program.",
+              "description": "an integer representing the location of a uniform in a graphics program.",
               "complex_type": false
             },
             "usage": {
               "language": "java",
-              "code": "String name = \"someUniformName\";\nint location = shader.getLocation(name);\n",
+              "code": "public class Example {\n\tpublic static void main(String[] args) {\n\t\tint program = GL20.glCreateProgram();\n\t\tloadShader(GL20.GL_VERTEX_SHADER, getText(\"vert.frag\"), program);\n\t\tloadShader(GL20.GL_FRAGMENT_SHADER, getText(\"frag.frag\"), program);\n\t\tvalidateProgram(program);\n\t\tShader shader = new Shader(program);\n\t\tint location = shader.getLoaction(\"uniformName\");\n\t\t// use the location variable to set a value for the uniform named \"uniformName\" in the shader\n\t}\n}\n",
               "description": ""
             },
             "name": "getLoaction",
@@ -187,23 +187,23 @@
             "docLength": null
           },
           {
-            "id": "bc79089e-5f09-46bb-3d47-92d10138b75b",
+            "id": "edb67ba8-f62b-8ba6-6747-9a4d60ef6071",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "loads a shader program from a file, consisting of a vertex and fragment shader, validates the program, and returns a new Shader object representing the loaded program.",
+            "description": "creates a shader program by loading vertex and fragment shaders from files, validating the program, and returning a new shader object representing the program.",
             "params": [
               {
                 "name": "filename",
                 "type_name": "String",
-                "description": "name of the file containing the vertex and fragment shaders to be loaded into the program.",
+                "description": "file name of the shader to be loaded.",
                 "complex_type": false
               }
             ],
             "returns": {
               "type_name": "Shader",
-              "description": "a `Shader` object representing the compiled shader program.\n\n* The output is a new `Shader` object, which represents a shader program created by combining a vertex shader and a fragment shader using the `GL20.glCreateProgram()` method.\n* The `Shader` object has a single field, `program`, which contains the program ID generated by `GL20.glCreateProgram()`. This ID can be used to activate and query the shader program using `GL20.glUseProgram()` and `GL20.glGetProgramiv()`.\n* The `Shader` object does not store any information about the vertex or fragment shaders themselves, such as their source code or metadata. Instead, it only contains a reference to the program ID generated by `loadShader()`.\n\nTherefore, the `loadShader` function returns a `Shader` object that represents a new shader program, but does not provide any information about the individual vertex and fragment shaders that were used to create it.",
+              "description": "a new `Shader` object representing a shader program created by combining a vertex shader and a fragment shader.\n\n* The returned value is an instance of the `Shader` class, which represents a shader program in the OpenGL context.\n* The `Shader` object contains information about the shader program, including its handle (program), which can be used to access and manipulate the program's resources.\n* The `Shader` object also stores the handles of the vertex and fragment shaders that make up the program, allowing for easy manipulation and modification of these components.",
               "complex_type": true
             },
             "name": "loadShader",
@@ -219,17 +219,17 @@
             "docLength": null
           },
           {
-            "id": "bd659686-93e5-c0be-5e4d-17c1a7aa3de3",
+            "id": "c0034360-54c6-dcbf-eb4b-00a91fc41dfb",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "loads a shader program into memory by creating and compiling a new shader or attaching an existing one to a program, depending on the target platform.",
+            "description": "creates a new shader program and attaches it to a program, loading the given source code as a shader module.",
             "params": [
               {
                 "name": "target",
                 "type_name": "int",
-                "description": "type of shader being created, which can be either a vertex shader or a fragment shader.",
+                "description": "type of shader to create, with possible values of 0 for vertex shader, 1 for fragment shader, and 128 for geometry shader.",
                 "complex_type": false
               },
               {
@@ -241,7 +241,7 @@
               {
                 "name": "program",
                 "type_name": "int",
-                "description": "3D graphics program that the shader will be attached to after being compiled.",
+                "description": "3D graphics program that the loaded shader will be attached to and used by.",
                 "complex_type": false
               }
             ],
@@ -258,17 +258,17 @@
             "docLength": null
           },
           {
-            "id": "53b27869-7c06-7dab-474e-c84da101f012",
+            "id": "4e269861-b915-1795-7e48-a6e5364f21f0",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "validates a program's linking and validation status using GL20 functions, printing any error messages to `System.err` and exiting with an error code if necessary.",
+            "description": "validates a program by linking and validating it using the `glLinkProgram` and `glValidateProgram` functions, respectively. If any errors occur during validation, the function prints the error message to `System.err` and exits with a non-zero status code.",
             "params": [
               {
                 "name": "program",
                 "type_name": "int",
-                "description": "3D graphics program to be validated, and it is passed to the `glLinkProgram`, `glValidateProgram`, and `glGetProgramInfoLog` functions for validation and error checking.",
+                "description": "3D program to be validated and linked with the OpenGL driver.",
                 "complex_type": false
               }
             ],
@@ -285,23 +285,23 @@
             "docLength": null
           },
           {
-            "id": "70bcfbf4-55c0-6b9e-4348-36de0d662e53",
+            "id": "7f4bffeb-38f6-6794-c040-469bd46b72b7",
             "ancestors": [
-              "44de077b-64f8-049d-4f44-f920d83fad94"
+              "1cc92703-61f2-5ca1-bd46-508ae338cdf2"
             ],
             "type": "function",
-            "description": "reads the contents of a specified file and returns the read text as a string.",
+            "description": "reads the contents of a given file as a string, handling potential IOExceptions.",
             "params": [
               {
                 "name": "file",
                 "type_name": "String",
-                "description": "path to a file from which the text is read.",
+                "description": "file whose contents are to be read and returned as a string by the `getText()` function.",
                 "complex_type": false
               }
             ],
             "returns": {
               "type_name": "String",
-              "description": "a string representation of the contents of the specified file.",
+              "description": "a string containing the contents of the specified file.",
               "complex_type": false
             },
             "name": "getText",
