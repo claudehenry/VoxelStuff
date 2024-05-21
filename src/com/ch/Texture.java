@@ -27,10 +27,10 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * in Java is used to handle textures for OpenGL rendering. It takes a filename as a
- * constructor parameter and loads the texture data from the file using ImageIO. The
- * loaded texture data is then bound to an OpenGL texture using the bind() method.
- * The ID of the loaded texture can be retrieved using the getID() method.
+ * in Java is used to handle textures in a 3D graphics application. It has a constructor
+ * that takes a file name as an argument and loads the texture from the file into the
+ * program. The class also provides methods for binding the texture to a specific
+ * slot and getting the ID of the loaded texture.
  */
 public class Texture {
 
@@ -44,18 +44,19 @@ public class Texture {
 
 
 	/**
-	 * 0 invokes a method with no arguments.
+	 * 0) binds a method.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * sets the texture slot to a specific value, ensuring that the specified slot is
-	 * within the valid range and binds the specified texture to the given slot using the
-	 * `glBindTexture()` method.
+	 * sets the active texture unit to a specific slot and binds a texture to it using
+	 * the `glBindTexture()` method. The function checks that the input `samplerSlot` is
+	 * within the range of 0 to 31 and asserts if it is not.
 	 * 
-	 * @param samplerSlot 0-based index of a texture slot in which to bind a texture.
+	 * @param samplerSlot 0-based index of a texture slot that is used to bind a texture
+	 * to the current graphics processing unit (GPU) context.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -64,7 +65,7 @@ public class Texture {
 	}
 
 	/**
-	 * returns the `id` variable value.
+	 * returns the value of the `id` field.
 	 * 
 	 * @returns an integer representing the ID of the object.
 	 */
@@ -73,12 +74,13 @@ public class Texture {
 	}
 
 	/**
-	 * loads a 2D image into an OpenGL texture, applying various texture filtering and
-	 * wrapping options. It returns the ID of the created texture.
+	 * loads an image from a file and creates a texture in OpenGL, optionally with alpha
+	 * channel. It reads the image data, converts it to an OpenGL texture format, and
+	 * generates mipmaps.
 	 * 
-	 * @param fileName name of the image file to be loaded and used as a texture.
+	 * @param fileName filename of the image file to be loaded and converted into a texture.
 	 * 
-	 * @returns an integer ID representing a loaded texture.
+	 * @returns an integer identifier of a loaded texture.
 	 */
 	private static int loadTexture(String fileName) {
 		try {

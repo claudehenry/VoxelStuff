@@ -1,12 +1,12 @@
 package com.ch.voxel;
 
 /**
- * represents a three-dimensional block with position and boolean flags for various
- * states.
+ * represents a three-dimensional spatial location with various flags for its properties,
+ * such as whether it is solid or not.
  * Fields:
- * 	- z (int): represents the vertical position of the block in the 3D space.
+ * 	- z (int): represents the depth of the block in the 3D space.
  * 	- rt (boolean): in the Block class represents whether the block has been right-clicked
- * on by a player.
+ * on by the player.
  */
 public class Block {
 	

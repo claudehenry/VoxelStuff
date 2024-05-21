@@ -6,6 +6,21 @@ import com.ch.Camera;
 import com.ch.Shader;
 
 
+/**
+ * has several methods and fields:
+ * 
+ * 	- `x`, `y`, and `z` are instance variables representing the position of the world
+ * in the game environment.
+ * 	- `W`, `H`, and `D` are constants representing the size of the world in each dimension.
+ * 	- `gen()` is a method that generates new chunk data based on the current position
+ * and size of the world.
+ * 	- `render(Shader, Camera)` is a method that renders the chunks in the world using
+ * a shader and a camera object.
+ * 
+ * The World Class also has several internal fields and methods that are not shown
+ * here, but they are likely used for managing and updating the chunk data and rendering
+ * the world.
+ */
 public class World {
 
 	private int x, y, z; // in chunks
@@ -22,8 +37,8 @@ public class World {
 	}
 	
 	/**
-	 * Iterates over a 3D grid of chunks, creating new chunks at each iteration and
-	 * updating their blocks and models.
+	 * iterates over a 3D grid of chunks, creating new chunks at each position and updating
+	 * their blocks and transforming them into a gen model.
 	 */
 	private void gen() {
 		for (int i = 0; i < W; i++)
@@ -36,19 +51,17 @@ public class World {
 	}
 
 	/**
-	 * Updates the position of an object based on its x, y, and z coordinates, comparing
-	 * them to those of a reference object. It then generates new chunks if necessary and
-	 * updates the chunks' positions accordingly.
+	 * updates an object's position based on changes to its x, y, and z components. It
+	 * checks for conflicts with nearby chunks and generates a new chunk if necessary.
 	 * 
-	 * @param x 2D coordinate of the chunk being updated, which is used to determine
-	 * whether any changes have occurred and whether the update logic should be executed.
+	 * @param x 3D coordinates of the position being updated within the Chunk structure,
+	 * and it is used to calculate the new value for the `wx`, `wy`, and `wz` variables.
 	 * 
-	 * @param y 2D coordinate of the position to be updated, and it is used to determine
-	 * the corresponding chunk and block within that chunk.
+	 * @param y 2D coordinate of the point within the Chunk, which is being updated based
+	 * on the new values of `x` and `z`.
 	 * 
-	 * @param z 3rd dimension of the chunk position and is used to calculate the difference
-	 * between the current chunk's position and the specified position, which determines
-	 * whether the chunk needs to be updated or not.
+	 * @param z 3D position of the current chunk, which is used to update the chunk's
+	 * blocks and models when the `x` and `y` positions change.
 	 */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
@@ -235,14 +248,42 @@ public class World {
 	}
 
 	/**
-	 * Takes a shader object `s`, a camera object `c`, and renders 3D objects represented
-	 * by chunks within a 2D space, using the shader's uniforms to colorize the objects.
+	 * renders a 3D scene by drawing models based on their positions and orientations,
+	 * using a shader to colorize them according to their coordinates.
 	 * 
-	 * @param s 3D rendering shader object that is being rendered, and it is used to set
-	 * the uniform values for the shader's color and modelview projection matrix.
+	 * @param s 3D shader instance that receives the rendering output from the function,
+	 * which is then used to compute and apply the appropriate color values using the
+	 * `uniformf()` method.
 	 * 
-	 * @param c 3D camera object used to render the scene, and it is used to calculate
-	 * the view-projection matrix that is applied to the 3D model objects in the scene.
+	 * 	- `s`: A `Shader` object that contains the fragment shader code and various
+	 * attributes such as uniform locations, texture units, and attribute pointers.
+	 * 	- `c`: A `Camera` object representing the camera used for rendering. It has various
+	 * properties such as position, direction, and field of view.
+	 * 
+	 * The function iterates over each pixel in the scene using a 3D loop, where `i`,
+	 * `j`, and `k` are indices into the `chunks` array. For each pixel, it checks if
+	 * there is a corresponding chunk in the `chunks` array, and if so, it applies the
+	 * following operations:
+	 * 
+	 * 1/ Calculates the color of the chunk using a hash code based on its position
+	 * (`ch.x`, `ch.y`, and `ch.z`).
+	 * 2/ Sets the red, green, and blue components of the color to arbitrary values between
+	 * 0 and 1 using `s.uniformf()`.
+	 * 3/ Multiplies the color with the view-projection matrix of the camera using `s.unifromMat4()`.
+	 * 4/ Draws the chunk using the model matrix of the chunk multiplied by the view-projection
+	 * matrix.
+	 * 
+	 * Note that the function does not handle the `s` object's destruction, as it is not
+	 * explicitly mentioned in the code snippet provided.
+	 * 
+	 * @param c 3D camera object used to project the scene onto the viewport, allowing
+	 * for rendering of the 3D environment from the specified viewpoint.
+	 * 
+	 * 	- `c`: A `Camera` object, which represents the camera's perspective on the 3D
+	 * scene. It has various attributes such as `getViewProjection()` that returns a
+	 * matrix representing the view and projection transformations combined, and
+	 * `getModelMatrix()` that returns a matrix representing the model transformation of
+	 * the objects in the scene.
 	 */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)
