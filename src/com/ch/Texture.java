@@ -27,10 +27,9 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * in the provided code is used to load and manage textures in an OpenGL environment.
- * It allows for binding and unbinding of textures, as well as providing the ID of
- * the loaded texture. The loadTexture method loads a texture from a specified file
- * and returns the ID of the loaded texture.
+ * has a constructor that takes a file path as input and loads the texture from the
+ * file using ImageIO. The class also provides methods to bind the texture to a
+ * specific slot in the GL and get the ID of the loaded texture.
  */
 public class Texture {
 
@@ -44,19 +43,18 @@ public class Texture {
 
 
 	/**
-	 * 0 in the code is used to bind an object to a specified position in an array.
+	 * 0-th Bond.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * binds a texture to an OpenGL texture slot. The function first checks if the input
-	 * `samplerSlot` is within the valid range (0-31) and then activates the corresponding
-	 * texture slot using `glActiveTexture()` and binds the texture using `glBindTexture()`.
+	 * sets the active texture slot to a specific value (0-31) and binds a texture ID to
+	 * that slot using the `glBindTexture()` method.
 	 * 
-	 * @param samplerSlot 0-based index of a texture slot in the GPU, which the function
-	 * binds to a specific texture id.
+	 * @param samplerSlot 0-based index of a texture slot to bind to the current graphics
+	 * processing unit (GPU) context.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -65,22 +63,21 @@ public class Texture {
 	}
 
 	/**
-	 * returns the `id` field of an object.
+	 * returns the current ID value of an object.
 	 * 
-	 * @returns an integer representing the ID of the object.
+	 * @returns an integer value representing the ID.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * loads an image file into a texture object using OpenGL. It reads the image data
-	 * from a file, converts it to an OpenGL-compatible format, and binds it as a texture
-	 * to the current rendering context.
+	 * loads a texture from a file, creates a byte buffer representation of it, and returns
+	 * the ID of the generated texture.
 	 * 
-	 * @param fileName file name of the image to load as a texture.
+	 * @param fileName image file to be loaded and processed by the `loadTexture()` method.
 	 * 
-	 * @returns an integer representing a valid texture ID.
+	 * @returns an OpenGL texture ID.
 	 */
 	private static int loadTexture(String fileName) {
 		try {

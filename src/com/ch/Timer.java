@@ -3,11 +3,9 @@ package com.ch;
 import org.lwjgl.Sys;
 
 /**
- * provides a way to measure and update the frame rate of an application. It has
- * several methods for calculating and updating the frame rate, including `init()`,
- * `calculateDelta()`, `updateFPS()`, and `update()`. These methods allow for the
- * measurement of time and the calculation of the delta between frames, as well as
- * the updating of the frame rate counter.
+ * is a Java class that provides various functions for measuring time and frame rate.
+ * It has several methods for calculating and updating frame rate, time, and delta.
+ * The class also has a method for getting the current time and delta value.
  */
 public class Timer {
 
@@ -19,28 +17,26 @@ public class Timer {
     public static float time;
 
 	/**
-	 * calculates the seconds since the Unix epoch (January 1, 1970, 00:00:00 UTC) based
-	 * on the current system time and timer resolution.
+	 * calculates the current time in milliseconds based on the system's timer resolution,
+	 * multiplying the current time by 1000 and then dividing it by the timer resolution.
 	 * 
-	 * @returns a long value representing the current time in milliseconds, adjusted for
-	 * timer resolution.
+	 * @returns a millisecond value representing the current time, calculated as the
+	 * product of the current UNIX time and a resolution factor.
 	 */
 	private static long getTimeS() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	/**
-	 * initializes a variable `lastFPS` with the current value of `getTimeS()` at the
-	 * moment of execution, storing the FPS of the application for future reference.
+	 * records the current FPS at the time of execution using `getTimeS()`.
 	 */
 	public static void init() {
 		lastFPS = getTimeS();
 	}
 
 	/**
-	 * calculates the time difference between two points and returns it as a float value.
-	 * It takes advantage of the `getTimeS()` method to retrieve the current time and
-	 * compares it with the previous frame time, stored in the `lastFrame` field.
+	 * measures the time elapsed between two frames and returns the difference as a float
+	 * value.
 	 * 
 	 * @returns a floating-point value representing the time difference between two frames.
 	 */
@@ -52,8 +48,8 @@ public class Timer {
 	}
 
 	/**
-	 * updates the frame rate by incrementing a counter every second, storing the current
-	 * frame rate and resetting it after 10 seconds have passed since the last update.
+	 * updates the frame rate by incrementing a counter every 1 second, resetting it to
+	 * 0 when the count reaches 1000. It also stores the current frame rate as a variable.
 	 */
 	private static void updateFPS() {
 		if (getTimeS() - lastFPS > 1000) {
@@ -65,27 +61,27 @@ public class Timer {
 	}
 
 	/**
-	 * returns the `delta` variable, which is a `float` value that contains the difference
-	 * between two values.
+	 * retrieves the value of the `delta` field, which is a floating-point number
+	 * representing the change in some quantity.
 	 * 
-	 * @returns a floating-point value representing the delta.
+	 * @returns a floating-point value representing the difference between two values.
 	 */
 	public static float getDelta() {
 		return delta;
 	}
 
 	/**
-	 * retrieves the current frame rate per second (FPS) and returns it as a floating-point
-	 * number.
+	 * returns the current frames per second (FPS) as a floating-point value.
 	 * 
-	 * @returns the current frame rate of the application in floats.
+	 * @returns the current frame rate of the application.
 	 */
 	public static float getFPS() {
 		return currentFPS;
 	}
 
     /**
-     * retrieves the value of a `time` field, returning it as a floating-point number.
+     * returns the value of a `time` field, which is not further defined in the given
+     * code snippet.
      * 
      * @returns a floating-point representation of the current time.
      */
@@ -94,7 +90,7 @@ public class Timer {
     }
 
     /**
-     * updates FPS, calculates and stores delta time, and increments time.
+     * updates the FPS, calculates and limits the delta time, and adds it to the total time.
      */
     public static void update() {
         updateFPS();

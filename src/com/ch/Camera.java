@@ -4,11 +4,11 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 /**
- * is an abstract class that contains methods for calculating and manipulating camera
- * matrices. It has several instance variables such as projection, viewProjectionMat4,
- * values, transform, and calculation methods such as calculateViewMatrix and
- * getTranslationMatrix. The class also has a few abstract methods like
- * calculateProjectionMatrix and adjustToViewport.
+ * is an abstract class that provides methods for calculating and manipulating matrices
+ * related to camera functionality. It has various fields and methods for calculating
+ * and adjusting view and projection matrices, as well as handling transformations
+ * and translation. The class also includes an abstract method for calculating a
+ * projection matrix.
  */
 public abstract class Camera {
 
@@ -23,20 +23,19 @@ public abstract class Camera {
 	}
 
 	/**
-	 * calculates and returns the view projection matrix, which is used to transform 3D
-	 * points from the world coordinate system to the camera's projection plane. The
-	 * function updates the view projection matrix only if it has changed or if the view
-	 * matrix is null.
+	 * computes and returns the view projection matrix, which is a combination of the
+	 * view matrix and the projection matrix used to transform 3D coordinates into screen
+	 * space.
 	 * 
-	 * @returns a `Matrix4f` object representing the view projection matrix.
+	 * @returns a Matrix4f object representing the view projection matrix.
 	 * 
-	 * The `Matrix4f` object `viewProjectionMat4` represents the view-projection matrix,
-	 * which combines the camera's perspective and orientation with the projection matrix
-	 * to generate the final view. The matrix is not null when the function is called,
-	 * unless `transform` has changed.
-	 * 
-	 * The view matrix is calculated using the `calculateViewMatrix()` method if necessary,
-	 * based on changes in the `transform`.
+	 * 	- `viewProjectionMat4`: A 4x4 matrix object representing the view projection
+	 * transformation. This transformation combines the view and projection matrices to
+	 * produce the final view frustum for rendering.
+	 * 	- `transform`: A transform instance containing information about the view and
+	 * projection transformations, including their respective matrices and other parameters.
+	 * The `transform` instance is used to determine whether the view projection matrix
+	 * needs to be recalculated.
 	 */
 	public Matrix4f getViewProjection() {
 
@@ -48,21 +47,23 @@ public abstract class Camera {
 	}
 
 	/**
-	 * calculates a view matrix that combines a rotation and translation of a camera,
-	 * performed using the `projection` and `transform` objects, and returns the result
-	 * as a `Matrix4f` object.
+	 * calculates a view matrix that combines a rotation and translation of a camera. The
+	 * rotation is derived from the transform's rotational component, while the translation
+	 * is obtained from the getTranslationMatrix() method. The resulting view matrix is
+	 * then created by multiplying the projection matrix with the product of the rotation
+	 * and translation matrices.
 	 * 
-	 * @returns a 4x4 matrix representing the view transformation of a camera.
+	 * @returns a matrix representation of the view transformation, including rotation
+	 * and translation.
 	 * 
-	 * 	- The `viewProjectionMat4` variable represents a 4x4 matrix that combines the
-	 * camera rotation and translation matrices using the multiplication operation.
-	 * 	- The resulting matrix is a view projection matrix, which encapsulates both the
-	 * perspective and zooming effects of the camera's movement.
-	 * 	- The matrix has four rows, each representing a different component of the view
-	 * transformation: translation, rotation around the world origin, and scaling in the
-	 * local coordinate system.
-	 * 	- The components of the matrix are arranged in columns, with each column representing
-	 * a different axis of transformation (x, y, z, and w).
+	 * 	- The output is a 4x4 matrix, representing a view projection matrix that combines
+	 * a rotation and translation of the camera.
+	 * 	- The rotation part of the matrix represents the transformation of the camera's
+	 * orientation relative to the world coordinate system.
+	 * 	- The translation part of the matrix represents the position of the camera in the
+	 * world coordinate system.
+	 * 	- The resulting matrix is obtained by multiplying the projection matrix with the
+	 * rotated and translated camera matrix, using the `mul` method.
 	 */
 	public Matrix4f calculateViewMatrix() {
 
@@ -74,19 +75,20 @@ public abstract class Camera {
 	}
 
 	/**
-	 * generates a 4x4 transformation matrix that translates a point by a specific amount
-	 * in the x, y, and z directions.
+	 * generates a matrix that represents the translation of a camera positioned in a
+	 * specific coordinate system, given by `transform.getTransformedPos()`. The resulting
+	 * matrix is initialized with the negative of the camera's position vector and then
+	 * transformed using multiplication to create the final translation matrix.
 	 * 
-	 * @returns a 4x4 matrix representing the translation of the camera's position in
-	 * homogeneous coordinates.
+	 * @returns a 4x4 matrix representing the translation of the camera's position from
+	 * its current location to a new location.
 	 * 
-	 * The `Matrix4f` object returned by the function represents a 4x4 homogeneous
-	 * transformation matrix that includes a translation component in the last column.
-	 * The translation vector is computed as the negative of the transform position
-	 * multiplied by 3 (since the transform position is a Vector3f). Therefore, the first
-	 * three components of the translation vector represent the x, y, and z coordinates
-	 * of the position shift, while the fourth component represents the scale factor of
-	 * the transformation.
+	 * 	- The Matrix4f object represents a 4x4 homogeneous transformation matrix.
+	 * 	- The translation component of the matrix is represented by the vector (cameraPos.x,
+	 * cameraPos.y, cameraPos.z), which indicates the distance and direction from the
+	 * origin to the translation point in 3D space.
+	 * 	- The matrix itself is initialized using the `initTranslation` method, which takes
+	 * the x, y, and z components of the translation vector as arguments.
 	 */
 	public Matrix4f getTranslationMatrix() {
 		Vector3f cameraPos = transform.getTransformedPos().mul(-1);
@@ -94,16 +96,15 @@ public abstract class Camera {
 	}
 
 	/**
-	 * returns the `transform` object, which is an instance of the `Transform` class,
-	 * providing access to its methods and properties.
+	 * returns the `transform` object, which represents a transformation matrix for
+	 * geometric transformations.
 	 * 
-	 * @returns a `Transform` object containing the transformation details.
+	 * @returns the `transform` object itself.
 	 * 
-	 * The output is of type `Transform`, which represents a transformation matrix that
-	 * can be used to transform points in 3D space. The matrix contains the necessary
-	 * elements to perform rotations, scaling, and translations on a point. The values
-	 * of the matrix are determined by the underlying properties of the transform object,
-	 * such as its rotation, scale, and translation components.
+	 * 	- The returned transform object is an instance of the `Transform` class.
+	 * 	- It contains the transformation applied to the input data.
+	 * 	- The transformation includes information about the matrix and any additional
+	 * attributes required for the specific application.
 	 */
 	public Transform getTransform() {
 		return transform;
@@ -114,11 +115,10 @@ public abstract class Camera {
 	public abstract void adjustToViewport(int width, int height);
 
 	/**
-	 * is an abstract class with a single abstract method, `getAsMatrix4()`. This method
-	 * is expected to return a Matrix4f object, which will be used for various purposes
-	 * related to the camera's view matrix calculations. The class does not provide any
-	 * field or method for calculating the view matrix, rather it relies on the
-	 * `calculateProjectionMatrix()` method of the Camera Class to perform that calculation.
+	 * is an abstract class that serves as a base for other classes in the package
+	 * com.ch.math. It does not contain any fields or methods of its own, but rather
+	 * provides an abstract method called getAsMatrix4() that allows subclasses to provide
+	 * their own implementation for calculating a Matrix4f object.
 	 */
 	protected abstract class CameraStruct {
 

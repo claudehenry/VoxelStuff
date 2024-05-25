@@ -1,5 +1,12 @@
 package com.ch.math;
 
+/**
+ * is a Java implementation of a 4x4 matrix object that can be used for various
+ * mathematical operations. It has several methods for setting and getting the elements
+ * of the matrix, as well as methods for transforming vectors and matrices. The class
+ * also provides methods for multiplying the matrix with another matrix, getting the
+ * linear data of the matrix, and transposing the matrix.
+ */
 public class Matrix4f {
 	
 	private float[][] data;
@@ -9,10 +16,23 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Sets all elements of a matrix to their corresponding identities, such as (1,0),
-	 * (0,1), etc.
+	 * sets the elements of a 4x4 matrix to identity values, making it useful for
+	 * initialization purposes or as a starting point for further transformations.
 	 * 
-	 * @returns a Matrix4f object with identity values.
+	 * @returns a `Matrix4f` object with identity matrix values.
+	 * 
+	 * 	- The returned object is the same as the original one, indicating that the function
+	 * modifies the input matrix directly.
+	 * 	- The data array of the matrix is initialized with values that satisfy the identity
+	 * condition, meaning that the product of any two elements remains unchanged.
+	 * Specifically, the elements in the first row and column are set to their appropriate
+	 * values (1 for the first element in each row and column, and 0 otherwise). Similarly,
+	 * the elements in the second row and column are also set to their appropriate values,
+	 * and so on.
+	 * 	- The resulting matrix has the same shape as the original one, with the same
+	 * number of rows and columns.
+	 * 	- The returned object is the same instance of the `Matrix4f` class, indicating
+	 * that any references to the original matrix remain valid after calling `initIdentity`.
 	 */
 	public Matrix4f initIdentity() {
 		data[0][0] = 1;
@@ -36,18 +56,32 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Initializes a matrix representing a translation in 3D space with the provided `x`,
-	 * `y`, and `z` values.
+	 * initializes a matrix with translation values in the x, y, and z directions. It
+	 * modifies the matrix elements to reflect the translated position and returns the
+	 * modified matrix.
 	 * 
-	 * @param x 3D translation's x-component in the returned matrix.
+	 * @param x 3D translation component along the x-axis in the returned matrix.
 	 * 
 	 * @param y 2nd element of the translation vector, which is added to the corresponding
-	 * elements of the matrix's data array.
+	 * component of the matrix's data array.
 	 * 
-	 * @param z 3rd coordinate of the translation vector, which is applied to the upper-left
-	 * corner of the matrix.
+	 * @param z 3rd component of the translation vector, which is added to the current
+	 * position of the matrix.
 	 * 
-	 * @returns a reference to the original matrix.
+	 * @returns a new instance of the `Matrix4f` class with the given translation values
+	 * applied to its elements.
+	 * 
+	 * 1/ The output is a reference to the original matrix object, indicating that the
+	 * translation has been applied to the matrix itself.
+	 * 2/ The matrix's data structure has been modified by setting specific elements to
+	 * new values, depending on the input parameters x, y, and z. These modifications
+	 * will affect how the matrix behaves when used for transformations or other mathematical
+	 * operations.
+	 * 3/ The elements of the matrix are now transformed in a way that represents a
+	 * translation from the origin in the x, y, and z directions. Specifically, the x-axis
+	 * element is negated, while the y- and z-axis elements are set to their respective
+	 * input values.
+	 * 4/ The returned matrix will have the same shape and dimensions as the original matrix.
 	 */
 	public Matrix4f initTranslation(float x, float y, float z) {
 //        x = -x;
@@ -72,20 +106,42 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Initializes a rotation matrix based on three input angles (x, y, z) using the law
-	 * of cosines and sine. It returns the initialized rotation matrix as a new Matrix4f
-	 * object.
+	 * creates a rotation matrix based on three Euler angles (x, y, and z) using the
+	 * Rodrigues formula. It then returns the resulting rotation matrix as a new instance
+	 * of the `Matrix4f` class.
 	 * 
-	 * @param x 3D rotation around the x-axis and affects the resulting rotation matrix
-	 * through its conversion to radians and multiplication with other rotation matrices.
+	 * @param x 3D rotation around the x-axis and is used to calculate the z-component
+	 * of the resulting rotation matrix.
 	 * 
-	 * @param y 2nd angle of rotation, which is used to transform the reference frame and
-	 * generate the resulting matrix representation of the rotated vector.
+	 * @param y 2D rotation angle around the x-axis, which is used to compute the rotated
+	 * values for the `ry` matrix.
 	 * 
-	 * @param z 3D rotation around the z-axis and is used to calculate the resulting
-	 * rotation matrix.
+	 * @param z 3D rotation axis around which the rotation is performed, and its value
+	 * determines the orientation of the resulting rotation matrix.
 	 * 
-	 * @returns a 4x4 homogeneous transformation matrix representing a rotation in 3D space.
+	 * @returns a `Matrix4f` object representing the rotation matrix based on the given
+	 * x, y, and z angles.
+	 * 
+	 * 	- `data`: This is an instance of the `Matrix4f` class, which represents a 4x4
+	 * homogeneous transformation matrix. The matrix contains the rotation and scaling
+	 * components of the input vectors.
+	 * 	- `rz`: This is an instance of the `Matrix4f` class, which represents a 4x4
+	 * rotation matrix. It is created by first rotating the x-axis, then the y-axis, and
+	 * finally the z-axis separately using the `Math.toRadians()` method to convert the
+	 * angles from degrees to radians.
+	 * 	- `ry`: This is an instance of the `Matrix4f` class, which represents a 4x4
+	 * rotation matrix. It is created by first rotating the y-axis, then the x-axis, and
+	 * finally the z-axis separately using the `Math.toRadians()` method to convert the
+	 * angles from degrees to radians.
+	 * 	- `rx`: This is an instance of the `Matrix4f` class, which represents a 4x4
+	 * rotation matrix. It is created by first rotating the x-axis, then the y-axis, and
+	 * finally the z-axis separately using the `Math.toRadians()` method to convert the
+	 * angles from degrees to radians.
+	 * 	- `mul`: This is a method of the `Matrix4f` class that performs matrix multiplication.
+	 * It takes another instance of the `Matrix4f` class as an argument and multiplies
+	 * its elements with those of the current matrix.
+	 * 	- `getData`: This is a method of the `Matrix4f` class that returns an array of
+	 * 16 float values representing the components of the matrix.
 	 */
 	public Matrix4f initRotation(float x, float y, float z) {
 		Matrix4f rx = new Matrix4f();
@@ -153,17 +209,29 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Sets the elements of a `Matrix4f` object to scaling factors for x, y, and z axes.
+	 * initializes a matrix with given scale values for the x, y, and z axes, returning
+	 * the modified matrix.
 	 * 
-	 * @param x 3D scaling factor along the x-axis for the matrix.
+	 * @param x 4th element of the scale factor matrix.
 	 * 
-	 * @param y 2nd component of the scaling vector, which determines the vertical scale
-	 * factor for the matrix.
+	 * @param y 2nd component of the scaling factor for the matrix.
 	 * 
-	 * @param z 2nd element of the scaling matrix and is responsible for setting the
-	 * vertical component of the transformation.
+	 * @param z 2nd dimension of the scaling factor for the matrix, which is applied to
+	 * the corresponding elements of the matrix.
 	 * 
-	 * @returns a matrix with updated data elements.
+	 * @returns a reference to the original matrix object.
+	 * 
+	 * 1/ The returned object is a `Matrix4f` instance, indicating that it is a 4D matrix
+	 * with float elements.
+	 * 2/ The `data` array of the returned object contains the scale values for each
+	 * dimension of the matrix, where the first dimension corresponds to the x-axis, the
+	 * second dimension corresponds to the y-axis, and the third dimension corresponds
+	 * to the z-axis. Each element in the array is a single float value representing the
+	 * scale factor for that dimension.
+	 * 3/ The returned object retains ownership of its `data` array, meaning it is
+	 * responsible for managing its memory allocation and deallocation.
+	 * 4/ The `initScale` function returns a reference to the same `Matrix4f` instance,
+	 * allowing the caller to modify the matrix further without creating a new instance.
 	 */
 	public Matrix4f initScale(float x, float y, float z) {
 		data[0][0] = x;
@@ -187,27 +255,46 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Sets up a 4x4 homogeneous transformation matrix to perform a perspective projection.
-	 * It calculates the near and far plane values based on the given field of view,
-	 * aspect ratio, and stores them in the matrix data.
+	 * initializes a matrix for perspective projection, setting up the necessary
+	 * transformations to project a 2D view into a 3D space with a specified field of
+	 * view (FOV), aspect ratio, and near and far distances.
 	 * 
-	 * @param fov Field of View (FOV) of the camera, which determines the angle of the
-	 * vertical visual horizon visible to the user, and it is used to calculate the aspect
-	 * ratio of the viewport.
+	 * @param fov 90-degree angle of the field of view, which is used to calculate the
+	 * tan of half of that angle and is multiplied by the aspect ratio to determine the
+	 * scaling factor for the matrix.
 	 * 
-	 * @param aspectRatio 1:n ratio of the viewport width to the viewport height, and is
-	 * used to scale the x-axis of the matrix inversely proportional to the y-axis, which
-	 * ensures that objects appear proportionate in their intended orientation within the
-	 * viewport.
+	 * @param aspectRatio 2D aspect ratio of the view frustum, which is used to scale the
+	 * near and far planes of the perspective projection.
 	 * 
-	 * @param zNear near clip plane of the perspective projection, which determines the
-	 * range of values for the z-coordinate of pixels in the resulting image.
+	 * @param zNear near plane distance of the perspective projection, which determines
+	 * the position of the near clipping plane and affects the appearance of objects in
+	 * the foreground.
 	 * 
-	 * @param zFar 2D perspective projection's far clip plane, which sets the distance
-	 * beyond which objects will appear blurred or distorted.
+	 * @param zFar 3D position of an object in the far distance from the camera, which
+	 * is used to calculate the perspective projection matrix.
 	 * 
-	 * @returns a matrix with four elements representing the projection of a 3D scene
-	 * onto a 2D viewplane.
+	 * @returns a matrix representing the perspective projection of a 3D scene with a
+	 * specified field of view, aspect ratio, near and far planes.
+	 * 
+	 * 	- `data`: This is an array of four float values that represent the components of
+	 * the matrix.
+	 * 	+ `data[0][0]`: The value of this element is 1 / (tan(half FOV) * aspect ratio).
+	 * 	+ `data[0][1]`: The value of this element is 0.
+	 * 	+ `data[0][2]`: The value of this element is 0.
+	 * 	+ `data[0][3]`: The value of this element is 0.
+	 * 	+ `data[1][0]`: The value of this element is 0.
+	 * 	+ `data[1][1]`: The value of this element is 1 / tan(half FOV).
+	 * 	+ `data[1][2]`: The value of this element is 0.
+	 * 	+ `data[1][3]`: The value of this element is 0.
+	 * 	+ `data[2][0]`: The value of this element is 0.
+	 * 	+ `data[2][1]`: The value of this element is the negative of the sum of zNear and
+	 * zFar divided by the range.
+	 * 	+ `data[2][2]`: The value of this element is -zNear - zFar.
+	 * 	+ `data[2][3]`: The value of this element is 2 * zFar * zNear / range.
+	 * 	+ `data[3][0]`: The value of this element is 0.
+	 * 	+ `data[3][1]`: The value of this element is 0.
+	 * 	+ `data[3][2]`: The value of this element is 1.
+	 * 	+ `data[3][3]`: The value of this element is 0.
 	 */
 	public Matrix4f initPerspective(float fov, float aspectRatio, float zNear, float zFar) {
 		float tanHalfFOV = (float) Math.tan(Math.toRadians(fov) / 2);
@@ -234,27 +321,42 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Sets up a orthographic projection matrix for a 3D scene, based on input values of
-	 * left, right, bottom, top, near and far coordinates.
+	 * initializes a matrix representing an orthographic projection, where the near and
+	 * far planes are separated by a distance `far - near`, and the left and right edges
+	 * are separated by a distance `right - left`. The matrix is returned as the result
+	 * of the function.
 	 * 
-	 * @param left 3D coordinate of one of the two plane boundaries, with positive values
-	 * corresponding to the near boundary and negative values to the far boundary.
+	 * @param left left edge of the orthographic projection, which is used to calculate
+	 * the scaling factors for the x-axis in the matrix.
 	 * 
-	 * @param right right boundary of the orthographic projection, which is used to
-	 * calculate the z-coordinates of the vertices of the projected image.
+	 * @param right right edge of the orthographic projection, which is used to calculate
+	 * the values for the matrix's data elements.
 	 * 
-	 * @param bottom 2D height of the bottom-left corner of the orthographic projection.
+	 * @param bottom 2D coordinate of the bottom left corner of the orthographic view
+	 * frustum, which is used to calculate the scale factors for the width, height, and
+	 * depth of the frustum.
 	 * 
-	 * @param top 3D coordinate of the top-left corner of the view frustum, which determines
-	 * the position and size of the frustum in the virtual world.
+	 * @param top 2D coordinate of the top-left corner of the orthographic projection,
+	 * which is used to calculate the corresponding 3D coordinate in the matrix data structure.
 	 * 
-	 * @param near 3D coordinate of the near plane, where the function will project any
-	 * 3D points into the view frustum.
+	 * @param near near plane of the orthographic projection, and it is used to compute
+	 * the corresponding value for the depth component of the resulting matrix.
 	 * 
-	 * @param far 4th coordinate of the orthographic projection, which determines the
-	 * distance from the near plane to the far plane along the depth axis.
+	 * @param far 4th coordinate of the orthographic projection, which determines how the
+	 * perspective view is scaled from near to far.
 	 * 
-	 * @returns a Matrix4f object representing an orthographic projection.
+	 * @returns a new `Matrix4f` object that represents an orthographic projection matrix.
+	 * 
+	 * 	- `data`: This is an array of 16 floating-point values that represent the components
+	 * of a 4x4 orthographic projection matrix. Each element of the array is assigned a
+	 * specific value based on the input parameters.
+	 * 	- `width`, `height`, and `depth`: These are the dimensions of the orthographic
+	 * projection, which are used to compute the values of the matrix components.
+	 * 	- `near` and `far`: These are the near and far clipping planes, respectively,
+	 * which determine the range of points that are clipped by the orthographic projection.
+	 * 
+	 * Overall, the returned output is an instance of a 4x4 orthographic projection matrix
+	 * that can be used to project 3D points and surfaces into a 2D image plane.
 	 */
 	public Matrix4f initOrthographic(float left, float right, float bottom, float top, float near, float far) {
 		float width = right - left;
@@ -282,14 +384,41 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Initializes a rotation matrix based on a forward vector and an up vector, returning
-	 * the rotation matrix.
+	 * generates a rotation matrix from three vectors: `forward`, `up`, and `u`. The
+	 * rotation is created by cross-producting the vectors, resulting in a matrix that
+	 * represents the desired orientation.
 	 * 
-	 * @param forward 3D direction of rotation.
+	 * @param forward 3D forward vector of the rotation.
+	 * 
+	 * The `forward` vector has three components, which represent the x, y, and z axes
+	 * of a 3D space. It is normalized, meaning that its magnitude (or length) is equal
+	 * to 1. This ensures that the rotation matrix generated by the function will have
+	 * units of radians, rather than any other unit of measurement.
 	 * 
 	 * @param up 3D direction perpendicular to the rotation axis.
 	 * 
-	 * @returns a matrix representing a rotation in 3D space.
+	 * 	- `up`: A normalized vector representing the upward direction in 3D space.
+	 * 	- `r`: The cross product of `f` and `up`, which represents the right-hand rotation
+	 * axis.
+	 * 
+	 * @returns a Matrix4f object representing a rotation matrix based on the provided
+	 * forward and up vectors.
+	 * 
+	 * 	- The output is a Matrix4f object representing a rotation transformation.
+	 * 	- The matrix has three columns, each representing a coordinate system (x, y, and
+	 * z) for the rotation.
+	 * 	- The elements of the matrix are defined as follows:
+	 * 	+ F11: The x-axis rotation angle
+	 * 	+ F12: The y-axis rotation angle
+	 * 	+ F13: The z-axis rotation angle
+	 * 	+ F21: The x-y plane rotation angle
+	 * 	+ F22: The y-z plane rotation angle
+	 * 	+ F23: The x-z plane rotation angle
+	 * 	+ F31: The z-x axis rotation angle
+	 * 	+ F32: The z-y plane rotation angle
+	 * 	+ F33: The z-z axis rotation angle.
+	 * 	- These angles can be positive or negative, indicating clockwise or counterclockwise
+	 * rotation around each axis, respectively.
 	 */
 	public Matrix4f initRotation(Vector3f forward, Vector3f up) {
 		Vector3f f = forward.normalized();
@@ -303,19 +432,50 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Sets up a rotation matrix based on three input vectors: `forward`, `up`, and
-	 * `right`. It generates a matrix where the rows represent the rotations around each
-	 * axis.
+	 * sets the elements of a Matrix4f object to represent a rotation based on three
+	 * vectors: forward, right, and up.
 	 * 
-	 * @param forward 3D vector of the direction of rotation.
+	 * @param forward 3D direction vector that points towards the front of the rotating
+	 * object, which is used to initialize the rotation matrix.
 	 * 
-	 * @param up 3D axis perpendicular to the rotation axis, which is used to calculate
-	 * the rotation matrix's skew element.
+	 * 	- `forward`: A Vector3f object representing the direction of motion, which contains
+	 * the x, y, and z components of the direction from the origin to the end point of
+	 * the motion. The x, y, and z components of `forward` have values between -1 and 1,
+	 * representing the magnitude of the direction.
 	 * 
-	 * @param right 3D direction of the rightward vector, which is used to construct the
-	 * rotation matrix.
+	 * @param up 3D direction perpendicular to the rotation axis and is used to set the
+	 * z-component of the rotation matrix.
 	 * 
-	 * @returns a matrix representation of a rotation in 3D space.
+	 * 	- `up`: A 3D vector representing the up direction in the rotation. It has x, y,
+	 * and z components, which are assigned to the corresponding elements of the `data`
+	 * array.
+	 * 
+	 * @param right 3D right vector of the rotation, which is used to initialize the
+	 * upper-left 3x3 submatrix of the returned `Matrix4f` object.
+	 * 
+	 * 	- `right`: A `Vector3f` object representing the right-hand orientation vector in
+	 * 3D space. It has three components: `x`, `y`, and `z`.
+	 * 
+	 * @returns a reference to the same `Matrix4f` instance.
+	 * 
+	 * 	- The output is a `Matrix4f` object, which represents a 4x4 homogeneous transformation
+	 * matrix.
+	 * 	- The elements of the matrix are initialized with values from the input vectors
+	 * `forward`, `up`, and `right`. Specifically, the rows of the matrix correspond to
+	 * the x, y, and z axes, respectively, while the columns represent the rotations
+	 * around those axes.
+	 * 	- The elements of the matrix are arranged in a specific order, following the
+	 * convention of homogeneous transformation matrices. This means that the first three
+	 * elements of each row represent the rotation around the respective axis, while the
+	 * fourth element represents the scale factor for that axis.
+	 * 	- The resulting matrix has the following properties:
+	 * 	+ It represents a 4x4 transformation matrix, which can be used to transform points
+	 * and vectors in 3D space.
+	 * 	+ Its elements are arranged in a specific order, which allows it to be easily
+	 * composed with other matrices to perform more complex transformations.
+	 * 	+ It is a homogeneous transformation matrix, which means that the fourth element
+	 * of each row is always equal to 1, allowing for easy scaling of the transformed
+	 * points and vectors.
 	 */
 	public Matrix4f initRotation(Vector3f forward, Vector3f up, Vector3f right) {
 		Vector3f f = forward;
@@ -343,14 +503,35 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Takes a vector `r` and returns a transformed vector using the elements of an array
-	 * `data`. The transformation is applied component-wise by multiplying each element
-	 * of `r` with a corresponding element of `data`.
+	 * transforms a vector `r` by multiplying each component with corresponding values
+	 * from an array `data`. The resulting vector is returned.
 	 * 
-	 * @param r 3D transformation vector applied to the output vector.
+	 * @param r 3D transformation to be applied to the output vector.
 	 * 
-	 * @returns a new Vector3f instance representing the result of applying the transformation
-	 * to the given vector.
+	 * 	- `r.getX()`: returns the x-component of the input vector.
+	 * 	- `r.getY()`: returns the y-component of the input vector.
+	 * 	- `r.getZ()`: returns the z-component of the input vector.
+	 * 	- `data[0][0]`, `data[0][1]`, `data[0][2]`, and `data[0][3]`: these are the
+	 * components of a 4D vector, which are multiplied by the corresponding components
+	 * of `r` to produce the transformed vector.
+	 * 
+	 * @returns a new Vector3f object with the dot product of the input vector and each
+	 * element of the input vector multiplied by the corresponding elements of the
+	 * transformation matrix.
+	 * 
+	 * The returned output is of type `Vector3f`, indicating that it represents a 3D
+	 * vector in homogeneous coordinates.
+	 * 
+	 * The first three elements of the output represent the transformed x, y, and z
+	 * components of the input vector, respectively. These elements are derived from the
+	 * original data array through multiplications with the corresponding components of
+	 * the input vector.
+	 * 
+	 * The fourth element of the output is a summary of the remaining data in the original
+	 * array, which has been discarded during the transformation process. This value is
+	 * computed as the sum of the elements in the second and third dimensions of the
+	 * original array, scaled by the product of the corresponding components of the input
+	 * vector.
 	 */
 	public Vector3f transform(Vector3f r) {
 		return new Vector3f(data[0][0] * r.getX() + data[0][1] * r.getY() + data[0][2] * r.getZ() + data[0][3], data[1][0] * r.getX() + data[1][1] * r.getY() + data[1][2]
@@ -358,13 +539,30 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Multiplies a given `Matrix4f` object by another `Matrix4f` object, computing the
-	 * resulting matrix product and returning it.
+	 * multiplies a matrix by another matrix, element-wise multiplying the corresponding
+	 * elements of each matrix and storing the result in a new matrix.
 	 * 
-	 * @param r 4x4 transformation matrix that the current matrix will be multiplied by,
-	 * and its elements are used to compute the new elements of the resulting matrix.
+	 * @param r 4x4 matrix that multiplies the current matrix, resulting in a new 4x4 matrix.
 	 * 
-	 * @returns a matrix resulting from the multiplication of two other matrices.
+	 * 	- `r` is a `Matrix4f` object representing a 4x4 homogeneous transformation matrix.
+	 * 	- It has four elements (0, 1, 2, and 3) that correspond to the components of the
+	 * matrix.
+	 * 	- Each element is a floating-point number representing the value of the corresponding
+	 * component of the matrix.
+	 * 
+	 * @returns a new matrix `res` containing the result of multiplying the input matrices.
+	 * 
+	 * The `res` object is created as a new instance of `Matrix4f`.
+	 * 
+	 * The values of the elements in the output matrix are calculated by multiplying
+	 * corresponding elements in the input matrices using the given indices. Specifically,
+	 * for each element (i, j) in the output matrix, the value is set to the result of
+	 * multiplying the element at position (0, j) of the first input matrix by the element
+	 * at position i of the second input matrix, plus the result of multiplying the element
+	 * at position i of the first input matrix by the element at position (1, j) of the
+	 * second input matrix, and so on.
+	 * 
+	 * Therefore, the output matrix represents the matrix product of the two input matrices.
 	 */
 	public Matrix4f mul(Matrix4f r) {
 		Matrix4f res = new Matrix4f();
@@ -379,11 +577,11 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Creates an array of size 4x4 containing values from an external `data` array. It
-	 * does this by using a nested loop to access each element in the `data` array and
-	 * assign it to the corresponding position in the returned array.
+	 * creates a new `float[][]` array and populates it with values from the input `data`
+	 * array using a nested loop. It returns the created array.
 	 * 
-	 * @returns an array of 4x4 floats containing the input data.
+	 * @returns an array of arrays, where each inner array has four elements representing
+	 * the data at different positions.
 	 */
 	public float[][] getData() {
 		float[][] res = new float[4][4];
@@ -396,10 +594,10 @@ public class Matrix4f {
 	}
 	
 	/**
-	 * Retrieves an array of floats representing linear data consisting of input values
-	 * for 4 channels, each with two output values.
+	 * returns an array of floats containing the data at different positions of a linear
+	 * system.
 	 * 
-	 * @returns an array of 9 floats representing 3 sets of 3 values each.
+	 * @returns an array of 12 float values.
 	 */
 	public float[] getLinearData() {
 		return new float[] {
@@ -423,48 +621,52 @@ public class Matrix4f {
 	}
 
 	/**
-	 * Retrieves the value of a pixel at a given coordinates (x, y) from an array of
-	 * pixels called "data".
+	 * retrieves a value from a 2D array `data` based on the input coordinates `x` and `y`.
 	 * 
-	 * @param x 1-based integer index of a cell within the 2D array 'data'.
+	 * @param x 1D coordinate of the point within the 2D array `data`.
 	 * 
-	 * @param y 2nd dimension of the 2D array `data`, providing its value for calculating
-	 * the output.
+	 * @param y 2nd dimension of the data array being accessed by the function, which is
+	 * used to locate the specific value within the array that the function returns.
 	 * 
-	 * @returns a floating-point value representing the cell at position (x, y) in a 2D
-	 * grid.
+	 * @returns a floating-point value representing the data at the specified position
+	 * in a 2D array.
 	 */
 	public float get(int x, int y) {
 		return data[x][y];
 	}
 
 	/**
-	 * Sets the value of a private member variable, `data`, to the input array.
+	 * sets the `data` field of the current object to the input `float[][]` array.
 	 * 
-	 * @param data 2D array of floating-point numbers that will be assigned to the `data`
-	 * field of the calling object.
+	 * @param data 2D array of floating-point values that will be assigned to the `data`
+	 * field of the function's caller.
+	 * 
+	 * 	- The `float[][]` data type represents an array of arrays, each containing
+	 * floating-point numbers.
+	 * 	- The `this.data` attribute assigns the input `data` to a field in the calling object.
 	 */
 	public void SetM(float[][] data) {
 		this.data = data;
 	}
 
 	/**
-	 * Updates the specified element of a 2D array with the provided float value.
+	 * sets a value at a specific position in a two-dimensional array.
 	 * 
-	 * @param x 0-based index of a pixel in the grid of pixels data structure.
+	 * @param x 0-based index of the row in the 2D array where the value should be assigned.
 	 * 
-	 * @param y 2D position of the element being manipulated within the grid.
+	 * @param y 2nd dimension of the data array being manipulated, and it provides the
+	 * position of the element within that dimension.
 	 * 
-	 * @param value 2D coordinate and sets its corresponding element of the data array
-	 * to that value.
+	 * @param value 2D coordinate point where the value is being assigned to the data array.
 	 */
 	public void set(int x, int y, float value) {
 		data[x][y] = value;
 	}
 
 	/**
-	 * Reverses an array of 4x4 float values by creating a new array with the same
-	 * dimensions and copying the original values into it.
+	 * transforms an array of floats `data` into a new array `tr` with elements swapped
+	 * horizontally. The original array `data` is then replaced with the transformed array
+	 * `tr`.
 	 */
 	public void transposeSelf() {
 		float[][] tr = new float[4][4];

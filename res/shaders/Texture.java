@@ -28,9 +28,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 /**
- * provides a simple way to handle textures in a OpenGL environment. It allows for
- * loading textures from files and binding them to a texture slot in the GPU. The
- * class also provides methods for getting the ID of the loaded texture.
+ * in Java provides functionality for loading and manipulating textures. It takes a
+ * filename as a constructor parameter and generates an ID for the texture upon load.
+ * The class also offers methods for binding and getting the ID of the texture.
  */
 public class Texture {
 	
@@ -43,26 +43,26 @@ public class Texture {
 	}
 
 	/**
-	 * does not have any specific functionality as it is already implemented by the Java
-	 * Language. Therefore, it does not perform any operations or actions.
+	 * has no functionality as it is abstract and cannot be instantiated or called directly.
 	 */
 	@Override
 	protected void finalize() {
 	}
 
 	/**
-	 * 0 is called, no other information is provided.
+	 * 0 in the given code snippet binds a connection to a specific endpoint.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * sets the active texture slot to a specific index (0-31) and binds the specified
-	 * texture ID to that slot using the `glBindTexture()` method.
+	 * activates a specific texture slot (0-31) and binds the specified texture ID to
+	 * that slot.
 	 * 
-	 * @param samplerSlot 0-based index of a texture slot in the GPU, with valid values
-	 * ranging from 0 to 31.
+	 * @param samplerSlot 0-based index of a texture slot in the GPU's texture array,
+	 * with values ranging from 0 to 31, and is used to select the corresponding texture
+	 * for binding.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -71,22 +71,22 @@ public class Texture {
 	}
 
 	/**
-	 * returns the value of the `id` field.
+	 * retrieves the `id` field of an object and returns its value as an `int`.
 	 * 
-	 * @returns an integer representing the value of the `id` field.
+	 * @returns the value of the `id` field.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * loads a texture from an image file, allocates memory for it, and binds it to a GPU
-	 * texture object. It also sets up texture wrapping and filtering parameters.
+	 * loads an image from a file and returns the ID of the generated texture. It reads
+	 * the image using `ImageIO`, converts it to a byte array, and binds it to a texture
+	 * using `GL11`.
 	 * 
-	 * @param fileName filename of the image to be loaded and processed by the `loadTexture()`
-	 * method.
+	 * @param fileName name of the file containing the image to be loaded as a texture.
 	 * 
-	 * @returns an integer ID representing a loaded texture.
+	 * @returns an OpenGL texture ID representing a loaded image.
 	 */
 	private static int loadTexture(String fileName) {
 		try {

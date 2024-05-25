@@ -13,27 +13,25 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * of this project is responsible for creating and rendering a 3D scene using Java
- * and the LWJGL library. It sets up the scene, loads a shader, and creates a world
- * and a camera. The loop function updates the position of the camera and renders the
- * scene using the shader. The program also includes an exit function to shut down
- * the application when the user presses the escape key.
+ * in the provided Java file implements a 3D graphics application using LWJGL. It
+ * initalizes display and GL capabilities, creates a camera and shader, loads a
+ * texture, and defines a world object. The main method then enters an infinite loop
+ * of updating, rendering, and displaying the scene.
  */
 public class Main {
 	
 	/**
-	 * initializes display and graphics libraries, enters an infinite loop for rendering,
-	 * and then exits with a successful status code of 0.
+	 * initializes display and graphics libraries, enters an infinite loop for rendering
+	 * and exiting with a successful status code of 0.
 	 * 
-	 * @param args 0 or more command-line arguments passed to the program by the user,
-	 * which are then ignored and have no effect on the function's execution.
+	 * @param args 1 or more command line arguments passed to the `main` function, which
+	 * are then ignored and have no effect on the program's execution.
 	 * 
-	 * 	- Length: The length of the `args` array is determined at compile-time and is
-	 * always non-zero.
-	 * 	- Elements: Each element in `args` is a string representing an command-line
-	 * argument passed to the program.
-	 * 	- Types: Each element in `args` is a `String`, indicating that the corresponding
-	 * argument must be a string value.
+	 * 	- The `String[] args` is an array of strings that contains the command-line
+	 * arguments passed to the program when it was launched.
+	 * 	- The length of the `args` array can vary depending on the number of arguments passed.
+	 * 	- Each element in the `args` array represents a separate argument passed to the
+	 * program.
 	 */
 	public static void main(String[] args) {
 		
@@ -52,8 +50,8 @@ public class Main {
 	private static World w;
 	
 	/**
-	 * initializes a display with a resolution of 1920x1080, sets vsync enabled, and
-	 * prints the version of GL supported by the system using `GL11.glGetString()`.
+	 * sets up a display mode with resolution 1920x1080, enables VSync, and prints the
+	 * GL version string to the console.
 	 */
 	private static void initDisplay() {
 		try {
@@ -67,9 +65,8 @@ public class Main {
 	}
 	
 	/**
-	 * sets up the GL context for a 3D rendering application, including setting the clear
-	 * color, enabling culling and depth testing, loading a shader, and creating a texture
-	 * and vertices for a 3D model.
+	 * initializes a 3D graphics environment, including setting up camera, depth testing,
+	 * and rendering a texture. It also creates a world object and loads a shader program.
 	 */
 	private static void initGL() {
 		
@@ -114,9 +111,8 @@ public class Main {
 	}
 	
 	/**
-	 * continuously runs a loop while a close request is not received and the escape key
-	 * is not pressed. It updates and renders the display, displays the frame rate, and
-	 * clears the color and depth buffers.
+	 * initializes a timer, enters an infinite loop, and updates the display title, clears
+	 * the color and depth buffers, renders the scene, and updates the display.
 	 */
 	private static void loop() {
 		
@@ -141,10 +137,11 @@ public class Main {
 	}
 	
 	/**
-	 * updates the position of an object (`w`) based on input processing and transformation.
+	 * updates the position of an object based on input and transform data, using
+	 * `processInput` and `updatePos`.
 	 * 
-	 * @param dt delta time, which is a measure of the elapsed time since the last frame
-	 * and is used to update the object's position and transform.
+	 * @param dt delta time, or the change in time since the last frame, which is used
+	 * to update the position of the entity in the world.
 	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -152,8 +149,8 @@ public class Main {
 	}
 
 	/**
-	 * renders a 3D model using the OpenGL API. It sets up the rendering context, binds
-	 * the model's vertex buffer, and draws the model using the model matrix.
+	 * performs rendering operations on a 3D scene represented by a matrix `ch`, using a
+	 * shader object `s`. It sets up the MVP matrix and draws the model objects in the scene.
 	 */
 	private static void render() {
 		
@@ -177,10 +174,11 @@ public class Main {
 	}
 	
 	/**
-	 * terminates the application with the specified exit code, which is passed as an argument.
+	 * terminates the Java program by calling the `System.exit()` method with the specified
+	 * status code, which can range from 0 to 255.
 	 * 
-	 * @param status value to be passed as an argument to the `System.exit()` method,
-	 * which terminates the Java application with the specified exit status.
+	 * @param status value to be passed to the `System.exit()` method, which terminates
+	 * the current Java process.
 	 */
 	private static void exit(int status) {
 		System.exit(status);
