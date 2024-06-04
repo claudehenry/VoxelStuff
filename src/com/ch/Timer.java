@@ -3,9 +3,11 @@ package com.ch;
 import org.lwjgl.Sys;
 
 /**
- * is a Java class that provides various functions for measuring time and frame rate.
- * It has several methods for calculating and updating frame rate, time, and delta.
- * The class also has a method for getting the current time and delta value.
+ * Provides a mechanism for measuring and updating frames per second (FPS). It has
+ * several static methods: `init()`, `calculateDelta()`, `updateFPS()`, `getDelta()`,
+ * `getFPS()`, and `getTime()`. These methods calculate and update various values
+ * related to FPS, such as the current FPS, time elapsed, and delta. The class also
+ * has several instance fields: `fps`, `lastFPS`, `lastFrame`, `time`, and `delta`.
  */
 public class Timer {
 
@@ -17,28 +19,29 @@ public class Timer {
     public static float time;
 
 	/**
-	 * calculates the current time in milliseconds based on the system's timer resolution,
-	 * multiplying the current time by 1000 and then dividing it by the timer resolution.
+	 * Calculates the current time in milliseconds using the system's timer resolution
+	 * and converts it to a value between 0 and 1000.
 	 * 
-	 * @returns a millisecond value representing the current time, calculated as the
-	 * product of the current UNIX time and a resolution factor.
+	 * @returns a long value representing the current time in milliseconds, calculated
+	 * from the system's timer resolution.
 	 */
 	private static long getTimeS() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	/**
-	 * records the current FPS at the time of execution using `getTimeS()`.
+	 * Initializes a variable `lastFPS` with the current time stamp using `getTimeS()` method.
 	 */
 	public static void init() {
 		lastFPS = getTimeS();
 	}
 
 	/**
-	 * measures the time elapsed between two frames and returns the difference as a float
+	 * Calculates the time difference between two points, represented by `lastFrame` and
+	 * `time`, using the `getTimeS()` method. The resulting delta is returned as a float
 	 * value.
 	 * 
-	 * @returns a floating-point value representing the time difference between two frames.
+	 * @returns a float value representing the time difference between two frames.
 	 */
 	private static float calculateDelta() {
 		long time = getTimeS();
@@ -48,8 +51,8 @@ public class Timer {
 	}
 
 	/**
-	 * updates the frame rate by incrementing a counter every 1 second, resetting it to
-	 * 0 when the count reaches 1000. It also stores the current frame rate as a variable.
+	 * Updates the framerate counter every 1 second, storing the current framerate and
+	 * resetting it to 0 when a threshold is met.
 	 */
 	private static void updateFPS() {
 		if (getTimeS() - lastFPS > 1000) {
@@ -61,8 +64,8 @@ public class Timer {
 	}
 
 	/**
-	 * retrieves the value of the `delta` field, which is a floating-point number
-	 * representing the change in some quantity.
+	 * Retrieves the value of the `delta` field, which stores a floating-point number
+	 * representing the difference between two values.
 	 * 
 	 * @returns a floating-point value representing the difference between two values.
 	 */
@@ -71,7 +74,7 @@ public class Timer {
 	}
 
 	/**
-	 * returns the current frames per second (FPS) as a floating-point value.
+	 * Returns the current frame rate as a floating-point number.
 	 * 
 	 * @returns the current frame rate of the application.
 	 */
@@ -80,8 +83,7 @@ public class Timer {
 	}
 
     /**
-     * returns the value of a `time` field, which is not further defined in the given
-     * code snippet.
+     * Retrieves the current time value stored as a `float` named `time`.
      * 
      * @returns a floating-point representation of the current time.
      */
@@ -90,7 +92,7 @@ public class Timer {
     }
 
     /**
-     * updates the FPS, calculates and limits the delta time, and adds it to the total time.
+     * Updates frame rate, calculates and stores delta time, and increments time variable.
      */
     public static void update() {
         updateFPS();
