@@ -412,141 +412,594 @@
     }
   },
   {
-    "name": "Timer.java",
-    "path": "src/com/ch/Timer.java",
+    "name": "Matrix4f.java",
+    "path": "src/com/ch/math/Matrix4f.java",
     "content": {
       "structured": {
-        "description": "A `Timer` class that measures and updates the frames per second (FPS) of an application. It uses the `Sys` package to get the current time and timer resolution, and calculates the delta time between two points. The `updateFPS()` method is called every frame, and it updates the current FPS and resets the delta counter. The `getDelta()` and `getFPS()` methods provide access to these values, while the `update()` method calls `updateFPS()` and calculates the time elapsed since the last frame.",
+        "description": "A Matrix4f class that represents a 4x4 matrix in the homogeneous coordinate system. The class provides several methods for creating matrices, including one that takes a vector and returns a rotation matrix, another that takes two vectors and returns an orthographic matrix, and another that takes three vectors and returns a rotation-orthographic matrix. Additionally, the class provides methods for transforming vectors using the matrix, as well as for getting and setting individual elements of the matrix.",
         "diagram": {
-          "path": "src/com/ch/Timer.java",
-          "gviz": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"]\n    \n    subgraph cluster_1 {\n        label=\"com\"\n        color=\"#33363A\"\n        subgraph cluster_main {\n            // style=filled\n            color=\"#00000000\"\n            Timer [] [fontsize=\"20pt\",style=filled,color=\"#26de81\",shape=square, fontname=\"Courier New\"]\n            label = \"\"\n        }\n    }\n    subgraph cluster_2 {\n        label=\"org\"\n        color=\"#33363A\"\n        Sys [label=\"org.lwjgl.Sys\", style=\"rounded,filled\"]\n    }\n    Timer -> Sys [style=\"dashed\"]\n}\n",
-          "d2": "<?xml version=\"1.0\" encoding=\"utf-8\"?><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" d2Version=\"v0.6.5\" preserveAspectRatio=\"xMinYMin meet\" viewBox=\"0 0 295 624\"><svg id=\"d2-svg\" class=\"d2-849989175\" width=\"295\" height=\"624\" viewBox=\"11 11 295 624\"><rect x=\"11.000000\" y=\"11.000000\" width=\"295.000000\" height=\"624.000000\" rx=\"0.000000\" fill=\"#151719\" stroke-width=\"0\" /><style type=\"text/css\"><![CDATA[\n.d2-849989175 .text {\n\tfont-family: \"d2-849989175-font-regular\";\n}\n@font-face {\n\tfont-family: d2-849989175-font-regular;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-849989175 .text-italic {\n\tfont-family: \"d2-849989175-font-italic\";\n}\n@font-face {\n\tfont-family: d2-849989175-font-italic;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-849989175 .text-mono {\n\tfont-family: \"d2-849989175-font-mono\";\n}\n@font-face {\n\tfont-family: d2-849989175-font-mono;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-849989175 .text-mono-bold {\n\tfont-family: \"d2-849989175-font-mono-bold\";\n}\n@font-face {\n\tfont-family: d2-849989175-font-mono-bold;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}]]></style><style type=\"text/css\"><![CDATA[.shape {\n  shape-rendering: geometricPrecision;\n  stroke-linejoin: round;\n}\n.connection {\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n.blend {\n  mix-blend-mode: multiply;\n  opacity: 0.5;\n}\n\n\t\t.d2-849989175 .fill-N1{fill:#ECEDED;}\n\t\t.d2-849989175 .fill-N2{fill:#676C7E;}\n\t\t.d2-849989175 .fill-N3{fill:#9499AB;}\n\t\t.d2-849989175 .fill-N4{fill:#CFD2DD;}\n\t\t.d2-849989175 .fill-N5{fill:#DEE1EB;}\n\t\t.d2-849989175 .fill-N6{fill:#EEF1F8;}\n\t\t.d2-849989175 .fill-N7{fill:#151719;}\n\t\t.d2-849989175 .fill-B1{fill:#717D86;}\n\t\t.d2-849989175 .fill-B2{fill:#717D86;}\n\t\t.d2-849989175 .fill-B3{fill:#ffff00;}\n\t\t.d2-849989175 .fill-B4{fill:#151719;}\n\t\t.d2-849989175 .fill-B5{fill:#151719;}\n\t\t.d2-849989175 .fill-B6{fill:#151719;}\n\t\t.d2-849989175 .fill-AA2{fill:#676C7E;}\n\t\t.d2-849989175 .fill-AA4{fill:#CFD2DD;}\n\t\t.d2-849989175 .fill-AA5{fill:#DEE1EB;}\n\t\t.d2-849989175 .fill-AB4{fill:#CFD2DD;}\n\t\t.d2-849989175 .fill-AB5{fill:#DEE1EB;}\n\t\t.d2-849989175 .stroke-N1{stroke:#ECEDED;}\n\t\t.d2-849989175 .stroke-N2{stroke:#676C7E;}\n\t\t.d2-849989175 .stroke-N3{stroke:#9499AB;}\n\t\t.d2-849989175 .stroke-N4{stroke:#CFD2DD;}\n\t\t.d2-849989175 .stroke-N5{stroke:#DEE1EB;}\n\t\t.d2-849989175 .stroke-N6{stroke:#EEF1F8;}\n\t\t.d2-849989175 .stroke-N7{stroke:#151719;}\n\t\t.d2-849989175 .stroke-B1{stroke:#717D86;}\n\t\t.d2-849989175 .stroke-B2{stroke:#717D86;}\n\t\t.d2-849989175 .stroke-B3{stroke:#ffff00;}\n\t\t.d2-849989175 .stroke-B4{stroke:#151719;}\n\t\t.d2-849989175 .stroke-B5{stroke:#151719;}\n\t\t.d2-849989175 .stroke-B6{stroke:#151719;}\n\t\t.d2-849989175 .stroke-AA2{stroke:#676C7E;}\n\t\t.d2-849989175 .stroke-AA4{stroke:#CFD2DD;}\n\t\t.d2-849989175 .stroke-AA5{stroke:#DEE1EB;}\n\t\t.d2-849989175 .stroke-AB4{stroke:#CFD2DD;}\n\t\t.d2-849989175 .stroke-AB5{stroke:#DEE1EB;}\n\t\t.d2-849989175 .background-color-N1{background-color:#ECEDED;}\n\t\t.d2-849989175 .background-color-N2{background-color:#676C7E;}\n\t\t.d2-849989175 .background-color-N3{background-color:#9499AB;}\n\t\t.d2-849989175 .background-color-N4{background-color:#CFD2DD;}\n\t\t.d2-849989175 .background-color-N5{background-color:#DEE1EB;}\n\t\t.d2-849989175 .background-color-N6{background-color:#EEF1F8;}\n\t\t.d2-849989175 .background-color-N7{background-color:#151719;}\n\t\t.d2-849989175 .background-color-B1{background-color:#717D86;}\n\t\t.d2-849989175 .background-color-B2{background-color:#717D86;}\n\t\t.d2-849989175 .background-color-B3{background-color:#ffff00;}\n\t\t.d2-849989175 .background-color-B4{background-color:#151719;}\n\t\t.d2-849989175 .background-color-B5{background-color:#151719;}\n\t\t.d2-849989175 .background-color-B6{background-color:#151719;}\n\t\t.d2-849989175 .background-color-AA2{background-color:#676C7E;}\n\t\t.d2-849989175 .background-color-AA4{background-color:#CFD2DD;}\n\t\t.d2-849989175 .background-color-AA5{background-color:#DEE1EB;}\n\t\t.d2-849989175 .background-color-AB4{background-color:#CFD2DD;}\n\t\t.d2-849989175 .background-color-AB5{background-color:#DEE1EB;}\n\t\t.d2-849989175 .color-N1{color:#ECEDED;}\n\t\t.d2-849989175 .color-N2{color:#676C7E;}\n\t\t.d2-849989175 .color-N3{color:#9499AB;}\n\t\t.d2-849989175 .color-N4{color:#CFD2DD;}\n\t\t.d2-849989175 .color-N5{color:#DEE1EB;}\n\t\t.d2-849989175 .color-N6{color:#EEF1F8;}\n\t\t.d2-849989175 .color-N7{color:#151719;}\n\t\t.d2-849989175 .color-B1{color:#717D86;}\n\t\t.d2-849989175 .color-B2{color:#717D86;}\n\t\t.d2-849989175 .color-B3{color:#ffff00;}\n\t\t.d2-849989175 .color-B4{color:#151719;}\n\t\t.d2-849989175 .color-B5{color:#151719;}\n\t\t.d2-849989175 .color-B6{color:#151719;}\n\t\t.d2-849989175 .color-AA2{color:#676C7E;}\n\t\t.d2-849989175 .color-AA4{color:#CFD2DD;}\n\t\t.d2-849989175 .color-AA5{color:#DEE1EB;}\n\t\t.d2-849989175 .color-AB4{color:#CFD2DD;}\n\t\t.d2-849989175 .color-AB5{color:#DEE1EB;}.appendix text.text{fill:#ECEDED}.md{--color-fg-default:#ECEDED;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#151719;--color-canvas-subtle:#EEF1F8;--color-border-default:#717D86;--color-border-muted:#717D86;--color-neutral-muted:#EEF1F8;--color-accent-fg:#717D86;--color-accent-emphasis:#717D86;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B5{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B6{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-AA2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-AA4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-darker);mix-blend-mode:lighten}.light-code{display: block}.dark-code{display: none}]]></style><g id=\"com\"><g class=\"shape\" ><rect x=\"12.000000\" y=\"12.000000\" width=\"293.000000\" height=\"271.000000\" class=\" stroke-B1 fill-B4\" style=\"stroke-width:2;\" /></g><text x=\"158.500000\" y=\"45.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:28px\">com</text></g><g id=\"org\"><g class=\"shape\" ><rect x=\"21.000000\" y=\"363.000000\" width=\"274.000000\" height=\"271.000000\" class=\" stroke-B1 fill-B4\" style=\"stroke-width:2;\" /></g><text x=\"158.000000\" y=\"396.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:28px\">org</text></g><g id=\"com.ch\"><g class=\"shape\" ><rect x=\"62.000000\" y=\"62.000000\" width=\"193.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B5\" style=\"stroke-width:2;\" /></g><text x=\"158.500000\" y=\"91.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:24px\">ch</text></g><g id=\"org.lwjgl\"><g class=\"shape\" ><rect x=\"71.000000\" y=\"418.000000\" width=\"174.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B5\" style=\"stroke-width:2;\" /></g><text x=\"158.000000\" y=\"447.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:24px\">lwjgl</text></g><g id=\"com.ch.Timer\"><g class=\"shape\" ><rect x=\"112.000000\" y=\"112.000000\" width=\"93.000000\" height=\"66.000000\" fill=\"#26de81\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"158.500000\" y=\"150.500000\" fill=\"#151719\" class=\"text-mono-bold\" style=\"text-anchor:middle;font-size:16px\">Timer</text></g><g id=\"org.lwjgl.Sys\"><g class=\"shape\" ><rect x=\"121.000000\" y=\"468.000000\" width=\"74.000000\" height=\"66.000000\" rx=\"33.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:2;\" /></g><text x=\"158.000000\" y=\"506.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Sys</text></g><g id=\"(com.ch.Timer -&gt; org.lwjgl.Sys)[0]\"><marker id=\"mk-558834944\" markerWidth=\"10.000000\" markerHeight=\"12.000000\" refX=\"7.000000\" refY=\"6.000000\" viewBox=\"0.000000 0.000000 10.000000 12.000000\" orient=\"auto\" markerUnits=\"userSpaceOnUse\"> <polygon points=\"0.000000,0.000000 10.000000,6.000000 0.000000,12.000000\" fill=\"#26de81\" class=\"connection\" stroke-width=\"2\" /> </marker><path d=\"M 158.500000 179.000000 L 158.500000 464.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-849989175)\" /><text x=\"193.000000\" y=\"458.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><mask id=\"d2-849989175\" maskUnits=\"userSpaceOnUse\" x=\"11\" y=\"11\" width=\"295\" height=\"624\">\n<rect x=\"11\" y=\"11\" width=\"295\" height=\"624\" fill=\"white\"></rect>\n<rect x=\"134.000000\" y=\"17.000000\" width=\"49\" height=\"36\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"139.000000\" y=\"368.000000\" width=\"38\" height=\"36\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"147.500000\" y=\"67.000000\" width=\"22\" height=\"31\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"134.500000\" y=\"423.000000\" width=\"47\" height=\"31\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"134.500000\" y=\"134.500000\" width=\"48\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"143.500000\" y=\"490.500000\" width=\"29\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n</mask></svg></svg>\n"
+          "path": "src/com/ch/math/Matrix4f.java",
+          "gviz": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"]\n    \n    Vector3f []\n    Camera3D []\n    CameraStruct []\n    Quaternion []\n    Shader []\n    Camera []\n    Transform []\n    Chunk []\n    subgraph cluster_main {\n        // style=filled\n        color=\"#00000000\"\n        Matrix4f [] [fontsize=\"20pt\",style=filled,color=\"#26de81\",shape=square, fontname=\"Courier New\"]\n        label = \"\"\n    }\n    Transform -> Matrix4f [style=\"dashed\"]\n    Quaternion -> Matrix4f [penwidth=1]\n    Matrix4f -> Shader [penwidth=1]\n    Camera3D -> Matrix4f [penwidth=2]\n    Chunk -> Matrix4f [penwidth=1]\n    Camera -> Matrix4f [penwidth=5]\n    Shader -> Matrix4f [style=\"dashed\"]\n    Transform -> Matrix4f [penwidth=2]\n    Camera3D -> Matrix4f [style=\"dashed\"]\n    Vector3f -> Matrix4f [dir=\"both\", penwidth=12]\n    Camera -> Matrix4f [style=\"dashed\"]\n    Chunk -> Matrix4f [style=\"dashed\"]\n    CameraStruct -> Matrix4f [penwidth=2]\n}\n",
+          "d2": "<?xml version=\"1.0\" encoding=\"utf-8\"?><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" d2Version=\"v0.6.5\" preserveAspectRatio=\"xMinYMin meet\" viewBox=\"0 0 1084 1321\"><svg id=\"d2-svg\" class=\"d2-696722563\" width=\"1084\" height=\"1321\" viewBox=\"11 11 1084 1321\"><rect x=\"11.000000\" y=\"11.000000\" width=\"1084.000000\" height=\"1321.000000\" rx=\"0.000000\" fill=\"#151719\" stroke-width=\"0\" /><style type=\"text/css\"><![CDATA[\n.d2-696722563 .text {\n\tfont-family: \"d2-696722563-font-regular\";\n}\n@font-face {\n\tfont-family: d2-696722563-font-regular;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-696722563 .text-italic {\n\tfont-family: \"d2-696722563-font-italic\";\n}\n@font-face {\n\tfont-family: d2-696722563-font-italic;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-696722563 .text-mono {\n\tfont-family: \"d2-696722563-font-mono\";\n}\n@font-face {\n\tfont-family: d2-696722563-font-mono;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-696722563 .text-mono-bold {\n\tfont-family: \"d2-696722563-font-mono-bold\";\n}\n@font-face {\n\tfont-family: d2-696722563-font-mono-bold;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}]]></style><style type=\"text/css\"><![CDATA[.shape {\n  shape-rendering: geometricPrecision;\n  stroke-linejoin: round;\n}\n.connection {\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n.blend {\n  mix-blend-mode: multiply;\n  opacity: 0.5;\n}\n\n\t\t.d2-696722563 .fill-N1{fill:#ECEDED;}\n\t\t.d2-696722563 .fill-N2{fill:#676C7E;}\n\t\t.d2-696722563 .fill-N3{fill:#9499AB;}\n\t\t.d2-696722563 .fill-N4{fill:#CFD2DD;}\n\t\t.d2-696722563 .fill-N5{fill:#DEE1EB;}\n\t\t.d2-696722563 .fill-N6{fill:#EEF1F8;}\n\t\t.d2-696722563 .fill-N7{fill:#151719;}\n\t\t.d2-696722563 .fill-B1{fill:#717D86;}\n\t\t.d2-696722563 .fill-B2{fill:#717D86;}\n\t\t.d2-696722563 .fill-B3{fill:#ffff00;}\n\t\t.d2-696722563 .fill-B4{fill:#151719;}\n\t\t.d2-696722563 .fill-B5{fill:#151719;}\n\t\t.d2-696722563 .fill-B6{fill:#151719;}\n\t\t.d2-696722563 .fill-AA2{fill:#676C7E;}\n\t\t.d2-696722563 .fill-AA4{fill:#CFD2DD;}\n\t\t.d2-696722563 .fill-AA5{fill:#DEE1EB;}\n\t\t.d2-696722563 .fill-AB4{fill:#CFD2DD;}\n\t\t.d2-696722563 .fill-AB5{fill:#DEE1EB;}\n\t\t.d2-696722563 .stroke-N1{stroke:#ECEDED;}\n\t\t.d2-696722563 .stroke-N2{stroke:#676C7E;}\n\t\t.d2-696722563 .stroke-N3{stroke:#9499AB;}\n\t\t.d2-696722563 .stroke-N4{stroke:#CFD2DD;}\n\t\t.d2-696722563 .stroke-N5{stroke:#DEE1EB;}\n\t\t.d2-696722563 .stroke-N6{stroke:#EEF1F8;}\n\t\t.d2-696722563 .stroke-N7{stroke:#151719;}\n\t\t.d2-696722563 .stroke-B1{stroke:#717D86;}\n\t\t.d2-696722563 .stroke-B2{stroke:#717D86;}\n\t\t.d2-696722563 .stroke-B3{stroke:#ffff00;}\n\t\t.d2-696722563 .stroke-B4{stroke:#151719;}\n\t\t.d2-696722563 .stroke-B5{stroke:#151719;}\n\t\t.d2-696722563 .stroke-B6{stroke:#151719;}\n\t\t.d2-696722563 .stroke-AA2{stroke:#676C7E;}\n\t\t.d2-696722563 .stroke-AA4{stroke:#CFD2DD;}\n\t\t.d2-696722563 .stroke-AA5{stroke:#DEE1EB;}\n\t\t.d2-696722563 .stroke-AB4{stroke:#CFD2DD;}\n\t\t.d2-696722563 .stroke-AB5{stroke:#DEE1EB;}\n\t\t.d2-696722563 .background-color-N1{background-color:#ECEDED;}\n\t\t.d2-696722563 .background-color-N2{background-color:#676C7E;}\n\t\t.d2-696722563 .background-color-N3{background-color:#9499AB;}\n\t\t.d2-696722563 .background-color-N4{background-color:#CFD2DD;}\n\t\t.d2-696722563 .background-color-N5{background-color:#DEE1EB;}\n\t\t.d2-696722563 .background-color-N6{background-color:#EEF1F8;}\n\t\t.d2-696722563 .background-color-N7{background-color:#151719;}\n\t\t.d2-696722563 .background-color-B1{background-color:#717D86;}\n\t\t.d2-696722563 .background-color-B2{background-color:#717D86;}\n\t\t.d2-696722563 .background-color-B3{background-color:#ffff00;}\n\t\t.d2-696722563 .background-color-B4{background-color:#151719;}\n\t\t.d2-696722563 .background-color-B5{background-color:#151719;}\n\t\t.d2-696722563 .background-color-B6{background-color:#151719;}\n\t\t.d2-696722563 .background-color-AA2{background-color:#676C7E;}\n\t\t.d2-696722563 .background-color-AA4{background-color:#CFD2DD;}\n\t\t.d2-696722563 .background-color-AA5{background-color:#DEE1EB;}\n\t\t.d2-696722563 .background-color-AB4{background-color:#CFD2DD;}\n\t\t.d2-696722563 .background-color-AB5{background-color:#DEE1EB;}\n\t\t.d2-696722563 .color-N1{color:#ECEDED;}\n\t\t.d2-696722563 .color-N2{color:#676C7E;}\n\t\t.d2-696722563 .color-N3{color:#9499AB;}\n\t\t.d2-696722563 .color-N4{color:#CFD2DD;}\n\t\t.d2-696722563 .color-N5{color:#DEE1EB;}\n\t\t.d2-696722563 .color-N6{color:#EEF1F8;}\n\t\t.d2-696722563 .color-N7{color:#151719;}\n\t\t.d2-696722563 .color-B1{color:#717D86;}\n\t\t.d2-696722563 .color-B2{color:#717D86;}\n\t\t.d2-696722563 .color-B3{color:#ffff00;}\n\t\t.d2-696722563 .color-B4{color:#151719;}\n\t\t.d2-696722563 .color-B5{color:#151719;}\n\t\t.d2-696722563 .color-B6{color:#151719;}\n\t\t.d2-696722563 .color-AA2{color:#676C7E;}\n\t\t.d2-696722563 .color-AA4{color:#CFD2DD;}\n\t\t.d2-696722563 .color-AA5{color:#DEE1EB;}\n\t\t.d2-696722563 .color-AB4{color:#CFD2DD;}\n\t\t.d2-696722563 .color-AB5{color:#DEE1EB;}.appendix text.text{fill:#ECEDED}.md{--color-fg-default:#ECEDED;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#151719;--color-canvas-subtle:#EEF1F8;--color-border-default:#717D86;--color-border-muted:#717D86;--color-neutral-muted:#EEF1F8;--color-accent-fg:#717D86;--color-accent-emphasis:#717D86;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B5{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B6{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-AA2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-AA4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-darker);mix-blend-mode:lighten}.light-code{display: block}.dark-code{display: none}]]></style><g id=\"com\"><g class=\"shape\" ><rect x=\"12.000000\" y=\"12.000000\" width=\"1082.000000\" height=\"1319.000000\" class=\" stroke-B1 fill-B4\" style=\"stroke-width:2;\" /></g><text x=\"553.000000\" y=\"45.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:28px\">com</text></g><g id=\"com.ch\"><g class=\"shape\" ><rect x=\"62.000000\" y=\"62.000000\" width=\"982.000000\" height=\"1219.000000\" class=\" stroke-B1 fill-B5\" style=\"stroke-width:2;\" /></g><text x=\"553.000000\" y=\"91.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:24px\">ch</text></g><g id=\"com.ch.Camera\"><g class=\"shape\" ><rect x=\"202.000000\" y=\"212.000000\" width=\"102.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"253.000000\" y=\"250.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Camera</text></g><g id=\"com.ch.math\"><g class=\"shape\" ><rect x=\"142.000000\" y=\"568.000000\" width=\"693.000000\" height=\"512.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"488.500000\" y=\"593.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">math</text></g><g id=\"com.ch.Camera3D\"><g class=\"shape\" ><rect x=\"324.000000\" y=\"212.000000\" width=\"123.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"385.500000\" y=\"250.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Camera3D</text></g><g id=\"com.ch.Shader\"><g class=\"shape\" ><rect x=\"245.000000\" y=\"1165.000000\" width=\"102.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"296.000000\" y=\"1203.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Shader</text></g><g id=\"com.ch.Transform\"><g class=\"shape\" ><rect x=\"467.000000\" y=\"212.000000\" width=\"132.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"533.000000\" y=\"250.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Transform</text></g><g id=\"com.ch.voxel\"><g class=\"shape\" ><rect x=\"619.000000\" y=\"112.000000\" width=\"194.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"716.000000\" y=\"137.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">voxel</text></g><g id=\"com.ch.CameraStruct\"><g class=\"shape\" ><rect x=\"833.000000\" y=\"212.000000\" width=\"160.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"913.000000\" y=\"250.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">CameraStruct</text></g><g id=\"com.ch.math.Matrix4f\"><g class=\"shape\" ><rect x=\"264.000000\" y=\"964.000000\" width=\"480.000000\" height=\"66.000000\" fill=\"#26de81\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"504.000000\" y=\"1002.500000\" fill=\"#151719\" class=\"text-mono-bold\" style=\"text-anchor:middle;font-size:16px\">Matrix4f</text></g><g id=\"com.ch.voxel.Chunk\"><g class=\"shape\" ><rect x=\"669.000000\" y=\"162.000000\" width=\"94.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"716.000000\" y=\"200.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Chunk</text></g><g id=\"com.ch.math.Quaternion\"><g class=\"shape\" ><rect x=\"233.000000\" y=\"618.000000\" width=\"141.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"303.500000\" y=\"656.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Quaternion</text></g><g id=\"com.ch.math.Vector3f\"><g class=\"shape\" ><rect x=\"661.000000\" y=\"618.000000\" width=\"123.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"722.500000\" y=\"656.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Vector3f</text></g><g id=\"com.ch.(Camera -&gt; math.Matrix4f)[0]\"><marker id=\"mk-558834944\" markerWidth=\"10.000000\" markerHeight=\"12.000000\" refX=\"7.000000\" refY=\"6.000000\" viewBox=\"0.000000 0.000000 10.000000 12.000000\" orient=\"auto\" markerUnits=\"userSpaceOnUse\"> <polygon points=\"0.000000,0.000000 10.000000,6.000000 0.000000,12.000000\" fill=\"#26de81\" class=\"connection\" stroke-width=\"2\" /> </marker><path d=\"M 236.307007 279.000000 L 236.307007 513.000000 S 236.307007 523.000000 246.307007 523.000000 L 404.000000 523.000000 S 414.000000 523.000000 414.000000 533.000000 L 414.000000 714.000000 S 414.000000 724.000000 404.000000 724.000000 L 385.114990 724.000000 S 375.114990 724.000000 375.114990 734.000000 L 375.114990 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /><text x=\"409.000000\" y=\"954.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera3D -&gt; math.Matrix4f)[0]\"><path d=\"M 365.307007 279.000000 L 365.307007 413.000000 S 365.307007 423.000000 375.307007 423.000000 L 455.019012 423.000000 S 465.019012 423.000000 465.019012 433.000000 L 465.019012 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /><text x=\"499.000000\" y=\"954.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Shader -&gt; math.Matrix4f)[0]\"><path d=\"M 279.173004 1164.000000 L 279.173004 1135.000000 S 279.173004 1125.000000 269.173004 1125.000000 L 122.000000 1125.000000 S 112.000000 1125.000000 112.000000 1115.000000 L 112.000000 533.000000 S 112.000000 523.000000 122.000000 523.000000 L 182.000000 523.000000 S 192.000000 523.000000 192.000000 533.000000 L 192.000000 764.000000 S 192.000000 774.000000 202.000000 774.000000 L 291.269012 774.000000 S 301.269012 774.000000 301.269012 784.000000 L 301.269012 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /><text x=\"335.000000\" y=\"954.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Transform -&gt; math.Matrix4f)[0]\"><path d=\"M 528.307007 279.000000 L 528.307007 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /><text x=\"562.000000\" y=\"954.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(voxel.Chunk -&gt; math.Matrix4f)[0]\"><path d=\"M 700.640991 229.000000 L 700.640991 313.000000 S 700.640991 323.000000 690.640991 323.000000 L 599.788025 323.000000 S 589.788025 323.000000 589.788025 333.000000 L 589.788025 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /><text x=\"624.000000\" y=\"954.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera -&gt; math.Matrix4f)[1]\"><path d=\"M 270.307007 279.000000 L 270.307007 463.000000 S 270.307007 473.000000 280.307007 473.000000 L 427.960999 473.000000 S 437.960999 473.000000 437.960999 483.000000 L 437.960999 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.(Camera3D -&gt; math.Matrix4f)[1]\"><path d=\"M 406.307007 279.000000 L 406.307007 363.000000 S 406.307007 373.000000 416.307007 373.000000 L 491.941986 373.000000 S 501.941986 373.000000 501.941986 383.000000 L 501.941986 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.(CameraStruct -&gt; math.Matrix4f)[0]\"><path d=\"M 913.307007 279.000000 L 913.307007 413.000000 S 913.307007 423.000000 903.307007 423.000000 L 630.979980 423.000000 S 620.979980 423.000000 620.979980 433.000000 L 620.979980 714.000000 S 620.979980 724.000000 630.979980 724.000000 L 660.499023 724.000000 S 670.499023 724.000000 670.499023 734.000000 L 670.499023 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.(Transform -&gt; math.Matrix4f)[1]\"><path d=\"M 559.729980 279.000000 L 559.729980 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.(math.Matrix4f -&gt; Shader)[0]\"><path d=\"M 313.173004 1031.000000 L 313.173004 1162.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.math.(Quaternion -&gt; Matrix4f)[0]\"><path d=\"M 338.191986 685.000000 L 338.191986 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.math.(Vector3f &lt;-&gt; Matrix4f)[0]\"><marker id=\"mk-3695359059\" markerWidth=\"10.000000\" markerHeight=\"12.000000\" refX=\"3.000000\" refY=\"6.000000\" viewBox=\"0.000000 0.000000 10.000000 12.000000\" orient=\"auto\" markerUnits=\"userSpaceOnUse\"> <polygon points=\"10.000000,0.000000 0.000000,6.000000 10.000000,12.000000\" fill=\"#26de81\" class=\"connection\" stroke-width=\"2\" /> </marker><path d=\"M 707.422974 687.000000 L 707.422974 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-start=\"url(#mk-3695359059)\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><g id=\"com.ch.(voxel.Chunk -&gt; math.Matrix4f)[1]\"><path d=\"M 731.973999 229.000000 L 731.973999 363.000000 S 731.973999 373.000000 721.973999 373.000000 L 619.979980 373.000000 S 609.979980 373.000000 609.979980 383.000000 L 609.979980 961.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-696722563)\" /></g><mask id=\"d2-696722563\" maskUnits=\"userSpaceOnUse\" x=\"11\" y=\"11\" width=\"1084\" height=\"1321\">\n<rect x=\"11\" y=\"11\" width=\"1084\" height=\"1321\" fill=\"white\"></rect>\n<rect x=\"528.500000\" y=\"17.000000\" width=\"49\" height=\"36\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"542.000000\" y=\"67.000000\" width=\"22\" height=\"31\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"224.500000\" y=\"234.500000\" width=\"57\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"467.000000\" y=\"573.000000\" width=\"43\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"346.500000\" y=\"234.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"267.500000\" y=\"1187.500000\" width=\"57\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"489.500000\" y=\"234.500000\" width=\"87\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"693.500000\" y=\"117.000000\" width=\"45\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"855.500000\" y=\"234.500000\" width=\"115\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"465.000000\" y=\"986.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"691.500000\" y=\"184.500000\" width=\"49\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"255.500000\" y=\"640.500000\" width=\"96\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"683.500000\" y=\"640.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n</mask></svg></svg>\n"
         },
         "items": [
           {
-            "id": "0d1d5157-7325-2d8d-6740-0d6b82aedab0",
+            "id": "8288e3e6-35c3-bfbc-6547-62f94ae91f3c",
             "ancestors": [],
             "type": "function",
-            "description": "Provides a mechanism for measuring and updating frames per second (FPS). It has several static methods: `init()`, `calculateDelta()`, `updateFPS()`, `getDelta()`, `getFPS()`, and `getTime()`. These methods calculate and update various values related to FPS, such as the current FPS, time elapsed, and delta. The class also has several instance fields: `fps`, `lastFPS`, `lastFrame`, `time`, and `delta`.",
-            "name": "Timer",
+            "description": "Is a matrix multiplication class with various methods for manipulating matrices. It has four parameters (data[0][0], data[1][0], data[2][0], and data[3][0]) that represent the matrix's linear data, which can be accessed through getLinearData(). The class also provides methods for transforming vectors using the matrix, such as transform(Vector3f r) and mul(Matrix4f r), as well as setting the matrix's data through the SetM(float[][] data) method.",
+            "name": "Matrix4f",
             "location": {
-              "start": 5,
-              "insert": 5,
+              "start": 3,
+              "insert": 3,
               "offset": " ",
               "indent": 0,
               "comment": null
             },
             "item_type": "class",
-            "length": 53,
+            "length": 291,
             "docLength": null
           },
           {
-            "id": "d0bcf5ce-3462-9d9f-1146-4ecaa930e9be",
+            "id": "3338929f-cc84-0687-0f4f-abd27eee7563",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Calculates the current time in milliseconds using the system's timer resolution and converts it to a value between 0 and 1000.",
+            "description": "Sets the elements of a `Matrix4f` object to identity values, i.e., all rows and columns are identical.",
             "params": [],
             "returns": {
-              "type_name": "long",
-              "description": "a long value representing the current time in milliseconds, calculated from the system's timer resolution.",
+              "type_name": "Matrix4f",
+              "description": "a matrix with identity values.\n\n* The `Matrix4f` object is returned as the output.\n* The data members of the matrix are initialized to identity values, meaning that the matrix has an identity transformation when multiplied with itself.\n* All elements of the matrix are set to their identity values, which are 1 for the diagonal elements (column and row), 0 for the off-diagonal elements, and 0 for the remaining elements.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f m = new Matrix4f();\nm.initIdentity(); // Set the matrix to identity.\n",
+              "description": "\nThis code creates a new `Matrix4f` object and sets its values to the identity matrix. The resulting matrix is:\n"
+            },
+            "name": "initIdentity",
+            "location": {
+              "start": 11,
+              "insert": 11,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          },
+          {
+            "id": "7de95368-7fa7-2fa9-894b-16e8b1f32327",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Initializes a matrix with translation values for x, y, and z coordinates, and returns the modified matrix.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "float",
+                "description": "3D translation amount in the x-axis direction.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "float",
+                "description": "2D translation component of the matrix, where it is assigned to the third column of the matrix, `data[1][3]`.",
+                "complex_type": false
+              },
+              {
+                "name": "z",
+                "type_name": "float",
+                "description": "3rd coordinate of the translation vector and is assigned the value `z` in the function.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a reference to the original matrix.\n\n* The `Matrix4f` object is returned, indicating that the method modifies the original matrix in place.\n* The data elements of the matrix are initialized with specific values, including 1 for the first column and row, 0 for the second column and row, and the input `x`, `y`, and `z` coordinates for the third column and row.\n* The resulting matrix will have a transformation that translates the origin to the point (`x`, `y`, `z`).",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f trans = new Matrix4f();\ntrans.initTranslation(2, 3, 5);\n// the matrix \"trans\" now has the values:\n// |  1  0  0  2 |\n// |  0  1  0  3 |\n// |  0  0  1  5 |\n",
+              "description": "\nExplanation:\nThe method initTranslation sets the values of the matrix as follows: \n* The first column is set to be the unit vector with a 1 in its diagonal and zeroes everywhere else. This means that this value in this row will scale all points' x-values by 2.\n* The second column is set to be the unit vector with a 0 in its diagonal and a 1 in its first entry. This means that this value in this row will translate all points' y-values by 3.\n* The third column is set to be the unit vector with a 0 in its diagonal and a 1 in its second entry. This means that this value in this row will scale all points' z-values by 5.\n* The last column is set to be the unit vector with a 1 in its diagonal, zeroes everywhere else. This means that any point that passes through this matrix will have it's x-value multiplied by 2 and it's y-value multiplied by 3 and it's z-value multiplied by 5 and all the other values be set to 1."
+            },
+            "name": "initTranslation",
+            "location": {
+              "start": 32,
+              "insert": 32,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 21,
+            "docLength": null
+          },
+          {
+            "id": "337db5c3-0fcd-4eba-744c-2a70374faf3c",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Initializes a rotation matrix `data` based on three Euler angles `x`, `y`, and `z`. It creates separate rotation matrices for each axis (`rx`, `ry`, and `rz`) using the angles, then multiplies them together to form the final rotation matrix `data`.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "float",
+                "description": "3D rotation around the x-axis, which is used to compute the rotations around the y and z axes.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "float",
+                "description": "2D rotation angle around the z-axis, which is used to compute the rotation matrix rz.",
+                "complex_type": false
+              },
+              {
+                "name": "z",
+                "type_name": "float",
+                "description": "3D rotation axis around which the rotation is performed, and it is used to compute the rotation matrix `rz`.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a new `Matrix4f` object representing the rotation of the input vectors in a 3D space.\n\n* The `data` field represents a 4x4 matrix, where each element is a 32-bit floating-point number.\n* The matrix contains the rotation information in the x, y, and z axes, which can be used to perform rotations in 3D space.\n* Each row (or column) of the matrix represents a different axis of rotation, with the first three rows representing the x, y, and z axes, respectively. The last row represents the identity matrix.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f m = new Matrix4f();\nm.initRotation(30, 60, 90);\nSystem.out.println(m.data[0][0]); // should output 1\n",
+              "description": "\nThis code creates an empty matrix, calls the initRotation method with arguments of 30 degrees for x-axis rotation, 60 degrees for y-axis rotation, and 90 degrees for z-axis rotation, then prints out a value of data[0][0] which should be equal to 1. This is because the identity matrix has an entry on the first row and first column that is equal to one.\n\nThis code uses the initRotation method correctly and will produce the correct output."
+            },
+            "name": "initRotation",
+            "location": {
+              "start": 54,
+              "insert": 54,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 64,
+            "docLength": null
+          },
+          {
+            "id": "40ef2a0f-93fd-a0af-2b4f-7c22454ba177",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Sets the scale factors for a matrix, by updating the respective elements of the data array. It returns the modified matrix object.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "float",
+                "description": "3D scale factor along the x-axis of the matrix.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "float",
+                "description": "2nd element of the scaling matrix.",
+                "complex_type": false
+              },
+              {
+                "name": "z",
+                "type_name": "float",
+                "description": "2nd coordinate of the scaling vector, which is applied to the matrix's second dimension, affecting its translation component.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a reference to the original matrix.\n\nThe returned object is an instance of the `Matrix4f` class.\nThe matrix's data contains new values for the elements in the 0-3 and 12-15 ranges, representing a transformation that scales the matrix by factors x, y, and z along the x, y, and z axes, respectively.\nThe returned object can be used to perform transformations on other matrices or objects using matrix multiplication.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f mat = new Matrix4f();\nmat.initIdentity().mul(mat.initTranslation(5, 6, 7)).mul(mat.initRotation(Vector3f.X_AXIS, Vector3f.Y_AXIS, Vector3f.Z_AXIS), mat.initScale(2, 3, 4));\n",
+              "description": ""
+            },
+            "name": "initScale",
+            "location": {
+              "start": 119,
+              "insert": 119,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          },
+          {
+            "id": "99166cd9-7e63-6aa2-e141-f9544e9031ae",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Initializes a matrix representing a perspective projection, where the x-axis is aligned with the view direction, and the y-axis is aligned with the screen aspect ratio. It sets the near and far clipping planes and computes the proper values for the rest of the matrix elements.",
+            "params": [
+              {
+                "name": "fov",
+                "type_name": "float",
+                "description": "field of view of the matrix, which determines the aspect ratio of the projection and affects the perspective correction performed by the function.",
+                "complex_type": false
+              },
+              {
+                "name": "aspectRatio",
+                "type_name": "float",
+                "description": "2D viewport's width-to-height ratio, which is used to scale the matrix's values to conform to the perspective projection.",
+                "complex_type": false
+              },
+              {
+                "name": "zNear",
+                "type_name": "float",
+                "description": "near plane distance of the perspective projection, which determines the position of the near clipping plane and affects the shape of the perspective view.",
+                "complex_type": false
+              },
+              {
+                "name": "zFar",
+                "type_name": "float",
+                "description": "2D distance from the center of the view frustum at which the near plane is located, and it is used to calculate the aspect ratio of the frustum.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a reference to a `Matrix4f` object that represents a perspective projection matrix.\n\n* The matrix has 16 elements, consisting of four rows and four columns.\n* Each row represents a coordinate system transformation (rotation and translation) for a particular axis (x, y, z).\n* The elements in each row are the values of the transformations applied to the corresponding axes.\n* The matrix is normalized, meaning that its determinant is equal to 1, ensuring proper matrix multiplication.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f m = new Matrix4f();\nm.initPerspective(45, 16 / 9, 0.1f, 100);\nSystem.out.println(m.getData());\n",
+              "description": "\nThe output of this example would be:\n"
+            },
+            "name": "initPerspective",
+            "location": {
+              "start": 140,
+              "insert": 140,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 23,
+            "docLength": null
+          },
+          {
+            "id": "f09f71b6-f7d8-dc9a-4146-845945060c2e",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Initializes an orthographic projection matrix with specified aspect ratios and near/far planes. It sets the matrix elements to achieve correct perspective distortion.",
+            "params": [
+              {
+                "name": "left",
+                "type_name": "float",
+                "description": "left coordinate of the orthographic projection.",
+                "complex_type": false
+              },
+              {
+                "name": "right",
+                "type_name": "float",
+                "description": "right side of the orthogonal projection, which is used to calculate the width of the matrix.",
+                "complex_type": false
+              },
+              {
+                "name": "bottom",
+                "type_name": "float",
+                "description": "2D coordinate of the bottom edge of the orthographic projection, which is used to calculate the scaling factors for the x, y, and z dimensions of the matrix.",
+                "complex_type": false
+              },
+              {
+                "name": "top",
+                "type_name": "float",
+                "description": "2D coordinate of the top-left corner of the orthographic projection, which is used to calculate the positions of the corners of the projection.",
+                "complex_type": false
+              },
+              {
+                "name": "near",
+                "type_name": "float",
+                "description": "near plane of the orthographic projection, and it is used to calculate the depth of objects in the image.",
+                "complex_type": false
+              },
+              {
+                "name": "far",
+                "type_name": "float",
+                "description": "3D far clipping plane distance, which determines how far into the distance the matrix will project the 3D scene.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a matrix representing an orthographic projection.\n\n* The returned object is a matrix with four elements, representing the orthographic projection of a 3D space.\n* Each element in the matrix represents the coordinate of a point in the projected space, with the origin being the center of the projection.\n* The matrix has dimensions 4x4, indicating that each point in the projected space can be represented by four coordinates.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f matrix = new Matrix4f();\nmatrix.initOrthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);\n",
+              "description": "\nThis example will set the matrix to an orthographic projection matrix that has a width and height of 2 units, near plane distance of 1 unit, far plane distance of 2 units, and depth of 1 unit. The left and right arguments are -1 and 1 respectively, so the x-axis ranges from -1 to 1 in screen space. Similarly, the bottom and top arguments are -1 and 1, which means that the y-axis ranges from -1 to 1 in screen space. The near and far arguments are also -1 and 2, respectively, so that the depth of the projection matrix is 1 unit and the far plane distance is 2 units.\n\nThe resulting matrix will have the following values:\n"
+            },
+            "name": "initOrthographic",
+            "location": {
+              "start": 164,
+              "insert": 164,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 24,
+            "docLength": null
+          },
+          {
+            "id": "eb8d8958-bd52-b291-ab45-796a2289d813",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Takes a forward and up vector and computes a rotation matrix based on them. The resulting matrix can be used to rotate objects in 3D space.",
+            "params": [
+              {
+                "name": "forward",
+                "type_name": "Vector3f",
+                "description": "3D direction in which the rotation will be applied.",
+                "complex_type": false
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D up direction vector that is used to compute the rotation matrix.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a matrix representing a rotation based on the input vectors.",
               "complex_type": false
             },
-            "name": "getTimeS",
+            "usage": {
+              "language": "java",
+              "code": "Vector3f forward = new Vector3f(1, 0, 0);\nVector3f up = new Vector3f(0, 0, 1);\nMatrix4f mtx = new Matrix4f();\nmtx.initRotation(forward, up);\n",
+              "description": "\nThe input (forward, up) for this example is a normalized Vector3f of the forward and up vectors respectively. The output would be a rotation matrix that represents the rotation needed to align the positive x-axis with the forward vector and the positive y-axis with the up vector. This rotation can then be used to rotate other objects in the scene by multiplying them with this rotation matrix."
+            },
+            "name": "initRotation",
             "location": {
-              "start": 14,
-              "insert": 14,
+              "start": 189,
+              "insert": 189,
               "offset": "\t",
               "indent": 1,
               "comment": null
             },
             "item_type": "method",
-            "length": 3,
+            "length": 10,
             "docLength": null
           },
           {
-            "id": "eb9d5545-121d-b3bb-424c-cb8d3156d720",
+            "id": "e087ea89-113d-6ab7-5146-5e6154165362",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Initializes a variable `lastFPS` with the current time stamp using `getTimeS()` method.",
-            "params": [],
-            "name": "init",
+            "description": "Initializes a rotation matrix based on three input vectors: `forward`, `right`, and `up`. It sets the elements of the matrix to represent the rotation around each axis.",
+            "params": [
+              {
+                "name": "forward",
+                "type_name": "Vector3f",
+                "description": "3D direction of rotation, which is multiplied with the identity matrix to create a rotation matrix.\n\n* It is a 3D vector representing the direction of forward motion.",
+                "complex_type": true
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D vector that points in the upward direction and is used to set the z-component of the rotation matrix.\n\n* `up` is a vector representing the upward direction.",
+                "complex_type": true
+              },
+              {
+                "name": "right",
+                "type_name": "Vector3f",
+                "description": "3D rightward vector, which is used to initialize the rotation matrix's columns.\n\n* Right: A vector representing the direction of rotation in the xyz plane. It is normalized and has a magnitude of 1.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a `Matrix4f` object representing the rotation matrix.\n\n* The returned object is an instance of `Matrix4f`, which represents a 4x4 matrix.\n* The elements of the matrix are set based on the input vectors `forward`, `up`, and `right`. Specifically, the elements in the first row (i.e., `data[0]`), second column (i.e., `data[1]`), and third row (i.e., `data[2]`) are set to the corresponding components of the input vectors. The remaining elements (`data[3][*]`), which represent the determinant of the matrix, are set to 1.\n* The returned object is assigned back to the original instance, so the modifications made by the function are effective for future uses of the instance.",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector3f forward = new Vector3f(1, 0, 0);\nVector3f up = new Vector3f(0, 1, 0);\nVector3f right = new Vector3f(0, 0, 1);\nMatrix4f mat = new Matrix4f();\nmat.initRotation(forward, up, right);\n",
+              "description": "\nThe method initRotation would be called on a new matrix object (mat) and would set the values of the first three columns to the respective values of the vectors forward, up and right. It would also initialize the fourth column to zero. The resulting matrix mat would then contain the rotation required to rotate an object around a world axis, such that its local y-axis points towards the direction specified by the vector up, its local x-axis points towards the direction specified by the vector right and its local z-axis points towards the direction specified by the vector forward.\nNote that this method would only be used when creating a transformation matrix from scratch and not when using built-in methods in the library to create such matrices."
+            },
+            "name": "initRotation",
             "location": {
-              "start": 18,
-              "insert": 18,
+              "start": 200,
+              "insert": 200,
               "offset": "\t",
               "indent": 1,
               "comment": null
             },
             "item_type": "method",
-            "length": 3,
+            "length": 24,
             "docLength": null
           },
           {
-            "id": "856cf4ad-9d14-b089-2c42-5573e0faaf1c",
+            "id": "07bf194f-1c45-a4a9-e549-39216fac3992",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Calculates the time difference between two points, represented by `lastFrame` and `time`, using the `getTimeS()` method. The resulting delta is returned as a float value.",
+            "description": "Takes a `Vector3f` object `r` and returns a new `Vector3f` object with the result of multiplying each element of the input vector by the corresponding element of a pre-defined array, followed by addition of the original elements.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Vector3f",
+                "description": "4D vector to be transformed, and its values are multiplied component-wise with the corresponding elements of the `data` array to produce the transformed vector.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a new vector with the result of multiplying each component of the input vector `r` by the corresponding components of a pre-defined matrix `data`.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    Vector3f v1 = new Vector3f(1, 0, 0);\n    Matrix4f m1 = new Matrix4f().initRotation(new Vector3f(0, 1, 0), new Vector3f(0, 0, -1));\n    System.out.println(\"v1: \" + v1);\n    System.out.println(\"m1: \" + m1);\n    \n    Vector3f result = m1.transform(v1);\n    System.out.println(\"result: \" + result);\n}\n",
+              "description": " \nThe output will be:\n"
+            },
+            "name": "transform",
+            "location": {
+              "start": 225,
+              "insert": 225,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "834f58d5-3fd3-72a2-7148-f684fe528e40",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Takes a `Matrix4f` argument `r` and returns a new `Matrix4f` instance containing the product of the current matrix's elements and the corresponding elements of `r`.",
+            "params": [
+              {
+                "name": "r",
+                "type_name": "Matrix4f",
+                "description": "4x4 matrix to be multiplied with the current matrix.\n\nR is a matrix with 4 rows and columns. It has 4 elements per row.\nThe values of R range from -1 to 1 for each element.",
+                "complex_type": true
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a new matrix with the product of the input matrices.\n\nThe `res` variable is initialized as an instance of the `Matrix4f` class. The method returns this instance, indicating that it is a new object that represents the result of multiplying the input matrices.\n\nThe matrix elements are calculated by multiplying corresponding elements of the input matrices and storing them in the resulting matrix. Specifically, for each element in the first column of the input matrices (`data`), the corresponding element in the resulting matrix `res` is set to the product of the corresponding elements of the input matrices (`r`).",
+              "complex_type": true
+            },
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f m1 = new Matrix4f();\nm1.initRotation(Vector3f.X_AXIS, Vector3f.Y_AXIS, Vector3f.Z_AXIS);\n\nMatrix4f m2 = new Matrix4f();\nm2.initTranslation(0, 0, -5);\n\nMatrix4f res = m1.mul(m2);\n",
+              "description": "\nThis will create two matrices m1 and m2, each representing a rotation around the X, Y, Z axis respectively. Then, m1 is multiplied by m2 which represents a translation of 5 units along the negative z-axis. The resulting matrix res would be a rotation around the x, y and z axes followed by a translation of -5 units along the negative z-axis.\nThe reason for this example is that multiplication of two matrices allows one to perform more complex transformations such as rotating and translating an object."
+            },
+            "name": "mul",
+            "location": {
+              "start": 230,
+              "insert": 230,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 11,
+            "docLength": null
+          },
+          {
+            "id": "c0fb44c1-39dc-3f9d-3843-970faf164959",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Creates an array of floats of size 4x4 and returns it, containing values from a provided 2D array `data`.",
             "params": [],
             "returns": {
               "type_name": "float",
-              "description": "a float value representing the time difference between two frames.",
+              "description": "an array of arrays, where each inner array has four elements representing the input data.",
               "complex_type": false
             },
-            "name": "calculateDelta",
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Matrix4f matrix = new Matrix4f();\n        float[][] data = matrix.getData();\n        System.out.println(data);\n    }\n}\n",
+              "description": "\nExpected output: \n"
+            },
+            "name": "getData",
             "location": {
-              "start": 22,
-              "insert": 22,
+              "start": 242,
+              "insert": 242,
               "offset": "\t",
               "indent": 1,
               "comment": null
             },
             "item_type": "method",
-            "length": 6,
+            "length": 9,
             "docLength": null
           },
           {
-            "id": "513b5528-c0f4-18be-9147-210e82beae3e",
+            "id": "4ede064c-0cd6-0286-8f41-481397d66c6c",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Updates the framerate counter every 1 second, storing the current framerate and resetting it to 0 when a threshold is met.",
-            "params": [],
-            "name": "updateFPS",
-            "location": {
-              "start": 29,
-              "insert": 29,
-              "offset": "\t",
-              "indent": 1,
-              "comment": null
-            },
-            "item_type": "method",
-            "length": 8,
-            "docLength": null
-          },
-          {
-            "id": "2db2e64c-3c10-1ca7-9f40-80c6268324ad",
-            "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
-            ],
-            "type": "function",
-            "description": "Retrieves the value of the `delta` field, which stores a floating-point number representing the difference between two values.",
+            "description": "Returns an array of float values representing the data at various points in a linear system.",
             "params": [],
             "returns": {
               "type_name": "float",
-              "description": "a floating-point value representing the difference between two values.",
+              "description": "an array of 12 float values representing the linear data.",
               "complex_type": false
             },
-            "name": "getDelta",
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n    float[][] matrix = new float[4][4];\n    \n    // initialize values of the 2D array\n    for (int i = 0; i < 4; i++) {\n        for (int j = 0; j < 4; j++) {\n            matrix[i][j] = i + j;\n        }\n    }\n    \n    Matrix4f m4f = new Matrix4f(matrix);\n    float[] linearData = m4f.getLinearData();\n    \n    // print the values in the linear array\n    for (int i = 0; i < linearData.length; i++) {\n        System.out.println(\"Linear data[\" + i + \"]: \" + linearData[i]);\n    }\n}\n",
+              "description": "\nThe output of the program would be:\n"
+            },
+            "name": "getLinearData",
             "location": {
-              "start": 38,
-              "insert": 38,
+              "start": 252,
+              "insert": 252,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          },
+          {
+            "id": "7c902f3f-84a7-39ac-4c49-8c89cfebf44e",
+            "ancestors": [
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
+            ],
+            "type": "function",
+            "description": "Retrieves a value from a 2D array `data` at the specified `x` and `y` coordinates, returning a float value.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "int",
+                "description": "1D coordinate of the point in the data array from which to retrieve the value.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "int",
+                "description": "2nd dimension of the data array being accessed by the function, and it determines the specific value within that dimension that the function returns.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "float",
+              "description": "a float value representing the data at the specified position in the 2D array.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Matrix {\n    private float[][] data;\n    public Matrix(float[][] data) { this.data = data; }\n    public float get(int x, int y) { return data[x][y]; }\n}\n\npublic class Main {\n    public static void main(String[] args) {\n        // Create a 2x3 matrix with the given values\n        float[][] data = new float[][] {\n            {1.0f, 2.0f, 3.0f},\n            {4.0f, 5.0f, 6.0f}\n        };\n        Matrix matrix = new Matrix(data);\n        \n        // Print the value at the 1st column and 2nd row\n        System.out.println(matrix.get(1, 2)); // Output: 6.0\n    }\n}\n",
+              "description": "\nHere's an example of how to use this method with a unit test:\n"
+            },
+            "name": "get",
+            "location": {
+              "start": 273,
+              "insert": 273,
               "offset": "\t",
               "indent": 1,
               "comment": null
@@ -556,22 +1009,29 @@
             "docLength": null
           },
           {
-            "id": "35b537f5-dafa-4896-784b-4f2942cba032",
+            "id": "e347f8c3-c1d1-88bd-394e-39d682c93ca8",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Returns the current frame rate as a floating-point number.",
-            "params": [],
-            "returns": {
-              "type_name": "float",
-              "description": "the current frame rate of the application.",
-              "complex_type": false
+            "description": "Sets the value of the `data` field to a given array of floats.",
+            "params": [
+              {
+                "name": "data",
+                "type_name": "float[][]",
+                "description": "2D array of floating-point values that will be stored in the `this.data` field.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Matrix4f m1 = new Matrix4f();\nm1.SetM(new float[][] {\n\t{ 1, 0, 0, 0 },\n\t{ 0, 1, 0, 0 },\n\t{ 0, 0, 1, 0 },\n\t{ 0, 0, 0, 1 }\n});\n",
+              "description": "\nThis code creates a matrix m1 and assigns its internal data array with the values provided. The SetM method is used to achieve this."
             },
-            "name": "getFPS",
+            "name": "SetM",
             "location": {
-              "start": 42,
-              "insert": 42,
+              "start": 277,
+              "insert": 277,
               "offset": "\t",
               "indent": 1,
               "comment": null
@@ -581,24 +1041,43 @@
             "docLength": null
           },
           {
-            "id": "d4f90205-7fd2-e1a9-994b-91fd2cab5625",
+            "id": "54f74ad6-c5ee-118a-0542-94d7f202569b",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Retrieves the current time value stored as a `float` named `time`.",
-            "params": [],
-            "returns": {
-              "type_name": "float",
-              "description": "a floating-point representation of the current time.",
-              "complex_type": false
+            "description": "Sets a value at a specific position in a two-dimensional array.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "int",
+                "description": "0-based index of a cell in the 2D array `data`.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "int",
+                "description": "2nd dimension of the data array being manipulated by the function.",
+                "complex_type": false
+              },
+              {
+                "name": "value",
+                "type_name": "float",
+                "description": "2D coordinate of the pixel to be set in the data array, with the x and y coordinates indicating the position in the array.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "float[][] data = new float[4][4];\ndata[0][1] = 5;\ndata[1][2] = -3;\nMatrix4f m = new Matrix4f();\nm.SetM(data);\nm.set(0, 1, 7);\n",
+              "description": "\nThis code creates a matrix with the data provided in `data`. It then calls the method `set` to change the value of the element at `(0, 1)` to 7. The `set` method takes three arguments: the x and y coordinates (in this case, both are zero), and the value to be set (`7`). The matrix is then printed.\n\nExpected output:\n"
             },
-            "name": "getTime",
+            "name": "set",
             "location": {
-              "start": 46,
-              "insert": 46,
-              "offset": " ",
-              "indent": 4,
+              "start": 281,
+              "insert": 281,
+              "offset": "\t",
+              "indent": 1,
               "comment": null
             },
             "item_type": "method",
@@ -606,23 +1085,28 @@
             "docLength": null
           },
           {
-            "id": "59f19955-1a97-96b5-f14d-53ea0b194bd9",
+            "id": "f82e62ff-38a8-9a9d-0542-af9f4d137c41",
             "ancestors": [
-              "0d1d5157-7325-2d8d-6740-0d6b82aedab0"
+              "8288e3e6-35c3-bfbc-6547-62f94ae91f3c"
             ],
             "type": "function",
-            "description": "Updates frame rate, calculates and stores delta time, and increments time variable.",
+            "description": "Transposes an array of arrays, assigning each element to a corresponding position in the new array.",
             "params": [],
-            "name": "update",
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n\tMatrix4f mat = new Matrix4f();\n\tmat.initTranslation(1, 2, 3);\n\tmat.transposeSelf();\n}\n",
+              "description": "\nThis code will result in a matrix where the values are transposed. For example, if the original matrix is:\n"
+            },
+            "name": "transposeSelf",
             "location": {
-              "start": 50,
-              "insert": 50,
-              "offset": " ",
-              "indent": 4,
+              "start": 285,
+              "insert": 285,
+              "offset": "\t",
+              "indent": 1,
               "comment": null
             },
             "item_type": "method",
-            "length": 6,
+            "length": 7,
             "docLength": null
           }
         ]
