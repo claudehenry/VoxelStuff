@@ -1,11 +1,12 @@
 package com.ch.voxel;
 
 /**
- * represents a three-dimensional block with x, y, and z coordinates and various
- * boolean flags for its properties.
+ * Defines a data structure with multiple attributes and methods for representing a
+ * block in a voxel environment.
  * Fields:
- * 	- z (int): represents the depth value of the block in the 3D space.
- * 	- rt (boolean): represents whether the block has been right-clicked on by a player.
+ * 	- z (int): represents an integer value representing the block's position in the
+ * x-y plane.
+ * 	- rt (boolean): in the Block class represents whether a block is on fire.
  */
 public class Block {
 	

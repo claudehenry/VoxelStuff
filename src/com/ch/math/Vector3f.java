@@ -2,12 +2,10 @@ package com.ch.math;
 
 /**
  * Is a mathematical representation of a three-dimensional point in space. It has
- * several fields and methods for performing various calculations related to vectors,
- * such as addition, subtraction, multiplication, and division by other vectors or
- * scalars. The class also provides methods for calculating the magnitude (length)
- * of a vector, normalizing it, rotating it, and converting it between different
- * coordinate systems. Additionally, it has a string representation method for
- * converting the vector to a String.
+ * fields for x, y, and z coordinates, as well as methods for basic arithmetic
+ * operations, rotation, and scaling. The class also provides methods for computing
+ * the magnitude, direction, and normalization of the vector, as well as setting and
+ * getting the coordinates.
  */
 public class Vector3f {
 
@@ -26,29 +24,27 @@ public class Vector3f {
 	}
 
 	/**
-	 * Calculates the Euclidean distance of a point from its origin using the Pythagorean
-	 * theorem and square root operation.
+	 * Calculates the Euclidean distance of a 3D point from the origin, using the square
+	 * root of the sum of the squared x, y, and z coordinates.
 	 * 
-	 * @returns the square root of the sum of the squares of the coordinates.
+	 * @returns the square root of the sum of the squares of the coordinates of a 3D point.
 	 */
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y + z * z);
 	}
 	
 	/**
-	 * Calculates the square of a 3D vector's components and returns the result as a float
-	 * value.
+	 * Calculates the length of a point in 3D space by squaring its coordinates and summing
+	 * them.
 	 * 
-	 * @returns a floating-point number representing the square of the length of the
-	 * provided vector.
+	 * @returns a value representing the square of the length of a vector in 3D space.
 	 */
 	public float squareLength() {
 		return (float) x*x + y*y + z*z;
 	}
 
 	/**
-	 * Computes the maximum value of three arguments: `x`, `y`, and `z`. It returns the
-	 * maximum value using the `Math.max()` method.
+	 * Computes and returns the maximum value among `x`, `y`, and `z`.
 	 * 
 	 * @returns the maximum value of `x`, `y`, and `z`.
 	 */
@@ -57,26 +53,26 @@ public class Vector3f {
 	}
 
 	/**
-	 * Computes the dot product of a `Vector3f` object and another vector.
+	 * Computes the dot product of a `Vector3f` object and another vector, returning the
+	 * result as a float value.
 	 * 
 	 * @param r 3D vector to be dot-producted with the `x`, `y`, and `z` components of
 	 * the function's output.
 	 * 
-	 * @returns a scalar value representing the dot product of the vector `r` and the
-	 * object's position vector.
+	 * @returns a scalar value representing the dot product of the input vector and the
+	 * vector represented by the `x`, `y`, and `z` variables.
 	 */
 	public float dot(Vector3f r) {
 		return x * r.getX() + y * r.getY() + z * r.getZ();
 	}
 
 	/**
-	 * Takes a `Vector3f` argument `r` and returns a new `Vector3f` object with the dot
-	 * product of the two vectors as its components.
+	 * Computes and returns the cross product of two vectors in 3D space, represented as
+	 * `Vector3f` objects.
 	 * 
-	 * @param r 2D vector that the `cross()` method computes the cross product of with
-	 * the given 3D vector.
+	 * @param r 3D vector to be crossed with the current vector, resulting in a new 3D vector.
 	 * 
-	 * @returns a vector with the cross product of the input vectors.
+	 * @returns a new vector with the cross product of the input vectors.
 	 */
 	public Vector3f cross(Vector3f r) {
 		float x_ = y * r.getZ() - z * r.getY();
@@ -87,11 +83,10 @@ public class Vector3f {
 	}
 
 	/**
-	 * Normalizes a `Vector3f` instance by dividing each component by its magnitude,
-	 * resulting in a unitized vector representation.
+	 * Normalizes a 3D vector by dividing its components by the magnitude of the vector,
+	 * resulting in a unit-length vector.
 	 * 
-	 * @returns a normalized vector in the form of a `Vector3f` instance, where the
-	 * magnitude of the vector is equal to 1.
+	 * @returns a normalized vector in the form of a `Vector3f`.
 	 */
 	public Vector3f normalized() {
 		float length = length();
@@ -100,16 +95,13 @@ public class Vector3f {
 	}
 
 	/**
-	 * Rotates a 3D vector by an angle around a specified axis, returning the resultant
-	 * vector.
+	 * Rotates a vector by an angle around a specified axis, returning the new vector.
 	 * 
 	 * @param axis 3D vector that defines the rotation axis.
 	 * 
-	 * @param angle 3D rotation angle of the vector, which is used to calculate the
-	 * resulting rotated vector.
+	 * @param angle 3D rotation angle about the specified `axis`.
 	 * 
-	 * @returns a rotated version of the original vector, based on the provided axis and
-	 * angle of rotation.
+	 * @returns a rotated vector based on the given axis and angle of rotation.
 	 */
 	public Vector3f rotate(Vector3f axis, float angle) {
 		float sinAngle = (float) Math.sin(-angle);
@@ -119,10 +111,10 @@ public class Vector3f {
 	}
 
 	/**
-	 * Rotates a `Vector3f` object by the specified `Quaternion` rotation, resulting in
-	 * a new `Vector3f` object with the rotated components.
+	 * Takes a quaternion argument `rotation`, multiplies it with the current vector's
+	 * position, and returns the rotated vector's position.
 	 * 
-	 * @param rotation 3D rotation matrix that is applied to the `Vector3f` object.
+	 * @param rotation 3D rotation transformation to be applied to the Vector3f object.
 	 * 
 	 * @returns a vector representing the rotated position of the original vector.
 	 */
@@ -135,39 +127,39 @@ public class Vector3f {
 	}
 
 	/**
-	 * Interpolates a destination vector (`dest`) towards a starting vector (`this`),
-	 * based on a lerp factor `lerpFactor`. The function returns the interpolated vector
-	 * as the result.
+	 * Calculates a linear interpolation between two vectors, resulting in a third vector
+	 * that is a weighted combination of the original inputs.
 	 * 
-	 * @param dest 3D destination vector to which the current vector will be interpolated.
+	 * @param dest 3D vector to which the lerped value will be added.
 	 * 
-	 * @param lerpFactor amount of interpolation or blending between the starting and
-	 * ending points of the vector, with higher values resulting in more gradual transitions.
+	 * @param lerpFactor 0.0-1.0 factor by which the current position is to be interpolated
+	 * towards the destination position.
 	 * 
-	 * @returns a new vector that is a linear combination of the input vectors, with the
-	 * specified lerp factor.
+	 * @returns a vector that interpolates between two given vectors, using a factor to
+	 * control the interpolation amount.
 	 */
 	public Vector3f lerp(Vector3f dest, float lerpFactor) {
 		return dest.sub(this).mul(lerpFactor).add(this);
 	}
 
 	/**
-	 * Adds two vector objects, returning a new vector object with the sum of the x, y,
-	 * and z components of each vector.
+	 * Takes a `Vector3f` argument and returns a new `Vector3f` object with the sum of
+	 * the current instance's coordinates and those of the input argument.
 	 * 
 	 * @param r 3D vector to be added to the current vector.
 	 * 
-	 * @returns a new `Vector3f` instance with the sum of the input vectors' coordinates.
+	 * @returns a new `Vector3f` object representing the sum of the input vectors.
 	 */
 	public Vector3f add(Vector3f r) {
 		return new Vector3f(x + r.getX(), y + r.getY(), z + r.getZ());
 	}
 	
 	/**
-	 * Updates the instance's position by adding the specified vector's components to its
-	 * own.
+	 * Adds the components of a `Vector3f` object to the corresponding components of the
+	 * current object.
 	 * 
-	 * @param r 3D vector that adds its components to the current object's position.
+	 * @param r 3D vector to be added to the current position of the object, and its
+	 * values are used to update the object's x, y, and z components.
 	 */
 	public void addSelf(Vector3f r) {
 		this.x += r.x;
@@ -176,79 +168,81 @@ public class Vector3f {
 	}
 
 	/**
-	 * Adds a scalar value `r` to the components of its input vector, returning a new
-	 * vector with the added value.
+	 * Adds a scalar value to a `Vector3f` object's components, returning a new `Vector3f`
+	 * instance with the added value.
 	 * 
-	 * @param r 3D vector to be added to the existing vector.
+	 * @param r 3D vector to be added to the current vector.
 	 * 
-	 * @returns a new `Vector3f` object representing the sum of the original vector and
-	 * the specified float value.
+	 * @returns a new `Vector3f` object with the sum of the original vector's components
+	 * and the given float value.
 	 */
 	public Vector3f add(float r) {
 		return new Vector3f(x + r, y + r, z + r);
 	}
 	
 	/**
-	 * Adds a vector to the current position, scaling the input vector by a provided
-	 * factor beforehand. The resulting vector is then returned.
+	 * Adds a vector to the current vector, scaling the input vector by the given scalar
+	 * value before concatenation.
 	 * 
-	 * @param v 3D vector to be added to the current vector, multiplied by a scalar value.
+	 * @param v 3D vector to be scaled and added to the current vector.
 	 * 
-	 * @param scale scalar value that is multiplied with the `v` input parameter, resulting
-	 * in the new vector sum.
+	 * @param scale scalar value by which the input vector is multiplied before being
+	 * added to the current vector.
 	 * 
-	 * @returns a new vector that is the result of adding the original vector multiplied
-	 * by the scale factor.
+	 * @returns a new vector that is the result of adding the provided vector multiplied
+	 * by a scale factor to the current vector.
 	 */
 	public Vector3f addScaledVector(Vector3f v, float scale) {
 		return this.add(v.mul(scale));
 	}
 	
 	/**
-	 * Multiplies a `Vector3f` object by a scalar value and adds it to the current vector
-	 * representation of the object, scaling the vector's components accordingly.
+	 * Multiplies a `Vector3f` object by a scalar value and adds it to the current vector,
+	 * scaling the current vector accordingly.
 	 * 
-	 * @param v 3D vector to be scaled.
+	 * @param v 3D vector that will be scaled by the specified `scale` value before being
+	 * added to the current vector.
 	 * 
-	 * @param scale 3D vector that is to be multiplied with the original `Vector3f` value.
+	 * @param scale 3D scaling factor applied to the `Vector3f` object passed as argument
+	 * to the function.
 	 */
 	public void addSelfScaledVector(Vector3f v, float scale) {
 		this.addSelf(v.mul(scale));
 	}
 
 	/**
-	 * Takes a `Vector3f` argument `r` and returns a new `Vector3f` object representing
-	 * the difference between the input and the current object's values.
+	 * Takes a reference to another `Vector3f` object `r`, and returns a new `Vector3f`
+	 * object representing the difference between the current object and `r`.
 	 * 
-	 * @param r 3D vector to be subtracted from the current vector, resulting in the new
-	 * vector.
+	 * @param r 3D vector to be subtracted from the current vector, resulting in a new
+	 * vector that represents the difference between the two.
 	 * 
-	 * @returns a new `Vector3f` instance representing the difference between the input
-	 * vector and the reference vector.
+	 * @returns a new vector with the difference between the input vector and the current
+	 * vector's components.
 	 */
 	public Vector3f sub(Vector3f r) {
 		return new Vector3f(x - r.getX(), y - r.getY(), z - r.getZ());
 	}
 
 	/**
-	 * Takes a single float argument `r` and returns a new `Vector3f` instance representing
-	 * the difference between the original vector and `r`.
+	 * Takes a single float argument `r` and returns a new `Vector3f` object representing
+	 * the difference between the original vector and the `r` value subtracted from it.
 	 * 
-	 * @param r 3D position from which to subtract the output of the function.
+	 * @param r 3D position to which the vector is being subtracted.
 	 * 
-	 * @returns a vector representing the difference between the original vector and the
-	 * given value.
+	 * @returns a new vector representing the difference between the original vector and
+	 * a given reference point.
 	 */
 	public Vector3f sub(float r) {
 		return new Vector3f(x - r, y - r, z - r);
 	}
 
 	/**
-	 * Takes a `Vector3f` object `r` and multiplies its components by the corresponding
-	 * components of the current vector, returning a new vector with the result.
+	 * Takes a `Vector3f` object as input and returns a new `Vector3f` object with the
+	 * dot product of the current vector and the given vector.
 	 * 
-	 * @param r 3D vector to be multiplied with the current vector, resulting in a new
-	 * 3D vector output.
+	 * @param r 3D vector that multiplies with the current vector, resulting in a new 3D
+	 * vector output.
 	 * 
 	 * @returns a vector with the product of the input vectors' coordinates.
 	 */
@@ -257,14 +251,12 @@ public class Vector3f {
 	}
 
 	/**
-	 * Multiplies the components of a `Vector3f` object by a scalar value `r`. The returned
-	 * `Vector3f` object has the same x, y, and z components as the original, but with
-	 * the values scaled by `r`.
+	 * Multiplies a vector by a scalar value, returning a new vector with the product.
 	 * 
-	 * @param r scalar value that is to be multiplied with the vector components of the
-	 * `Vector3f` object.
+	 * @param r scalar value that is multiplied with the vector components of the `Vector3f`
+	 * object.
 	 * 
-	 * @returns a vector with components scaled by the input parameter `r`.
+	 * @returns a vector with x, y, and z components scaled by the input parameter `r`.
 	 */
 	public Vector3f mul(float r) {
 		return new Vector3f(x * r, y * r, z * r);
@@ -272,12 +264,12 @@ public class Vector3f {
 
 	/**
 	 * Takes a reference to another vector and returns a new vector with the components
-	 * scaled by the reciprocal of the corresponding values of the provided vector.
+	 * scaled by the reciprocal of the corresponding component of the input vector.
 	 * 
-	 * @param r vector to divide by, and it is used to calculate the output vector.
+	 * @param r 3D vector to which the current vector is to be divided.
 	 * 
-	 * @returns a vector with the same components as the input vector, but scaled by the
-	 * reciprocal of the corresponding component of the argument vector.
+	 * @returns a new vector with the same components as the input vector, scaled by the
+	 * reciprocal of its magnitude.
 	 */
 	public Vector3f div(Vector3f r) {
 		return new Vector3f(x / r.getX(), y / r.getY(), z / r.getZ());
@@ -285,103 +277,104 @@ public class Vector3f {
 
 	/**
 	 * Takes a scalar value `r` and returns a new `Vector3f` instance with components
-	 * scaled by the reciprocal of `r`.
+	 * scaled by the ratio of the original vector's magnitude to `r`.
 	 * 
-	 * @param r scalar value used to divide each component of the `Vector3f` object.
+	 * @param r scalar value used to divide the vector components.
 	 * 
-	 * @returns a vector with its x, y, and z components scaled by the input parameter `r`.
+	 * @returns a vector with the same x, y, and z values divided by the input `r`.
 	 */
 	public Vector3f div(float r) {
 		return new Vector3f(x / r, y / r, z / r);
 	}
 
 	/**
-	 * Computes and returns a new `Vector3f` object containing the absolute values of its
-	 * input components.
+	 * Computes and returns a vector with the absolute value of its components.
 	 * 
-	 * @returns a new vector with the absolute value of the original vector's components.
+	 * @returns a new vector with the absolute value of the input vector's components.
 	 */
 	public Vector3f abs() {
 		return new Vector3f(Math.abs(x), Math.abs(y), Math.abs(z));
 	}
 
 	/**
-	 * Returns a string representation of an object, including its instance variables (x,
-	 * y, and z) separated by spaces.
+	 * Returns a string representation of a mathematical expression, consisting of three
+	 * variables: `x`, `y`, and `z`.
 	 * 
-	 * @returns a string representation of a point in 3D space, consisting of three values
-	 * separated by spaces.
+	 * @returns a string representation of the current state of the object, including its
+	 * `x`, `y`, and `z` properties.
 	 */
 	public String toString() {
 		return "(" + x + " " + y + " " + z + ")";
 	}
 
 	/**
-	 * Returns a `Vector2f` object containing the x and y coordinates of a point.
+	 * Returns a `Vector2f` object representing the coordinates (x, y) of some entity.
 	 * 
-	 * @returns a `Vector2f` object containing the `x` and `y` coordinates of the point.
+	 * @returns a Vector2f object containing the x and y coordinates.
 	 */
 	public Vector2f getXY() {
 		return new Vector2f(x, y);
 	}
 
 	/**
-	 * Returns a `Vector2f` object representing the y- and z-components of a point.
+	 * Returns a `Vector2f` object representing the y-axis and z-axis coordinates of a point.
 	 * 
-	 * @returns a `Vector2f` object containing the values of `y` and `z`.
+	 * @returns a `Vector2f` object containing the `y` and `z` coordinates of a point.
 	 */
 	public Vector2f getYZ() {
 		return new Vector2f(y, z);
 	}
 
 	/**
-	 * Returns a new `Vector2f` object representing the point (x, z).
+	 * Returns a `Vector2f` object representing the position (x and z) of an entity.
 	 * 
-	 * @returns a `Vector2f` object representing the coordinates (x, z).
+	 * @returns a `Vector2f` object representing the point (x, z).
 	 */
 	public Vector2f getZX() {
 		return new Vector2f(z, x);
 	}
 
 	/**
-	 * Creates a new `Vector2f` object and returns its values for `y` and `x`.
+	 * Returns a `Vector2f` instance representing the position (x, y) of an object.
 	 * 
-	 * @returns a `Vector2f` object representing the coordinate values of the point (x,
-	 * y).
+	 * @returns a `Vector2f` object representing the coordinates (x, y) of a point.
 	 */
 	public Vector2f getYX() {
 		return new Vector2f(y, x);
 	}
 
 	/**
-	 * Returns a `Vector2f` object containing the `z` and `y` components of a point.
+	 * Returns a `Vector2f` object representing the point (z,y) coordinates.
 	 * 
-	 * @returns a `Vector2f` object representing the coordinate (z, y) of a point.
+	 * @returns a `Vector2f` object representing the z-coordinate and y-coordinate of a
+	 * point.
 	 */
 	public Vector2f getZY() {
 		return new Vector2f(z, y);
 	}
 
 	/**
-	 * Returns a `Vector2f` object containing the `x` and `z` coordinates of a point.
+	 * Returns a `Vector2f` object representing the x and z coordinates of a point.
 	 * 
-	 * @returns a `Vector2f` object containing the x and z coordinates of the point.
+	 * @returns a `Vector2f` object containing the `x` and `z` coordinates of the point.
 	 */
 	public Vector2f getXZ() {
 		return new Vector2f(x, z);
 	}
 
 	/**
-	 * Sets the values of the `x`, `y`, and `z` fields of a `Vector3f` object to the input
-	 * parameters.
+	 * Sets the coordinates of a `Vector3f` instance to the input values for `x`, `y`,
+	 * and `z`.
 	 * 
-	 * @param x 3D position of the vector along the x-axis.
+	 * @param x 3D vector's x component, which is being set to the provided value.
 	 * 
-	 * @param y 2D position of the vector in the Y-axis.
+	 * @param y 2D coordinate value that is being set for the `Vector3f` instance.
 	 * 
-	 * @param z 3D position of the object along the z-axis.
+	 * @param z 3rd component of the vector, which is assigned the value provided by the
+	 * user.
 	 * 
-	 * @returns a reference to the modified `Vector3f` object.
+	 * @returns a reference to the same `Vector3f` object, with its components set to the
+	 * input values.
 	 */
 	public Vector3f set(float x, float y, float z) {
 		this.x = x;
@@ -391,11 +384,12 @@ public class Vector3f {
 	}
 
 	/**
-	 * Sets the position of a vector to the given coordinates.
+	 * Sets the components of a `Vector3f` object to the corresponding values of another
+	 * `Vector3f` object.
 	 * 
 	 * @param r 3D vector that sets the values of the `Vector3f` object.
 	 * 
-	 * @returns a reference to the same `Vector3f` object, unchanged.
+	 * @returns a reference to the original `Vector3f` object, unchanged.
 	 */
 	public Vector3f set(Vector3f r) {
 		set(r.getX(), r.getY(), r.getZ());
@@ -403,68 +397,70 @@ public class Vector3f {
 	}
 
 	/**
-	 * Retrieves the value of the `x` field.
+	 * Returns the value of the `x` field.
 	 * 
-	 * @returns the value of the `x` field.
+	 * @returns a floating-point representation of the variable `x`.
 	 */
 	public float getX() {
 		return x;
 	}
 
 	/**
-	 * Sets the value of the `x` field of its object to the input float value.
+	 * Sets the value of the `x` field of its object reference to the provided float value.
 	 * 
-	 * @param x float value that will be assigned to the `x` field of the class instance
-	 * being passed as an argument to the `setX()` method.
+	 * @param x floating-point value that sets the `x` field of the class instance being
+	 * modified by the function.
 	 */
 	public void setX(float x) {
 		this.x = x;
 	}
 
 	/**
-	 * Retrieves and returns the value of the `y` field of a Java object.
+	 * Returns the value of the `y` field.
 	 * 
-	 * @returns a float value representing the y-coordinate of a point.
+	 * @returns the value of the `y` field.
 	 */
 	public float getY() {
 		return y;
 	}
 
 	/**
-	 * Sets the value of a object's `y` field to the input float value.
+	 * Sets the value of an object's `y` field to the input `float` value.
 	 * 
-	 * @param y vertical component of an object's position and stores it as the field `y`.
+	 * @param y 𝑥 coordinate of an object, where the function is called to update or set
+	 * that value.
 	 */
 	public void setY(float y) {
 		this.y = y;
 	}
 
 	/**
-	 * Returns the value of the `z` field.
+	 * Retrieves the value of the `z` field.
 	 * 
-	 * @returns a floating-point representation of the value `z`.
+	 * @returns a floating-point value representing the z component of an object's position.
 	 */
 	public float getZ() {
 		return z;
 	}
 
 	/**
-	 * Sets the value of the field `z` to the provided float parameter.
+	 * Sets the value of the `z` field of the object to which it belongs.
 	 * 
-	 * @param z 3D position of an object in the `setZ` function.
+	 * @param z 3D coordinates of an object's position in space, and it is being assigned
+	 * the value passed as argument to the function.
 	 */
 	public void setZ(float z) {
 		this.z = z;
 	}
 
 	/**
-	 * Compares a vector with another vector by checking if its x, y and z components are
-	 * equal to those of the other vector.
+	 * Compares a `Vector3f` object with another object, returning `true` if all components
+	 * are equal, and `false` otherwise.
 	 * 
-	 * @param r 3D vector to be compared with the current vector.
+	 * @param r 3D vector to compare with the current vector.
 	 * 
-	 * @returns a boolean value indicating whether the vector's components are equal to
-	 * those of the provided vector.
+	 * @returns a boolean value indicating whether the vector is equal to the provided
+	 * reference vector.
 	 */
 	public boolean equals(Vector3f r) {
 		return x == r.getX() && y == r.getY() && z == r.getZ();

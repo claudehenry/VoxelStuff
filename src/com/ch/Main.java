@@ -13,18 +13,19 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * Is a simple 3D graphics program that renders a cube in a 3D space. It uses the
- * Android Studio SDK and the OpenGL ES library to create the 3D scene and render it
- * on the screen. The program also includes a camera and a world object, which are
- * used to control the view and update the 3D scene accordingly.
+ * Is a game engine that handles input, rendering, and world updates in a 3D environment.
+ * It uses the OpenGL API for rendering and has a basic camera and model loading
+ * functionality. The engine can be used to create a simple 3D game or application
+ * with basic rendering and physics capabilities.
  */
 public class Main {
 	
 	/**
-	 * Initializes display and GL resources, loops, and exits with a return value of 0.
+	 * Initializes display and GL resources, enters an infinite loop, and exits with a
+	 * successful return value of 0.
 	 * 
 	 * @param args 1 or more command line arguments passed to the program when it is
-	 * executed, which are then ignored by the `main()` function.
+	 * launched, which are used to initialize various components of the program.
 	 */
 	public static void main(String[] args) {
 		
@@ -43,8 +44,9 @@ public class Main {
 	private static World w;
 	
 	/**
-	 * Sets up a display mode with a resolution of 1920x1080, creates a GL context with
-	 * forward compatibility and VSync enabled, and prints the version number of OpenGL.
+	 * Sets the display mode and creates a Display object with forward compatibility
+	 * enabled, enables vertical synchronization, and prints the GPU version string using
+	 * `GL11.glGetString()`.
 	 */
 	private static void initDisplay() {
 		try {
@@ -58,9 +60,8 @@ public class Main {
 	}
 	
 	/**
-	 * Sets up the GL context for a 3D rendering application, including setting clear
-	 * color, grabbing the mouse, enabling cull face and depth testing, loading a shader,
-	 * creating a camera and texture, and initializing a world object.
+	 * Initializes various GL settings and creates a new instance of a `Camera3D`,
+	 * `Texture`, and `Chunk` class, preparing for rendering a 3D world.
 	 */
 	private static void initGL() {
 		
@@ -105,8 +106,8 @@ public class Main {
 	}
 	
 	/**
-	 * Initializes a timer, enters an infinite loop, and updates the display title every
-	 * frame by displaying the frame rate, memory usage, and other information.
+	 * Continuously runs a loop while certain conditions are not met, updating and rendering
+	 * the display, and displaying the current frame rate and memory usage.
 	 */
 	private static void loop() {
 		
@@ -131,11 +132,11 @@ public class Main {
 	}
 	
 	/**
-	 * Updates the position of an entity (`w`) based on input and transform changes, using
-	 * `c.processInput()` and `c.getTransform().getPos()`.
+	 * Updates the position of an object `w` based on input signals and transforms them
+	 * using a matrix.
 	 * 
-	 * @param dt time step for simulation, which is used to update the position of the
-	 * game object in the world.
+	 * @param dt 3D time step used to update the object's position and is multiplied by
+	 * the input values to determine the update speed.
 	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -143,7 +144,9 @@ public class Main {
 	}
 
 	/**
-	 * Updates the viewport and renders objects using a modelview matrix and uniform colors.
+	 * Performs rendering of 3D models using a scene graph and a camera. It sets up the
+	 * rendering pipeline, including uniforms for color and transformation, and then draws
+	 * the models using the model matrix.
 	 */
 	private static void render() {
 		
@@ -167,10 +170,10 @@ public class Main {
 	}
 	
 	/**
-	 * Terminates the Java application with a specified exit status, passed as an argument.
+	 * Terminates the Java program with the specified exit status.
 	 * 
-	 * @param status 0-based exit code that indicates the reason for terminating the Java
-	 * application, with higher values indicating more severe errors or failures.
+	 * @param status value to be passed to the `System.exit()` method, which terminates
+	 * the Java application with the specified status code.
 	 */
 	private static void exit(int status) {
 		System.exit(status);

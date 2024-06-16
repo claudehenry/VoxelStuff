@@ -28,9 +28,10 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 /**
- * in Java provides functionality for loading and manipulating textures. It takes a
- * filename as a constructor parameter and generates an ID for the texture upon load.
- * The class also offers methods for binding and getting the ID of the texture.
+ * Is used to load and manage textures in a 3D graphics application. It allows for
+ * loading textures from files, binding them to texture slots, and retrieving the ID
+ * of the loaded texture. The class also provides methods for flipping and manipulating
+ * the texture data.
  */
 public class Texture {
 	
@@ -43,26 +44,29 @@ public class Texture {
 	}
 
 	/**
-	 * has no functionality as it is abstract and cannot be instantiated or called directly.
+	 * Is a hook that executes when an object is about to be garbage collected. It provides
+	 * a chance for objects to perform any necessary cleanup or resource management before
+	 * they are reclaimed by the garbage collector.
 	 */
 	@Override
 	protected void finalize() {
 	}
 
 	/**
-	 * 0 in the given code snippet binds a connection to a specific endpoint.
+	 * 0 is invoked, which binds a value to a variable or method invocation.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * activates a specific texture slot (0-31) and binds the specified texture ID to
-	 * that slot.
+	 * Specifies which texture slot to use for rendering. It first checks that the input
+	 * value is within a valid range and then sets the active texture unit using
+	 * `glActiveTexture()` and binds the specified texture using `glBindTexture()`.
 	 * 
-	 * @param samplerSlot 0-based index of a texture slot in the GPU's texture array,
-	 * with values ranging from 0 to 31, and is used to select the corresponding texture
-	 * for binding.
+	 * @param samplerSlot 0-based index of a texture slot in the current active texture
+	 * unit, with values ranging from 0 to 31, and is used to select the corresponding
+	 * texture object to bind.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -71,22 +75,22 @@ public class Texture {
 	}
 
 	/**
-	 * retrieves the `id` field of an object and returns its value as an `int`.
+	 * Returns the `id` variable's value.
 	 * 
-	 * @returns the value of the `id` field.
+	 * @returns the value of `id`.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * loads an image from a file and returns the ID of the generated texture. It reads
-	 * the image using `ImageIO`, converts it to a byte array, and binds it to a texture
-	 * using `GL11`.
+	 * Loads a texture from a file, creates a ByteBuffer representation of it, and binds
+	 * it to a GL_TEXTURE_2D texture ID. It also sets texture wrapping and filtering parameters.
 	 * 
-	 * @param fileName name of the file containing the image to be loaded as a texture.
+	 * @param fileName name of the texture file to be loaded and read by the `loadTexture()`
+	 * method.
 	 * 
-	 * @returns an OpenGL texture ID representing a loaded image.
+	 * @returns an integer representing the ID of the generated texture.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
