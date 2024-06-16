@@ -26,6 +26,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Provides a way to load and manipulate textures in a 2D graphics environment. It
+ * allows for binding the texture to a specific sampler slot and provides methods for
+ * loading and unloading the texture. The loadTexture method takes a file path as an
+ * argument and returns the ID of the loaded texture.
+ */
 public class Texture {
 
 	private int id;
@@ -37,20 +43,43 @@ public class Texture {
 	}
 
 
+	/**
+	 * 0 is invoked, which performs an action related to binding.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Sets the active texture slot to a specific value (between 0 and 31) and binds a
+	 * texture using the specified slot.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot in the current GL context, with
+	 * valid values ranging from 0 to 31.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Returns the current ID of an object.
+	 * 
+	 * @returns an integer representing the ID value.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a texture from a file and returns its ID. It reads the image data, converts
+	 * it to an OpenGL-compatible format, and generates mipmap levels for improved performance.
+	 * 
+	 * @param fileName file path of the texture to load.
+	 * 
+	 * @returns an integer representing the ID of a newly generated texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));

@@ -27,6 +27,12 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Is used to load and manage textures in a 3D graphics application. It allows for
+ * loading textures from files, binding them to texture slots, and retrieving the ID
+ * of the loaded texture. The class also provides methods for flipping and manipulating
+ * the texture data.
+ */
 public class Texture {
 	
 	private String fileName;
@@ -37,24 +43,55 @@ public class Texture {
 		this.id = Texture.loadTexture(fileName);
 	}
 
+	/**
+	 * Is a hook that executes when an object is about to be garbage collected. It provides
+	 * a chance for objects to perform any necessary cleanup or resource management before
+	 * they are reclaimed by the garbage collector.
+	 */
 	@Override
 	protected void finalize() {
 	}
 
+	/**
+	 * 0 is invoked, which binds a value to a variable or method invocation.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Specifies which texture slot to use for rendering. It first checks that the input
+	 * value is within a valid range and then sets the active texture unit using
+	 * `glActiveTexture()` and binds the specified texture using `glBindTexture()`.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot in the current active texture
+	 * unit, with values ranging from 0 to 31, and is used to select the corresponding
+	 * texture object to bind.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Returns the `id` variable's value.
+	 * 
+	 * @returns the value of `id`.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a texture from a file, creates a ByteBuffer representation of it, and binds
+	 * it to a GL_TEXTURE_2D texture ID. It also sets texture wrapping and filtering parameters.
+	 * 
+	 * @param fileName name of the texture file to be loaded and read by the `loadTexture()`
+	 * method.
+	 * 
+	 * @returns an integer representing the ID of the generated texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));

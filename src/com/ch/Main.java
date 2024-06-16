@@ -12,8 +12,21 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * Is a game engine that handles input, rendering, and world updates in a 3D environment.
+ * It uses the OpenGL API for rendering and has a basic camera and model loading
+ * functionality. The engine can be used to create a simple 3D game or application
+ * with basic rendering and physics capabilities.
+ */
 public class Main {
 	
+	/**
+	 * Initializes display and GL resources, enters an infinite loop, and exits with a
+	 * successful return value of 0.
+	 * 
+	 * @param args 1 or more command line arguments passed to the program when it is
+	 * launched, which are used to initialize various components of the program.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +43,11 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * Sets the display mode and creates a Display object with forward compatibility
+	 * enabled, enables vertical synchronization, and prints the GPU version string using
+	 * `GL11.glGetString()`.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +59,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Initializes various GL settings and creates a new instance of a `Camera3D`,
+	 * `Texture`, and `Chunk` class, preparing for rendering a 3D world.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +105,10 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Continuously runs a loop while certain conditions are not met, updating and rendering
+	 * the display, and displaying the current frame rate and memory usage.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +131,23 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Updates the position of an object `w` based on input signals and transforms them
+	 * using a matrix.
+	 * 
+	 * @param dt 3D time step used to update the object's position and is multiplied by
+	 * the input values to determine the update speed.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * Performs rendering of 3D models using a scene graph and a camera. It sets up the
+	 * rendering pipeline, including uniforms for color and transformation, and then draws
+	 * the models using the model matrix.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +169,12 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * Terminates the Java program with the specified exit status.
+	 * 
+	 * @param status value to be passed to the `System.exit()` method, which terminates
+	 * the Java application with the specified status code.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}

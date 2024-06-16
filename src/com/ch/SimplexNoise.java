@@ -1,5 +1,14 @@
 package com.ch;
 
+/**
+ * Is a mathematical algorithm for generating random numbers in a way that mimics the
+ * natural noise patterns found in real-world phenomena, such as water ripples or
+ * mountain ranges. The class provides a simple and efficient way to generate noise
+ * based on the Simplex Noise Algorithm, which is a widely used method for producing
+ * high-quality noise patterns. The algorithm takes in several parameters that determine
+ * the frequency and amplitude of the noise, and returns a value between -1 and 1
+ * that represents the noise at a particular point in space.
+ */
 public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 private static int grad3[][] = {{1,1,0},{-1,1,0},{1,-1,0},{-1,-1,0},
 	 {1,0,1},{-1,0,1},{1,0,-1},{-1,0,-1},
@@ -40,6 +49,15 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 {2,0,1,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,0,1,2},{3,0,2,1},{0,0,0,0},{3,1,2,0},
 	 {2,1,0,3},{0,0,0,0},{0,0,0,0},{0,0,0,0},{3,1,0,2},{0,0,0,0},{3,2,0,1},{3,2,1,0}};
 	 // This method is a *lot* faster than using (int)Math.floor(x)
+		/**
+		 * Computes the nearest integer to a given double value, returning it as an integer.
+		 * If the input is positive, it returns the exact integer value. Otherwise, it returns
+		 * the integer value minus one.
+		 * 
+		 * @param x floating-point number that is being floored to an integer value.
+		 * 
+		 * @returns an integer representing the nearest whole number to the input double value.
+		 */
 	 private static int fastfloor(double x) {
 	 return x>0 ? (int)x : (int)x-1;
 	 }
@@ -50,6 +68,20 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 private static double dot(int g[], double x, double y, double z, double w) {
 	 return g[0]*x + g[1]*y + g[2]*z + g[3]*w; }
 	 // 2D simplex noise
+		/**
+		 * Generates a noise value based on the positions of three simplex corners in a 2D
+		 * space, using the Midpoint Displacement Method for Simplex Noise.
+		 * 
+		 * @param xin 2D coordinates of a point within the grid, which are used to determine
+		 * the simplex cell and calculate the noise contribution.
+		 * 
+		 * @param yin 2D noise contribution from the second corner of the simplex, which is
+		 * calculated based on the skewed coordinates of the cell origin and the three simplex
+		 * corners.
+		 * 
+		 * @returns a scaled noise value between -1 and 1, calculated using the hashed gradient
+		 * indices of three simplex corners.
+		 */
 	 public static double noise(double xin, double yin) {
 	 double n0, n1, n2; // Noise contributions from the three corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -105,6 +137,23 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 70.0 * (n0 + n1 + n2);
 	 }
 	 // 3D simplex noise
+		/**
+		 * Computes a noise value for a given set of input coordinates (x, y, z) using the
+		 * Perlin noise formula. The output is a scaled value within [-1, 1].
+		 * 
+		 * @param xin 3D noise sample at the current position, which is used to calculate the
+		 * contributions from each simplex corner and finally determine the final noise value.
+		 * 
+		 * @param yin 3D noise simulation's input value for the y-coordinate of the current
+		 * simplex cell, which is used to calculate the contribution from the fourth corner
+		 * of the simplex in the noise calculation.
+		 * 
+		 * @param zin 3D noise simulation's third dimension, z, and is used to calculate the
+		 * contribution from the fourth simplex corner in the hashed gradient algorithm.
+		 * 
+		 * @returns a scaled value between [-1, 1] that represents the final noise value after
+		 * combining contributions from four simplex corners.
+		 */
 	 public static double noise(double xin, double yin, double zin) {
 	 double n0, n1, n2, n3; // Noise contributions from the four corners
 	 // Skew the input space to determine which simplex cell we're in
@@ -187,6 +236,27 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 return 32.0*(n0 + n1 + n2 + n3);
 	 }
 	 // 4D simplex noise
+		/**
+		 * Calculates a Perlin noise value based on a set of coordinates and a set of hashed
+		 * gradient indices, producing a continuous random signal within a square area.
+		 * 
+		 * @param x 3D coordinate of the point being evaluated, and it is used to compute the
+		 * contribution from each simplex corner to the final gradient value.
+		 * 
+		 * @param y 2D gradient of the potential at the position `x`, and it is used to compute
+		 * the dot product with the `grad4` array, which contains the partial derivatives of
+		 * the potential with respect to each of the four coordinates (x, y, z, and w).
+		 * 
+		 * @param z 3D gradient vector at a given point, which is used to calculate the dot
+		 * product with the simplex edges and vertices to compute the contribution from each
+		 * corner to the final result.
+		 * 
+		 * @param w 4th coordinate of the simplex vertices, which is used to compute the dot
+		 * product with the gradient vector at each corner and contribute to the final result.
+		 * 
+		 * @returns a scalar value between -1 and 1, representing the gradient noise at a
+		 * given point.
+		 */
 	 double noise(double x, double y, double z, double w) {
 
 	 // The skewing and unskewing factors are hairy again for the 4D case
@@ -212,7 +282,7 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 	 // To find out which of the 24 possible simplices we're in, we need to
 	 // determine the magnitude ordering of x0, y0, z0 and w0.
 	 // The method below is a good way of finding the ordering of x,y,z,w and
-	 // then find the correct traversal order for the simplex we’re in.
+	 // then find the correct traversal order for the simplex weÂ’re in.
 	 // First, six pair-wise comparisons are performed between each possible pair
 	 // of the four coordinates, and the results are used to add up binary bits
 	 // for an integer index.
