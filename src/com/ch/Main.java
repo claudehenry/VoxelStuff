@@ -13,25 +13,18 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * in the provided Java file implements a 3D graphics application using LWJGL. It
- * initalizes display and GL capabilities, creates a camera and shader, loads a
- * texture, and defines a world object. The main method then enters an infinite loop
- * of updating, rendering, and displaying the scene.
+ * Is a simple 3D graphics program that renders a cube in a 3D space. It uses the
+ * Android Studio SDK and the OpenGL ES library to create the 3D scene and render it
+ * on the screen. The program also includes a camera and a world object, which are
+ * used to control the view and update the 3D scene accordingly.
  */
 public class Main {
 	
 	/**
-	 * initializes display and graphics libraries, enters an infinite loop for rendering
-	 * and exiting with a successful status code of 0.
+	 * Initializes display and GL resources, loops, and exits with a return value of 0.
 	 * 
-	 * @param args 1 or more command line arguments passed to the `main` function, which
-	 * are then ignored and have no effect on the program's execution.
-	 * 
-	 * 	- The `String[] args` is an array of strings that contains the command-line
-	 * arguments passed to the program when it was launched.
-	 * 	- The length of the `args` array can vary depending on the number of arguments passed.
-	 * 	- Each element in the `args` array represents a separate argument passed to the
-	 * program.
+	 * @param args 1 or more command line arguments passed to the program when it is
+	 * executed, which are then ignored by the `main()` function.
 	 */
 	public static void main(String[] args) {
 		
@@ -50,8 +43,8 @@ public class Main {
 	private static World w;
 	
 	/**
-	 * sets up a display mode with resolution 1920x1080, enables VSync, and prints the
-	 * GL version string to the console.
+	 * Sets up a display mode with a resolution of 1920x1080, creates a GL context with
+	 * forward compatibility and VSync enabled, and prints the version number of OpenGL.
 	 */
 	private static void initDisplay() {
 		try {
@@ -65,8 +58,9 @@ public class Main {
 	}
 	
 	/**
-	 * initializes a 3D graphics environment, including setting up camera, depth testing,
-	 * and rendering a texture. It also creates a world object and loads a shader program.
+	 * Sets up the GL context for a 3D rendering application, including setting clear
+	 * color, grabbing the mouse, enabling cull face and depth testing, loading a shader,
+	 * creating a camera and texture, and initializing a world object.
 	 */
 	private static void initGL() {
 		
@@ -111,8 +105,8 @@ public class Main {
 	}
 	
 	/**
-	 * initializes a timer, enters an infinite loop, and updates the display title, clears
-	 * the color and depth buffers, renders the scene, and updates the display.
+	 * Initializes a timer, enters an infinite loop, and updates the display title every
+	 * frame by displaying the frame rate, memory usage, and other information.
 	 */
 	private static void loop() {
 		
@@ -137,11 +131,11 @@ public class Main {
 	}
 	
 	/**
-	 * updates the position of an object based on input and transform data, using
-	 * `processInput` and `updatePos`.
+	 * Updates the position of an entity (`w`) based on input and transform changes, using
+	 * `c.processInput()` and `c.getTransform().getPos()`.
 	 * 
-	 * @param dt delta time, or the change in time since the last frame, which is used
-	 * to update the position of the entity in the world.
+	 * @param dt time step for simulation, which is used to update the position of the
+	 * game object in the world.
 	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -149,8 +143,7 @@ public class Main {
 	}
 
 	/**
-	 * performs rendering operations on a 3D scene represented by a matrix `ch`, using a
-	 * shader object `s`. It sets up the MVP matrix and draws the model objects in the scene.
+	 * Updates the viewport and renders objects using a modelview matrix and uniform colors.
 	 */
 	private static void render() {
 		
@@ -174,11 +167,10 @@ public class Main {
 	}
 	
 	/**
-	 * terminates the Java program by calling the `System.exit()` method with the specified
-	 * status code, which can range from 0 to 255.
+	 * Terminates the Java application with a specified exit status, passed as an argument.
 	 * 
-	 * @param status value to be passed to the `System.exit()` method, which terminates
-	 * the current Java process.
+	 * @param status 0-based exit code that indicates the reason for terminating the Java
+	 * application, with higher values indicating more severe errors or failures.
 	 */
 	private static void exit(int status) {
 		System.exit(status);
