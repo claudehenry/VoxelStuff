@@ -26,6 +26,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Is used to handle texture mapping in graphics programming. It loads and manages
+ * textures, allowing for easy binding and manipulation. The class provides methods
+ * for loading and binding textures, as well as getting the ID of a loaded texture.
+ */
 public class Texture {
 
 	private int id;
@@ -37,20 +42,44 @@ public class Texture {
 	}
 
 
+	/**
+	 * 0 invokes the `bind` method on the `java.lang.Object` class, passing `0` as the argument.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Sets the active texture slot to a specific value (0-31) and binds a texture ID to
+	 * that slot using glBindTexture().
+	 * 
+	 * @param samplerSlot 0-based index of the texture slot to bind a texture to within
+	 * the current active texture group, with values ranging from 0 to 31.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Returns the object's `id` field value.
+	 * 
+	 * @returns the value of the `id` field.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a texture image from a file and stores it as a GL_RGBA8 texture in memory.
+	 * It generates mipmaps and sets the appropriate texture parameters for linear filtering
+	 * and lod bias.
+	 * 
+	 * @param fileName file path of the image to load as a texture.
+	 * 
+	 * @returns an integer identifier of a texture object created from an image file.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
