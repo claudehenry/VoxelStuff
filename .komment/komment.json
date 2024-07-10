@@ -1,0 +1,16 @@
+{
+  "meta": {
+    "version": "1",
+    "updated_at": "2024-07-10T12:58:28.533Z",
+    "created_at": "2024-07-10T12:55:05.728Z",
+    "pipelines": [
+      "8d311a5b-0cd5-41c0-8399-e1627913a568",
+      "647f6d37-d096-48b1-98ec-15dc63f77640"
+    ]
+  },
+  "lookup": [
+    [
+      "src/com/ch/Camera.java"
+    ]
+  ]
+}
