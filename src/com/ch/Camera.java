@@ -10,6 +10,7 @@ public abstract class Camera {
 	protected CameraStruct values;
 	protected Transform transform;
 
+	
 	protected Camera(Matrix4f projection) {
 		this.projection = projection;
 		transform = new Transform();
