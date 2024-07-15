@@ -4,12 +4,12 @@
     "path": "src/com/ch/Camera.java",
     "content": {
       "structured": {
-        "description": "an abstract class `Camera` that represents a camera in a 3D space. The class has various properties and methods for manipulating the camera's position, orientation, and projection matrix. The `calculateViewMatrix()` method calculates the view matrix based on the camera's rotation and translation, while the `getTranslationMatrix()` method returns a matrix that represents the camera's position in 3D space. The `adjustToViewport()` method adjusts the camera's projection matrix to fit within a specified width and height. Finally, the class defines an abstract `calculateProjectionMatrix()` method and a `CameraStruct` class for storing camera data.",
+        "description": "A Camera class that represents a 3D camera in a mathematical framework. The camera can be moved and rotated using its transform property, and it has a projection matrix that determines how the camera sees its surroundings. The code also provides methods to calculate the view and projection matrices, which are used to render 3D scenes. Additionally, there is an abstract class called CameraStruct that provides a way to store camera data in a standardized format.",
         "items": [
           {
-            "id": "26b215d1-8d0f-b685-cc49-061f171019df",
+            "id": "1618293d-5295-faba-8341-b95c54524fe6",
             "ancestors": [],
-            "description": "Is an abstract class that provides methods for calculating view and projection matrices, as well as adjusting to a specified viewport size. It also has a getTransform() method that returns the transform of the camera, and an abstract calculateProjectionMatrix() method that can be overridden by subclasses.",
+            "description": "Is an abstract class that provides methods for calculating and manipulating matrices related to camera functionality. It has fields for projection, viewProjectionMat4, values, transform, and allows for calculation of projection matrix and adjustment to the viewport size. Additionally, it provides abstract methods for calculateProjectionMatrix and adjustToViewport, and a protected class for CameraStruct.",
             "name": "Camera",
             "location": {
               "start": 6,
@@ -23,11 +23,11 @@
             "docLength": null
           },
           {
-            "id": "827e8964-44e8-d4ae-364f-3ed18ff984f3",
+            "id": "4e48ae3f-899a-1b80-9443-5f9cc1065400",
             "ancestors": [
-              "26b215d1-8d0f-b685-cc49-061f171019df"
+              "1618293d-5295-faba-8341-b95c54524fe6"
             ],
-            "description": "Retrieves a matrix representing the view projection, which combines the camera's view transformation and projection onto the image plane. If the matrix is null or has changed since the last calculation, it calculates and returns the view projection matrix.",
+            "description": "Retrieves a `Matrix4f` object representing the view projection transformation, calculating it if necessary based on the current view and transformation matrices.",
             "params": [],
             "returns": {
               "type_name": "Matrix4f",
@@ -36,7 +36,7 @@
             },
             "usage": {
               "language": "java",
-              "code": "Camera myCam = new Camera(new Matrix4f());\nmyCam.getViewProjection();\n",
+              "code": "Camera camera = new PerspectiveCamera(new Matrix4f().initPerspective(fov, aspectRatio, nearPlane, farPlane));\nMatrix4f viewProjectionMatrix = camera.getViewProjection();\n",
               "description": ""
             },
             "name": "getViewProjection",
@@ -52,21 +52,21 @@
             "docLength": null
           },
           {
-            "id": "24785416-93ee-2d90-674a-91f5a031bdc8",
+            "id": "f8d152a5-8f58-799b-c44f-60e1bbc787a3",
             "ancestors": [
-              "26b215d1-8d0f-b685-cc49-061f171019df"
+              "1618293d-5295-faba-8341-b95c54524fe6"
             ],
-            "description": "Calculates a view matrix by multiplying the camera rotation and translation matrices using the projection matrix. The resulting matrix represents the transformation from world space to camera space for rendering purposes.",
+            "description": "Calculates a view matrix for a 3D scene based on the rotation and translation of a camera. The view matrix is used to transform 3D points from world space to screen space.",
             "params": [],
             "returns": {
               "type_name": "Matrix4f",
-              "description": "a 4x4 matrix representing the view transformation of a camera.",
+              "description": "a matrix representing the view transformation of a 3D scene from a camera's perspective.",
               "complex_type": false
             },
             "usage": {
               "language": "java",
-              "code": "Camera camera = new Camera(new Matrix4f());\nTransform transform = new Transform();\ncamera.getViewProjection(); // This returns the view projection matrix of the camera.\ncamera.calculateViewMatrix(); // This calculates and sets the view projection matrix.\ncamera.getTranslationMatrix(); // This returns the translation matrix for the camera.\ntransform.setPosition(new Vector3f(1, 2, 3)); // This sets the position of the transform.\ncamera.calculateViewMatrix(); // This calculates and sets the view projection matrix again.\n",
-              "description": ""
+              "code": "Camera camera = new Camera(new Matrix4f());\n\tcamera.getTransform().setPosition(new Vector3f(0, 0, -5));\n\tcamera.getTransform().setRotation(new Quaternionf(180, 0, 0, 0));\n\tMatrix4f viewProjectionMat = camera.calculateViewProjection();\n",
+              "description": "\nIn this example, we create a new instance of the Camera class using an empty Matrix4f for the projection matrix. We then set the position and rotation of the transform associated with the camera to values that are appropriate for our use case (a camera looking at the origin from a distance of 5 units). Finally, we call the calculateViewProjection method on the camera instance, which will return a Matrix4f representing the view-projection matrix. This matrix can then be used to render the scene from the perspective of the camera."
             },
             "name": "calculateViewMatrix",
             "location": {
@@ -81,21 +81,21 @@
             "docLength": null
           },
           {
-            "id": "512f6dec-ab1b-82ba-b541-c92e7d350324",
+            "id": "d1889aa0-2738-5c95-414d-3a40f6d8cc39",
             "ancestors": [
-              "26b215d1-8d0f-b685-cc49-061f171019df"
+              "1618293d-5295-faba-8341-b95c54524fe6"
             ],
-            "description": "Generates a matrix that represents a translation from the origin to a point in 3D space, based on the position of a camera transform.",
+            "description": "Calculates a translation matrix that moves the camera position by a distance equal to its negation.",
             "params": [],
             "returns": {
               "type_name": "Matrix4f",
-              "description": "a 4x4 transformation matrix representing the camera's position in 3D space, with the x, y, and z components of the matrix corresponding to the translation vector in the correct order.",
+              "description": "a 4x4 transformation matrix representing the camera's position in the world, translated by a specified amount in the x, y, and z directions.",
               "complex_type": false
             },
             "usage": {
               "language": "java",
-              "code": "Camera camera = new Camera(new Matrix4f());\nVector3f cameraPos = transform.getTransformedPos().mul(-1);\nMatrix4f translationMatrix = camera.getTranslationMatrix();\n",
-              "description": "\nIn this code, a `Camera` object is created with an empty `Matrix4f`. A `Vector3f` representing the position of the camera is obtained from the `transform` object and inverted to get the camera's position. The `getTranslationMatrix()` method is then called on the `Camera` object using this vector, which returns a new `Matrix4f` that represents the translation matrix of the camera. This matrix can then be used for further calculations or operations."
+              "code": "public class MyClass {\n    public static void main(String[] args) {\n        //create a transform object for the camera\n        Transform myTransform = new Transform();\n        \n        //set the position of the camera to some value\n        Vector3f cameraPos = new Vector3f(5, 6, 7);\n        myTransform.setPosition(cameraPos);\n        \n        //create a new camera object and pass in the transform object\n        Camera myCamera = new Camera(myTransform);\n        \n        //get the translation matrix of the camera\n        Matrix4f translationMatrix = myCamera.getTranslationMatrix();\n    }\n}\n",
+              "description": ""
             },
             "name": "getTranslationMatrix",
             "location": {
@@ -110,11 +110,40 @@
             "docLength": null
           },
           {
-            "id": "9ad780fd-3fcd-0cb3-d046-3ca82eaff7cb",
+            "id": "207bfc06-422e-7196-8140-de97db24408e",
             "ancestors": [
-              "26b215d1-8d0f-b685-cc49-061f171019df"
+              "1618293d-5295-faba-8341-b95c54524fe6"
             ],
-            "description": "Is an abstract class that contains an abstract method for getting a Matrix4f object and offers no other publicly accessible methods or fields.",
+            "description": "Retrieves and returns the `transform` object, which is an instance of the `Transform` class.",
+            "params": [],
+            "returns": {
+              "type_name": "Transform",
+              "description": "a reference to an instance of the `Transform` class.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Camera myCamera = new Camera();\nTransform transform = myCamera.getTransform();\n",
+              "description": ""
+            },
+            "name": "getTransform",
+            "location": {
+              "start": 40,
+              "insert": 40,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "529eaf51-4f85-539b-e646-cf572da620d1",
+            "ancestors": [
+              "1618293d-5295-faba-8341-b95c54524fe6"
+            ],
+            "description": "Is an abstract class that serves as a base for other classes in the package com.ch.math. It provides an abstract method called getAsMatrix4() that returns a Matrix4f object, which can be used to perform various calculations related to camera and matrix operations.",
             "name": "CameraStruct",
             "location": {
               "start": 48,
