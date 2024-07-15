@@ -8,10 +8,10 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 /**
- * Is an extension of the Camera class that adds additional functionality for
- * manipulating a camera's position and view in a 3D space. The class has several
- * methods for calculating projection and view matrices, as well as handling user
- * input for rotating and moving the camera.
+ * Defines a camera class that inherits from the `Camera` class and has additional
+ * features such as adjusting to the viewport size, calculating the projection matrix,
+ * and processing input events. The class also includes a `processInput` method that
+ * handles mouse and keyboard input events and moves the camera accordingly.
  */
 public class Camera3D extends Camera {
 
@@ -22,13 +22,14 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * Calculates a matrix representation of the camera's projection, based on the given
-	 * `CameraStruct` data.
+	 * Takes a `CameraStruct` object as input and returns the projection matrix in form
+	 * of a `Matrix4f` object.
 	 * 
-	 * @param data 3D camera parameters as a `CameraStruct` object, which is used to
-	 * create the projection matrix.
+	 * @param data 3D camera's properties, such as its position, orientation, and field
+	 * of view, which are used to calculate the projection matrix.
 	 * 
-	 * @returns a Matrix4f object representing the camera's projection matrix.
+	 * @returns a `Matrix4f` object representing the projection matrix as specified by
+	 * the input `CameraStruct`.
 	 */
 	@Override
 	public Matrix4f calculateProjectionMatrix(CameraStruct data) {
@@ -36,13 +37,14 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * Updates a 3D scene's projection and view matrices based on the window size, aspect
-	 * ratio, and original values stored in the `CameraStruct3D`.
+	 * Adjusts the camera's projection and view matrices to fit within the specified
+	 * viewport dimensions. It also sets the viewport dimensions using `GL11.glViewport()`.
 	 * 
-	 * @param width 2D viewport width for which the camera's projection matrix is calculated
-	 * and displayed.
+	 * @param width width of the viewport in pixels.
 	 * 
-	 * @param height 2D viewport size of the canvas on which the 3D scene is rendered.
+	 * @param height 2D viewport size of the graphical representation of the scene, which
+	 * is used to calculate the appropriate projection matrix and view matrix for the
+	 * camera's rendering.
 	 */
 	@Override
 	public void adjustToViewport(int width, int height) {
@@ -56,11 +58,9 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * Is a customized implementation of a camera class that includes additional parameters
-	 * for the field of view (fov), aspect ratio (aspect), near clipping plane (zNear),
-	 * and far clipping plane (zFar). The class provides methods for calculating the
-	 * perspective projection matrix and the view matrix, as well as handling input from
-	 * the mouse and keyboard.
+	 * Is a sub-class of the Camera Struct that contains additional attributes and methods
+	 * to handle 3D camera calculations, such as fov, aspect, zNear, and zFar. It also
+	 * provides a method for getting the matrix representation of the camera's projection.
 	 */
 	protected class CameraStruct3D extends CameraStruct {
 
@@ -74,10 +74,10 @@ public class Camera3D extends Camera {
 		}
 
 		/**
-		 * Initializes a matrix representation of a 3D perspective projection, setting its
-		 * field of view (fov), aspect ratio, near and far distances.
+		 * Initializes a matrix representing a perspective projection with the specified field
+		 * of view (fov), aspect ratio, near and far distances.
 		 * 
-		 * @returns a 4x4 matrix representing a perspective projection.
+		 * @returns a Matrix4f object representing a perspective projection matrix.
 		 */
 		public Matrix4f getAsMatrix4() {
 			return new Matrix4f().initPerspective(fov, aspect, zNear, zFar);
@@ -86,20 +86,18 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * Processes input from the mouse and keyboard, applying rotations and translations
-	 * to an object based on user inputs. It also scales the movement speed based on the
-	 * LShift key.
+	 * Rotates the object based on mouse input and key presses, moving it along the forward
+	 * direction of its rotation.
 	 * 
-	 * @param dt time step used to update the object's position and rotation during
-	 * animation, with a value of `dt` determining how much the object moves or rotates
-	 * within the frame.
+	 * @param dt 3D game time step, which is used to calculate the movement of the object
+	 * based on keyboard input.
 	 * 
-	 * @param speed 3D movement speed of the object being controlled by the player, and
-	 * it is multiplied by the time interval `dt` to determine the total distance traveled
-	 * during the frame.
+	 * @param speed 3D movement speed of the entity being controlled by the code, which
+	 * is multiplied by the time interval `dt` to determine the distance traveled during
+	 * each iteration of the function.
 	 * 
-	 * @param sens sensitivity of the object's rotation in response to mouse movements,
-	 * which affects the amount of rotation applied to the object's transform.
+	 * @param sens sensitivity of the mouse input, which determines how much the character
+	 * will move when the mouse is moved.
 	 */
 	public void processInput(float dt, float speed, float sens) {
 
@@ -126,10 +124,11 @@ public class Camera3D extends Camera {
 	}
 
 	/**
-	 * Updates the position of an object by adding a directional vector multiplied by a
+	 * Modifies the position of an object by adding a directional vector multiplied by a
 	 * scalar value to its current position.
 	 * 
-	 * @param dir 3D direction to move the object in the game world.
+	 * @param dir 3D direction in which to move the object, with the magnitude of the
+	 * movement specified by the `amt` parameter.
 	 * 
 	 * @param amt amount of movement along the specified direction, which is added to the
 	 * current position of the transform.
