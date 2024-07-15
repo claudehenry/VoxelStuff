@@ -27,9 +27,10 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * Is used to handle texture mapping in graphics programming. It loads and manages
- * textures, allowing for easy binding and manipulation. The class provides methods
- * for loading and binding textures, as well as getting the ID of a loaded texture.
+ * Defines a class for managing textures in an OpenGL environment. The class provides
+ * methods for binding and unbinding textures, as well as loading textures from files.
+ * The loadTexture method takes a file path as an argument and returns the ID of the
+ * loaded texture.
  */
 public class Texture {
 
@@ -43,18 +44,18 @@ public class Texture {
 
 
 	/**
-	 * 0 invokes the `bind` method on the `java.lang.Object` class, passing `0` as the argument.
+	 * 0) binds an object to a specified method invocation site.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * Sets the active texture slot to a specific value (0-31) and binds a texture ID to
-	 * that slot using glBindTexture().
+	 * Sets the active texture slot to a specific index (0-31) and binds a texture to
+	 * that slot using the `glBindTexture()` method.
 	 * 
-	 * @param samplerSlot 0-based index of the texture slot to bind a texture to within
-	 * the current active texture group, with values ranging from 0 to 31.
+	 * @param samplerSlot 0-based index of a texture slot that specifies which texture
+	 * to bind to the current texture unit.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -63,22 +64,22 @@ public class Texture {
 	}
 
 	/**
-	 * Returns the object's `id` field value.
+	 * Returns the instance variable `id`.
 	 * 
-	 * @returns the value of the `id` field.
+	 * @returns the integer value of the `id` field.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * Loads a texture image from a file and stores it as a GL_RGBA8 texture in memory.
-	 * It generates mipmaps and sets the appropriate texture parameters for linear filtering
-	 * and lod bias.
+	 * Loads a texture from a file, converts it to a GL texture and stores it in an integer
+	 * ID.
 	 * 
-	 * @param fileName file path of the image to load as a texture.
+	 * @param fileName name of the texture file to be loaded and read by the `loadTexture()`
+	 * method.
 	 * 
-	 * @returns an integer identifier of a texture object created from an image file.
+	 * @returns an integer ID representing a loaded texture.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
