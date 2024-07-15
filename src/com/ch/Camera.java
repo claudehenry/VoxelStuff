@@ -4,11 +4,10 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 /**
- * Is an abstract class that provides methods for calculating and manipulating matrices
- * related to camera functionality. It has fields for projection, viewProjectionMat4,
- * values, transform, and allows for calculation of projection matrix and adjustment
- * to the viewport size. Additionally, it provides abstract methods for
- * calculateProjectionMatrix and adjustToViewport, and a protected class for CameraStruct.
+ * Is an abstract class that provides methods for calculating view and projection
+ * matrices, as well as getting and setting transformation values. It also has an
+ * abstract method for calculating a projection matrix and another abstract method
+ * for adjusting to the viewport size.
  */
 public abstract class Camera {
 
@@ -23,8 +22,10 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Retrieves a `Matrix4f` object representing the view projection transformation,
-	 * calculating it if necessary based on the current view and transformation matrices.
+	 * Retrieves a matrix representing the view projection transformation, which combines
+	 * the camera's view matrix and projection matrix. If the `viewProjectionMat4` variable
+	 * is null or has changed since the last calculation, the function calculates and
+	 * returns the view matrix.
 	 * 
 	 * @returns a `Matrix4f` object representing the view projection matrix.
 	 */
@@ -37,12 +38,10 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Calculates a view matrix for a 3D scene based on the rotation and translation of
-	 * a camera. The view matrix is used to transform 3D points from world space to screen
-	 * space.
+	 * Calculates a view matrix that represents the transformation of a 3D camera's
+	 * perspective and translation.
 	 * 
-	 * @returns a matrix representing the view transformation of a 3D scene from a camera's
-	 * perspective.
+	 * @returns a matrix representing the view transformation of a camera.
 	 */
 	public Matrix4f calculateViewMatrix() {
 
@@ -54,11 +53,12 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Calculates a translation matrix that moves the camera position by a distance equal
-	 * to its negation.
+	 * Generates a transformation matrix for translating an object by a specified distance
+	 * from its current position. The matrix is initialized with the negative of the
+	 * camera's position, and then the translation amount is applied to each axis.
 	 * 
-	 * @returns a 4x4 transformation matrix representing the camera's position in the
-	 * world, translated by a specified amount in the x, y, and z directions.
+	 * @returns a 4x4 transformation matrix that represents the camera's translation
+	 * relative to its initial position.
 	 */
 	public Matrix4f getTranslationMatrix() {
 		Vector3f cameraPos = transform.getTransformedPos().mul(-1);
@@ -66,8 +66,8 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Retrieves and returns the `transform` object, which is an instance of the `Transform`
-	 * class.
+	 * Returns the `transform` object, which represents a transformation from one coordinate
+	 * system to another.
 	 * 
 	 * @returns a reference to an instance of the `Transform` class.
 	 */
@@ -80,10 +80,10 @@ public abstract class Camera {
 	public abstract void adjustToViewport(int width, int height);
 
 	/**
-	 * Is an abstract class that serves as a base for other classes in the package
-	 * com.ch.math. It provides an abstract method called getAsMatrix4() that returns a
-	 * Matrix4f object, which can be used to perform various calculations related to
-	 * camera and matrix operations.
+	 * Is an abstract class that provides a base implementation for all camera structs
+	 * in the `com.ch` package. It includes an abstract method `getAsMatrix4()` for
+	 * returning a Matrix4f object, which can be used to represent the camera's transformation
+	 * matrix in various contexts.
 	 */
 	protected abstract class CameraStruct {
 
