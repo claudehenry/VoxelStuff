@@ -1428,5 +1428,186 @@
         ]
       }
     }
+  },
+  {
+    "name": "Main.java",
+    "path": "src/com/ch/Main.java",
+    "content": {
+      "structured": {
+        "description": "A 3D graphics program using LWJGL, with a basic scene consisting of a camera, a shader, and a cube. The program also includes a world object for storing voxel data, but this is not explicitly accessed or used in the provided code. The main function initializes display and GL capabilities, loads a default shader, and renders the cube at the correct position and size. The update function processes input and updates the position of the camera, while the render function draws the cube using the shader and camera positions.",
+        "items": [
+          {
+            "id": "3447bcac-0f93-74a4-e041-16cdca9f2777",
+            "ancestors": [],
+            "description": "Has various methods for initializing and updating display and GPU state, rendering 3D graphics, and exiting the application. It also includes a Model class, a Shader class, a Texture class, and a World class, which are likely used for rendering 3D graphics.",
+            "name": "Main",
+            "location": {
+              "start": 15,
+              "insert": 15,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 123,
+            "docLength": null
+          },
+          {
+            "id": "de11a202-b5f7-13a7-6d4e-d77f78e6b543",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Initializes display and GL resources, enters an endless loop to render graphics, and then exits with a success code (0).",
+            "params": [
+              {
+                "name": "args",
+                "type_name": "String[]",
+                "description": "1 or more command-line arguments passed to the `main` method when the program is launched, which are then ignored and not used in the program's execution.",
+                "complex_type": false
+              }
+            ],
+            "name": "main",
+            "location": {
+              "start": 17,
+              "insert": 17,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "4b1e2311-117e-8ab7-5943-b25fb64774d6",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Sets up a display mode, creates a Display object, enables vertical syncing, and prints the OpenGL version string.",
+            "params": [],
+            "name": "initDisplay",
+            "location": {
+              "start": 33,
+              "insert": 33,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": null
+          },
+          {
+            "id": "f52d9600-105a-09b4-3447-f823b75fcbe4",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Initializes a 3D graphics environment using OpenGL ES 2.0. It sets up a camera, loads a shader, creates a texture, and defines a cube-shaped chunk for rendering.",
+            "params": [],
+            "name": "initGL",
+            "location": {
+              "start": 44,
+              "insert": 44,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 41,
+            "docLength": null
+          },
+          {
+            "id": "c5cc6c93-57ea-0cb3-dc40-8e8e25da496a",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Updates and renders a graphical user interface using the Java 2D API, displaying the frame rate and memory usage in the title bar. It loops until the user requests closure or the escape key is pressed.",
+            "params": [],
+            "name": "loop",
+            "location": {
+              "start": 86,
+              "insert": 86,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 21,
+            "docLength": null
+          },
+          {
+            "id": "dd1738f6-8c8d-88aa-044b-f2e86c83eee7",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Updates the position of an object (`w`) based on input from a controller (`c`) and its current transform state, using a fixed time step `dt`.",
+            "params": [
+              {
+                "name": "dt",
+                "type_name": "float",
+                "description": "time step passed to the `processInput()` method for processing.",
+                "complex_type": false
+              }
+            ],
+            "name": "update",
+            "location": {
+              "start": 108,
+              "insert": 108,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "ad56a10e-aa39-aa98-ca4b-cf5323a02379",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Renders a 3D scene using the `GLSL` shader language. It sets up the rendering context, binds the modelview and projection matrices, and draws the 3D objects in the scene.",
+            "params": [],
+            "name": "render",
+            "location": {
+              "start": 113,
+              "insert": 113,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          },
+          {
+            "id": "ae85e437-0253-9b94-8a46-99197708d95d",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Terminates the Java process with the specified status code, which can be a value between 0 and 2147483647.",
+            "params": [
+              {
+                "name": "status",
+                "type_name": "int",
+                "description": "exit code for the program, which is passed to the `System.exit()` method to terminate the program.",
+                "complex_type": false
+              }
+            ],
+            "name": "exit",
+            "location": {
+              "start": 134,
+              "insert": 134,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
   }
 ]
