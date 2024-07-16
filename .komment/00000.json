@@ -101,5 +101,321 @@
         ]
       }
     }
+  },
+  {
+    "name": "Main.java",
+    "path": "src/com/ch/Main.java",
+    "content": {
+      "structured": {
+        "description": "A 3D rendering program using the LWJGL library for input and graphics rendering. It creates a display, initializes GL objects, loads a shader, and renders a scene using a camera and a world object containing blocks. The scene is updated and rendered in a loop until the user closes the application.",
+        "items": [
+          {
+            "id": "f855525a-8445-b180-7149-048ddc4b6835",
+            "ancestors": [],
+            "description": "Is a game engine that creates a window, loads a texture, and renders a 3D scene using a Chunk object and a World object. The class also handles input, updates the position of the world, and renders the scene using a Shader object. The render method uses the Model class to draw the chunks in the world.",
+            "name": "Main",
+            "location": {
+              "start": 15,
+              "insert": 15,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 122,
+            "docLength": null
+          },
+          {
+            "id": "6c76db48-5c00-98a1-d641-cc96d8e55877",
+            "ancestors": [
+              "f855525a-8445-b180-7149-048ddc4b6835"
+            ],
+            "description": "Initializes display and GL libraries, then enters an infinite loop for rendering and user input processing before exiting with a successful result code of 0.",
+            "params": [
+              {
+                "name": "args",
+                "type_name": "String[]",
+                "description": "program's command-line options and data, which are not used directly in this function but may be accessed later.",
+                "complex_type": false
+              }
+            ],
+            "name": "main",
+            "location": {
+              "start": 17,
+              "insert": 17,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "e02571e5-5743-3198-7647-1cc4dffb34cd",
+            "ancestors": [
+              "f855525a-8445-b180-7149-048ddc4b6835"
+            ],
+            "description": "Sets up a display mode with a resolution of 1920x1080, creates a GL context with forward compatibility enabled and VSync enabled, and prints the current GL version.",
+            "params": [],
+            "name": "initDisplay",
+            "location": {
+              "start": 32,
+              "insert": 32,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": null
+          },
+          {
+            "id": "20f9a0b5-f938-5fbb-8e41-bac51ae0a5cc",
+            "ancestors": [
+              "f855525a-8445-b180-7149-048ddc4b6835"
+            ],
+            "description": "Initializes OpenSceneGraph and sets up a 3D rendering environment by setting up camera, shader, texture, and vertices.",
+            "params": [],
+            "name": "initGL",
+            "location": {
+              "start": 43,
+              "insert": 43,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 41,
+            "docLength": null
+          },
+          {
+            "id": "8b53675b-d7f5-4282-634b-d61606e99d0f",
+            "ancestors": [
+              "f855525a-8445-b180-7149-048ddc4b6835"
+            ],
+            "description": "Continuously updates and renders a graphic display while monitoring and displaying various system metrics, including frames per second, memory usage, and overall system performance.",
+            "params": [],
+            "name": "loop",
+            "location": {
+              "start": 85,
+              "insert": 85,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 21,
+            "docLength": null
+          },
+          {
+            "id": "f4f7e9eb-7afe-d3aa-0843-86dd3932d5a5",
+            "ancestors": [
+              "f855525a-8445-b180-7149-048ddc4b6835"
+            ],
+            "description": "Updates the position of an object (w) based on input from a component (c) and a time parameter (dt).",
+            "params": [
+              {
+                "name": "dt",
+                "type_name": "float",
+                "description": "time step that passes during the update operation.",
+                "complex_type": false
+              }
+            ],
+            "name": "update",
+            "location": {
+              "start": 107,
+              "insert": 107,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "0d6051a6-0c4a-b6ab-074d-1d765c655076",
+            "ancestors": [
+              "f855525a-8445-b180-7149-048ddc4b6835"
+            ],
+            "description": "Renders a 3D model using a shader and a camera view projection matrix. It enables and disables attributess for the model, binds the shader, and draws the model using the view projection matrix.",
+            "params": [],
+            "name": "render",
+            "location": {
+              "start": 112,
+              "insert": 112,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "SimplexNoise.java",
+    "path": "src/com/ch/SimplexNoise.java",
+    "content": {
+      "structured": {
+        "description": "A function that takes in a 5D array of values and returns a single value in the range [-1,1]. The function works by first computing the hashed gradient indices of five simplex corners, followed by calculating the contribution from each corner using the dot product of the gradients at each corner with the input values. These contributions are then summed and scaled to produce the final output value within the desired range.\n\nIn summary, the code defines a function that takes in a 5D array of values and computes the weighted sum of the gradient contributions from five simplex corners to produce a single value within the range [-1,1].",
+        "items": [
+          {
+            "id": "7d804f46-8b5c-3bb8-e04f-9c915473fe91",
+            "ancestors": [],
+            "description": "Is a noise generator that uses the Simplex Noise algorithm to produce a continuous and smooth noise signal. The class takes in various parameters such as the size of the grid, the number of dimensions, and the hash function, and then calculates the contribution from each corner of a simplex to generate the noise. The output is a single value that can be scaled to cover the range [-1, 1].",
+            "name": "SimplexNoise",
+            "location": {
+              "start": 3,
+              "insert": 3,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 307,
+            "docLength": null
+          },
+          {
+            "id": "171125d1-0306-a592-304e-fd391d80530f",
+            "ancestors": [
+              "7d804f46-8b5c-3bb8-e04f-9c915473fe91"
+            ],
+            "description": "Generates a noise value based on a 3D simplex noise algorithm. It takes two input coordinates and returns a value within the interval [-1,1].",
+            "params": [
+              {
+                "name": "xin",
+                "type_name": "double",
+                "description": "2D coordinate of a point in the input space, which is skewed using the `F2` factor to determine which simplex cell it belongs to.",
+                "complex_type": false
+              },
+              {
+                "name": "yin",
+                "type_name": "double",
+                "description": "2D noise simulation's input coordinate for the y-axis, which is skewed and transformed into the original simplex cell's coordinate system along with the `xin` input parameter.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "double",
+              "description": "a scalar value between -1 and 1, representing a noise value for a given input pair.",
+              "complex_type": false
+            },
+            "name": "noise",
+            "location": {
+              "start": 53,
+              "insert": 53,
+              "offset": "\t",
+              "indent": 2,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 54,
+            "docLength": null
+          },
+          {
+            "id": "f8321e1c-3f24-b682-6f47-f9dccc96acec",
+            "ancestors": [
+              "7d804f46-8b5c-3bb8-e04f-9c915473fe91"
+            ],
+            "description": "Generates a noise value based on a 3D grid of samples, using a simplex-based algorithm to calculate the contribution from each corner of the grid and sum them up to get the final noise value. The output is scaled to stay within [-1,1].",
+            "params": [
+              {
+                "name": "xin",
+                "type_name": "double",
+                "description": "3D coordinate of the point where noise is being generated.",
+                "complex_type": false
+              },
+              {
+                "name": "yin",
+                "type_name": "double",
+                "description": "2D projection of the 3D noise value along the y-axis.",
+                "complex_type": false
+              },
+              {
+                "name": "zin",
+                "type_name": "double",
+                "description": "3D noise grid coordinate for which the noise value is being calculated.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "double",
+              "description": "a scaled noise value between -1 and 1, calculated using the Hashed Gradient Noise algorithm.",
+              "complex_type": false
+            },
+            "name": "noise",
+            "location": {
+              "start": 108,
+              "insert": 108,
+              "offset": "\t",
+              "indent": 2,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 81,
+            "docLength": null
+          },
+          {
+            "id": "6ec8f085-dbce-948d-b84b-30c2c2ccb56b",
+            "ancestors": [
+              "7d804f46-8b5c-3bb8-e04f-9c915473fe91"
+            ],
+            "description": "Calculates a noise value based on the positions and normals of five simplex corners, using a dot product to calculate the contribution from each corner and summing them up with a scaling factor.",
+            "params": [
+              {
+                "name": "x",
+                "type_name": "double",
+                "description": "4th corner point of the simplex in (x,y,z,w) coordinates, which is used to compute the contribution from that corner to the final result.",
+                "complex_type": false
+              },
+              {
+                "name": "y",
+                "type_name": "double",
+                "description": "2D coordinates of the point on the mesh surface, which are used to calculate the gradient contributions from each simplex corner and then summed to obtain the final normals.",
+                "complex_type": false
+              },
+              {
+                "name": "z",
+                "type_name": "double",
+                "description": "3D gradient vector at each of the five simplex corners, which is used to compute the contribution from each corner to the final hashed gradient value.",
+                "complex_type": false
+              },
+              {
+                "name": "w",
+                "type_name": "double",
+                "description": "4th coordinate of the simplex, which is used to calculate the contribution from the last corner of the simplex in the gradient calculation.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "double",
+              "description": "a float value between -1 and 1, representing the noise value at a given point in a 3D space.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n  public static void main(String[] args) {\n    double x = Math.random() * 2 - 1; // Generate random x value between -1 and 1\n    System.out.println(\"Noise at \" + x + \": \" + noise(x)); // Call the noise method with the generated x value and print out the result\n  }\n\n  private static double noise(double x) {\n    int i = (int)(Math.floor(x)) & 255; // Get integer part of x, then bitwise AND with 255\n    double y = x - Math.floor(x); // Get fractional part of x\n    double n0 = dot(grad4[i % 32], y, 1); // Calculate noise value at (x,y)\n    return 27 * n0; // Return the scaled noise value\n  }\n}\n",
+              "description": ""
+            },
+            "name": "noise",
+            "location": {
+              "start": 190,
+              "insert": 190,
+              "offset": "\t",
+              "indent": 2,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 119,
+            "docLength": null
+          }
+        ]
+      }
+    }
   }
 ]

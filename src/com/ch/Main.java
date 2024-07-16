@@ -12,10 +12,22 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * Is a game engine that creates a window, loads a texture, and renders a 3D scene
+ * using a Chunk object and a World object. The class also handles input, updates the
+ * position of the world, and renders the scene using a Shader object. The render
+ * method uses the Model class to draw the chunks in the world.
+ */
 public class Main {
 	
-	public static void main(String[] args) {
-		
+	/**
+	 * Initializes display and GL libraries, then enters an infinite loop for rendering
+	 * and user input processing before exiting with a successful result code of 0.
+	 * 
+	 * @param args program's command-line options and data, which are not used directly
+	 * in this function but may be accessed later.
+	 */
+	public static void main(String[] args) {	
 		initDisplay();
 		initGL();
 		loop();
@@ -30,6 +42,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * Sets up a display mode with a resolution of 1920x1080, creates a GL context with
+	 * forward compatibility enabled and VSync enabled, and prints the current GL version.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +57,10 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Initializes OpenSceneGraph and sets up a 3D rendering environment by setting up
+	 * camera, shader, texture, and vertices.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +103,11 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Continuously updates and renders a graphic display while monitoring and displaying
+	 * various system metrics, including frames per second, memory usage, and overall
+	 * system performance.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +130,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Updates the position of an object (w) based on input from a component (c) and a
+	 * time parameter (dt).
+	 * 
+	 * @param dt time step that passes during the update operation.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * Renders a 3D model using a shader and a camera view projection matrix. It enables
+	 * and disables attributess for the model, binds the shader, and draws the model using
+	 * the view projection matrix.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
