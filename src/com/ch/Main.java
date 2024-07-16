@@ -14,8 +14,7 @@ import com.ch.voxel.World;
 
 public class Main {
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) {	
 		initDisplay();
 		initGL();
 		loop();
