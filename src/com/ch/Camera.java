@@ -4,12 +4,10 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 /**
- * Is an abstract class with multiple fields and methods for manipulating camera
- * views. It has a matrix4f field for projection and viewProjectionMat4, which are
- * used to calculate the view matrix. The class also has a transform field for storing
- * transformations, and a getTransform method for accessing it. Additionally, there
- * are methods for calculating the view matrix and adjusting the camera to fit within
- * a specified viewport size.
+ * Is an abstract class that represents a camera in a 3D environment. It has various
+ * methods and fields related to camera calculations, transformations, and viewport
+ * adjustments. The class also includes an abstract method for calculating the
+ * projection matrix, which can be used to transform 3D objects into 2D space.
  */
 public abstract class Camera {
 
@@ -24,10 +22,11 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Returns the view projection matrix, calculated either from a pre-existing matrix
-	 * or recomputed if the transform has changed.
+	 * Retrieves the view projection matrix, which is used to transform 3D points from
+	 * world space to screen space. If the matrix has changed or is null, it calculates
+	 * and stores the view matrix locally.
 	 * 
-	 * @returns a `Matrix4f` object representing the view projection matrix.
+	 * @returns a Matrix4f object containing the view projection matrix.
 	 */
 	public Matrix4f getViewProjection() {
 
@@ -38,11 +37,10 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Calculates a view matrix that combines the camera's rotation and translation with
-	 * the perspective projection matrix to produce the final view matrix.
+	 * Calculates a view matrix for a camera, combining rotation and translation of the
+	 * camera with the projection matrix.
 	 * 
-	 * @returns a matrix representing the view transformation of a 3D scene from a camera's
-	 * perspective, taking into account both rotation and translation.
+	 * @returns a matrix representing the combined effects of camera rotation and translation.
 	 */
 	public Matrix4f calculateViewMatrix() {
 
@@ -54,12 +52,10 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Generates a matrix that represents the translation of a camera's position by a
-	 * negative value. The returned matrix has the form `translationX, translationY,
-	 * translationZ`, where `translationX`, `translationY`, and `translationZ` are the
-	 * component values of the camera's position.
+	 * Generates a matrix representing the translation of a camera positioned in 3D space.
 	 * 
-	 * @returns a 4x4 matrix representing the translation of the camera position.
+	 * @returns a 4x4 transformation matrix representing the camera's translation vector
+	 * in the world space.
 	 */
 	public Matrix4f getTranslationMatrix() {
 		Vector3f cameraPos = transform.getTransformedPos().mul(-1);
@@ -67,10 +63,9 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Returns the `transform` object, which is an instance of the `Transform` class,
-	 * representing a transformation matrix for 3D graphics.
+	 * Retrieves a reference to the `transform` object, which is used for geometric transformations.
 	 * 
-	 * @returns a reference to an object of type `Transform`.
+	 * @returns a reference to an instance of the `Transform` class.
 	 */
 	public Transform getTransform() {
 		return transform;
@@ -81,10 +76,11 @@ public abstract class Camera {
 	public abstract void adjustToViewport(int width, int height);
 
 	/**
-	 * Is an abstract class that serves as a base for other classes in the same package.
-	 * It has a protected abstract method called `getAsMatrix4()` that returns a Matrix4f
-	 * object, which represents a mathematical matrix used in the calculations of camera
-	 * movements and transformations.
+	 * Is an abstract class that serves as a base for other classes in the Camera package.
+	 * It has a method called getAsMatrix4() which returns a Matrix4f object, but no
+	 * implementation details are provided. The purpose of this class seems to be to
+	 * provide a common interface for various camera-related classes in the package,
+	 * allowing them to share a common structure and methods.
 	 */
 	protected abstract class CameraStruct {
 
