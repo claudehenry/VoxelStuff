@@ -26,6 +26,12 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Defines a class for managing textures in an OpenGL environment. The class provides
+ * methods for binding and unbinding textures, as well as loading textures from files.
+ * The loadTexture method takes a file path as an argument and returns the ID of the
+ * loaded texture.
+ */
 public class Texture {
 
 	private int id;
@@ -37,20 +43,44 @@ public class Texture {
 	}
 
 
+	/**
+	 * 0) binds an object to a specified method invocation site.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Sets the active texture slot to a specific index (0-31) and binds a texture to
+	 * that slot using the `glBindTexture()` method.
+	 * 
+	 * @param samplerSlot 0-based index of a texture slot that specifies which texture
+	 * to bind to the current texture unit.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Returns the instance variable `id`.
+	 * 
+	 * @returns the integer value of the `id` field.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a texture from a file, converts it to a GL texture and stores it in an integer
+	 * ID.
+	 * 
+	 * @param fileName name of the texture file to be loaded and read by the `loadTexture()`
+	 * method.
+	 * 
+	 * @returns an integer ID representing a loaded texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
