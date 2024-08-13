@@ -27,10 +27,10 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * Defines a class for managing textures in an OpenGL environment. The class provides
- * methods for binding and unbinding textures, as well as loading textures from files.
- * The loadTexture method takes a file path as an argument and returns the ID of the
- * loaded texture.
+ * Loads and manages textures for Open Graphics Library (OpenGL) applications. It
+ * provides methods to bind and unbind textures, as well as retrieve their IDs. The
+ * class also includes a loadTexture method that creates a texture from a given image
+ * file.
  */
 public class Texture {
 
@@ -44,18 +44,22 @@ public class Texture {
 
 
 	/**
-	 * 0) binds an object to a specified method invocation site.
+	 * Invokes another instance method called `bind` with a parameter value of 0. This
+	 * operation appears to be responsible for initializing or configuring an object or
+	 * resource, possibly by setting up connections or assignments. The specific purpose
+	 * and behavior depend on the implementation details.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * Sets the active texture slot to a specific index (0-31) and binds a texture to
-	 * that slot using the `glBindTexture()` method.
-	 * 
-	 * @param samplerSlot 0-based index of a texture slot that specifies which texture
-	 * to bind to the current texture unit.
+	 * Binds a texture to a specific sampler slot. It asserts that the given sampler slot
+	 * is within valid range, then sets the active texture and binds the specified texture
+	 * with ID `id`.
+	 *
+	 * @param samplerSlot 32 possible texture units in OpenGL and determines which texture
+	 * unit is bound to the specified sampler.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -64,22 +68,29 @@ public class Texture {
 	}
 
 	/**
-	 * Returns the instance variable `id`.
-	 * 
-	 * @returns the integer value of the `id` field.
+	 * Retrieves and returns an integer value representing a unique identifier. It does
+	 * not perform any calculations or modifications on the data, simply exposing the
+	 * existing `id` variable for external access. The returned value is directly obtained
+	 * from the `id` field without any processing.
+	 *
+	 * @returns an integer value representing a unique identifier.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * Loads a texture from a file, converts it to a GL texture and stores it in an integer
-	 * ID.
-	 * 
-	 * @param fileName name of the texture file to be loaded and read by the `loadTexture()`
-	 * method.
-	 * 
-	 * @returns an integer ID representing a loaded texture.
+	 * Loads a texture from a file and returns its ID. It converts the image data to a
+	 * buffer, creates an OpenGL texture object, sets its parameters, and uploads the
+	 * image data to it. The function also generates mipmaps for the texture.
+	 *
+	 * @param fileName name of the file to be loaded as a texture, which is then used to
+	 * read the image data and create a OpenGL texture object.
+	 *
+	 * @returns an integer identifier for a texture loaded from a specified file.
+	 *
+	 * An integer representing the unique ID of the generated texture in OpenGL. The ID
+	 * can be used to reference and manipulate the texture in subsequent OpenGL operations.
 	 */
 	private static int loadTexture(String fileName) {
 		try {

@@ -17,10 +17,9 @@ import org.lwjgl.opengl.GL20;
 import com.ch.math.Matrix4f;
 
 /**
- * Is designed to load and manage shaders for an OpenGL context. It provides functions
- * for binding a program, getting the location of uniform and uniform matrix functions,
- * and loading vertex and fragment shaders. The class also validates the program after
- * loading the shaders.
+ * Manages and loads OpenGL shader programs from files. It provides methods for
+ * binding, unifying values and matrices to shader uniforms, and loading shaders from
+ * vertex and fragment files.
  */
 public class Shader {
 	
@@ -31,35 +30,39 @@ public class Shader {
 	}
 	
 	/**
-	 * GlUseProgram(program) to associate a program object with the current GL context.
+	 * Binds a graphics program to the Graphics Library (GL) for usage by other functions.
+	 * It specifies which shader program should be used for rendering and animation tasks.
+	 * The function sets the current program to the provided program identifier (`program`).
 	 */
 	public void bind() {
 		GL20.glUseProgram(program);
 	}
 	
 	/**
-	 * Returns the value of the `program` field.
-	 * 
-	 * @returns an integer representing the value of the `program` field.
+	 * Retrieves and returns an integer value representing a program. This value is stored
+	 * within the current object instance, specifically within the `this.program` field.
+	 * The returned value is the exact same as the one stored internally.
+	 *
+	 * @returns an integer value representing a program.
 	 */
 	public int getProgram() {
 		return this.program;
 	}
 	
 	/**
-	 * Is a method that sets a uniform float value(s) for a given shader program location,
-	 * based on the length of the input array of float values.
-	 * 
-	 * @param name name of the uniform location for which the values are being set.
-	 * 
-	 * @param vals 0 or more floating-point values that will be passed to the corresponding
-	 * glUniform() method to set the uniform value of the same name as the function.
-	 * 
-	 * * Length: 1 to 4
-	 * * Content: A sequence of floating-point values
-	 * 
-	 * The length of `vals` determines the number of arguments passed to the corresponding
-	 * GL uniform function (GL20.glUniform1f, GL20.glUniform2f, GL20.glUniform3f, or GL20.glUniform4f).
+	 * Sets uniform floating-point values for a given variable name, depending on the
+	 * number of values provided. It uses the OpenGL API to set the values: one value for
+	 * `GLUniform1f`, two values for `GLUniform2f`, three values for `GLUniform3f`, and
+	 * four values for `GLUniform4f`.
+	 *
+	 * @param name name of the uniform variable to be updated, and is used as an argument
+	 * for the OpenGL functions.
+	 *
+	 * @param vals 1-4 floating-point values that are passed to the function, depending
+	 * on its length, which determines the type of uniform variable that is set using
+	 * OpenGL API calls.
+	 *
+	 * Varies in length, taking values from 1 to 4.
 	 */
 	public void uniformf(String name, float ...vals) {
 		switch (vals.length) {
@@ -79,24 +82,30 @@ public class Shader {
 	}
 	
 	/**
-	 * Unloads a 4x4 uniform matrix from an OpenGL context to a flipped buffer.
-	 * 
-	 * @param name 3D uniform matrix that is to be loaded and applied as a transformation
-	 * to the graphics object.
-	 * 
-	 * @param mat 4x4 matrix to be uniformed.
+	 * Sets a uniform matrix for an OpenGL program. It specifies the location of the
+	 * uniform matrix by name and updates its value with the given `Matrix4f`. The matrix
+	 * is passed as a linear data buffer to prevent copying.
+	 *
+	 * @param name location of the uniform matrix that is being set with the given
+	 * `Matrix4f` value.
+	 *
+	 * @param mat 4x4 matrix that is to be set as a uniform variable with the specified
+	 * name in the OpenGL program.
 	 */
 	public void unifromMat4(String name, Matrix4f mat) {
 		GL20.glUniformMatrix4(getLoaction(name), false, Util.createFlippedBuffer(mat.getLinearData()));
 	}
 	
 	/**
-	 * Is a part of the Java API for OpenGL, and it returns the uniform location of a
-	 * named uniform in an OpenGL program.
-	 * 
-	 * @param name name of the uniform to locate.
-	 * 
-	 * @returns an integer representing the location of a uniform in a program.
+	 * Retrieves an unsigned integer representing the location of a uniform variable with
+	 * the specified name from a shader program. The result is returned as an integer
+	 * value. This location is used to set the uniform variable's value programmatically
+	 * during rendering.
+	 *
+	 * @param name uniform variable or shader storage block to be located within the
+	 * OpenGL program.
+	 *
+	 * @returns an integer representing a uniform location in OpenGL.
 	 */
 	public int getLoaction(String name) {
 		return GL20.glGetUniformLocation(program, name);
@@ -105,13 +114,13 @@ public class Shader {
 	private static final String VERT = ".vert", FRAG = ".frag";
 	
 	/**
-	 * Loads a shader program from a file and creates a new shader object that represents
-	 * it.
-	 * 
-	 * @param filename name of a shader file to be loaded.
-	 * 
-	 * @returns a new instance of `Shader` object that represents a shader program created
-	 * by combining a vertex shader and a fragment shader.
+	 * Loads a shader by creating a new OpenGL program, adding vertex and fragment shaders
+	 * to it, validating the program, and returning a new instance of `Shader`.
+	 *
+	 * @param filename name of the shader file to be loaded from the file system and used
+	 * as the source for vertex and fragment shaders.
+	 *
+	 * @returns an instance of the `Shader` class.
 	 */
 	public static Shader loadShader(String filename) {
 		int program = GL20.glCreateProgram();
@@ -122,16 +131,17 @@ public class Shader {
 	}
 	
 	/**
-	 * Loads a shader program into memory and attaches it to a program handle.
-	 * 
-	 * @param target type of shader to be created, which can be either a fragment shader
-	 * or a vertex shader.
-	 * 
-	 * @param src 3D graphics shader source code that will be compiled and linked to
-	 * create the final shader program.
-	 * 
-	 * @param program 3D graphics program that will be used to link the loaded shader
-	 * with, allowing for the creation of a fully functional graphics program.
+	 * Creates a shader object with a specified target type and sets its source code. It
+	 * then compiles the shader, checks for compilation errors, and attaches it to an
+	 * existing program if successful. If errors occur during compilation, it prints an
+	 * error log and exits the program.
+	 *
+	 * @param target type of shader to be created, such as GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+	 *
+	 * @param src source code of the shader, which is used to create and compile the
+	 * shader object using GL20.glShaderSource().
+	 *
+	 * @param program OpenGL program object to which the shader is attached and linked.
 	 */
 	private static void loadShader(int target, String src, int program) {
 		int shader = GL20.glCreateShader(target);
@@ -148,12 +158,12 @@ public class Shader {
 	}
 	
 	/**
-	 * Validates a program by checking its link and validation statuses, printing any
-	 * error messages if they exist, and exiting the program with an error code if there
-	 * are issues.
-	 * 
-	 * @param program 3D program to be validated and linked, and is passed through the
-	 * `glLinkProgram()` and `glValidateProgram()` functions for validation and linking.
+	 * Validates and links a OpenGL program. It attempts to link the program and checks
+	 * if it is successful. If not, it prints the error message and exits the application.
+	 * Then, it validates the program and checks if it is successful again.
+	 *
+	 * @param program program object that is being linked and validated for use with
+	 * OpenGL operations.
 	 */
 	private static void validateProgram(int program) {
 		GL20.glLinkProgram(program);
@@ -172,11 +182,14 @@ public class Shader {
 	}
 	
 	/**
-	 * Reads the contents of a given text file and returns its raw string value.
-	 * 
-	 * @param file file to read and return its text content.
-	 * 
-	 * @returns a string containing the contents of the specified file.
+	 * Reads a file and returns its content as a string. It uses a FileInputStream to
+	 * read the file, character by character, and appends each character to a string until
+	 * the end of the file is reached. If an I/O error occurs, it prints the exception
+	 * and exits the program.
+	 *
+	 * @param file file to be read, and its path is used as an argument for creating a `FileInputStream`.
+	 *
+	 * @returns a string representation of the content read from the specified file.
 	 */
 	private static String getText(String file) {
 		String text = "";
