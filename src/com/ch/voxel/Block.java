@@ -1,12 +1,13 @@
 package com.ch.voxel;
 
 /**
- * Defines a basic block structure with properties for spatial coordinates and boolean
- * flags to represent various directions in three-dimensional space.
+ * Represents a 3D block with its position coordinates (x, y, z) and six boolean flags
+ * indicating various directional faces (front, back, top, bottom, left, right).
  *
- * - z (int): is an integer representing a three-dimensional coordinate in space.
+ * - z (int): is an integer attribute of the Block class.
  *
- * - rt (boolean): is a boolean variable indicating the right side of the block.
+ * - rt (boolean): represents a boolean indicating whether the Block has its right
+ * side facing.
  */
 public class Block {
 	
