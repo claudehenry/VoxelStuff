@@ -13,17 +13,20 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * Initializes and sets up an OpenGL display, loads various assets such as shaders,
- * textures, and models, and enters a rendering loop that updates and renders the
- * scene. The class also handles input events and manages memory usage.
+ * Initializes an OpenGL display and loads a shader, texture, camera, and world model.
+ * It then enters a rendering loop where it updates and renders the world based on
+ * user input and timing information. The loop continues until the user closes the
+ * window or presses the escape key.
  */
 public class Main {
 	
 	/**
-	 * Initializes a display and GL (Graphics Library), then enters an infinite loop for
-	 * rendering graphics, and finally exits with status code 0.
+	 * Initializes display settings using `initDisplay`, sets up OpenGL context with
+	 * `initGL`, runs a game loop with `loop`, and terminates the program with an exit
+	 * code of 0.
 	 *
-	 * @param args array of command-line arguments passed to the Java program.
+	 * @param args array of strings that is passed to the program when it is launched
+	 * from the command line.
 	 */
 	public static void main(String[] args) {
 		
@@ -42,10 +45,9 @@ public class Main {
 	private static World w;
 	
 	/**
-	 * Sets the display mode to a resolution of 1920x1080, creates a display context with
-	 * forward-compatible and profile-core support, and enables vertical sync. It also
-	 * prints the OpenGL version. If any exceptions occur during this process, it catches
-	 * and prints them.
+	 * Initializes display settings and creates a display mode with a resolution of
+	 * 1920x1080. It enables vertical sync and retrieves the OpenGL version. If any
+	 * LWJGLException occurs, it prints the error message to the console.
 	 */
 	private static void initDisplay() {
 		try {
@@ -59,9 +61,9 @@ public class Main {
 	}
 	
 	/**
-	 * Initializes OpenGL settings by setting clear color and enabling culling face and
-	 * depth testing. It creates a camera, loads shaders and textures, defines vertices
-	 * and indices for rendering, and initializes a world object with no chunks.
+	 * Initializes OpenGL settings, enables culling and depth testing, loads shaders and
+	 * textures, and creates a camera, world, and other game objects. It sets up the game
+	 * environment and prepares it for rendering.
 	 */
 	private static void initGL() {
 		
@@ -106,9 +108,9 @@ public class Main {
 	}
 	
 	/**
-	 * Initializes a timer and enters an infinite loop, continuously updating and rendering
-	 * the display while checking for window close request or escape key press. It displays
-	 * the frame rate, memory usage, and updates the scene.
+	 * Initializes a timer, then enters an infinite loop that updates and renders graphics
+	 * while checking for escape key press or close request. It displays frame rate,
+	 * memory usage, and title on the display window.
 	 */
 	private static void loop() {
 		
@@ -133,11 +135,12 @@ public class Main {
 	}
 	
 	/**
-	 * Processes input and updates an object's position based on its transformation data.
-	 * It calls `c.processInput` to handle user input, and then uses the resulting position
-	 * data to update the object's position through a call to `w.updatePos`.
+	 * Updates an object's state by processing user input and moving it based on a delta
+	 * time value, position, and transform information. It utilizes two methods:
+	 * `processInput` to handle user input and `updatePos` to update the object's position.
 	 *
-	 * @param dt time delta, used to update the game world and its components accordingly.
+	 * @param dt delta time, serving as a scaling factor for processing game logic and
+	 * updates within the function.
 	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -145,10 +148,10 @@ public class Main {
 	}
 
 	/**
-	 * Binds a shader and sets up rendering operations. It renders multiple models with
-	 * different colors and MVP transformations using uniforms, and finally calls another
-	 * render method on a separate object (`w.render`). The commented-out code suggests
-	 * that the functionality was simplified for demonstration purposes.
+	 * Binds a shader and then calls another method `w.render` to perform rendering
+	 * operations. It also sets uniforms for color and MVP matrices, but this is commented
+	 * out. The rendering process involves drawing multiple models with different colors
+	 * and transformations.
 	 */
 	private static void render() {
 		
@@ -172,12 +175,12 @@ public class Main {
 	}
 	
 	/**
-	 * Terminates the Java Virtual Machine with a specified exit status. It takes an
-	 * integer `status` as input, which is used to indicate the cause of the termination.
-	 * The function calls the `System.exit` method to initiate the termination process.
+	 * Terminates the Java Virtual Machine (JVM) with a specified exit status. The `status`
+	 * parameter determines the exit code, which is returned to the operating system.
+	 * Upon execution, the JVM will terminate and release all system resources.
 	 *
 	 * @param status 16-bit integer value that is passed to the operating system as the
-	 * program's termination status.
+	 * exit status of the Java program.
 	 */
 	private static void exit(int status) {
 		System.exit(status);
