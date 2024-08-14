@@ -13,19 +13,18 @@ import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
 /**
- * Has various methods for initializing and updating display and GPU state, rendering
- * 3D graphics, and exiting the application. It also includes a Model class, a Shader
- * class, a Texture class, and a World class, which are likely used for rendering 3D
- * graphics.
+ * Initializes and sets up an OpenGL display with a camera, shader, texture, and world
+ * object, then enters a loop where it updates and renders the scene. The loop runs
+ * until the user closes the window or presses the escape key.
  */
 public class Main {
 	
 	/**
-	 * Initializes display and GL resources, enters an endless loop to render graphics,
-	 * and then exits with a success code (0).
-	 * 
-	 * @param args 1 or more command-line arguments passed to the `main` method when the
-	 * program is launched, which are then ignored and not used in the program's execution.
+	 * Initializes display and OpenGL, then enters a loop. After completing its iterations,
+	 * it terminates the program with exit code 0. This sequence represents the typical
+	 * startup and shutdown process for a graphical application.
+	 *
+	 * @param args array of command-line arguments passed to the program.
 	 */
 	public static void main(String[] args) {
 		
@@ -44,8 +43,10 @@ public class Main {
 	private static World w;
 	
 	/**
-	 * Sets up a display mode, creates a Display object, enables vertical syncing, and
-	 * prints the OpenGL version string.
+	 * Sets up a display mode with resolution 1920x1080, creates a display using PixelFormat
+	 * and ContextAttribs, enables vertical sync, and prints the OpenGL version string
+	 * to the console. It handles exceptions by printing the error message if an
+	 * LWJGLException occurs.
 	 */
 	private static void initDisplay() {
 		try {
@@ -59,8 +60,8 @@ public class Main {
 	}
 	
 	/**
-	 * Initializes a 3D graphics environment using OpenGL ES 2.0. It sets up a camera,
-	 * loads a shader, creates a texture, and defines a cube-shaped chunk for rendering.
+	 * Initializes OpenGL settings, sets up camera and shader, loads texture, defines
+	 * vertices and indices for a 3D model, and creates a world object.
 	 */
 	private static void initGL() {
 		
@@ -105,9 +106,9 @@ public class Main {
 	}
 	
 	/**
-	 * Updates and renders a graphical user interface using the Java 2D API, displaying
-	 * the frame rate and memory usage in the title bar. It loops until the user requests
-	 * closure or the escape key is pressed.
+	 * Initializes a timer and enters a continuous loop until the display is closed or
+	 * the escape key is pressed. It updates the timer, clears the graphics buffer, renders
+	 * the scene, and updates the display title with various statistics at each iteration.
 	 */
 	private static void loop() {
 		
@@ -132,10 +133,12 @@ public class Main {
 	}
 	
 	/**
-	 * Updates the position of an object (`w`) based on input from a controller (`c`) and
-	 * its current transform state, using a fixed time step `dt`.
-	 * 
-	 * @param dt time step passed to the `processInput()` method for processing.
+	 * Processes input data, updates an object's position based on its transform coordinates,
+	 * and applies these changes to a specified entity (w). This processing is performed
+	 * for a given time interval (dt) with adjustable parameters (5, .3f).
+	 *
+	 * @param dt time elapsed since the last update, used to process input and update
+	 * positions accordingly.
 	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
@@ -143,9 +146,9 @@ public class Main {
 	}
 
 	/**
-	 * Renders a 3D scene using the `GLSL` shader language. It sets up the rendering
-	 * context, binds the modelview and projection matrices, and draws the 3D objects in
-	 * the scene.
+	 * Binds a shader, sets uniform values for color and MVP matrices, and renders a
+	 * series of models with different colors. It also calls another function `w.render`
+	 * to render additional content. Finally, it disables certain attributes.
 	 */
 	private static void render() {
 		
@@ -169,11 +172,14 @@ public class Main {
 	}
 	
 	/**
-	 * Terminates the Java process with the specified status code, which can be a value
-	 * between 0 and 2147483647.
-	 * 
-	 * @param status exit code for the program, which is passed to the `System.exit()`
-	 * method to terminate the program.
+	 * Terminates the Java virtual machine with a specified status code. It uses the
+	 * `System.exit` method to ensure that any pending native methods are completed and
+	 * the system resources are released. The termination is immediate, without calling
+	 * finalize() methods of any objects.
+	 *
+	 * @param status 16-bit integer value that is passed to the operating system as the
+	 * process's termination status, indicating whether the program terminated normally
+	 * or abnormally.
 	 */
 	private static void exit(int status) {
 		System.exit(status);
