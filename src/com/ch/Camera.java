@@ -4,10 +4,11 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 /**
- * Is an abstract class that encapsulates camera-related functionality. It manages
- * projection and view matrices as well as transformation data, enabling the creation
- * of customizable cameras for various applications. The class also defines methods
- * to calculate matrices and adjust camera settings based on viewport dimensions.
+ * Is an abstract class that represents a camera in a 3D graphics system. It maintains
+ * internal state such as a projection matrix and a transformation matrix, and provides
+ * methods to calculate the view-projection matrix based on this state. The class
+ * also defines an abstract method for calculating the projection matrix and adjusting
+ * the camera to fit within a viewport.
  */
 public abstract class Camera {
 
@@ -22,9 +23,9 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Returns a matrix combining the view and projection transformations. It calculates
-	 * this combination only when necessary, i.e., if the transformation has changed or
-	 * the cached matrix is null. Otherwise, it reuses the previously calculated result.
+	 * Calculates a matrix representing the combined view and projection transformations
+	 * if they have changed or the previous result is null. It then returns this calculated
+	 * matrix, allowing for efficient reuse when no changes occur.
 	 *
 	 * @returns a Matrix4f object.
 	 */
@@ -37,11 +38,11 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Transforms a 3D scene based on the camera's position and rotation. It combines the
-	 * camera's translation matrix with its rotation matrix, then multiplies the result
-	 * by a projection matrix to produce the final view matrix.
+	 * Calculates a view matrix for rendering purposes. It multiplies the camera's rotation,
+	 * represented as a conjugated rotation matrix, with its translation, and then combines
+	 * the result with a projection matrix to produce the final view-projection matrix.
 	 *
-	 * @returns a Matrix4f object representing the view matrix.
+	 * @returns a view-projection matrix, which combines rotation and translation.
 	 */
 	public Matrix4f calculateViewMatrix() {
 
@@ -53,11 +54,10 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Calculates a translation matrix based on the negative transformed position of a
-	 * camera. It multiplies the original transformation by -1 to invert its effect, then
-	 * initializes a new Matrix4f with the resulting x, y, and z coordinates.
+	 * Multiplies a given camera position by -1 and then initializes a translation matrix
+	 * with the resulting x, y, z coordinates to create a transformation for object rendering.
 	 *
-	 * @returns a 4x4 matrix representing a translation transformation.
+	 * @returns a matrix representing translation to the camera position.
 	 */
 	public Matrix4f getTranslationMatrix() {
 		Vector3f cameraPos = transform.getTransformedPos().mul(-1);
@@ -65,12 +65,11 @@ public abstract class Camera {
 	}
 
 	/**
-	 * Retrieves a transformation object, represented by the variable `transform`, and
-	 * returns it to the caller. This method provides read-only access to the stored
-	 * transformation information. The returned object allows for inspection or further
-	 * processing of the transformation data.
+	 * Returns a reference to an object of type `Transform`. This suggests that it provides
+	 * access to the current state or configuration of some transformation, allowing
+	 * external code to read and potentially use its properties.
 	 *
-	 * @returns an instance of the `Transform` class.
+	 * @returns an instance of class `Transform`.
 	 */
 	public Transform getTransform() {
 		return transform;
@@ -81,9 +80,10 @@ public abstract class Camera {
 	public abstract void adjustToViewport(int width, int height);
 
 	/**
-	 * Is an abstract class that defines a template for objects containing camera-specific
-	 * data. It provides a method to retrieve this data as a Matrix4f object. This structure
-	 * is used in the calculation of projection matrices and other camera-related operations.
+	 * Is an abstract class that provides a common interface for camera-related data
+	 * structures to implement. It defines a single abstract method getAsMatrix4() which
+	 * returns a Matrix4f object. This allows for polymorphic usage of different camera
+	 * data types.
 	 */
 	protected abstract class CameraStruct {
 
