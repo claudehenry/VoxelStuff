@@ -27,10 +27,11 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * Loads and manages textures for Open Graphics Library (OpenGL) applications. It
- * provides methods to bind and unbind textures, as well as retrieve their IDs. The
- * class also includes a loadTexture method that creates a texture from a given image
- * file.
+ * Represents a texture in OpenGL and provides methods for loading, binding, and
+ * managing textures from image files. It allows for specifying the sampler slot to
+ * bind the texture to, and returns the ID of the loaded texture. The loadTexture
+ * method loads an image file into a ByteBuffer and configures the texture parameters
+ * accordingly.
  */
 public class Texture {
 
@@ -44,22 +45,22 @@ public class Texture {
 
 
 	/**
-	 * Invokes another instance method called `bind` with a parameter value of 0. This
-	 * operation appears to be responsible for initializing or configuring an object or
-	 * resource, possibly by setting up connections or assignments. The specific purpose
-	 * and behavior depend on the implementation details.
+	 * Calls another method named `bind` with an integer argument set to 0. This implies
+	 * that it is a recursive call, where the function invokes itself with a specific
+	 * parameter. The purpose of this function remains unclear without further context
+	 * or information about its implementation.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * Binds a texture to a specific sampler slot. It asserts that the given sampler slot
-	 * is within valid range, then sets the active texture and binds the specified texture
-	 * with ID `id`.
+	 * Activates a specific texture unit and binds a given 2D texture to it. The active
+	 * texture unit is determined by the provided sampler slot, which must be within the
+	 * range [0, 31].
 	 *
-	 * @param samplerSlot 32 possible texture units in OpenGL and determines which texture
-	 * unit is bound to the specified sampler.
+	 * @param samplerSlot 1-based index of the texture unit to be used for binding the
+	 * specified texture.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -68,29 +69,26 @@ public class Texture {
 	}
 
 	/**
-	 * Retrieves and returns an integer value representing a unique identifier. It does
-	 * not perform any calculations or modifications on the data, simply exposing the
-	 * existing `id` variable for external access. The returned value is directly obtained
-	 * from the `id` field without any processing.
+	 * Returns an integer value representing an ID. It retrieves the stored `id` value
+	 * and returns it without modification or calculation. This read-only function simply
+	 * exposes the existing ID for access by other parts of the program.
 	 *
-	 * @returns an integer value representing a unique identifier.
+	 * @returns an integer value representing the ID.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * Loads a texture from a file and returns its ID. It converts the image data to a
-	 * buffer, creates an OpenGL texture object, sets its parameters, and uploads the
-	 * image data to it. The function also generates mipmaps for the texture.
+	 * Loads a texture from a file, converts it to RGBA format, and generates an OpenGL
+	 * texture object with specified parameters. It returns the ID of the generated texture.
 	 *
-	 * @param fileName name of the file to be loaded as a texture, which is then used to
-	 * read the image data and create a OpenGL texture object.
+	 * @param fileName name of the image file that is being loaded and used to create a
+	 * texture.
 	 *
-	 * @returns an integer identifier for a texture loaded from a specified file.
+	 * @returns an ID of a generated OpenGL texture.
 	 *
-	 * An integer representing the unique ID of the generated texture in OpenGL. The ID
-	 * can be used to reference and manipulate the texture in subsequent OpenGL operations.
+	 * The output is an integer ID representing the generated texture on the graphics card.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
