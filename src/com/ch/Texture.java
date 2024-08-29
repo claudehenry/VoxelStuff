@@ -26,6 +26,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Loads a given image file and generates an OpenGL texture from it. It provides
+ * methods to bind the texture to a specific sampler slot for rendering. The class
+ * also handles error handling during the loading process.
+ */
 public class Texture {
 
 	private int id;
@@ -37,20 +42,55 @@ public class Texture {
 	}
 
 
+	/**
+	 * Invokes another overloaded version named `bind(int)`, passing an integer argument
+	 * with a value of 0. This implies that the `bind(int)` method is responsible for
+	 * performing some binding operation, and the `bind()` function simply delegates this
+	 * task to it with a default parameter.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Binds a texture to a specific sampler slot using OpenGL commands. It activates the
+	 * specified texture and binds it to the target texture ID. The function also ensures
+	 * that the sampler slot is within the valid range of 0 to 31.
+	 *
+	 * @param samplerSlot 1-based index of the sampler slot to bind the texture to, and
+	 * it is used to determine the active texture unit for binding the texture.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Retrieves the value of an integer variable named `id`. The returned value is the
+	 * current state of the `id` variable, which is not modified within the function
+	 * itself. This method simply returns the existing value without performing any
+	 * calculations or operations.
+	 *
+	 * @returns an integer value representing the identifier stored in the `id` variable.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a specified image file into a texture buffer and returns its ID. It reads
+	 * the image, converts it to a ByteBuffer, binds the texture, sets parameters for
+	 * filtering and wrapping, uploads the data to OpenGL, and generates mipmaps.
+	 *
+	 * @param fileName name of the file to be loaded as a texture, which is then used to
+	 * read the image and generate a corresponding OpenGL texture object.
+	 *
+	 * @returns an integer identifier of a loaded texture.
+	 *
+	 * The output is an integer value representing the ID of the generated texture in
+	 * OpenGL. The ID can be used to bind and manipulate the texture later in the program.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));

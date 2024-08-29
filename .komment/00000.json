@@ -1,0 +1,1623 @@
+[
+  {
+    "name": "Camera.java",
+    "path": "src/com/ch/Camera.java",
+    "content": {
+      "structured": {
+        "description": "an abstract camera class that handles 3D transformations and projections. It uses Matrix4f from com.ch.math package to perform matrix operations. The Camera class maintains a transformation (transform) and calculates view projection matrices based on this transformation.",
+        "diagram": {
+          "gviz": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"]\n    \n    subgraph cluster_main {\n        // style=filled\n        color=\"#00000000\"\n        Camera [] [fontsize=\"20pt\",style=filled,color=\"#26de81\",shape=square, fontname=\"Courier New\"]\n        label = \"\"\n    }\n    World []\n    Vector3f []\n    CameraStruct []\n    Matrix4f []\n    Transform []\n    Camera -> Vector3f [style=\"dashed\"]\n    Camera -> Matrix4f [style=\"dashed\"]\n    Camera -> Transform [penwidth=1]\n    World -> Camera [style=\"dashed\"]\n    Camera -> World [penwidth=1]\n    CameraStruct -> Camera [penwidth=1]\n    Matrix4f -> Camera [dir=\"both\", penwidth=6]\n}\n",
+          "d2": "<?xml version=\"1.0\" encoding=\"utf-8\"?><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" d2Version=\"v0.6.5\" preserveAspectRatio=\"xMinYMin meet\" viewBox=\"0 0 1053 800\"><svg id=\"d2-svg\" class=\"d2-3616583411\" width=\"1053\" height=\"800\" viewBox=\"11 11 1053 800\"><rect x=\"11.000000\" y=\"11.000000\" width=\"1053.000000\" height=\"800.000000\" rx=\"0.000000\" fill=\"#151719\" stroke-width=\"0\" /><style type=\"text/css\"><![CDATA[\n.d2-3616583411 .text {\n\tfont-family: \"d2-3616583411-font-regular\";\n}\n@font-face {\n\tfont-family: d2-3616583411-font-regular;\n\tsrc: url(\"data:application/font-woff;base64,d09GRgABAAAAAA1EAAoAAAAAFFQAAguFAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAAA9AAAAGAAAABgXd/Vo2NtYXAAAAFUAAAAjwAAALIC8gPVZ2x5ZgAAAeQAAAbtAAAJND8DlVVoZWFkAAAI1AAAADYAAAA2G4Ue32hoZWEAAAkMAAAAJAAAACQKhAXfaG10eAAACTAAAAB0AAAAdDZ5BV9sb2NhAAAJpAAAADwAAAA8Izolom1heHAAAAngAAAAIAAAACAANQD2bmFtZQAACgAAAAMjAAAIFAbDVU1wb3N0AAANJAAAAB0AAAAg/9EAMgADAgkBkAAFAAACigJYAAAASwKKAlgAAAFeADIBIwAAAgsFAwMEAwICBGAAAvcAAAADAAAAAAAAAABBREJPAEAAIP//Au7/BgAAA9gBESAAAZ8AAAAAAeYClAAAACAAA3icbMw/TsIAHEDhr7Zq1ar1f/UaegNnJ43MDQmBhIEwEI4DBLrCwspxuMaP0Jm3fslDIpWgkGlQKaVyX779+NNR6xkYmZhG4LOVX/9qXX1D46PEPnaxjU2so4lVLGMR85i179O9+5A4k8qcu3Apd+XajcKtO/dKDx49efbi1ZuKAwAAAP//AQAA//8WdiC1AHicbJVvaBv3Gcef308XXRyd7Jyl00my/t2dfWf9s2zdP1lSpFiWUtuxLecUN3USO0vixEnclcTbEgJZykhHw8qYoSkLpHSl65tBoRmFsFHYi8I671/ZyrZusBfdXphAC1uFB2ObT+NOsue0e3V683ue5/t9Ps9XsA8WALCK74EDuqAHeoEBkGmOHuAkSSB1WdcF1qFLiCYX0J/NdYQmFULTiJHKJ5Wbzz+PnrmN720/m39hZeWnSzdumN/efGxm0QePAYHS2sJ9+FUIA+zjRVFVNE3O+lhSFAXe6WS8Pp+c1XTW6USG8Y2j0y80iqdD6WAlUVqUs6dKmanokHSOOnZ/9cp9YySmhfix64ZxszLIK+ksACA4CYC/jtet+jIte3w+VtY03SPTAq1oukA6BIck+HwMfXL5NsVSBMVQty7M7ncQyi39lkI4SLxuvsHXeL7Go6Xtq+hyajX5ivkWOv5KcjVlftfukWhtob/hVyFta5B0e2ZVEUVJGsJPKrIEsWwEM16nEx2sXU9mhTPy2ER4JLoUPRRXlwqFZSEdmRzSx7lscFE81K8tU2oqP5AuDPODoe64O1EZztbT6X4tzCmpaDzoGjyYHhtR5rOAIASA/oPXgbS0CirHCPRf30cfv4+njhzZfgT2rACAHXgd3ACyY48fjg8/XLjc2+chekP05fnf4HXztfyFfP5CHp3bvgoIWAD8L7wO3Ofe7akgOERREpxO0vHGS0/XurxdhMvvOjV9ivJTRFfvgdrc3eXzXT37CbJ3/1m8bj5Qr6jqqoIumA+U1fav7avoJXFSFCdF82uALTbQD1ETgtAPwPIWHLpi20hKtqkMLVgNpaymqzYs7x069p0HdHIwMRWO8efzC3NV0sEf8wkl4ebZLDU5NjdPR3NCzDvqi3/5lPmHfChR4aMv9hQz8QFAMNTaQm+jpuXj/2dxB8Xew5eKY6ul4VogwWTCqZrUGOfzvn5ujiquzRlrRZ7VPP7MfK6xEvbqYQ4AQ6a1hf6EN8ADsR0tdnFJlXdE6Opuo3+eeq5wVk+UYkSjSjpC04HDxehoRCqLR6hv3qx/pRQJNt7dzo2G4rVxM8RmGrkT5wHb8/8CNcEP0ScUMF4nye0ekoNTrDaIHbtSKi/rixcQNn+078QRodAXjtZ/iYjyqHyMOrRWn1sr3brkDnTNnGZozRtB4tRM3WYoAoDK+HftDBBUXVU6Pgk8w8iMQH+pUqlNsomDvX2h6soK+n5p38zUiS6yTC3NjJuLdg0DAH2EN8Br3yVD7uyTtocjacNwCDPZmaeM1PBAYQBvvLfMZc4umr9C8WpJHDBfh1YLagDwDn6ERegDACeEbrUZN1pb8Ee8AT1tp2mZ3l3dD4biRncXQZKu/T5qVMUXt+95aIRKBNGeCX+GmjbjtGxhbcl6YjJy92tUSUdsOpkr94izqaOTRmpIqxqpjFZFm0eEzEgqruyMe9R8vfPZ0Y2aHd2dHnt1V0mHMLsr3C72hO7Onv+OmtBj6d6zZ2vR1jGoSidqUE9hpVxeKRQvlssXi+WZmXJpdrbDaHHNmFsrVlcaxy9dOt5YseoaLRn9GzU7jP5vOq/TKfCixDKendok4/NZk3L15NK5wpkcP87jG8V6oRYt93OlX+N3cqHBF68Z10uR4PybyLlycu48H2uFWNjd/RJqAr3Hg86VtQ0ITMTD7EHK2xMdD6DNZ4a0AxMEkS2ZG+33odYWuoOakLD3uzdv7bj9XNq2w/a3ypIQj1WTw8Oc3MdXEgv19GxoMKDFhpKR4T6hmo7XKSmkB7h0NMCzB9ycGi/UY6zi8SdCbJhxuTl9SKoM2v39rS1Uw89ZmWjzJai6Ltvg73L2yeyhiekDtTt3uIQ7Qh30ZqiTE8hd2nf37rjZTI90ESXSZdc62tpCH6BNi4cnWKU7sfDxzEQjOSwWeMsXfpo6u4gU86NqSUqiBTM4PTgMCCgA9DO0+cVMf/ft+dMu1kW42AOnj72FNs1P+ycEYaIfec0gIOgGQA/RJgQAZF2S2c5DXSZZQepkOdn9vZcXxlx+N+HyuQpPv/zawlPuYDfh9lMV8/GqJ+H1Jjyrn/3jmi/FMEn2mq0p2NpCP8Hf+uJ+BDWr7RAk7UYT0wb30+mLsUR4Npefkhamq3W+IA+Oh1MDJ3ONZw8r+bncGUoXtMjQYVUcjZVjGpfR+sOKkJ6fyU95CXejkjNSgC2m0O/xbeiyHNVl6y/DkuFRORVZQSMwlzYIRFDBbtn8C6JPnzjR/HFwIsCmWFN5qKH75lcrDzuMwptoExw2o7RhoE3Ls9bP8RTo+BG4AGg7xdsi/NGo3x+N4qlwwB+J+ANh+C8AAAD//wEAAP//RWDmxgAAAAABAAAAAguFWOIShV8PPPUAAwPoAAAAANhdoKEAAAAA3WYvNv46/tsIbwPIAAAAAwACAAAAAAAAAAEAAAPY/u8AAAiY/jr+OghvAAEAAAAAAAAAAAAAAAAAAAAdAo0AWQI7ADQC1wBaAhYAKgIYABwCAwAAAxIAFwH4ADQByAAuAisALwHwAC4BJAAeAiAAUgD2AEUA/wBSAz0AUgIjAFICHgAuAisAUgFbAFIBowAcAVIAGAIgAEsB0wAMAb4ADgHxABoB8QARAPYAUgAA/8kAAAAsAFwAjgDSAOQBAAE6AXIBoAHSAgYCKAJKAlYCcgKkAsYC8gMmA0YDhgOsA84D6gQWBFQEeASEBJoAAQAAAB0AjAAMAGYABwABAAAAAAAAAAAAAAAAAAQAA3icnJTdThtXFIU/B9ttVDUXFYrIDTqXbZWM3QiiBK5MCYpVhFOP0x+pqjR4xj9iPDPyDFCqPkCv+xZ9i1z1OfoQVa+rs7wNNqoUgRCwzpy991lnr7UPsMm/bFCrPwT+av5guMZ2c8/wAx41nxre4Ljxt+H6SkyDuPGb4SZfNvqGP+J9/Q/DH7NT/9nwQ7bqR4Y/4Xl90/CnG45/DD9ih/cLXIOX/G64xhaF4Qds8pPhDR5jNWt1HtM23OAztg032QYGTKlImZIxxjFiyphz5iSUhCTMmTIiIcbRpUNKpa8ZkZBj/L9fI0Iq5kSqOKHCkRKSElEysYq/KivnrU4caTW3vQ4VEyJOlXFGRIYjZ0xORsKZ6lRUFOzRokXJUHwLKkoCSqakBOTMGdOixxHHDJgwpcRxpEqeWUjOiIpLIp3vLMJ3ZkhCRmmszsmIxdOJX6LsLsc4ehSKXa18vFbhKY7vlO255Yr9ikC/boXZ+rlLNhEX6meqrqTauZSCE+36czt8K1yxh7tXf9aZfLhHsf5XqnzKufSPpVQmJhnObdEhlINC9wTHgdZdQnXke7oMeEOPdwy07tCnT4cTBnR5rdwefRxf0+OEQ2V0hRd7R3LMCT/i+IauYnztxPqzUCzhFwpzdymOc91jRqGee+aB7prohndX2M9QvuaOUjlDzZGPdNIv05xFjM0VhRjO1MulN0rrX2yOmOkuXtubfT8NFzZ7yym+ItcMe7cuOHnlFow+pGpwyzOX+gmIiMk5VcSQnBktKq7E+y0R56Q4DtW9N5qSis51jj/nSi5JmIlBl0x15hT6G5lvQuM+XPO9s7ckVr5nenZ9q/uc4tSrG43eqXvLvdC6nKwo0DJV8xU3DcU1M+8nmqlV/qFyS71uOc/ok0j1VDe4/Q48J6DNDrvsM9E5Q+1c2BvR1jvR5hX76sEZiaJGcnViFXYJeMEuu7zixVrNDocc0GP/DhwXWT0OeH1rZ12nZRVndf4Um7b4Op5dr17eW6/P7+DLLzRRNy9jX9r4bl9YtRv/nxAx81zc1uqd3BOC/wAAAP//AQAA//8HW0wwAHicYmBmAIP/5xiMGLAAAAAAAP//AQAA//8vAQIDAAAA\");\n}\n.d2-3616583411 .text-italic {\n\tfont-family: \"d2-3616583411-font-italic\";\n}\n@font-face {\n\tfont-family: d2-3616583411-font-italic;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-3616583411 .text-mono {\n\tfont-family: \"d2-3616583411-font-mono\";\n}\n@font-face {\n\tfont-family: d2-3616583411-font-mono;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-3616583411 .text-mono-bold {\n\tfont-family: \"d2-3616583411-font-mono-bold\";\n}\n@font-face {\n\tfont-family: d2-3616583411-font-mono-bold;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}]]></style><style type=\"text/css\"><![CDATA[.shape {\n  shape-rendering: geometricPrecision;\n  stroke-linejoin: round;\n}\n.connection {\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n.blend {\n  mix-blend-mode: multiply;\n  opacity: 0.5;\n}\n\n\t\t.d2-3616583411 .fill-N1{fill:#ECEDED;}\n\t\t.d2-3616583411 .fill-N2{fill:#676C7E;}\n\t\t.d2-3616583411 .fill-N3{fill:#9499AB;}\n\t\t.d2-3616583411 .fill-N4{fill:#CFD2DD;}\n\t\t.d2-3616583411 .fill-N5{fill:#DEE1EB;}\n\t\t.d2-3616583411 .fill-N6{fill:#EEF1F8;}\n\t\t.d2-3616583411 .fill-N7{fill:#151719;}\n\t\t.d2-3616583411 .fill-B1{fill:#717D86;}\n\t\t.d2-3616583411 .fill-B2{fill:#717D86;}\n\t\t.d2-3616583411 .fill-B3{fill:#ffff00;}\n\t\t.d2-3616583411 .fill-B4{fill:#151719;}\n\t\t.d2-3616583411 .fill-B5{fill:#151719;}\n\t\t.d2-3616583411 .fill-B6{fill:#151719;}\n\t\t.d2-3616583411 .fill-AA2{fill:#ECEDED;}\n\t\t.d2-3616583411 .fill-AA4{fill:#CFD2DD;}\n\t\t.d2-3616583411 .fill-AA5{fill:#DEE1EB;}\n\t\t.d2-3616583411 .fill-AB4{fill:#CFD2DD;}\n\t\t.d2-3616583411 .fill-AB5{fill:#DEE1EB;}\n\t\t.d2-3616583411 .stroke-N1{stroke:#ECEDED;}\n\t\t.d2-3616583411 .stroke-N2{stroke:#676C7E;}\n\t\t.d2-3616583411 .stroke-N3{stroke:#9499AB;}\n\t\t.d2-3616583411 .stroke-N4{stroke:#CFD2DD;}\n\t\t.d2-3616583411 .stroke-N5{stroke:#DEE1EB;}\n\t\t.d2-3616583411 .stroke-N6{stroke:#EEF1F8;}\n\t\t.d2-3616583411 .stroke-N7{stroke:#151719;}\n\t\t.d2-3616583411 .stroke-B1{stroke:#717D86;}\n\t\t.d2-3616583411 .stroke-B2{stroke:#717D86;}\n\t\t.d2-3616583411 .stroke-B3{stroke:#ffff00;}\n\t\t.d2-3616583411 .stroke-B4{stroke:#151719;}\n\t\t.d2-3616583411 .stroke-B5{stroke:#151719;}\n\t\t.d2-3616583411 .stroke-B6{stroke:#151719;}\n\t\t.d2-3616583411 .stroke-AA2{stroke:#ECEDED;}\n\t\t.d2-3616583411 .stroke-AA4{stroke:#CFD2DD;}\n\t\t.d2-3616583411 .stroke-AA5{stroke:#DEE1EB;}\n\t\t.d2-3616583411 .stroke-AB4{stroke:#CFD2DD;}\n\t\t.d2-3616583411 .stroke-AB5{stroke:#DEE1EB;}\n\t\t.d2-3616583411 .background-color-N1{background-color:#ECEDED;}\n\t\t.d2-3616583411 .background-color-N2{background-color:#676C7E;}\n\t\t.d2-3616583411 .background-color-N3{background-color:#9499AB;}\n\t\t.d2-3616583411 .background-color-N4{background-color:#CFD2DD;}\n\t\t.d2-3616583411 .background-color-N5{background-color:#DEE1EB;}\n\t\t.d2-3616583411 .background-color-N6{background-color:#EEF1F8;}\n\t\t.d2-3616583411 .background-color-N7{background-color:#151719;}\n\t\t.d2-3616583411 .background-color-B1{background-color:#717D86;}\n\t\t.d2-3616583411 .background-color-B2{background-color:#717D86;}\n\t\t.d2-3616583411 .background-color-B3{background-color:#ffff00;}\n\t\t.d2-3616583411 .background-color-B4{background-color:#151719;}\n\t\t.d2-3616583411 .background-color-B5{background-color:#151719;}\n\t\t.d2-3616583411 .background-color-B6{background-color:#151719;}\n\t\t.d2-3616583411 .background-color-AA2{background-color:#ECEDED;}\n\t\t.d2-3616583411 .background-color-AA4{background-color:#CFD2DD;}\n\t\t.d2-3616583411 .background-color-AA5{background-color:#DEE1EB;}\n\t\t.d2-3616583411 .background-color-AB4{background-color:#CFD2DD;}\n\t\t.d2-3616583411 .background-color-AB5{background-color:#DEE1EB;}\n\t\t.d2-3616583411 .color-N1{color:#ECEDED;}\n\t\t.d2-3616583411 .color-N2{color:#676C7E;}\n\t\t.d2-3616583411 .color-N3{color:#9499AB;}\n\t\t.d2-3616583411 .color-N4{color:#CFD2DD;}\n\t\t.d2-3616583411 .color-N5{color:#DEE1EB;}\n\t\t.d2-3616583411 .color-N6{color:#EEF1F8;}\n\t\t.d2-3616583411 .color-N7{color:#151719;}\n\t\t.d2-3616583411 .color-B1{color:#717D86;}\n\t\t.d2-3616583411 .color-B2{color:#717D86;}\n\t\t.d2-3616583411 .color-B3{color:#ffff00;}\n\t\t.d2-3616583411 .color-B4{color:#151719;}\n\t\t.d2-3616583411 .color-B5{color:#151719;}\n\t\t.d2-3616583411 .color-B6{color:#151719;}\n\t\t.d2-3616583411 .color-AA2{color:#ECEDED;}\n\t\t.d2-3616583411 .color-AA4{color:#CFD2DD;}\n\t\t.d2-3616583411 .color-AA5{color:#DEE1EB;}\n\t\t.d2-3616583411 .color-AB4{color:#CFD2DD;}\n\t\t.d2-3616583411 .color-AB5{color:#DEE1EB;}.appendix text.text{fill:#ECEDED}.md{--color-fg-default:#ECEDED;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#151719;--color-canvas-subtle:#EEF1F8;--color-border-default:#717D86;--color-border-muted:#717D86;--color-neutral-muted:#EEF1F8;--color-accent-fg:#717D86;--color-accent-emphasis:#717D86;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B5{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B6{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-AA2{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-darker);mix-blend-mode:lighten}.light-code{display: block}.dark-code{display: none}]]></style><g id=\"com\"><g class=\"shape\" ><rect x=\"12.000000\" y=\"12.000000\" width=\"1051.000000\" height=\"798.000000\" class=\" stroke-B1 fill-B4\" style=\"stroke-width:2;\" /></g><text x=\"537.500000\" y=\"45.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:28px\">com</text></g><g id=\"com.ch\"><g class=\"shape\" ><rect x=\"62.000000\" y=\"62.000000\" width=\"951.000000\" height=\"698.000000\" class=\" stroke-B1 fill-B5\" style=\"stroke-width:2;\" /></g><text x=\"537.500000\" y=\"91.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:24px\">ch</text></g><g id=\"com.ch.Camera\"><g class=\"shape\" ><rect x=\"506.000000\" y=\"248.000000\" width=\"160.000000\" height=\"66.000000\" fill=\"#26de81\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"586.000000\" y=\"286.500000\" fill=\"#151719\" class=\"text-mono-bold\" style=\"text-anchor:middle;font-size:16px\">Camera</text></g><g id=\"com.ch.math\"><g class=\"shape\" ><rect x=\"112.000000\" y=\"499.000000\" width=\"366.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"295.000000\" y=\"524.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">math</text></g><g id=\"com.ch.voxel\"><g class=\"shape\" ><rect x=\"558.000000\" y=\"499.000000\" width=\"193.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"654.500000\" y=\"524.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">voxel</text></g><g id=\"com.ch.Transform\"><g class=\"shape\" ><rect x=\"831.000000\" y=\"499.000000\" width=\"132.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"897.000000\" y=\"537.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Transform</text></g><g id=\"com.ch.CameraStruct\"><g class=\"shape\" ><rect x=\"506.000000\" y=\"112.000000\" width=\"160.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"586.000000\" y=\"150.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">CameraStruct</text></g><g id=\"com.ch.math.Matrix4f\"><g class=\"shape\" ><rect x=\"162.000000\" y=\"549.000000\" width=\"123.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"223.500000\" y=\"587.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Matrix4f</text></g><g id=\"com.ch.math.Vector3f\"><g class=\"shape\" ><rect x=\"305.000000\" y=\"549.000000\" width=\"123.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"366.500000\" y=\"587.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Vector3f</text></g><g id=\"com.ch.voxel.World\"><g class=\"shape\" ><rect x=\"608.000000\" y=\"549.000000\" width=\"93.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"654.500000\" y=\"587.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">World</text></g><g id=\"com.ch.(Camera -&gt; math.Matrix4f)[0]\"><marker id=\"mk-558834944\" markerWidth=\"10.000000\" markerHeight=\"12.000000\" refX=\"7.000000\" refY=\"6.000000\" viewBox=\"0.000000 0.000000 10.000000 12.000000\" orient=\"auto\" markerUnits=\"userSpaceOnUse\"> <polygon points=\"0.000000,0.000000 10.000000,6.000000 0.000000,12.000000\" fill=\"#26de81\" class=\"connection\" stroke-width=\"2\" /> </marker><path d=\"M 529.106995 315.000000 L 529.106995 344.000000 S 529.106995 354.000000 519.106995 354.000000 L 233.500000 354.000000 S 223.500000 354.000000 223.500000 364.000000 L 223.500000 546.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /><text x=\"258.000000\" y=\"539.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera -&gt; math.Vector3f)[0]\"><path d=\"M 551.963989 315.000000 L 551.963989 394.000000 S 551.963989 404.000000 541.963989 404.000000 L 376.500000 404.000000 S 366.500000 404.000000 366.500000 414.000000 L 366.500000 546.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /><text x=\"401.000000\" y=\"539.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(voxel.World -&gt; Camera)[0]\"><path d=\"M 654.500000 616.000000 L 654.500000 700.000000 S 654.500000 710.000000 664.500000 710.000000 L 781.000000 710.000000 S 791.000000 710.000000 791.000000 700.000000 L 791.000000 414.000000 S 791.000000 404.000000 781.000000 404.000000 L 630.534973 404.000000 S 620.534973 404.000000 620.534973 394.000000 L 620.534973 317.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /><text x=\"587.000000\" y=\"335.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera -&gt; voxel.World)[0]\"><path d=\"M 597.677979 315.000000 L 597.677979 444.000000 S 597.677979 454.000000 607.677979 454.000000 L 644.500000 454.000000 S 654.500000 454.000000 654.500000 464.000000 L 654.500000 546.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /></g><g id=\"com.ch.(Camera -&gt; Transform)[0]\"><path d=\"M 643.392029 315.000000 L 643.392029 344.000000 S 643.392029 354.000000 653.392029 354.000000 L 887.000000 354.000000 S 897.000000 354.000000 897.000000 364.000000 L 897.000000 496.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /></g><g id=\"com.ch.(CameraStruct -&gt; Camera)[0]\"><path d=\"M 586.250000 179.000000 L 586.250000 245.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /></g><g id=\"com.ch.(math.Matrix4f &lt;-&gt; Camera)[0]\"><marker id=\"mk-3695359059\" markerWidth=\"10.000000\" markerHeight=\"12.000000\" refX=\"3.000000\" refY=\"6.000000\" viewBox=\"0.000000 0.000000 10.000000 12.000000\" orient=\"auto\" markerUnits=\"userSpaceOnUse\"> <polygon points=\"10.000000,0.000000 0.000000,6.000000 10.000000,12.000000\" fill=\"#26de81\" class=\"connection\" stroke-width=\"2\" /> </marker><path d=\"M 223.500000 618.000000 L 223.500000 700.000000 S 223.500000 710.000000 233.500000 710.000000 L 508.000000 710.000000 S 518.000000 710.000000 518.000000 700.000000 L 518.000000 464.000000 S 518.000000 454.000000 528.000000 454.000000 L 564.820984 454.000000 S 574.820984 454.000000 574.820984 444.000000 L 574.820984 317.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-start=\"url(#mk-3695359059)\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-3616583411)\" /></g><mask id=\"d2-3616583411\" maskUnits=\"userSpaceOnUse\" x=\"11\" y=\"11\" width=\"1053\" height=\"800\">\n<rect x=\"11\" y=\"11\" width=\"1053\" height=\"800\" fill=\"white\"></rect>\n<rect x=\"513.000000\" y=\"17.000000\" width=\"49\" height=\"36\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"526.500000\" y=\"67.000000\" width=\"22\" height=\"31\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"557.500000\" y=\"270.500000\" width=\"57\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"273.500000\" y=\"504.000000\" width=\"43\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"632.000000\" y=\"504.000000\" width=\"45\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"853.500000\" y=\"521.500000\" width=\"87\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"528.500000\" y=\"134.500000\" width=\"115\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"184.500000\" y=\"571.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"327.500000\" y=\"571.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"630.500000\" y=\"571.500000\" width=\"48\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n</mask></svg></svg>\n",
+          "d2_src": "direction: down\n\nvars: {\n  d2-config: {\n    pad: 0\n    theme-overrides: {\n      B1: \"#717D86\"\n      B2: \"#717D86\"\n      B3: \"#ffff00\"\n      B4: \"#151719\"\n      B5: \"#151719\"\n      B6: \"#151719\"\n      N1: \"#ECEDED\"\n      N7: \"#151719\"\n      AA2: \"#ECEDED\"\n    }\n  }\n}\n\nstyle: {\n  fill: \"#151719\"\n}\ncom.ch.Camera -> com.ch.math.Matrix4f: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera -> com.ch.math.Vector3f: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.voxel.World -> com.ch.Camera: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera -> com.ch.voxel.World: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\ncom.ch.Camera -> com.ch.Transform: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\ncom.ch.CameraStruct -> com.ch.Camera: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\ncom.ch.math.Matrix4f <-> com.ch.Camera: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\ncom.ch.voxel.World: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.Transform: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.math.Vector3f: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.math.Matrix4f: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.CameraStruct: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.Camera: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.Camera: {\n  style: {\n    fill: \"#26de81\"\n    font-color: \"#151719\"\n    stroke-width: 0\n  }\n}\n"
+        },
+        "items": [
+          {
+            "id": "c348d298-67fe-6bba-7e4d-b42b2489c5db",
+            "ancestors": [],
+            "description": "Is an abstract class that encapsulates camera-related functionality. It manages projection and view matrices as well as transformation data, enabling the creation of customizable cameras for various applications. The class also defines methods to calculate matrices and adjust camera settings based on viewport dimensions.",
+            "name": "Camera",
+            "location": {
+              "start": 6,
+              "insert": 6,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 49,
+            "docLength": null
+          },
+          {
+            "id": "312f2dd4-06c2-04a1-ce45-7fd254708203",
+            "ancestors": [
+              "c348d298-67fe-6bba-7e4d-b42b2489c5db"
+            ],
+            "description": "Returns a matrix combining the view and projection transformations. It calculates this combination only when necessary, i.e., if the transformation has changed or the cached matrix is null. Otherwise, it reuses the previously calculated result.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f object.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Camera camera = new Camera(new Matrix4f());\ncamera.getTransform().setChanged();\nMatrix4f result = camera.getViewProjection();\n",
+              "description": ""
+            },
+            "name": "getViewProjection",
+            "location": {
+              "start": 18,
+              "insert": 18,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "28ae7005-0e66-91a3-d047-f4029ea8df32",
+            "ancestors": [
+              "c348d298-67fe-6bba-7e4d-b42b2489c5db"
+            ],
+            "description": "Transforms a 3D scene based on the camera's position and rotation. It combines the camera's translation matrix with its rotation matrix, then multiplies the result by a projection matrix to produce the final view matrix.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f object representing the view matrix.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Camera camera = new Camera(new Matrix4f());\ncamera.getTransform().setPos(new Vector3f(1, 2, 3));\ncamera.getTransform().setRot(new Vector3f(Math.PI / 4, Math.PI / 6, 0));\n\nMatrix4f viewProjectionMat4 = camera.getViewProjection();\n",
+              "description": ""
+            },
+            "name": "calculateViewMatrix",
+            "location": {
+              "start": 26,
+              "insert": 26,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "0960e220-ee04-2088-c44b-ba005cb3a616",
+            "ancestors": [
+              "c348d298-67fe-6bba-7e4d-b42b2489c5db"
+            ],
+            "description": "Calculates a translation matrix based on the negative transformed position of a camera. It multiplies the original transformation by -1 to invert its effect, then initializes a new Matrix4f with the resulting x, y, and z coordinates.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a 4x4 matrix representing a translation transformation.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public void main() {\n    Camera camera = new Camera(new Matrix4f());\n    Transform transform = camera.getTransform();\n    Vector3f cameraPos = transform.getTransformedPos().mul(-1);\n    Matrix4f translationMat = new Matrix4f().initTranslation(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());\n}",
+              "description": ""
+            },
+            "name": "getTranslationMatrix",
+            "location": {
+              "start": 35,
+              "insert": 35,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "400b2246-655d-058d-5f48-474d914504b1",
+            "ancestors": [
+              "c348d298-67fe-6bba-7e4d-b42b2489c5db"
+            ],
+            "description": "Retrieves a transformation object, represented by the variable `transform`, and returns it to the caller. This method provides read-only access to the stored transformation information. The returned object allows for inspection or further processing of the transformation data.",
+            "params": [],
+            "returns": {
+              "type_name": "Transform",
+              "description": "an instance of the `Transform` class.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Camera camera = new Camera(projection);\nTransform transform = camera.getTransform();\n",
+              "description": "\n\nResult: The Transform object associated with the given Camera is returned and stored in the variable \"transform\"."
+            },
+            "name": "getTransform",
+            "location": {
+              "start": 40,
+              "insert": 40,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "8b7546ed-871d-e8ae-a748-0d1e49869571",
+            "ancestors": [
+              "c348d298-67fe-6bba-7e4d-b42b2489c5db"
+            ],
+            "description": "Is an abstract class that defines a template for objects containing camera-specific data. It provides a method to retrieve this data as a Matrix4f object. This structure is used in the calculation of projection matrices and other camera-related operations.",
+            "name": "CameraStruct",
+            "location": {
+              "start": 48,
+              "insert": 48,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 5,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Texture.java",
+    "path": "src/com/ch/Texture.java",
+    "content": {
+      "structured": {
+        "description": "A `Texture` class that loads and manages textures for an OpenGL application. The code uses various packages such as `GL11`, `GL14`, and `Util` to create and manage textures, bind them to specific texture slots, and set texture parameters like filtering, wrapping, and texture min/mag filter. The `loadTexture()` method loads a texture from a file using `ImageIO` and creates a byte buffer representation of it. The `bind()` method binds the texture to a specific texture slot, and the `getID()` method returns the ID of the bound texture.",
+        "items": [
+          {
+            "id": "39c41fe9-263d-ac9b-d946-fc35de9eaf45",
+            "ancestors": [],
+            "description": "Defines a class for managing textures in an OpenGL environment. The class provides methods for binding and unbinding textures, as well as loading textures from files. The loadTexture method takes a file path as an argument and returns the ID of the loaded texture.",
+            "name": "Texture",
+            "location": {
+              "start": 29,
+              "insert": 29,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 75,
+            "docLength": null
+          },
+          {
+            "id": "b7e8284a-e38a-9b9c-e14e-7494a421e96b",
+            "ancestors": [
+              "39c41fe9-263d-ac9b-d946-fc35de9eaf45"
+            ],
+            "description": "0) binds an object to a specified method invocation site.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "public void bind() {\n\t\tbind(0);\n\t}\n\nThis method binds the texture to the specified sampler slot, which in this case is 0.",
+              "description": ""
+            },
+            "name": "bind",
+            "location": {
+              "start": 40,
+              "insert": 40,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "864099ec-49b8-8cac-8c4d-d0fbfbbd05cd",
+            "ancestors": [
+              "39c41fe9-263d-ac9b-d946-fc35de9eaf45"
+            ],
+            "description": "Sets the active texture slot to a specific index (0-31) and binds a texture to that slot using the `glBindTexture()` method.",
+            "params": [
+              {
+                "name": "samplerSlot",
+                "type_name": "int",
+                "description": "0-based index of a texture slot that specifies which texture to bind to the current texture unit.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Texture texture = new Texture(\"example.png\");\ntexture.bind(1);\n",
+              "description": ""
+            },
+            "name": "bind",
+            "location": {
+              "start": 44,
+              "insert": 44,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 5,
+            "docLength": null
+          },
+          {
+            "id": "701cc593-e22d-cdb8-fe4b-7848b708ff2c",
+            "ancestors": [
+              "39c41fe9-263d-ac9b-d946-fc35de9eaf45"
+            ],
+            "description": "Returns the instance variable `id`.",
+            "params": [],
+            "returns": {
+              "type_name": "int",
+              "description": "the integer value of the `id` field.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n\t// Instantiating the Texture class with a string parameter\n\tTexture texture = new Texture(\"grass_block.png\");\n\t\n\tSystem.out.println(texture.getID());\n}\n",
+              "description": "\nThe code above shows an example on how to get the id of a texture object from the texture class."
+            },
+            "name": "getID",
+            "location": {
+              "start": 50,
+              "insert": 50,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "b60ad4ba-7599-cca4-5e46-bb38a8d5d33e",
+            "ancestors": [
+              "39c41fe9-263d-ac9b-d946-fc35de9eaf45"
+            ],
+            "description": "Loads a texture from a file, converts it to a GL texture and stores it in an integer ID.",
+            "params": [
+              {
+                "name": "fileName",
+                "type_name": "String",
+                "description": "name of the texture file to be loaded and read by the `loadTexture()` method.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "int",
+              "description": "an integer ID representing a loaded texture.",
+              "complex_type": false
+            },
+            "name": "loadTexture",
+            "location": {
+              "start": 54,
+              "insert": 54,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 48,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Camera3D.java",
+    "path": "src/com/ch/Camera3D.java",
+    "content": {
+      "structured": {
+        "description": "A 3D camera class that uses OpenGL and LWJGL libraries for rendering and input handling. The camera class extends a base Camera class and provides methods for calculating projection matrices, adjusting viewports, and processing user input such as mouse movements and keyboard key presses. The camera's position, rotation, and field of view can be adjusted based on user input.",
+        "diagram": {
+          "gviz": "digraph G {\n    bgcolor=\"#151719\"\n    fontcolor=\"#ECEDED\"\n    splines=ortho\n    fontname=\"Courier New\"\n    edge [color=\"#26de81\"]\n    node [style=filled,color=\"#717D86\", shape=rectangle, fontname=\"Courier New\"]\n    \n    Mouse [label=\"org.lwjgl.input.Mouse\", style=\"rounded,filled\"]\n    CameraStruct []\n    GL11 [label=\"org.lwjgl.opengl.GL11\", style=\"rounded,filled\"]\n    Vector3f []\n    Keyboard [label=\"org.lwjgl.input.Keyboard\", style=\"rounded,filled\"]\n    Matrix4f []\n    subgraph cluster_main {\n        // style=filled\n        color=\"#00000000\"\n        Camera3D [] [fontsize=\"20pt\",style=filled,color=\"#26de81\",shape=square, fontname=\"Courier New\"]\n        label = \"\"\n    }\n    CameraStruct -> Camera3D [penwidth=1]\n    Camera3D -> Mouse [style=\"dashed\"]\n    Camera3D -> Vector3f [style=\"dashed\"]\n    Vector3f -> Camera3D [penwidth=1]\n    Camera3D -> Keyboard [style=\"dashed\"]\n    Camera3D -> Matrix4f [style=\"dashed\"]\n    Camera3D -> Matrix4f [penwidth=2]\n    Camera3D -> GL11 [style=\"dashed\"]\n}\n",
+          "d2": "<?xml version=\"1.0\" encoding=\"utf-8\"?><svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" d2Version=\"v0.6.5\" preserveAspectRatio=\"xMinYMin meet\" viewBox=\"0 0 781 1461\"><svg id=\"d2-svg\" class=\"d2-1670053911\" width=\"781\" height=\"1461\" viewBox=\"11 11 781 1461\"><rect x=\"11.000000\" y=\"11.000000\" width=\"781.000000\" height=\"1461.000000\" rx=\"0.000000\" fill=\"#151719\" stroke-width=\"0\" /><style type=\"text/css\"><![CDATA[\n.d2-1670053911 .text {\n\tfont-family: \"d2-1670053911-font-regular\";\n}\n@font-face {\n\tfont-family: d2-1670053911-font-regular;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-1670053911 .text-italic {\n\tfont-family: \"d2-1670053911-font-italic\";\n}\n@font-face {\n\tfont-family: d2-1670053911-font-italic;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}\n.d2-1670053911 .text-mono {\n\tfont-family: \"d2-1670053911-font-mono\";\n}\n@font-face {\n\tfont-family: d2-1670053911-font-mono;\n\tsrc: url(\"data:application/font-woff;base64,d09GRgABAAAAABMQAAoAAAAAIBQAAgm6AAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAAA9AAAAGAAAABgld/X+GNtYXAAAAFUAAAAmgAAAMADXAQqZ2x5ZgAAAfAAAAkJAAAL/ITSCBVoZWFkAAAK/AAAADYAAAA2GanOOmhoZWEAAAs0AAAAJAAAACQGMwCsaG10eAAAC1gAAAB0AAAAlFa4C15sb2NhAAALzAAAAEwAAABMOUI8IG1heHAAAAwYAAAAIAAAACAAWQJhbmFtZQAADDgAAAa4AAAQztydAx9wb3N0AAAS8AAAACAAAAAg/7gAMwADAlgBkAAFAAACigJYAAAASwKKAlgAAAFeADIBIwAAAgsFCQMEAwICBCAAAvcCADgDAAAAAAAAAABBREJPAEAAIP//Au7/BgAAA9gBEWAAAZ8AAAAAAeYClAAAACAAA3icbMw7SsMAHIDxX0zUqFHjO771CEFvoJBBnAR3V3EQQUoP1MdcshRKb9Re4V/I3G/94IdEKkEh06JSSuVqz1413n349O3Xv34Eak9eNN668+XHn15ELGMR85jFNNqYxDhGMYxBZ6/v3oNHiQ2pzKYt23I7du0p7DtwqHTk2IlTZ85dqFy6cu3GrTtWAAAA//8BAAD//9LGIXQAAHicjFZ9aBv3+X++X8k6O5ZfztJJsXyWdPpad9abZet0d7Is690vSuzElq3YcW3nxU7suM2vcdImv440S9u1Zc1e3FJoYV4Za2GM0tEyRtvtj0H/KBlkox1bYbDBaEEN3ViZ5hXK4tO4kxwnHYP9IR2cdM/z+X6ez+fzHDRAEgA78ItggCYwQwcwACLN0V5OEAhFKYJdVBTiwnQS/VHdQqgQNcqPXr/+unEg+5fsqa/jF3cfin9jbW2qfPvd5StXvl1GvwEEmeoO9uNt6AZo8PC8FJVlMWKzUzxPPCYTY7XZxIis2E0mdGL6iYmJp0tDi2y4M+tLLUWjS6nQuCssrJinX35w4+Viv1vq4jKXi8XHsjwRQxEAwDAHgH14CxqB1tCKERtjNRFBjMhSlCdk7ocvbn/v+ZnC5sMPbxbw1o+3v/+T/I2rV58GAARSdQczeBtc/w2bGFEkIom0yYSmi08UDj9Vysyz4YOp8PCieO5UwffUB64zdXBit+TwZC4Xrz4vvD6i/tUVAgSnAXAeb4FZR0aLSKQsxEAxp2cNyHrig9vLv9zEW+rbqPCleg7NP/uhhukZANyNt6Ch9gzHPFNEI3hr9+0x0DGPA+B2vAVd+u8Wu6hYRJrQUVlWCGUgBoE4MUOPn110G11LZ6caKGzwLicWeWwwNeAt9fbGBjq4ewGNu+dK7HVVRfg6W5pzq+9otXPVHdyJtyGk8yEo+mykKM8LQh++nx1tcHa7EzNWkwkNjH8tGPGuxPKHXZJnmcsElVOp5HpP0H1EHBwlMrvoywixdbMUjHtD8T7iZ1t9Lf5sf+RoKNQjd3PRoKvXYe5tD2UGoqUIIAgA4BDeghYA0SBabDa7KMuKRTTc+XB+g2Y7jB3d7edKH+At9ZX4mXj8TByd3r0AGKarO9iAKsCCAGCvT1Tpw8RjogQdPUMTgZhMQkRWpFbMWG1fhA6HxrYfR52xcPi4x+29lF49laMMvatO34xv/cpAxswlA0oheIBTPF4mdrDv/APqR1lXOMt7rjdyA26fFzAsVXcwi2+CFbgac4QitMhQYq2nVW+oydFjohibDaXJNDFQ2aLBwM0FTq8nV8fSs+mCu8CTMTNxyfjme8ue3mc2Zy4nR9YWplYIX3E5tPlMVXdwF6r8D15amPj/0UNXC0PzTp8zw8dK/eHZWOiw09u7Yk5cnCpeTPi7JYczXIops+GeTqmnV/dSorqD/nXPOfYaiIIk7hGnSHe7obYTj6TODAZHXQZjMU8ZnDPseIZLuf0jvgnz048dvZTknAu/2I2lXaGRQsXlCM/E5la0PvnqDnagCpg05yGPieJ43rB/IMZqorj9syQTy81IbjgSKVwZHd3MnHsUY/WJxnMTwTHO2bOE3pocP3xIzSUuTR+9OPz4WqvjQHG2k5EPemp+WQPAWfw7sGl+IZIiRWUxsidiRmQIXblx4+TqeN7iFN2Z+K1b6NVkg+/4Q2yytSk/FMypS1odA4xX3VhGFeiHBEzU2dG4kKJy/aLVFRli0wdOPLxQi5C6Agx7CmCsNks9nPb+g3o3Lk9ZXE62k0hzos/1q2v0wUhJsgSsHVap//zyA9nH5sOZTLgvmx0snVZiJxhvu4ed/vNYOtlnbOZd9gGL0ZIOSEcC5hwd7Y4e7m1qamZplo0mQ0fC6K1UVEylxGhKvZHwkoNGo8XH8Fo+LQHgZnyzlvP7etXiRNcqvVRsMPBzg8eKxWgikA/gm+9d8smrJ9XfIjKSCwbVNwCgWoUFAPQKvoV50Eg3Aemv3VeqQv1+z/59QHBIz5mb0F7jkdYiVg9bbdwvTc68UZUCgX7GEzMfP4Y+zu3+Xuq3Dbe26c/GAXAfqmgKFWnRrkO27+PWYd/FH89S2BLxjzGM6BcHi9FOzjph7+r0dqBy2uOfFUKTBfU1dKzk5dUfoGP+gHbd4wVVwHpPj/toyVNGfv4uLag881VWdC9hFlWgTUvqe9x6fxxoww+mz+dy59O179FSaXS0VKq7NHGxOHUxkV+bmV1fn53RpAxLVVGvq3vUvo+urjliZyz3Zs1SnjJ4jodOryVXhzxH3Qbjk5lSLWpGf41/mnT7n90sXk5yzsXXkOm+rHkBAHeiCnTcy0HdNxT9Qp4y8BdyXWGbpbOnWzkTROVLQ/mm5rGmxtSE+gkgGKvu4FZUgd7/2CU6Ffdtkr09Io9dDfL+s7nkMJPJLp88uxpb7+n1FMPJSO7Q9BwXOWkOuWRnT8hlcbIt1pwydNTbKdlZP+vytNN+2Stke3WNjFR3sAc/CQfrzEtEUhRRM7u+02ux8txYkXzzW835zz+XRknM0cEVzOJCopxs2N7OfZrJmw8kzDQgmKzuoC9RWdOCXdNqTamyQtcT8Yu54ow47B/pLeYoo3fevHoS9al/GskFwmhadZQCMiBoBMBTqKyl3T37TBHt+5uNCLxATBR1caMYp5qNxoa2xkQx3thhNJqaqPjE+kbMbDaazTIqq2VPhpCM586d2hU5VMdtcWlJvK2fPQ2A7agMnQCiItxtoYiUnQi81sREUel3X39gsqW7zdjKthTm3vj5QqmNaze2Odum7nz2oCVgtQat5/7+zwtMH2ML2C/odQeqYSygMjg0HurjVJT7tnMrfqqHpQ/Ym8V0R9snM1daXW3Gli7zxpGPOuSjHx7IGIxDoR70qfoP9yFCChxq2a30T2g5dAoAd+Br+nuStmkkWVa0QDr1zndjk67hH+XRR1KjvX33/XwtPwarO9iEnwP/V7RFpLvSF+6ajWLq6nIVN4nfvTCcmd+4tnlybCg05Q72rg0nTsQmhwJjwdS6WSGysy8tDY6mRiJhuac7SkL8eDR+yGpsCmSDsWIQsPZmgTl8DZo0RSiiBlWj1CJxEtIwE+bJvyEDamjztGfUt1FqfmWl8r5j2GEP29Xomwp6SX0k+yYgPTO/g8raex5HE4mjUeJjFEWv5lSHfsbP8AT6P3wLmrUNWXcMYzWhIMvzLMvzeIJ0dxPtU+NEy1qtXoeu0z1O9MpWk+k9fry7yzHIFiIfo6h3/g+W1uGW1tEk+llObU0sSv8GAAD//wEAAP//Zp1/sQAAAAABAAAAAgm6UHIS518PPPUAAwPoAAAAANwdDfcAAAAA3BxzS/8//joDGQQkAAAAAwACAAAAAAAAAAEAAAPY/u8AAAJY/z//PwMZAAEAAAAAAAAAAAAAAAAAAAAleJwszDFqAmEABeFhqtwkRaoUISQsISGKIghaOQgW2ngTD+AxPYUs/NWD4fEZP8afcTA+jItxM9bGv/Fm7I2TsTMmY2Fcx2fuR+PT2Bjfo01j78bKWBpb48X4Nd6Ns/FlvA7jMTtPAAAA//8BAAD///6UGGEAAAAqAFoAeACoAMIA0gEAAUQBYAGcAdACAAI0AmoCjgL4AxwDKAM0A1IDhAOmA9IEBgQmBGQEigSsBOIFDgU8BVQFkgW2BcYF3gX+AAEAAAAlAfgAKgBlAAYAAQAAAAAAAAAAAAAAAAADAAN4nJyWS2yT2RXHf865Ab94GVQNCFVXI4SmCIydScBNIOCQAcIgQklm2gpR1STGsUjsyHZg6GIWXVZddV11M120ErQKJWomgUIgpGoFqtRFNauuuqi66KqaRVfVd77jxHESOoOQyO8+zv+e173+gItyCyHiohFIgnGEJEnjDg7xjrGQ5JSxI8lF406SjBpvI8kPjbeTYtI4ymE+NY5xmF8axznCn40TnOA/xkkGI0eMd9IbqRjv4mDkV8a76YosG+9p8TPFwciXxntXdWLASkfKOMI3O74w7mBnx5fGwmVxxq5lTyfjctV4G0fkkfF2nsnfjaN0u18Yx+h2fzVO0NW5zXiH+M6c8U66o98LOQK7oz81jrA7+nPjDg5E7xsLyeiKsSMVNf1IJ6noP4y3kYpaLEH+Y1HjKIdiB4xj+Fi/cZyjsR8YJ8jEfmKcJB1bMN5BV+yfxjvJxZs6uzgcv2a8m1PxT4z3tPic4t245Sqyt0Vz36rm/gik4n8zjpCKN+c7eDf+X2NhX+KgseNAImPcyYHEJeNtHEiMG29nX+JT4yiZxM+MY7yXeG4c52jiX8YJupPfME6SSzY1d3Iq+WPjXWSSfzDezcXkv433tPiZomvHCeO9gY7MyjNZlFd4Ci1cooznMJ5JvDyWObzMyoIsyZw8llfyRObkuXwm9+Wx/B4fuSRL8kD+JE/w8rCF51t4RT6TB7IkD+VzWZCneJeVBXkpS/K5LMqizr4y+1n5o7zGc73jC24EZ8gjeaAqoS8Lcl/mZU6WAx2uk+GGLMtLeSZP5Xdqv6J6v8HLM5mV17Ios7rz2BY7n8pzjfGFLMucLMlv5UVzlusc4Ya8kNfyWB7KU1kMTg3Olpd4eaQzs2oTzmzu46EtTr6Plzl5IrOahSDLy8159feont6SX46qp2t1a8l321pJxxvz3lIV27FaSX6Np4sMWTJ4jtmoS0d5xqlykyKeEe5Rp0GRKep4hqgwRpUa0/p/QdfG8bzHBA0aTNPLcY5zV/+lKayqpdVyiuN8K/CHu5RpMIHnGkXqFKlxx9TOU6VCA88VCkwFvvh3GKHKDDXGKPr9pFvHeM5RZVzpKjWqqlpihkkK1OgiTYb3ydFHnkEGGKZvnULTPrQ+1mYfWg0zwAd8rL7WKauXfp32BFUaGmmFO3iyupYmS5YT9DFFgdsUddctinyiHgcKPaQ5QQ8ntC5f3bP1WShrnQp4Glqfca1dsO82niq33rrCZY01qFhg9xEVrV+4NkLDdoanVxjnuNp7jXRCM+ZVeUYrW6Osu9Nv5c1VChq/Z5A0noumGvTVqGY3+Duj/Rb4XaTyNfqzwT2mKTLKhOVzrR9HNIcN7mpO1zI+SVkrUNFODnIyo1kI425mbYQhLuMZVv3KOuXL6xSCSNr7LKt9lNbYJjY9d63+dyhQ1g65yaSurN23gp6b5zvKDXrxbdmpM6YVmqahNaqrVlprUOI4w5zncpsn/z9H4/o3rP1NZla7J4wu6JrglucZ0cqP+P14BnQ8xIhm5LsMMcpFhvmIUR3nucY18lxhlCE+UNthrul7MMwVBtViSDlcO6834Arfx/MhQ7on0C5afsKKBTdzWr2vq+9hL5eZYlpzHnie1liLGuHXr7Dnlqk2betqM0aZW7rTa/0qetcLlKwrptXDKc1lszfWbl3YEVMaS1DbtfUSVX1fa3pzA1XPPXs7gm4NfQpfiMZXqGr6rXqmvprDovq8flyy34Gyvo3hq9P8RhnRX4Ky/n6NqdeBbRBR8HvZPjO/YWZFa1XjJuWw12SFc9zT0ybtHnluamxqEX6ZUNcq1LVGgUc/UpVq85vEXosqJX2fpjVzY3qj7uko7AL9Ktlyb8FevZpm/Xbze2TD2cFbNWnvvtfYSqZ+iBsUmDSVir2Ungoz+vtZ09XwrmlsZN/oT7tSvfVLZUMVj+rb3l6T9tputku/Ztor47Lrqr2Z3Yo74866fpd3A67ffRvvMu0zlNzHeJfDu7/gXR7vTrqMy7sed8H1uow75XIu7zJKedfrcoFV5JJyv2qd0R2n3YfBijzccmV+y5UVPe+sy66d4LJKZ13O9bk+l3MXXI+uZtww3vW6sy7jBoJxswfV7wuq0+tOu3NuIFR3p12/63OXm73oBlzOnXH97n3VGGw5s9v1uMHAs2Yvbro39OCk63I97qTrdv1hppr9uKUfJ91pl3G9ek6/RpUJVJuduYVfPVaRUxp/sGfA9QQZae21jXUO+uGNNdqQb7XY0B1v1JnfrDPeaLHyPwAAAP//AQAA//+blbgHAAMAAAAAAAD/tQAyAAAAAQAAAAAAAAAAAAAAAAAAAAA=\");\n}\n.d2-1670053911 .text-mono-bold {\n\tfont-family: \"d2-1670053911-font-mono-bold\";\n}\n@font-face {\n\tfont-family: d2-1670053911-font-mono-bold;\n\tsrc: url(\"data:application/font-woff;base64,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\");\n}]]></style><style type=\"text/css\"><![CDATA[.shape {\n  shape-rendering: geometricPrecision;\n  stroke-linejoin: round;\n}\n.connection {\n  stroke-linecap: round;\n  stroke-linejoin: round;\n}\n.blend {\n  mix-blend-mode: multiply;\n  opacity: 0.5;\n}\n\n\t\t.d2-1670053911 .fill-N1{fill:#ECEDED;}\n\t\t.d2-1670053911 .fill-N2{fill:#676C7E;}\n\t\t.d2-1670053911 .fill-N3{fill:#9499AB;}\n\t\t.d2-1670053911 .fill-N4{fill:#CFD2DD;}\n\t\t.d2-1670053911 .fill-N5{fill:#DEE1EB;}\n\t\t.d2-1670053911 .fill-N6{fill:#EEF1F8;}\n\t\t.d2-1670053911 .fill-N7{fill:#151719;}\n\t\t.d2-1670053911 .fill-B1{fill:#717D86;}\n\t\t.d2-1670053911 .fill-B2{fill:#717D86;}\n\t\t.d2-1670053911 .fill-B3{fill:#ffff00;}\n\t\t.d2-1670053911 .fill-B4{fill:#151719;}\n\t\t.d2-1670053911 .fill-B5{fill:#151719;}\n\t\t.d2-1670053911 .fill-B6{fill:#151719;}\n\t\t.d2-1670053911 .fill-AA2{fill:#ECEDED;}\n\t\t.d2-1670053911 .fill-AA4{fill:#CFD2DD;}\n\t\t.d2-1670053911 .fill-AA5{fill:#DEE1EB;}\n\t\t.d2-1670053911 .fill-AB4{fill:#CFD2DD;}\n\t\t.d2-1670053911 .fill-AB5{fill:#DEE1EB;}\n\t\t.d2-1670053911 .stroke-N1{stroke:#ECEDED;}\n\t\t.d2-1670053911 .stroke-N2{stroke:#676C7E;}\n\t\t.d2-1670053911 .stroke-N3{stroke:#9499AB;}\n\t\t.d2-1670053911 .stroke-N4{stroke:#CFD2DD;}\n\t\t.d2-1670053911 .stroke-N5{stroke:#DEE1EB;}\n\t\t.d2-1670053911 .stroke-N6{stroke:#EEF1F8;}\n\t\t.d2-1670053911 .stroke-N7{stroke:#151719;}\n\t\t.d2-1670053911 .stroke-B1{stroke:#717D86;}\n\t\t.d2-1670053911 .stroke-B2{stroke:#717D86;}\n\t\t.d2-1670053911 .stroke-B3{stroke:#ffff00;}\n\t\t.d2-1670053911 .stroke-B4{stroke:#151719;}\n\t\t.d2-1670053911 .stroke-B5{stroke:#151719;}\n\t\t.d2-1670053911 .stroke-B6{stroke:#151719;}\n\t\t.d2-1670053911 .stroke-AA2{stroke:#ECEDED;}\n\t\t.d2-1670053911 .stroke-AA4{stroke:#CFD2DD;}\n\t\t.d2-1670053911 .stroke-AA5{stroke:#DEE1EB;}\n\t\t.d2-1670053911 .stroke-AB4{stroke:#CFD2DD;}\n\t\t.d2-1670053911 .stroke-AB5{stroke:#DEE1EB;}\n\t\t.d2-1670053911 .background-color-N1{background-color:#ECEDED;}\n\t\t.d2-1670053911 .background-color-N2{background-color:#676C7E;}\n\t\t.d2-1670053911 .background-color-N3{background-color:#9499AB;}\n\t\t.d2-1670053911 .background-color-N4{background-color:#CFD2DD;}\n\t\t.d2-1670053911 .background-color-N5{background-color:#DEE1EB;}\n\t\t.d2-1670053911 .background-color-N6{background-color:#EEF1F8;}\n\t\t.d2-1670053911 .background-color-N7{background-color:#151719;}\n\t\t.d2-1670053911 .background-color-B1{background-color:#717D86;}\n\t\t.d2-1670053911 .background-color-B2{background-color:#717D86;}\n\t\t.d2-1670053911 .background-color-B3{background-color:#ffff00;}\n\t\t.d2-1670053911 .background-color-B4{background-color:#151719;}\n\t\t.d2-1670053911 .background-color-B5{background-color:#151719;}\n\t\t.d2-1670053911 .background-color-B6{background-color:#151719;}\n\t\t.d2-1670053911 .background-color-AA2{background-color:#ECEDED;}\n\t\t.d2-1670053911 .background-color-AA4{background-color:#CFD2DD;}\n\t\t.d2-1670053911 .background-color-AA5{background-color:#DEE1EB;}\n\t\t.d2-1670053911 .background-color-AB4{background-color:#CFD2DD;}\n\t\t.d2-1670053911 .background-color-AB5{background-color:#DEE1EB;}\n\t\t.d2-1670053911 .color-N1{color:#ECEDED;}\n\t\t.d2-1670053911 .color-N2{color:#676C7E;}\n\t\t.d2-1670053911 .color-N3{color:#9499AB;}\n\t\t.d2-1670053911 .color-N4{color:#CFD2DD;}\n\t\t.d2-1670053911 .color-N5{color:#DEE1EB;}\n\t\t.d2-1670053911 .color-N6{color:#EEF1F8;}\n\t\t.d2-1670053911 .color-N7{color:#151719;}\n\t\t.d2-1670053911 .color-B1{color:#717D86;}\n\t\t.d2-1670053911 .color-B2{color:#717D86;}\n\t\t.d2-1670053911 .color-B3{color:#ffff00;}\n\t\t.d2-1670053911 .color-B4{color:#151719;}\n\t\t.d2-1670053911 .color-B5{color:#151719;}\n\t\t.d2-1670053911 .color-B6{color:#151719;}\n\t\t.d2-1670053911 .color-AA2{color:#ECEDED;}\n\t\t.d2-1670053911 .color-AA4{color:#CFD2DD;}\n\t\t.d2-1670053911 .color-AA5{color:#DEE1EB;}\n\t\t.d2-1670053911 .color-AB4{color:#CFD2DD;}\n\t\t.d2-1670053911 .color-AB5{color:#DEE1EB;}.appendix text.text{fill:#ECEDED}.md{--color-fg-default:#ECEDED;--color-fg-muted:#676C7E;--color-fg-subtle:#9499AB;--color-canvas-default:#151719;--color-canvas-subtle:#EEF1F8;--color-border-default:#717D86;--color-border-muted:#717D86;--color-neutral-muted:#EEF1F8;--color-accent-fg:#717D86;--color-accent-emphasis:#717D86;--color-attention-subtle:#676C7E;--color-danger-fg:red;}.sketch-overlay-B1{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-B3{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-B4{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B5{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-B6{fill:url(#streaks-darker);mix-blend-mode:lighten}.sketch-overlay-AA2{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AA4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AA5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-AB4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-AB5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N1{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N2{fill:url(#streaks-dark);mix-blend-mode:overlay}.sketch-overlay-N3{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N4{fill:url(#streaks-normal);mix-blend-mode:color-burn}.sketch-overlay-N5{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N6{fill:url(#streaks-bright);mix-blend-mode:darken}.sketch-overlay-N7{fill:url(#streaks-darker);mix-blend-mode:lighten}.light-code{display: block}.dark-code{display: none}]]></style><g id=\"com\"><g class=\"shape\" ><rect x=\"122.000000\" y=\"12.000000\" width=\"669.000000\" height=\"943.000000\" class=\" stroke-B1 fill-B4\" style=\"stroke-width:2;\" /></g><text x=\"456.500000\" y=\"45.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:28px\">com</text></g><g id=\"org\"><g class=\"shape\" ><rect x=\"12.000000\" y=\"1095.000000\" width=\"737.000000\" height=\"376.000000\" class=\" stroke-B1 fill-B4\" style=\"stroke-width:2;\" /></g><text x=\"380.500000\" y=\"1128.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:28px\">org</text></g><g id=\"com.ch\"><g class=\"shape\" ><rect x=\"172.000000\" y=\"62.000000\" width=\"569.000000\" height=\"838.000000\" class=\" stroke-B1 fill-B5\" style=\"stroke-width:2;\" /></g><text x=\"456.500000\" y=\"91.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:24px\">ch</text></g><g id=\"org.lwjgl\"><g class=\"shape\" ><rect x=\"62.000000\" y=\"1150.000000\" width=\"637.000000\" height=\"271.000000\" class=\" stroke-B1 fill-B5\" style=\"stroke-width:2;\" /></g><text x=\"380.500000\" y=\"1179.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:24px\">lwjgl</text></g><g id=\"com.ch.Camera3D\"><g class=\"shape\" ><rect x=\"360.000000\" y=\"248.000000\" width=\"240.000000\" height=\"66.000000\" fill=\"#26de81\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"480.000000\" y=\"286.500000\" fill=\"#151719\" class=\"text-mono-bold\" style=\"text-anchor:middle;font-size:16px\">Camera3D</text></g><g id=\"org.lwjgl.input\"><g class=\"shape\" ><rect x=\"112.000000\" y=\"1205.000000\" width=\"334.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"279.000000\" y=\"1230.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">input</text></g><g id=\"org.lwjgl.opengl\"><g class=\"shape\" ><rect x=\"466.000000\" y=\"1205.000000\" width=\"183.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"557.500000\" y=\"1230.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">opengl</text></g><g id=\"com.ch.math\"><g class=\"shape\" ><rect x=\"285.000000\" y=\"599.000000\" width=\"366.000000\" height=\"166.000000\" class=\" stroke-B1 fill-B6\" style=\"stroke-width:2;\" /></g><text x=\"468.000000\" y=\"624.000000\" class=\"text fill-N1\" style=\"text-anchor:middle;font-size:20px\">math</text></g><g id=\"com.ch.CameraStruct\"><g class=\"shape\" ><rect x=\"400.000000\" y=\"112.000000\" width=\"160.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"480.000000\" y=\"150.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">CameraStruct</text></g><g id=\"org.lwjgl.input.Keyboard\"><g class=\"shape\" ><rect x=\"162.000000\" y=\"1255.000000\" width=\"121.000000\" height=\"66.000000\" rx=\"33.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:2;\" /></g><text x=\"222.500000\" y=\"1293.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Keyboard</text></g><g id=\"org.lwjgl.input.Mouse\"><g class=\"shape\" ><rect x=\"303.000000\" y=\"1255.000000\" width=\"93.000000\" height=\"66.000000\" rx=\"33.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:2;\" /></g><text x=\"349.500000\" y=\"1293.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Mouse</text></g><g id=\"org.lwjgl.opengl.GL11\"><g class=\"shape\" ><rect x=\"516.000000\" y=\"1255.000000\" width=\"83.000000\" height=\"66.000000\" rx=\"33.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:2;\" /></g><text x=\"557.500000\" y=\"1293.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">GL11</text></g><g id=\"com.ch.math.Matrix4f\"><g class=\"shape\" ><rect x=\"335.000000\" y=\"649.000000\" width=\"123.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"396.500000\" y=\"687.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Matrix4f</text></g><g id=\"com.ch.math.Vector3f\"><g class=\"shape\" ><rect x=\"478.000000\" y=\"649.000000\" width=\"123.000000\" height=\"66.000000\" fill=\"#717D86\" class=\" stroke-B1\" style=\"stroke-width:0;\" /></g><text x=\"539.500000\" y=\"687.500000\" class=\"text-mono-bold fill-N1\" style=\"text-anchor:middle;font-size:16px\">Vector3f</text></g><g id=\"(com.ch.Camera3D -&gt; org.lwjgl.input.Keyboard)[0]\"><marker id=\"mk-558834944\" markerWidth=\"10.000000\" markerHeight=\"12.000000\" refX=\"7.000000\" refY=\"6.000000\" viewBox=\"0.000000 0.000000 10.000000 12.000000\" orient=\"auto\" markerUnits=\"userSpaceOnUse\"> <polygon points=\"0.000000,0.000000 10.000000,6.000000 0.000000,12.000000\" fill=\"#26de81\" class=\"connection\" stroke-width=\"2\" /> </marker><path d=\"M 390.000000 315.000000 L 390.000000 344.000000 S 390.000000 354.000000 380.000000 354.000000 L 232.500000 354.000000 S 222.500000 354.000000 222.500000 364.000000 L 222.500000 1251.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /><text x=\"257.000000\" y=\"1245.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"(com.ch.Camera3D -&gt; org.lwjgl.input.Mouse)[0]\"><path d=\"M 420.000000 315.000000 L 420.000000 394.000000 S 420.000000 404.000000 410.000000 404.000000 L 243.500000 404.000000 S 233.500000 404.000000 233.500000 414.000000 L 233.500000 1040.000000 S 233.500000 1050.000000 243.500000 1050.000000 L 339.500000 1050.000000 S 349.500000 1050.000000 349.500000 1060.000000 L 349.500000 1251.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /><text x=\"384.000000\" y=\"1245.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"(com.ch.Camera3D -&gt; org.lwjgl.opengl.GL11)[0]\"><path d=\"M 450.000000 315.000000 L 450.000000 444.000000 S 450.000000 454.000000 440.000000 454.000000 L 254.500000 454.000000 S 244.500000 454.000000 244.500000 464.000000 L 244.500000 990.000000 S 244.500000 1000.000000 254.500000 1000.000000 L 547.500000 1000.000000 S 557.500000 1000.000000 557.500000 1010.000000 L 557.500000 1251.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /><text x=\"592.000000\" y=\"1245.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera3D -&gt; math.Matrix4f)[0]\"><path d=\"M 480.000000 315.000000 L 480.000000 494.000000 S 480.000000 504.000000 470.000000 504.000000 L 386.500000 504.000000 S 376.500000 504.000000 376.500000 514.000000 L 376.500000 646.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /><text x=\"411.000000\" y=\"639.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera3D -&gt; math.Vector3f)[0]\"><path d=\"M 540.000000 315.000000 L 540.000000 646.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;stroke-dasharray:6.000000,5.919384;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /><text x=\"574.000000\" y=\"639.000000\" class=\"text-italic fill-N1\" style=\"text-anchor:middle;font-size:16px\">imports</text></g><g id=\"com.ch.(Camera3D -&gt; math.Matrix4f)[1]\"><path d=\"M 510.000000 315.000000 L 510.000000 544.000000 S 510.000000 554.000000 500.000000 554.000000 L 427.500000 554.000000 S 417.500000 554.000000 417.500000 564.000000 L 417.500000 646.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /></g><g id=\"com.ch.(CameraStruct -&gt; Camera3D)[0]\"><path d=\"M 480.000000 179.000000 L 480.000000 245.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /></g><g id=\"com.ch.(math.Vector3f -&gt; Camera3D)[0]\"><path d=\"M 540.000000 716.000000 L 540.000000 800.000000 S 540.000000 810.000000 550.000000 810.000000 L 681.500000 810.000000 S 691.500000 810.000000 691.500000 800.000000 L 691.500000 364.000000 S 691.500000 354.000000 681.500000 354.000000 L 580.000000 354.000000 S 570.000000 354.000000 570.000000 344.000000 L 570.000000 317.000000\" stroke=\"#26de81\" fill=\"none\" class=\"connection\" style=\"stroke-width:2;\" marker-end=\"url(#mk-558834944)\" mask=\"url(#d2-1670053911)\" /></g><mask id=\"d2-1670053911\" maskUnits=\"userSpaceOnUse\" x=\"11\" y=\"11\" width=\"781\" height=\"1461\">\n<rect x=\"11\" y=\"11\" width=\"781\" height=\"1461\" fill=\"white\"></rect>\n<rect x=\"432.000000\" y=\"17.000000\" width=\"49\" height=\"36\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"361.500000\" y=\"1100.000000\" width=\"38\" height=\"36\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"445.500000\" y=\"67.000000\" width=\"22\" height=\"31\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"357.000000\" y=\"1155.000000\" width=\"47\" height=\"31\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"441.000000\" y=\"270.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"256.500000\" y=\"1210.000000\" width=\"45\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"528.500000\" y=\"1210.000000\" width=\"58\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"446.500000\" y=\"604.000000\" width=\"43\" height=\"26\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"422.500000\" y=\"134.500000\" width=\"115\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"184.500000\" y=\"1277.500000\" width=\"76\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"325.500000\" y=\"1277.500000\" width=\"48\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"538.500000\" y=\"1277.500000\" width=\"38\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"357.500000\" y=\"671.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n<rect x=\"500.500000\" y=\"671.500000\" width=\"78\" height=\"21\" fill=\"rgba(0,0,0,0.75)\"></rect>\n</mask></svg></svg>\n",
+          "d2_src": "direction: down\n\nvars: {\n  d2-config: {\n    pad: 0\n    theme-overrides: {\n      B1: \"#717D86\"\n      B2: \"#717D86\"\n      B3: \"#ffff00\"\n      B4: \"#151719\"\n      B5: \"#151719\"\n      B6: \"#151719\"\n      N1: \"#ECEDED\"\n      N7: \"#151719\"\n      AA2: \"#ECEDED\"\n    }\n  }\n}\n\nstyle: {\n  fill: \"#151719\"\n}\ncom.ch.Camera3D -> org.lwjgl.input.Keyboard: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera3D -> org.lwjgl.input.Mouse: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera3D -> org.lwjgl.opengl.GL11: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera3D -> com.ch.math.Matrix4f: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera3D -> com.ch.math.Vector3f: {\n  target-arrowhead: \"imports\"\n  style: {\n    stroke: \"#26de81\"\n    stroke-dash: 3\n  }\n}\n\ncom.ch.Camera3D -> com.ch.math.Matrix4f: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\ncom.ch.CameraStruct -> com.ch.Camera3D: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\ncom.ch.math.Vector3f -> com.ch.Camera3D: {\n  style: {\n    stroke: \"#26de81\"\n  }\n}\n\norg.lwjgl.input.Mouse: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    border-radius: 100\n  }\n}\n\norg.lwjgl.input.Keyboard: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    border-radius: 100\n  }\n}\n\norg.lwjgl.opengl.GL11: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    border-radius: 100\n  }\n}\n\ncom.ch.math.Matrix4f: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.Camera3D: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.math.Vector3f: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.CameraStruct: {\n  style: {\n    font: mono\n    fill: \"#717D86\"\n    stroke-width: 0\n  }\n}\n\ncom.ch.Camera3D: {\n  style: {\n    fill: \"#26de81\"\n    font-color: \"#151719\"\n    stroke-width: 0\n  }\n}\n"
+        },
+        "items": [
+          {
+            "id": "fcce124d-c979-0796-9848-b5e9cfddbd1c",
+            "ancestors": [],
+            "description": "Is designed to handle camera movement and projection in a 3D environment. It extends the Camera class and provides methods for calculating projection matrices, adjusting to viewports, and processing user input. The class includes features such as mouse-based rotation and keyboard-controlled movement.",
+            "name": "Camera3D",
+            "location": {
+              "start": 10,
+              "insert": 10,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 70,
+            "docLength": null
+          },
+          {
+            "id": "e66b4768-ed00-db92-ef48-7b33a98d6891",
+            "ancestors": [
+              "fcce124d-c979-0796-9848-b5e9cfddbd1c"
+            ],
+            "description": "Returns a projection matrix calculated from a given camera structure. It retrieves the projection matrix from the camera structure using the `getAsMatrix4()` method and assigns it to the `projection` variable, returning the result as a Matrix4f object.",
+            "params": [
+              {
+                "name": "data",
+                "type_name": "CameraStruct",
+                "description": "4x4 matrix that is retrieved and assigned to the local variable `projection`.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Matrix4f object.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "CameraStruct3D data = new CameraStruct3D(45, 4/3f, 0.1f, 1000);\nMatrix4f projection = camera.calculateProjectionMatrix(data);",
+              "description": ""
+            },
+            "name": "calculateProjectionMatrix",
+            "location": {
+              "start": 18,
+              "insert": 18,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "6a05b168-a78b-e8a2-634b-10c6299c8439",
+            "ancestors": [
+              "fcce124d-c979-0796-9848-b5e9cfddbd1c"
+            ],
+            "description": "Adjusts the camera's aspect ratio and calculates projection and view matrices based on the provided viewport dimensions. It also sets the OpenGL viewport to the specified width and height, effectively adjusting the rendering area to match the new dimensions.",
+            "params": [
+              {
+                "name": "width",
+                "type_name": "int",
+                "description": "2D viewport's width and is used to calculate the aspect ratio of the camera's projection matrix.",
+                "complex_type": false
+              },
+              {
+                "name": "height",
+                "type_name": "int",
+                "description": "height of the viewport, which is used to calculate the aspect ratio and set the glViewport.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "camera3D.adjustToViewport(800, 600);",
+              "description": ""
+            },
+            "name": "adjustToViewport",
+            "location": {
+              "start": 23,
+              "insert": 23,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": null
+          },
+          {
+            "id": "cc0795b0-cad4-e7aa-8648-21999a5b55a4",
+            "ancestors": [
+              "fcce124d-c979-0796-9848-b5e9cfddbd1c"
+            ],
+            "description": "Is an extension of the CameraStruct class, used to define parameters for a camera in a 3D environment. It initializes these parameters through its constructor and provides a method to generate a perspective projection matrix based on these values.",
+            "name": "CameraStruct3D",
+            "location": {
+              "start": 34,
+              "insert": 34,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 16,
+            "docLength": null
+          },
+          {
+            "id": "8eae7163-9eeb-7785-2a4d-99ac553cc15d",
+            "ancestors": [
+              "fcce124d-c979-0796-9848-b5e9cfddbd1c",
+              "cc0795b0-cad4-e7aa-8648-21999a5b55a4"
+            ],
+            "description": "Creates and initializes a perspective matrix with a specified field of view (fov), aspect ratio, near clipping plane distance (zNear), and far clipping plane distance (zFar). The resulting matrix is represented by the `Matrix4f` class.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a Perspective Matrix4f object initialized with specified parameters.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "CameraStruct3D cameraStruct = new CameraStruct3D(60, 16/9f, 0.1f, 100f);\nMatrix4f projectionMatrix = cameraStruct.getAsMatrix4();",
+              "description": ""
+            },
+            "name": "getAsMatrix4",
+            "location": {
+              "start": 45,
+              "insert": 45,
+              "offset": "\t",
+              "indent": 2,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "7ef673ff-67c3-1e81-964f-5b43172b676f",
+            "ancestors": [
+              "fcce124d-c979-0796-9848-b5e9cfddbd1c"
+            ],
+            "description": "Calculates mouse rotation and applies it to the object's transform, then adjusts movement speed based on keyboard input. It enables faster movement when the left shift key is pressed and controls movement direction with W, S, A, D keys.",
+            "params": [
+              {
+                "name": "dt",
+                "type_name": "float",
+                "description": "3D time interval, used to calculate the movement amount based on the speed and other inputs.",
+                "complex_type": false
+              },
+              {
+                "name": "speed",
+                "type_name": "float",
+                "description": "magnitude of movement, which is scaled up by a factor of 10 when the left shift key is pressed and used to calculate the amount of movement along each axis.",
+                "complex_type": false
+              },
+              {
+                "name": "sens",
+                "type_name": "float",
+                "description": "sensitivity of mouse rotation, used to calculate the amount of rotation based on the horizontal and vertical mouse movement.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Camera3D camera = new Camera3D(45, 4/3f, 0.1f, 100);\ncamera.processInput(0.01f, 5f, 0.1f);",
+              "description": ""
+            },
+            "name": "processInput",
+            "location": {
+              "start": 51,
+              "insert": 51,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 23,
+            "docLength": null
+          },
+          {
+            "id": "1315a5dc-52bc-ee93-4746-f5ecc9cf2456",
+            "ancestors": [
+              "fcce124d-c979-0796-9848-b5e9cfddbd1c"
+            ],
+            "description": "Translates an object's position by adding a vector `dir` scaled by a floating-point value `amt`. The new position is set as the current transform's position using the `getTransform()` method. This results in moving the object along the specified direction for a certain amount.",
+            "params": [
+              {
+                "name": "dir",
+                "type_name": "Vector3f",
+                "description": "3D direction vector that is multiplied by the specified amount (`amt`) and added to the current position.",
+                "complex_type": false
+              },
+              {
+                "name": "amt",
+                "type_name": "float",
+                "description": "scalar amount to multiply with the direction vector `dir`, determining the magnitude of the movement.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Vector3f dir = new Vector3f(0, 1, 0);\nfloat amt = 10.0f;\nmove(dir, amt);\n",
+              "description": ""
+            },
+            "name": "move",
+            "location": {
+              "start": 75,
+              "insert": 75,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Shader.java",
+    "path": "src/com/ch/Shader.java",
+    "content": {
+      "structured": {
+        "description": "A `Shader` class that loads and manages shaders for rendering 3D graphics using OpenGL. The code loads shaders from files, compiles and links them to create a program, and provides methods for setting uniform values and matrix transformations. The code also includes utility functions for reading shader source code from files and validating the program.",
+        "items": [
+          {
+            "id": "50185b82-8214-169e-8248-d2614bc24261",
+            "ancestors": [],
+            "description": "Is designed to load and manage shaders for an OpenGL context. It provides functions for binding a program, getting the location of uniform and uniform matrix functions, and loading vertex and fragment shaders. The class also validates the program after loading the shaders.",
+            "name": "Shader",
+            "location": {
+              "start": 19,
+              "insert": 19,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 97,
+            "docLength": null
+          },
+          {
+            "id": "92ce00e1-78ce-1280-9a49-fbecc6ccecb5",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "GlUseProgram(program) to associate a program object with the current GL context.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "public class Main{\n    public static void main(String[] args){\n        // create a new Shader object with the name \"myShader\"\n        Shader myShader = new Shader(\"myShader\");\n        \n        // bind the shader to the OpenGL context\n        myShader.bind();\n    }\n}\n",
+              "description": "\nIn this example, a new instance of the `Shader` class is created with the name \"myShader\". Then, the `bind()` method is called on this instance, which binds the shader to the OpenGL context."
+            },
+            "name": "bind",
+            "location": {
+              "start": 27,
+              "insert": 27,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "ea4d7563-f22f-ecad-ce48-dd3e777ce103",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Returns the value of the `program` field.",
+            "params": [],
+            "returns": {
+              "type_name": "int",
+              "description": "an integer representing the value of the `program` field.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public void myMethod() {\n\t\tShader shader = Shader.loadShader(\"MyShader\");\n\t\tint program = shader.getProgram();\n\t}\n",
+              "description": "\nIn the above code, we first load a shader by calling the static method loadShader with the name of the shader file, and then we get the program ID associated with the loaded shader using the method getProgram() in our Shader class. The value returned is an integer representing the program ID that can be used to interact with the shader through OpenGL calls."
+            },
+            "name": "getProgram",
+            "location": {
+              "start": 31,
+              "insert": 31,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "2d795f97-72b1-79ab-8e40-c028e30fd7ad",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Is a method that sets a uniform float value(s) for a given shader program location, based on the length of the input array of float values.",
+            "params": [
+              {
+                "name": "name",
+                "type_name": "String",
+                "description": "name of the uniform location for which the values are being set.",
+                "complex_type": false
+              },
+              {
+                "name": "vals",
+                "type_name": "float[]",
+                "description": "0 or more floating-point values that will be passed to the corresponding glUniform() method to set the uniform value of the same name as the function.\n\n* Length: 1 to 4\n* Content: A sequence of floating-point values\n\nThe length of `vals` determines the number of arguments passed to the corresponding GL uniform function (GL20.glUniform1f, GL20.glUniform2f, GL20.glUniform3f, or GL20.glUniform4f).",
+                "complex_type": true
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Shader shader = new Shader(program);\nshader.uniformf(\"my_float\", 10.5f);\nshader.uniformf(\"my_vec2\", 3.5f, -4.7f);\nshader.uniformf(\"my_vec3\", 1.0f, 2.5f, 3.2f);\nshader.uniformf(\"my_vec4\", -1.5f, 2.0f, 3.8f, -4.7f);\n",
+              "description": ""
+            },
+            "name": "uniformf",
+            "location": {
+              "start": 35,
+              "insert": 35,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 16,
+            "docLength": null
+          },
+          {
+            "id": "1fbec190-62e1-0a99-1440-2f4c605aeec2",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Unloads a 4x4 uniform matrix from an OpenGL context to a flipped buffer.",
+            "params": [
+              {
+                "name": "name",
+                "type_name": "String",
+                "description": "3D uniform matrix that is to be loaded and applied as a transformation to the graphics object.",
+                "complex_type": false
+              },
+              {
+                "name": "mat",
+                "type_name": "Matrix4f",
+                "description": "4x4 matrix to be uniformed.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "public void render() {\n\t\t...\n\t\tMatrix4f modelView = ...; // create model-view matrix\n\t\tshader.uniformMat4(\"model_view\", modelView); // pass it to the shader\n\t\t...\n\t}\n",
+              "description": ""
+            },
+            "name": "unifromMat4",
+            "location": {
+              "start": 52,
+              "insert": 52,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "9b3fc502-d8b7-2ea6-ca42-f0bfe0421795",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Is a part of the Java API for OpenGL, and it returns the uniform location of a named uniform in an OpenGL program.",
+            "params": [
+              {
+                "name": "name",
+                "type_name": "String",
+                "description": "name of the uniform to locate.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "int",
+              "description": "an integer representing the location of a uniform in a program.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Shader myShader = Shader.loadShader(\"MyShader\");\nint uniformLocation = myShader.getLoaction(\"uniformName\")\n",
+              "description": ""
+            },
+            "name": "getLoaction",
+            "location": {
+              "start": 56,
+              "insert": 56,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "80f793bf-cb11-ed97-8741-84637e9b3f39",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Loads a shader program from a file and creates a new shader object that represents it.",
+            "params": [
+              {
+                "name": "filename",
+                "type_name": "String",
+                "description": "name of a shader file to be loaded.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Shader",
+              "description": "a new instance of `Shader` object that represents a shader program created by combining a vertex shader and a fragment shader.",
+              "complex_type": false
+            },
+            "name": "loadShader",
+            "location": {
+              "start": 62,
+              "insert": 62,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "1332abfc-f975-65b7-6e44-dc3f31c7885b",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Loads a shader program into memory and attaches it to a program handle.",
+            "params": [
+              {
+                "name": "target",
+                "type_name": "int",
+                "description": "type of shader to be created, which can be either a fragment shader or a vertex shader.",
+                "complex_type": false
+              },
+              {
+                "name": "src",
+                "type_name": "String",
+                "description": "3D graphics shader source code that will be compiled and linked to create the final shader program.",
+                "complex_type": false
+              },
+              {
+                "name": "program",
+                "type_name": "int",
+                "description": "3D graphics program that will be used to link the loaded shader with, allowing for the creation of a fully functional graphics program.",
+                "complex_type": false
+              }
+            ],
+            "name": "loadShader",
+            "location": {
+              "start": 70,
+              "insert": 70,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 13,
+            "docLength": null
+          },
+          {
+            "id": "8c91f297-7b42-4780-3044-3fe26ebaf4da",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Validates a program by checking its link and validation statuses, printing any error messages if they exist, and exiting the program with an error code if there are issues.",
+            "params": [
+              {
+                "name": "program",
+                "type_name": "int",
+                "description": "3D program to be validated and linked, and is passed through the `glLinkProgram()` and `glValidateProgram()` functions for validation and linking.",
+                "complex_type": false
+              }
+            ],
+            "name": "validateProgram",
+            "location": {
+              "start": 84,
+              "insert": 84,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 15,
+            "docLength": null
+          },
+          {
+            "id": "6e50dbd9-0193-9ca5-7749-ebd1771b8141",
+            "ancestors": [
+              "50185b82-8214-169e-8248-d2614bc24261"
+            ],
+            "description": "Reads the contents of a given text file and returns its raw string value.",
+            "params": [
+              {
+                "name": "file",
+                "type_name": "String",
+                "description": "file to read and return its text content.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "String",
+              "description": "a string containing the contents of the specified file.",
+              "complex_type": false
+            },
+            "name": "getText",
+            "location": {
+              "start": 100,
+              "insert": 100,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 14,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Transform.java",
+    "path": "src/com/ch/Transform.java",
+    "content": {
+      "structured": {
+        "description": "A `Transform` class that handles transformations in 3D space. It has several methods for rotating and translating objects in 3D space, as well as a `getTransformation()` method that returns a matrix representation of the transformation. The class also has an `update()` method that updates the transformation matrix based on the position, rotation, and scale of the object. Additionally, it has a `setParent()` method for setting the parent transform, and a `getTransformedPos()` and `getTransformedRot()` methods for obtaining the transformed position and rotation of the object.",
+        "items": [
+          {
+            "id": "c5d1cafe-a09c-9c91-3647-893faaa7c191",
+            "ancestors": [],
+            "description": "Is an extension of the Math package, allowing for rotations and scale changes in 3D space. It has several public methods such as update() to update the transform matrix, rotate() and lookAt() to change the orientation, and getTransformedPos() and getTransformedRot() to return transformed positions and rotations respectively. Additionally, it has properties like pos, rot, and scale that can be modified, and a parent field that can link this transform to another one in a hierarchy.",
+            "name": "Transform",
+            "location": {
+              "start": 7,
+              "insert": 7,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 131,
+            "docLength": null
+          },
+          {
+            "id": "92e361e2-f63c-4890-aa41-e081d46d9b41",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Updates an object's position, rotation, and scale based on its previous values or initializes them if not provided.",
+            "params": [],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(0, 0, 1));\ntransform.update();\n",
+              "description": ""
+            },
+            "name": "update",
+            "location": {
+              "start": 32,
+              "insert": 32,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 14,
+            "docLength": null
+          },
+          {
+            "id": "1a81aa17-ec73-a3a8-dd46-bed67059266b",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Multiplies a quaternion representing a rotation axis by an angle and normalizes the result, returning a new quaternion representing the rotated orientation.",
+            "params": [
+              {
+                "name": "axis",
+                "type_name": "Vector3f",
+                "description": "3D rotation axis around which the rotation will be performed.",
+                "complex_type": false
+              },
+              {
+                "name": "angle",
+                "type_name": "float",
+                "description": "3D rotation angle of the object around the specified `axis`.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform myObject = new Transform();\n\tVector3f axis = new Vector3f(1, 0, 0); // X-axis\n\tfloat angle = 90; // counterclockwise rotation in degrees\n\tmyObject.rotate(axis, angle);\n",
+              "description": ""
+            },
+            "name": "rotate",
+            "location": {
+              "start": 47,
+              "insert": 47,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "322d1fdb-544f-13b8-8a4c-68679cf60aaa",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Computes the rotation required to face a specified point while maintaining a specific direction perpendicular to the plane of the point. The rotation is returned as a `Quaternion` object.",
+            "params": [
+              {
+                "name": "point",
+                "type_name": "Vector3f",
+                "description": "3D position of an object that the `lookAt()` method should rotate around.",
+                "complex_type": false
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D direction perpendicular to the look-at point, which is used to calculate the rotation necessary for the camera to face that direction.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.lookAt(new Vector3f(0, 10, 0), new Vector3f(0, 1, 0));\n",
+              "description": "\nThis code creates a new instance of the Transform class and then uses the lookAt method to set the rotation of the transform object to face in the direction of the point (0, 10, 0) with the up vector being (0, 1, 0)."
+            },
+            "name": "lookAt",
+            "location": {
+              "start": 51,
+              "insert": 51,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "c785d925-f5f7-c080-074e-1b86b4e25918",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Computes a rotation quaternion that looks at a specified point while orienting along a supplied up vector.",
+            "params": [
+              {
+                "name": "point",
+                "type_name": "Vector3f",
+                "description": "3D position from which to look at the scene.",
+                "complex_type": false
+              },
+              {
+                "name": "up",
+                "type_name": "Vector3f",
+                "description": "3D direction that the look-at rotation should be applied to, relative to the position of the object being rotated.",
+                "complex_type": false
+              }
+            ],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a quaternion representing the rotation needed to look at a point in the environment from a specific position and orientation.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector3f point = new Vector3f(5, 0, 0);\nVector3f up = new Vector3f(0, 1, 0);\nTransform transform = new Transform();\ntransform.lookAt(point, up);\nQuaternion rotation = transform.getLookAtRotation(point, up);\n",
+              "description": ""
+            },
+            "name": "getLookAtRotation",
+            "location": {
+              "start": 55,
+              "insert": 55,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "c1a9140e-99bf-d2a2-9e4e-b6abcd286bcf",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Checks if an object's properties have changed from their previous values, returning `true` if any change was detected and `false` otherwise.",
+            "params": [],
+            "returns": {
+              "type_name": "boolean",
+              "description": "a boolean indicating whether any of the object's properties have changed.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform(); // creating an instance of the class Transform and initializing it with a position, rotation and scale \ntransform.hasChanged(); // returns false because all values are equal to their original value\ntransform.pos.x = 1; // updating a position x coordinate\ntransform.hasChanged(); // returns true because only the x coordinate of the position has been updated \n",
+              "description": ""
+            },
+            "name": "hasChanged",
+            "location": {
+              "start": 59,
+              "insert": 59,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 15,
+            "docLength": null
+          },
+          {
+            "id": "6f349904-07e4-3090-cd46-3ffa764aa63a",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Computes the transformation matrix for an object based on its position, rotation, and scale. It takes the position, rotation, and scale values as input and returns the transformed matrix as output.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a matrix representation of a transformation consisting of translation, rotation, and scaling.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nmyTransform.setPos(new Vector3f(1, 2, 3));\nmyTransform.setRot(new Quaternion(0, 1, 0, 0));\nmyTransform.setScale(new Vector3f(4, 5, 6));\nMatrix4f myTransformation = myTransform.getTransformation();\n",
+              "description": ""
+            },
+            "name": "getTransformation",
+            "location": {
+              "start": 75,
+              "insert": 75,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 7,
+            "docLength": null
+          },
+          {
+            "id": "f66627aa-4ea2-55b1-fa40-76b3ac0cd9fb",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Retrieves and returns the transformation matrix of its parent node in the scene graph, taking into account changes made to the parent node's transformation.",
+            "params": [],
+            "returns": {
+              "type_name": "Matrix4f",
+              "description": "a `Matrix4f` representation of the transformation matrix of the parent node.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class MyClass {\n    private Transform myTransform;\n\n    public void someMethod() {\n        Matrix4f parentTransformation = myTransform.getParentMatrix();\n        // Use parentTransformation in your code...\n    }\n}\n",
+              "description": "\nIn this example, the method getParentMatrix is called on an instance of Transform named \"myTransform\" within the scope of a class named MyClass. The returned Matrix4f is then used to perform transformations on the myTransform object."
+            },
+            "name": "getParentMatrix",
+            "location": {
+              "start": 83,
+              "insert": 83,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 6,
+            "docLength": null
+          },
+          {
+            "id": "e5f3d597-3001-f29b-464f-70c1161105cc",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Sets the `Transform` field `parent`.",
+            "params": [
+              {
+                "name": "parent",
+                "type_name": "Transform",
+                "description": "Transform to which the current Transform should be set as a child.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\n\ttransform.setParent(parent);\n",
+              "description": ""
+            },
+            "name": "setParent",
+            "location": {
+              "start": 90,
+              "insert": 90,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "1796e641-b09a-07aa-ed46-fe3876552ffa",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Transforms a `Vector3f` object using a matrix representation, returning the transformed position.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a transformed position vector based on the parent matrix.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Vector3f myPos = new Vector3f();\nmyPos.set(1, 2, 3); // Set the position vector to (1, 2, 3)\n\nTransform myTransform = new Transform(); // Create a new transform object\nmyTransform.setPos(myPos); // Set the position of the transform object to (1, 2, 3)\n\nVector3f transformedPos = myTransform.getTransformedPos(); // Get the transformed position vector\nSystem.out.println(transformedPos); // Output: [2, 4, 6]\n",
+              "description": ""
+            },
+            "name": "getTransformedPos",
+            "location": {
+              "start": 94,
+              "insert": 94,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "3cdd4dc4-0d99-3288-0241-86ee01048de5",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Takes a `Quaternion` object `parentRotation` and multiplies it with another `Quaternion` object `rot`, returning the transformed rotation.",
+            "params": [],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a Quaternion representation of the transformed rotation matrix multiplied by the input rotation matrix `rot`.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "import com.ch.math.Quaternion;\n\npublic class Test {\n    public static void main(String[] args) {\n        Transform myTransform = new Transform();\n        Quaternion rot = new Quaternion(1, 0, 0, 0);\n        myTransform.setRot(rot);\n        \n        Quaternion transformedRot = myTransform.getTransformedRot();\n        System.out.println(\"My Transformed Rotation: \" + transformedRot);\n    }\n}\n",
+              "description": ""
+            },
+            "name": "getTransformedRot",
+            "location": {
+              "start": 98,
+              "insert": 98,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "16dc88aa-a272-0a89-a746-5e6b14104325",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Returns a `Vector3f` object containing the position of an entity.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a `Vector3f` object representing the position of the entity.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(1, 2, 3)); // Sets position to (1, 2, 3)\nVector3f pos = transform.getPos();\nSystem.out.println(pos);\n// Output: (1, 2, 3)\n",
+              "description": ""
+            },
+            "name": "getPos",
+            "location": {
+              "start": 107,
+              "insert": 107,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "d61889e4-8baa-99ab-d049-388028c9f7c5",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Sets the position of an object to a specified value.",
+            "params": [
+              {
+                "name": "pos",
+                "type_name": "Vector3f",
+                "description": "3D position of an object or entity that the method is called on, and assigns it to the `pos` field of the class instance.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform t = new Transform();\nVector3f position = new Vector3f(1, 2, 3);\nt.setPos(position);\n",
+              "description": "\nIn this example, we are creating a new instance of the Transform class and storing it in the variable \"t\". We then create a new vector of type Vector3f and store it in the variable \"position\". Finally, we use the setPos method to set the position value stored in variable \"t\" to be equal to the position value stored in variable \"position\"."
+            },
+            "name": "setPos",
+            "location": {
+              "start": 111,
+              "insert": 111,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "83c1c70f-4d8f-5c87-d94f-315c73f96178",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Adds a vector to the position component of its object parameter, by first getting the current position and then adding the provided vector to it.",
+            "params": [
+              {
+                "name": "addVec",
+                "type_name": "Vector3f",
+                "description": "3D vector to be added to the current position of the object, which is then updated using the `setPos()` method.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "public static void main(String[] args) {\n\n\t\tTransform t = new Transform();\n\n\t\tVector3f pos = new Vector3f(0, 0, 1);\n\t\tt.setPos(pos);\n\n\t\tVector3f addVec = new Vector3f(0, 1, 0);\n\t\tt.addToPos(addVec);\n\n\t\tSystem.out.println(t.getPos()); // prints (0, 1, 1)\n\t}\n",
+              "description": ""
+            },
+            "name": "addToPos",
+            "location": {
+              "start": 115,
+              "insert": 115,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 1,
+            "docLength": null
+          },
+          {
+            "id": "b04df31c-5218-d082-6d4b-15327ae018f3",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Returns a `Quaternion` object representing the rotation of an entity.",
+            "params": [],
+            "returns": {
+              "type_name": "Quaternion",
+              "description": "a Quaternion object representing the robot's rotation.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform transform = new Transform();\ntransform.setPos(new Vector3f(0, 0, 0));\ntransform.setRot(new Quaternion(1, 0, 0, 0));\ntransform.addToPos(new Vector3f(1, 0, 0));\nQuaternion rotation = transform.getRot();\n",
+              "description": "\nIn this example, we first create a new Transform object and set its position to (0, 0, 0) using the setPos() method. Then, we set its rotation to identity quaternion using the setRot() method. Next, we add (1, 0, 0) to its current position using the addToPos() method. Finally, we retrieve its rotation using getRot() and store it in a Quaternion object called \"rotation\"."
+            },
+            "name": "getRot",
+            "location": {
+              "start": 117,
+              "insert": 117,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "b647d1ee-8298-efb8-9344-901566374b92",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Sets the instance field `rot` to the given `Quaternion` representation of a rotation matrix.",
+            "params": [
+              {
+                "name": "rotation",
+                "type_name": "Quaternion",
+                "description": "4D quaternion that updates the rotational state of the object, which is stored in the `rot` field of the class.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nQuaternion rotation = Quaternion.fromAngleAxis(90, Vector3f.UNIT_X);\nmyTransform.setRot(rotation);  // sets the rotation of myTransform to a quaterion with the angle axis (90 degrees, X-axis)\n",
+              "description": ""
+            },
+            "name": "setRot",
+            "location": {
+              "start": 121,
+              "insert": 121,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "17b01cc4-6920-c393-bd45-5c0d864e7bdd",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Returns the object's scale value as a `Vector3f` instance.",
+            "params": [],
+            "returns": {
+              "type_name": "Vector3f",
+              "description": "a `Vector3f` object representing the scale of the game object.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "Transform myTransform = new Transform();\nVector3f scale = new Vector3f(1, 2, 3);\nmyTransform.setScale(scale);\n// Get the current scale of the transform\nVector3f scaleFromMethod = myTransform.getScale();\nSystem.out.println(\"The transform's scale is: \" + scaleFromMethod);\n",
+              "description": ""
+            },
+            "name": "getScale",
+            "location": {
+              "start": 125,
+              "insert": 125,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "e47a999d-e41f-e6b6-164a-24de53ed3561",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Sets the scale of an object, replacing its previous value.",
+            "params": [
+              {
+                "name": "scale",
+                "type_name": "Vector3f",
+                "description": "3D scaling factor for the object, which is applied to its geometry.",
+                "complex_type": false
+              }
+            ],
+            "usage": {
+              "language": "java",
+              "code": "Transform t = new Transform();\nVector3f scale = new Vector3f(2, 4, 8);\nt.setScale(scale);\n",
+              "description": ""
+            },
+            "name": "setScale",
+            "location": {
+              "start": 129,
+              "insert": 129,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          },
+          {
+            "id": "263b67a1-bfef-5a94-fa46-7726673b357b",
+            "ancestors": [
+              "c5d1cafe-a09c-9c91-3647-893faaa7c191"
+            ],
+            "description": "Returns an empty string.",
+            "params": [],
+            "returns": {
+              "type_name": "empty",
+              "description": "an empty string.",
+              "complex_type": false
+            },
+            "usage": {
+              "language": "java",
+              "code": "public class Main {\n    public static void main(String[] args) {\n        Transform transform = new Transform();\n        String string = transform.toString(); // The value of the variable \"string\" will be an empty string.\n    }\n}\n",
+              "description": ""
+            },
+            "name": "toString",
+            "location": {
+              "start": 133,
+              "insert": 133,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "Main.java",
+    "path": "src/com/ch/Main.java",
+    "content": {
+      "structured": {
+        "description": "A 3D graphics program using LWJGL, with a basic scene consisting of a camera, a shader, and a cube. The program also includes a world object for storing voxel data, but this is not explicitly accessed or used in the provided code. The main function initializes display and GL capabilities, loads a default shader, and renders the cube at the correct position and size. The update function processes input and updates the position of the camera, while the render function draws the cube using the shader and camera positions.",
+        "items": [
+          {
+            "id": "3447bcac-0f93-74a4-e041-16cdca9f2777",
+            "ancestors": [],
+            "description": "Has various methods for initializing and updating display and GPU state, rendering 3D graphics, and exiting the application. It also includes a Model class, a Shader class, a Texture class, and a World class, which are likely used for rendering 3D graphics.",
+            "name": "Main",
+            "location": {
+              "start": 15,
+              "insert": 15,
+              "offset": " ",
+              "indent": 0,
+              "comment": null
+            },
+            "item_type": "class",
+            "length": 123,
+            "docLength": null
+          },
+          {
+            "id": "de11a202-b5f7-13a7-6d4e-d77f78e6b543",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Initializes display and GL resources, enters an endless loop to render graphics, and then exits with a success code (0).",
+            "params": [
+              {
+                "name": "args",
+                "type_name": "String[]",
+                "description": "1 or more command-line arguments passed to the `main` method when the program is launched, which are then ignored and not used in the program's execution.",
+                "complex_type": false
+              }
+            ],
+            "name": "main",
+            "location": {
+              "start": 17,
+              "insert": 17,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 8,
+            "docLength": null
+          },
+          {
+            "id": "4b1e2311-117e-8ab7-5943-b25fb64774d6",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Sets up a display mode, creates a Display object, enables vertical syncing, and prints the OpenGL version string.",
+            "params": [],
+            "name": "initDisplay",
+            "location": {
+              "start": 33,
+              "insert": 33,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 10,
+            "docLength": null
+          },
+          {
+            "id": "f52d9600-105a-09b4-3447-f823b75fcbe4",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Initializes a 3D graphics environment using OpenGL ES 2.0. It sets up a camera, loads a shader, creates a texture, and defines a cube-shaped chunk for rendering.",
+            "params": [],
+            "name": "initGL",
+            "location": {
+              "start": 44,
+              "insert": 44,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 41,
+            "docLength": null
+          },
+          {
+            "id": "c5cc6c93-57ea-0cb3-dc40-8e8e25da496a",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Updates and renders a graphical user interface using the Java 2D API, displaying the frame rate and memory usage in the title bar. It loops until the user requests closure or the escape key is pressed.",
+            "params": [],
+            "name": "loop",
+            "location": {
+              "start": 86,
+              "insert": 86,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 21,
+            "docLength": null
+          },
+          {
+            "id": "dd1738f6-8c8d-88aa-044b-f2e86c83eee7",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Updates the position of an object (`w`) based on input from a controller (`c`) and its current transform state, using a fixed time step `dt`.",
+            "params": [
+              {
+                "name": "dt",
+                "type_name": "float",
+                "description": "time step passed to the `processInput()` method for processing.",
+                "complex_type": false
+              }
+            ],
+            "name": "update",
+            "location": {
+              "start": 108,
+              "insert": 108,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 4,
+            "docLength": null
+          },
+          {
+            "id": "ad56a10e-aa39-aa98-ca4b-cf5323a02379",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Renders a 3D scene using the `GLSL` shader language. It sets up the rendering context, binds the modelview and projection matrices, and draws the 3D objects in the scene.",
+            "params": [],
+            "name": "render",
+            "location": {
+              "start": 113,
+              "insert": 113,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 20,
+            "docLength": null
+          },
+          {
+            "id": "ae85e437-0253-9b94-8a46-99197708d95d",
+            "ancestors": [
+              "3447bcac-0f93-74a4-e041-16cdca9f2777"
+            ],
+            "description": "Terminates the Java process with the specified status code, which can be a value between 0 and 2147483647.",
+            "params": [
+              {
+                "name": "status",
+                "type_name": "int",
+                "description": "exit code for the program, which is passed to the `System.exit()` method to terminate the program.",
+                "complex_type": false
+              }
+            ],
+            "name": "exit",
+            "location": {
+              "start": 134,
+              "insert": 134,
+              "offset": "\t",
+              "indent": 1,
+              "comment": null
+            },
+            "item_type": "method",
+            "length": 3,
+            "docLength": null
+          }
+        ]
+      }
+    }
+  }
+]
