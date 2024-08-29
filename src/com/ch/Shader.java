@@ -16,8 +16,7 @@ import org.lwjgl.opengl.GL20;
 
 import com.ch.math.Matrix4f;
 
-public class Shader {
-	
+public class Shader {	
 	private int program;
 	
 	public Shader(int program) {
