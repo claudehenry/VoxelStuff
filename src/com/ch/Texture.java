@@ -27,11 +27,9 @@ import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
 /**
- * Represents a texture in OpenGL and provides methods for loading, binding, and
- * managing textures from image files. It allows for specifying the sampler slot to
- * bind the texture to, and returns the ID of the loaded texture. The loadTexture
- * method loads an image file into a ByteBuffer and configures the texture parameters
- * accordingly.
+ * Loads a given image file and generates an OpenGL texture from it. It provides
+ * methods to bind the texture to a specific sampler slot for rendering. The class
+ * also handles error handling during the loading process.
  */
 public class Texture {
 
@@ -45,22 +43,22 @@ public class Texture {
 
 
 	/**
-	 * Calls another method named `bind` with an integer argument set to 0. This implies
-	 * that it is a recursive call, where the function invokes itself with a specific
-	 * parameter. The purpose of this function remains unclear without further context
-	 * or information about its implementation.
+	 * Invokes another overloaded version named `bind(int)`, passing an integer argument
+	 * with a value of 0. This implies that the `bind(int)` method is responsible for
+	 * performing some binding operation, and the `bind()` function simply delegates this
+	 * task to it with a default parameter.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * Activates a specific texture unit and binds a given 2D texture to it. The active
-	 * texture unit is determined by the provided sampler slot, which must be within the
-	 * range [0, 31].
+	 * Binds a texture to a specific sampler slot using OpenGL commands. It activates the
+	 * specified texture and binds it to the target texture ID. The function also ensures
+	 * that the sampler slot is within the valid range of 0 to 31.
 	 *
-	 * @param samplerSlot 1-based index of the texture unit to be used for binding the
-	 * specified texture.
+	 * @param samplerSlot 1-based index of the sampler slot to bind the texture to, and
+	 * it is used to determine the active texture unit for binding the texture.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -69,26 +67,29 @@ public class Texture {
 	}
 
 	/**
-	 * Returns an integer value representing an ID. It retrieves the stored `id` value
-	 * and returns it without modification or calculation. This read-only function simply
-	 * exposes the existing ID for access by other parts of the program.
+	 * Retrieves the value of an integer variable named `id`. The returned value is the
+	 * current state of the `id` variable, which is not modified within the function
+	 * itself. This method simply returns the existing value without performing any
+	 * calculations or operations.
 	 *
-	 * @returns an integer value representing the ID.
+	 * @returns an integer value representing the identifier stored in the `id` variable.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * Loads a texture from a file, converts it to RGBA format, and generates an OpenGL
-	 * texture object with specified parameters. It returns the ID of the generated texture.
+	 * Loads a specified image file into a texture buffer and returns its ID. It reads
+	 * the image, converts it to a ByteBuffer, binds the texture, sets parameters for
+	 * filtering and wrapping, uploads the data to OpenGL, and generates mipmaps.
 	 *
-	 * @param fileName name of the image file that is being loaded and used to create a
-	 * texture.
+	 * @param fileName name of the file to be loaded as a texture, which is then used to
+	 * read the image and generate a corresponding OpenGL texture object.
 	 *
-	 * @returns an ID of a generated OpenGL texture.
+	 * @returns an integer identifier of a loaded texture.
 	 *
-	 * The output is an integer ID representing the generated texture on the graphics card.
+	 * The output is an integer value representing the ID of the generated texture in
+	 * OpenGL. The ID can be used to bind and manipulate the texture later in the program.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
