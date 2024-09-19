@@ -4,7 +4,6 @@ import com.ch.math.Matrix4f;
 import com.ch.math.Vector3f;
 
 public abstract class Camera {
-
 	protected Matrix4f projection;
 	protected Matrix4f viewProjectionMat4;
 	protected CameraStruct values;
@@ -16,15 +15,14 @@ public abstract class Camera {
 	}
 
 	public Matrix4f getViewProjection() {
-
 		if (viewProjectionMat4 == null || transform.hasChanged()) {
 			calculateViewMatrix();
 		}
+
 		return viewProjectionMat4;
 	}
 
 	public Matrix4f calculateViewMatrix() {
-
 		Matrix4f cameraRotation = transform.getTransformedRot().conjugate().toRotationMatrix();
 		Matrix4f cameraTranslation = getTranslationMatrix();
 
@@ -34,6 +32,7 @@ public abstract class Camera {
 
 	public Matrix4f getTranslationMatrix() {
 		Vector3f cameraPos = transform.getTransformedPos().mul(-1);
+
 		return new Matrix4f().initTranslation(cameraPos.getX(), cameraPos.getY(), cameraPos.getZ());
 	}
 
@@ -46,9 +45,6 @@ public abstract class Camera {
 	public abstract void adjustToViewport(int width, int height);
 
 	protected abstract class CameraStruct {
-
 		protected abstract Matrix4f getAsMatrix4();
-
 	}
-
 }
