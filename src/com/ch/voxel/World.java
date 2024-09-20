@@ -7,9 +7,10 @@ import com.ch.Shader;
 
 
 /**
- * Manages a 3D world with a grid structure. It generates chunks of the world and
- * updates their positions when necessary. The class also handles rendering of these
- * chunks using a shader and camera.
+ * Manages a three-dimensional world of chunks, generating and updating them as the
+ * game's position changes. It handles chunk loading and unloading to optimize
+ * performance. The class also provides a render method for drawing the world using
+ * shaders and a camera.
  */
 public class World {
 
@@ -27,9 +28,10 @@ public class World {
 	}
 	
 	/**
-	 * Initializes and updates a three-dimensional array of `Chunk` objects, setting their
-	 * positions based on global coordinates `x`, `y`, and `z`. Each `Chunk` object is
-	 * updated to generate its blocks and generates a model representation.
+	 * Initializes and updates a three-dimensional array of Chunk objects, populating it
+	 * with instances of Chunk at specified positions. Each chunk instance is updated to
+	 * generate its block model. The chunks are initialized across a grid defined by
+	 * dimensions W, H, and D.
 	 */
 	private void gen() {
 		for (int i = 0; i < W; i++)
@@ -42,19 +44,18 @@ public class World {
 	}
 
 	/**
-	 * Updates the position of a chunk and checks if it has changed. If there is no change,
-	 * it returns early. Otherwise, it generates new chunks or moves existing ones based
-	 * on the direction and distance of the change.
+	 * Updates the current position of a chunk in a world based on new coordinates provided
+	 * as parameters. If the position has changed, it generates new chunks and updates
+	 * the world's chunk array accordingly.
 	 *
-	 * @param x 3D coordinates of a position, and it is used to update the internal state
-	 * of an object by recalculating its chunk coordinates and potentially generating new
-	 * chunks if necessary.
+	 * @param x 3D coordinate position of an object or entity in a world, and is used to
+	 * update its chunk position by dividing it by Chunk.CHUNK_SIZE.
 	 *
-	 * @param y 2D position of an object and is used to determine if there has been a
-	 * change in its location, but it is not updated or utilized further in the code.
+	 * @param y 2D coordinate of the chunk being updated but is immediately replaced with
+	 * a hardcoded value of 0 when casting to an integer, effectively rendering it unnecessary.
 	 *
-	 * @param z 3D coordinate to be updated, and its value is used to calculate the `_z`
-	 * variable, which determines whether the chunk needs to be regenerated or updated.
+	 * @param z 3D coordinate of a chunk and is used to determine when chunks need to be
+	 * generated or updated due to changes in the world's height.
 	 */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
@@ -241,22 +242,22 @@ public class World {
 	}
 
 	/**
-	 * Iterates over a three-dimensional array of chunk objects, rendering each non-null
-	 * chunk's model using a shader program and a camera. The color of each chunk is
-	 * calculated based on its coordinates and an identifier, and the model-view-projection
-	 * matrix is set accordingly.
+	 * 3D models associated with chunks of a world, iterating over a 3D array of chunk
+	 * data and drawing each chunk's model using a shader program, camera, and uniform
+	 * variables. It handles null chunk references and calculates colors from chunk coordinates.
 	 *
-	 * @param s Shader object, which is used to set uniform variables and draw the model
-	 * of each chunk.
+	 * @param s shader used for rendering, allowing it to set uniforms and matrices such
+	 * as colors and model-view-projection transforms.
 	 *
-	 * Set `Shader s`. It has an `uniformf` method and a `unifromMat4` method. The first
-	 * method sets a uniform floating-point value for a specified variable name and values.
+	 * Set multiple shader uniforms:
+	 * - "color" with values r, g, b
+	 * - "MVP" with a 4x4 matrix value resulting from multiplying two matrices together.
 	 *
-	 * @param c Camera object, which is used to calculate the Model View Projection (MVP)
-	 * matrix and multiply it with the chunk's model matrix before drawing the chunk's model.
+	 * @param c 3D camera, which is used to calculate the model-view-projection (MVP)
+	 * matrix and pass it to the shader through the "MVP" uniform.
 	 *
-	 * Apply transformation to view and projection matrices using multiplication. The
-	 * result is a 4x4 matrix representing combined transformations.
+	 * Transforms the camera's view projection matrix with the chunk's model matrix using
+	 * `mul` operation.
 	 */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)

@@ -9,10 +9,10 @@ import com.ch.Util;
 import com.ch.math.Matrix4f;
 
 /**
- * Represents a three-dimensional chunk of blocks in a world, with each block having
- * specific properties such as coordinates, neighbors, and textures. The class generates
- * models from these blocks and manages their updating, rendering, and storage. It
- * also handles noise generation for terrain creation.
+ * Represents a three-dimensional area of blocks in a game world, generated using
+ * Simplex Noise to create terrain. It has methods for updating block relationships
+ * and generating model data for rendering. The class also provides access to the
+ * generated model and its transformation matrix.
  */
 public class Chunk {
 
@@ -25,9 +25,11 @@ public class Chunk {
 	private Model model;
 	
 	/**
-	 * Creates a new model if a flag is set, then returns it. It resets the flag after creation.
+	 * Returns a model, optionally creating it if necessary. It checks a flag to determine
+	 * if creation is needed and calls `createModel` if so, then resets the flag. The
+	 * created or existing model is returned as a result.
 	 *
-	 * @returns a pre-generated model if necessary, otherwise returns an existing one.
+	 * @returns a generated or cached instance of the Model class.
 	 */
 	public Model getModel() {
 		if (to_gen_model) {
@@ -38,11 +40,14 @@ public class Chunk {
 	}
 	
 	/**
-	 * Returns a new instance of a `Matrix4f` object initialized with a translation
-	 * transformation based on the provided coordinates x, y, and z multiplied by a
-	 * constant value `CHUNK_SIZE`. This matrix represents a position in 3D space.
+	 * Initializes a 4x4 transformation matrix with a translation component that moves
+	 * an object by a certain offset (x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE)
+	 * based on its position (x, y, z). A new instance of Matrix4f is created and initialized.
 	 *
-	 * @returns a new 4x4 matrix initialized with translation values.
+	 * @returns a translation matrix.
+	 * The matrix represents position (x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE)
+	 * in 3D space.
+	 * It initializes a new Matrix4f object with this translation.
 	 */
 	public Matrix4f getModelMatrix() {
 		return new Matrix4f().initTranslation(x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE);
@@ -70,9 +75,9 @@ public class Chunk {
 	
 
 	/**
-	 * Iterates through an array of blocks, checking adjacent blocks for existence and
-	 * updating various flags (lt, bt, ft, rt, tp, bk) based on their presence or absence.
-	 * This process is repeated for each block within a chunk.
+	 * Checks each block's neighbors and updates its flags, indicating whether it is
+	 * adjacent to an existing block or not. It iterates over a three-dimensional array
+	 * of blocks, examining each block's north-south, east-west, and up-down neighbors.
 	 */
 	public void updateBlocks() {
 		for (int i = 0; i < CHUNK_SIZE_CUBED; i++) {
@@ -167,21 +172,19 @@ public class Chunk {
 	
 	
 	/**
-	 * Invokes another method `toGenModel` with a boolean argument set to false. This
-	 * implies that the function generates a model, likely in a specific context or
-	 * environment, and does not specify any additional parameters for customization.
+	 * Calls another method with a default argument value of false when called directly.
+	 * This suggests that the function has an overloaded variant that takes a boolean
+	 * parameter. The purpose of this function is to initiate model generation without
+	 * specifying additional parameters or values.
 	 */
 	public void toGenModel() { toGenModel(false); };
 	
 	/**
-	 * Iterates through a block array, generating vertices and indices for each non-null
-	 * block using the `gen` method. The generated data is not directly used but rather
-	 * stored in variables `vertices`, `indices`. The function also toggles a boolean
-	 * flag based on the input parameter `now`.
+	 * Generates a model by iterating through an array of blocks, generating vertices and
+	 * indices for each block, and storing them in the `vertices` and `indices` arrays.
+	 * The generated model is then loaded into memory if the `now` parameter is true.
 	 *
-	 * @param now boolean value that determines whether the `createModel()` method is
-	 * called or not, with `true` triggering model creation and `false` setting `to_gen_model`
-	 * to true.
+	 * @param now generation of a model immediately, as opposed to deferring it for later.
 	 */
 	public void toGenModel(boolean now) {
 
@@ -219,20 +222,21 @@ public class Chunk {
 	}
 	
 	/**
-	 * Loads a 3D model from vertex and index arrays, which are converted to float and
-	 * integer arrays respectively using utility functions. The loaded model is then
-	 * stored as an instance variable.
+	 * Initializes a 3D model by loading data from an array of vertices and indices into
+	 * the `model` object using the `load` method provided by the `Model` class. The data
+	 * is converted to float and int arrays, respectively, using utility methods before
+	 * being loaded.
 	 */
 	private void createModel() {
 		this.model = Model.load(Util.toFloatArray(vertices), Util.toIntArray(indices));
 	}
 	
 	/**
-	 * Generates a model by calling the `toGenModel` method with a boolean argument set
-	 * to true, and returns the generated model. The returned model is stored as an
-	 * instance variable `model`.
+	 * Generates a model and returns it. It is called with an argument that triggers the
+	 * generation process by executing the `toGenModel` method. The generated model is
+	 * stored in the `model` property, which is then returned.
 	 *
-	 * @returns an instance of the `Model` class.
+	 * @returns a generated model instance stored in the `model` variable.
 	 */
 	public Model genModel() {
 		
@@ -242,42 +246,44 @@ public class Chunk {
 	}
 
 	/**
-	 * Generates vertices and indices for a 3D object's face based on block properties
-	 * (`ft`, `bk`, `bt`, `tp`, `lt`, and `rt`). It adds vertices and corresponding indices
-	 * to lists, incrementing the maximum index after each iteration. The function returns
-	 * the updated maximum index.
+	 * Generates vertices and indices for a 3D cube based on the properties of a given
+	 * block, adding the generated data to corresponding lists. It handles six sides of
+	 * a cube: front, back, top, bottom, left, and right.
 	 *
-	 * @param vertices 3D vertices of a cube, and its elements are updated with new vertex
-	 * coordinates based on the block's properties.
+	 * @param vertices 3D model's vertex data, where vertices are appended to it with
+	 * newly generated coordinates for each block face.
 	 *
-	 * Add vertices to the list in groups of four with x, y and z coordinates defined by
-	 * block parameters; each group is a face of a 3D cube. The float array contains the
-	 * vertex values.
+	 * Accumulates floats representing 3D vertex coordinates.
+	 * Can grow by adding new float values iteratively.
 	 *
-	 * @param indices indices of vertices to be connected and forms triangles, which are
-	 * then added to the list of indices for rendering purposes.
+	 * @param indices 3D object's face indices, which are incremented and added to as
+	 * vertices are generated for each of its constituent parts.
 	 *
-	 * Adds integers to form a list with incremental values starting from 0;
-	 * Each sequence of four consecutive indices represents an element in a mesh structure;
-	 * These sequences have varying start points and increment patterns based on the block
-	 * conditions.
+	 * Indices are added to this list from four different blocks (ft, bk, bt, tp) with
+	 * specific values based on block flags and their respective vertex coordinates. The
+	 * indices for each block are in a cyclic pattern of [0, 1, 2, 0, 2, 3] or [0, 3, 2,
+	 * 0, 2, 1].
 	 *
-	 * @param block 3D block structure that is being processed, with its properties ft,
-	 * bk, bt, tp, lt, and rt determining whether additional vertices and indices are
-	 * added to the lists.
+	 * @param block 3D block that is being processed, and its properties are used to
+	 * determine which faces of the block should be generated.
 	 *
-	 * Block contains boolean flags ft, bk, bt, tp, lt and rt. These flags indicate whether
-	 * certain parts of the block (front, back, bottom, top, left, right) should be
-	 * generated or not.
+	 * Set X-coordinate to x.
+	 * Set Y-coordinate to y.
+	 * Set Z-coordinate to z.
+	 * FT is a boolean property.
+	 * BK is a boolean property.
+	 * BT is a boolean property.
+	 * TP is a boolean property.
+	 * LT is a boolean property.
+	 * RT is a boolean property.
 	 *
-	 * @param max_index maximum index value that is to be used for adding new vertices
-	 * and indices to the provided lists.
+	 * @param max_index current maximum index that should be assigned to new vertices and
+	 * indices added to the `vertices` and `indices` lists, respectively.
 	 *
 	 * @returns an updated maximum index value.
 	 *
-	 * Returned index is incremented by 4 after adding each new set of vertices and indices
-	 * for each block face (ft, bk, bt, tp, lt, rt). The total number of indices added
-	 * to the list is equal to the value of max_index.
+	 * The method returns an integer value representing the updated maximum index.
+	 * The value is incremented by 4 for each valid block condition met.
 	 */
 	private static int gen(List<Float> vertices, List<Integer> indices, Block block, int max_index) {
 		

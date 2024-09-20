@@ -1,13 +1,12 @@
 package com.ch.voxel;
 
 /**
- * Represents a three-dimensional block in space with properties such as coordinates
- * and flags indicating its front, back, top, bottom, left, and right sides.
+ * Represents a three-dimensional spatial unit with defined coordinates and properties.
  *
- * - z (int): represents an integer variable of a block's coordinates.
+ * - z (int): is an integer representing a three-dimensional coordinate value.
  *
- * - rt (boolean): represents a boolean variable in the Block class indicating a
- * right-sided property.
+ * - rt (boolean): is a boolean variable indicating a right-facing direction of an
+ * object or entity.
  */
 public class Block {
 	

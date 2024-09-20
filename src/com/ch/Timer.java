@@ -3,9 +3,11 @@ package com.ch;
 import org.lwjgl.Sys;
 
 /**
- * Measures and updates the frame rate (FPS), calculates the time delta between frames,
- * and keeps track of the total time elapsed since initialization. The class also
- * provides methods to retrieve these values.
+ * Measures and updates frame rates and elapsed time in real-time using system timing
+ * functionality.
+ * It provides means to calculate frame rate and delta time for use in game or animation
+ * loops.
+ * The class is designed for use in a single-threaded environment with LWJGL dependencies.
  */
 public class Timer {
 
@@ -17,32 +19,34 @@ public class Timer {
     public static float time;
 
 	/**
-	 * Calculates the current system time in seconds by multiplying the result of
-	 * `Sys.getTime()` with 1000 and then dividing it by the timer resolution returned
-	 * by `Sys.getTimerResolution()`. The resulting value is a long integer representing
-	 * the elapsed time in seconds.
+	 * Returns a time value in milliseconds by multiplying the current system time in
+	 * seconds by 1000 and dividing it by the timer resolution. This calculates an
+	 * approximate millisecond time based on system clock ticks. The result is returned
+	 * as a long data type.
 	 *
-	 * @returns the current system time in seconds.
+	 * @returns a numerical representation of current time in milliseconds.
 	 */
 	private static long getTimeS() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 
 	/**
-	 * Initializes the last frame per second (FPS) by recording the current time using
-	 * `getTimeS`. This sets a baseline for subsequent FPS calculations, indicating the
-	 * starting point for measuring performance.
+	 * Initializes a variable `lastFPS` by recording the current system time using the
+	 * `getTimeS()` method, effectively capturing the initial timestamp for subsequent
+	 * FPS calculations. This operation serves as a starting point to measure frame rate
+	 * performance over time. The timestamp is stored in a static context.
 	 */
 	public static void init() {
 		lastFPS = getTimeS();
 	}
 
 	/**
-	 * Calculates the time difference between the current frame and the previous frame.
-	 * It returns this difference as a float value, which is the elapsed time since the
-	 * last frame. The result is used to control the game's speed or timing.
+	 * Computes the elapsed time since the previous frame. It retrieves the current
+	 * timestamp, calculates the difference with the last recorded frame time, updates
+	 * the last frame time to the current value, and returns the time delta as a float.
+	 * The delta is cast from an integer.
 	 *
-	 * @returns a floating-point value representing the time difference between frames.
+	 * @returns a float representing the elapsed time between frames.
 	 */
 	private static float calculateDelta() {
 		long time = getTimeS();
@@ -52,9 +56,9 @@ public class Timer {
 	}
 
 	/**
-	 * Updates the frames per second (FPS) counter by incrementing a `fps` variable and
-	 * updating `currentFPS` when a second has elapsed since the last update, calculated
-	 * using the `getTimeS()` method. The `lastFPS` timestamp is also updated accordingly.
+	 * Tracks and updates the frames per second (FPS) metric by incrementing a counter,
+	 * resetting it when one second has passed since last update, and storing the average
+	 * FPS over time.
 	 */
 	private static void updateFPS() {
 		if (getTimeS() - lastFPS > 1000) {
@@ -66,43 +70,45 @@ public class Timer {
 	}
 
 	/**
-	 * Returns a floating-point value named `delta`. The returned value is not modified
-	 * or calculated within the function, suggesting that it may be a getter method
-	 * retrieving an existing variable's state. The purpose of this function appears to
-	 * be providing access to the external scope's `delta` variable.
+	 * Returns a floating-point value representing a delta, indicating a difference or
+	 * change. The function is declared as static, suggesting it operates on class-level
+	 * data rather than instance data. It appears to provide access to a pre-computed
+	 * delta value.
 	 *
-	 * @returns a floating-point value representing the current value of the variable `delta`.
+	 * @returns a single floating-point value representing an unknown quantity named `delta`.
 	 */
 	public static float getDelta() {
 		return delta;
 	}
 
 	/**
-	 * Returns a floating-point value representing the current frame per second (FPS)
-	 * rate. It does not perform any computations or modifications to the FPS data, instead
-	 * simply retrieves and returns the existing `currentFPS` value. The returned value
-	 * is read-only and static.
+	 * Retrieves and returns the current Frames Per Second value, which is a measure of
+	 * the frame rate. It provides an accessor for the `currentFPS` variable, allowing
+	 * it to be accessed from other parts of the program. The returned value represents
+	 * the current frame rate in floating-point format.
 	 *
-	 * @returns a floating-point value representing the current frames per second.
+	 * @returns a floating-point number representing the current frames per second value.
 	 */
 	public static float getFPS() {
 		return currentFPS;
 	}
 
     /**
-     * Returns a float value representing the current time. The time is stored in the
-     * `time` variable, which is not explicitly defined within the provided code snippet.
+     * Returns a floating-point value representing the current time, accessing it from
+     * an external variable named `time`. The function is declared as `static`, indicating
+     * it can be accessed without creating an instance of the class. It does not modify
+     * the `time` variable.
      *
-     * @returns a `float` value representing the current time.
+     * @returns a fixed floating-point value stored in the `time` variable.
      */
     public static float getTime() {
         return time;
     }
 
     /**
-     * Updates the game's FPS and calculates a time delta by dividing the calculated delta
-     * by 1000, ensuring it stays within the range [0, 1]. The accumulated time is
-     * incremented by the updated delta. This process controls the game's timing.
+     * Calculates and updates the game's timestamp, taking into account the average frame
+     * rate per second. It limits the calculated delta to a valid range (0-1) to prevent
+     * errors. The updated time is then incremented by the delta value.
      */
     public static void update() {
         updateFPS();

@@ -4,11 +4,11 @@ import static java.lang.Math.sin;
 import static java.lang.Math.cos;
 
 /**
- * Represents a mathematical object used to describe 3D rotations in computer graphics
- * and game development. It provides various methods for performing quaternion
- * operations such as multiplication, normalization, conjugation, and conversion from
- * Euler angles. The class also includes getter and setter methods for accessing and
- * modifying the quaternion's components.
+ * Represents a mathematical entity used to describe rotations in 3D space, providing
+ * methods for quaternion creation, manipulation, and conversion between quaternions,
+ * matrices, and Euler angles. It offers various operations such as scalar multiplication,
+ * addition, subtraction, and conjugation. The class also includes methods for
+ * converting quaternions to rotation matrices and vice versa.
  */
 public class Quaternion {
 
@@ -40,23 +40,25 @@ public class Quaternion {
 	}
 
 	/**
-	 * Calculates and returns the Euclidean norm, or magnitude, of a four-dimensional
-	 * vector represented by the variables `x`, `y`, `z`, and `w`. It uses the Pythagorean
-	 * theorem to combine the squares of each component, then takes the square root of
-	 * the result.
+	 * Calculates the Euclidean norm or magnitude of a vector. It returns the square root
+	 * of the sum of squares of its components, i.e., x, y, z and w. The result is cast
+	 * to float for precision.
 	 *
-	 * @returns a floating-point value representing the Euclidean distance from origin.
+	 * @returns the Euclidean magnitude of a 4-dimensional vector.
 	 */
 	public float length() {
 		return (float) Math.sqrt(x * x + y * y + z * z + w * w);
 	}
 
 	/**
-	 * Computes a new quaternion by dividing each component (w, x, y, and z) of the input
-	 * quaternion by its magnitude (length). This results in a quaternion with unit length,
-	 * often used for normalization or to ensure rotation matrices are orthonormal.
+	 * Computes the length of a quaternion and returns a new normalized quaternion with
+	 * components scaled by the reciprocal of its length. This effectively normalizes the
+	 * input quaternion to have unit length while preserving its direction. The original
+	 * quaternion is unchanged.
 	 *
-	 * @returns a new quaternion with its magnitude normalized to 1.
+	 * @returns a quaternion with components scaled to unit length.
+	 * Its components are normalized values of the original w, x, y, and z values.
+	 * The result has a magnitude of 1.0f.
 	 */
 	public Quaternion normalized() {
 		float length = length();
@@ -65,39 +67,43 @@ public class Quaternion {
 	}
 
 	/**
-	 * Returns a quaternion with the imaginary parts negated. It takes the original
-	 * quaternion's real part and flips the signs of its imaginary components. The resulting
-	 * quaternion is the complex conjugate of the input quaternion.
+	 * Returns a quaternion that is the conjugate of the current instance, obtained by
+	 * negating its non-real components (`x`, `y`, and `z`). The resulting quaternion has
+	 * the same real part and an inverted imaginary part. The function creates a new
+	 * quaternion object with these values.
 	 *
-	 * @returns a new Quaternion object with reversed imaginary components.
+	 * @returns a quaternion with negated x, y, and z components.
 	 */
 	public Quaternion conjugate() {
 		return new Quaternion(w, -x, -y, -z);
 	}
 
 	/**
-	 * Multiplies a given float value with each component (w, x, y, and z) of a quaternion
-	 * object and returns a new quaternion object with the resulting values.
+	 * Multiplies a quaternion by a scalar value, returning a new quaternion with each
+	 * component scaled by the given factor. The original quaternion's components are
+	 * modified by multiplying them with the specified float value r. A new quaternion
+	 * is created and returned.
 	 *
-	 * @param r scalar value by which each component of the quaternion (w, x, y, and z)
-	 * is multiplied to produce the result of the multiplication operation.
+	 * @param r scalar value to be multiplied with each component of the current quaternion.
 	 *
-	 * @returns a new `Quaternion` object with scaled components.
+	 * Scales each component of the quaternion by the given factor.
+	 *
+	 * @returns a new Quaternion instance with scalar and vector components scaled by the
+	 * input parameter `r`.
 	 */
 	public Quaternion mul(float r) {
 		return new Quaternion(w * r, x * r, y * r, z * r);
 	}
 
 	/**
-	 * Multiplies two quaternions element-wise, following the Hamilton product rule for
-	 * quaternion multiplication. It calculates the product of two quaternions and returns
-	 * a new quaternion as the result. The product is represented by four floating-point
-	 * numbers: w, x, y, z.
+	 * Computes the product of two quaternions, represented as instances of the Quaternion
+	 * class, and returns a new quaternion instance resulting from the multiplication
+	 * operation. The product is calculated using the standard formula for quaternion multiplication.
 	 *
-	 * @param r 4D vector (w, x, y, z) of another quaternion that is multiplied with the
-	 * current quaternion.
+	 * @param r quaternion to be multiplied by the current quaternion, whose result is
+	 * computed and returned as a new quaternion object.
 	 *
-	 * @returns a new quaternion representing the result of multiplying two quaternions.
+	 * @returns a new quaternion resulting from the multiplication of two quaternions.
 	 */
 	public Quaternion mul(Quaternion r) {
 		float w_ = w * r.getW() - x * r.getX() - y * r.getY() - z * r.getZ();
@@ -109,14 +115,17 @@ public class Quaternion {
 	}
 
 	/**
-	 * Multiplies a quaternion by a 3D vector, performing a rotation operation on the
-	 * vector. It calculates the resulting components of the rotated vector based on the
-	 * input quaternion and returns a new quaternion with the updated values.
+	 * Performs a quaternion-vector multiplication, resulting in a new quaternion with
+	 * components calculated from the input vector and the current quaternion's components.
+	 * It uses Hamilton product rules for quaternions and vectors to compute the products.
+	 * The result is a new quaternion representing the rotation applied to the original
+	 * quaternion.
 	 *
-	 * @param r 3D vector to be multiplied with the quaternion, and its coordinates are
-	 * used to calculate the resulting quaternion components.
+	 * @param r 3D vector with which to multiply the quaternion, used for scalar
+	 * multiplication and cross product calculations.
 	 *
-	 * @returns a new quaternion representing the product of an input quaternion and a vector.
+	 * @returns a new quaternion resulting from the multiplication of the current quaternion
+	 * with the given vector.
 	 */
 	public Quaternion mul(Vector3f r) {
 		float w_ = -x * r.getX() - y * r.getY() - z * r.getZ();
@@ -128,41 +137,44 @@ public class Quaternion {
 	}
 
 	/**
-	 * Calculates the difference between two quaternions, subtracting corresponding
-	 * components (w, x, y, and z). It returns a new quaternion object representing the
-	 * result of the subtraction operation.
+	 * Subtracts two quaternions, element-wise. It takes another quaternion as an argument
+	 * and returns a new quaternion with components w, x, y, and z calculated by subtracting
+	 * corresponding components of the input quaternion from its own components. The
+	 * result is a new quaternion representing the difference between the two input quaternions.
 	 *
-	 * @param r 4D vector to be subtracted from the current Quaternion instance's components
-	 * (w, x, y, and z).
+	 * @param r 3D vector to be subtracted from another Quaternion's components, w, x,
+	 * y, and z.
 	 *
-	 * @returns a Quaternion object resulting from subtracting another Quaternion from
-	 * the current one.
+	 * @returns a new quaternion resulting from element-wise subtraction of input quaternions.
+	 * Resulting components are differences between corresponding w, x, y, and z values.
+	 * Subtraction is performed componentwise on each value.
 	 */
 	public Quaternion sub(Quaternion r) {
 		return new Quaternion(w - r.getW(), x - r.getX(), y - r.getY(), z - r.getZ());
 	}
 
 	/**
-	 * Combines two quaternion objects by adding their corresponding components, namely
-	 * w, x, y, and z, and returns a new quaternion object with the resulting values.
+	 * Adds two quaternions together element-wise, combining corresponding elements from
+	 * both quaternions to produce a new quaternion. This is achieved by creating a new
+	 * quaternion instance with the sum of each component. The result is a new quaternion
+	 * representing the sum of the input quaternions.
 	 *
-	 * @param r 4D vector of another quaternion, which is added to the current quaternion's
-	 * components.
+	 * @param r 4D vector components of another quaternion to be added to the current
+	 * quaternion's components.
 	 *
-	 * @returns a new quaternion resulting from adding the input quaternion to the current
-	 * one.
+	 * @returns a new Quaternion with added components.
 	 */
 	public Quaternion add(Quaternion r) {
 		return new Quaternion(w + r.getW(), x + r.getX(), y + r.getY(), z + r.getZ());
 	}
 
 	/**
-	 * Calculates a rotation matrix from three vectors: forward, up, and right. These
-	 * vectors are derived from input values x, y, w, and z using various trigonometric
-	 * formulas. The function then initializes a new `Matrix4f` object with the calculated
-	 * rotation information.
+	 * Computes a rotation matrix from a quaternion. The input quaternion is assumed to
+	 * be in the form (x, y, z, w). The function calculates the forward, up, and right
+	 * vectors based on the quaternion components and creates a new rotation matrix with
+	 * these vectors.
 	 *
-	 * @returns a rotation matrix represented as a `Matrix4f`.
+	 * @returns a rotation matrix representing a 3D rotation from a quaternion.
 	 */
 	public Matrix4f toRotationMatrix() {
 		Vector3f forward = new Vector3f(2.0f * (x * z - w * y), 2.0f * (y * z + w * x), 1.0f - 2.0f * (x * x + y * y));
@@ -173,36 +185,39 @@ public class Quaternion {
 	}
 
 	/**
-	 * Computes the dot product of a quaternion and another given quaternion. It multiplies
-	 * corresponding elements of both quaternions (x, y, z, w) and returns their sum as
-	 * a floating-point value.
+	 * Computes the dot product of two quaternions by multiplying corresponding components
+	 * and summing them together, returning a scalar result representing the similarity
+	 * or magnitude between the two input quaternions. The operation is element-wise
+	 * multiplication followed by addition. It produces a float value.
 	 *
-	 * @param r 4D vector of another Quaternion object, whose components are used to
-	 * compute the dot product with the current Quaternion's components.
+	 * @param r 4D vector to be dotted with the current quaternion's components, accessed
+	 * through its getter methods.
 	 *
-	 * @returns a floating-point value representing the dot product of two quaternions.
+	 * @returns a scalar value representing the dot product of two Quaternions.
 	 */
 	public float dot(Quaternion r) {
 		return x * r.getX() + y * r.getY() + z * r.getZ() + w * r.getW();
 	}
 
 	/**
-	 * Interpolates between a source quaternion and a destination quaternion by calculating
-	 * the shortest rotation from the source to the destination, considering the dot
-	 * product of the quaternions. It takes into account whether the shortest path is
-	 * required and normalizes the result.
+	 * Interpolates between two quaternions, effectively performing a non-linear interpolation
+	 * (spherical linear interpolation) with a given factor and optional shortest-path
+	 * correction. It calculates a intermediate quaternion based on the interpolated
+	 * vector between the current quaternion and the destination quaternion. The result
+	 * is then normalized.
 	 *
-	 * @param dest 4D vector towards which the quaternion is interpolated, with its sign
-	 * determining the direction of interpolation and its magnitude influencing the rate
-	 * of interpolation.
+	 * @param dest 4D quaternion that defines the target or destination rotation, which
+	 * is used to perform spherical linear interpolation with the current instance's quaternion.
 	 *
-	 * @param lerpFactor 0-to-1 factor that controls the interpolation between the current
-	 * quaternion and the destination quaternion.
+	 * @param lerpFactor 3D linear interpolation factor that determines the degree to
+	 * which the current quaternion is interpolated towards the destination quaternion.
 	 *
-	 * @param shortest 3D vector of the dot product of two quaternion, which is used to
-	 * determine if it should be negated for calculating the shortest path to destination.
+	 * @param shortest option to return the shortest arc between two rotations, which is
+	 * achieved by reflecting the target rotation if the current rotation and target
+	 * rotation have opposite directions.
 	 *
-	 * @returns a normalized Quaternion resulting from lerping to the destination.
+	 * @returns a normalized Quaternion representing the result of natural LERP interpolation
+	 * between two Quaternions.
 	 */
 	public Quaternion NLerp(Quaternion dest, float lerpFactor, boolean shortest) {
 		Quaternion correctedDest = dest;
@@ -214,29 +229,29 @@ public class Quaternion {
 	}
 
 	/**
-	 * Interpolates between two quaternions, `this` and `dest`, using spherical linear
-	 * interpolation (Slerp). It returns a quaternion that represents the intermediate
-	 * state, taking into account whether to use the shortest or longest path.
+	 * Interpolates between two quaternions using spherical linear interpolation, ensuring
+	 * a smooth rotation. It adjusts the destination quaternion based on whether shortest
+	 * or longest path is preferred and handles cases where the quaternions are nearly
+	 * antipodal. The result is a quaternion representing an intermediate rotation.
 	 *
-	 * @param dest 3D rotation to be interpolated towards, serving as the target quaternion
-	 * for the spherical linear interpolation process.
+	 * @param dest destination quaternion towards which a smooth rotation is interpolated
+	 * from the current object's quaternion.
 	 *
-	 * Dest has a quaternion structure with four components - W, X, Y and Z. Its dot
-	 * product with the current object (this) is calculated. If shortest arc is required,
-	 * its components are negated accordingly.
+	 * Dest has four components: w, x, y, z, which are accessed via methods getW(), getX(),
+	 * getY(), and getZ() respectively.
 	 *
-	 * @param lerpFactor 0-to-1 value that determines the proportion of the destination
-	 * quaternion to blend with the current quaternion during the linear interpolation process.
+	 * @param lerpFactor 0 to 1 interpolation factor that determines the proportion of
+	 * the destination quaternion's rotation to blend into the source quaternion.
 	 *
-	 * @param shortest flag that determines whether to adjust the destination quaternion
-	 * for the shortest rotation path, if necessary, based on its cosine value with respect
-	 * to the current quaternion.
+	 * @param shortest shortest path option for quaternion spherical lerp, swapping the
+	 * target quaternion if necessary to ensure a shorter rotation arc when its dot product
+	 * with the current quaternion is negative.
 	 *
-	 * @returns a Quaternion that smoothly interpolates between the source and destination.
+	 * @returns a quaternion interpolated between two input quaternions.
 	 *
-	 * The output is an instance of `Quaternion`, which represents a 4D vector with w,
-	 * x, y, and z components. The magnitude or length of this quaternion vector can be
-	 * calculated as the square root of the sum of the squares of its components.
+	 * The returned Quaternion is a weighted average of the input Quaternions `this` and
+	 * `dest`, with weights determined by the lerpFactor and shortest flag. The resulting
+	 * Quaternion has magnitude 1 and is on the great circle between the two input Quaternions.
 	 */
 	public Quaternion SLerp(Quaternion dest, float lerpFactor, boolean shortest) {
 		final float EPSILON = 1e3f;
@@ -302,89 +317,103 @@ public class Quaternion {
 	}
 
 	/**
-	 * Returns a new `Vector3f` object representing the forward direction after rotation
-	 * by the instance it belongs to. The vector (0, 0, 1) is rotated using the instance
-	 * as the rotation center.
+	 * Returns a new rotation of the unit vector (0, 0, 1) based on the current object's
+	 * orientation.
+	 * It accomplishes this by applying the object's transformation to the unit vector
+	 * through the `rotate` method.
+	 * A Vector3f representing the forward direction in the object's coordinate system
+	 * is returned.
 	 *
-	 * @returns a new `Vector3f` object rotated based on the input.
+	 * @returns a rotated vector pointing forward from the object's local space.
 	 */
 	public Vector3f getForward() {
 		return new Vector3f(0, 0, 1).rotate(this);
 	}
 
 	/**
-	 * Returns a new `Vector3f` object representing the direction behind an entity. The
-	 * vector is created by rotating a default vector pointing towards negative z-axis
-	 * around the entity's orientation, represented by the `this` parameter.
+	 * Returns a vector that represents the direction opposite to the current object's
+	 * orientation, taking into account its rotation matrix. It does so by creating a new
+	 * vector (0, 0, -1) and applying the object's rotation to it using the `rotate` method.
 	 *
-	 * @returns a rotated `Vector3f` object with x and y coordinates as zero.
+	 * @returns a rotated version of the unit vector (-1, 0, 0) relative to the instance's
+	 * orientation.
+	 * This vector represents the back direction from the object's perspective.
+	 * Its direction is opposite to the x-axis in local space.
 	 */
 	public Vector3f getBack() {
 		return new Vector3f(0, 0, -1).rotate(this);
 	}
 
 	/**
-	 * Rotates a predefined vector (0, 1, 0) by a specified angle using the object `this`,
-	 * and returns the resulting vector as a new `Vector3f`. This represents the upward
-	 * direction in a three-dimensional space. The rotation is applied around an arbitrary
-	 * axis defined by `this`.
+	 * Returns a vector representing the local up direction for an object defined by this
+	 * instance, calculated based on its rotation and an initial upward vector (0, 1, 0).
+	 * The result is a new Vector3f object with the rotated coordinates. Rotation is
+	 * performed using another object's transformation properties.
 	 *
-	 * @returns a rotated vector (0, 1, 0) based on the input object's orientation.
+	 * @returns a rotated `Vector3f` object representing the vector (0, 1, 0) relative
+	 * to the instance's orientation.
 	 */
 	public Vector3f getUp() {
 		return new Vector3f(0, 1, 0).rotate(this);
 	}
 
 	/**
-	 * Creates a new `Vector3f` object with coordinates (0, -1, 0) and rotates it by the
-	 * instance's transformation matrix before returning the result. The rotation is
-	 * applied around the origin to produce a vector pointing downwards from the instance's
-	 * position.
+	 * Returns a new vector pointing downward from the current orientation, calculated
+	 * by rotating a unit vector (0, -1, 0) around the current rotation. The result is a
+	 * vector that represents the downward direction relative to the object's current
+	 * position and orientation. It returns a Vector3f object.
 	 *
-	 * @returns a rotated vector pointing down (0, -1, 0) relative to the object's orientation.
+	 * @returns a rotated `Vector3f` with the z-axis remaining unchanged.
 	 */
 	public Vector3f getDown() {
 		return new Vector3f(0, -1, 0).rotate(this);
 	}
 
 	/**
-	 * Returns a new `Vector3f` object created by rotating the vector (1, 0, 0) around
-	 * the origin by the angle specified in the `this` object. The result is a vector
-	 * representing the right direction of the coordinate system defined by `this`.
+	 * Returns a Vector3f instance representing the local right axis of an object, relative
+	 * to its current rotation state.
+	 * This is achieved by rotating the global unit vector along the X-axis (1,0,0) around
+	 * the object's origin.
+	 * The result is the object's local X-axis as a new vector.
 	 *
-	 * @returns a rotated vector with its x-axis pointing right.
+	 * @returns a normalized vector in the direction to the right of the object.
+	 * It is orthogonal to the object's forward and up vectors.
+	 * Its magnitude is 1.
 	 */
 	public Vector3f getRight() {
 		return new Vector3f(1, 0, 0).rotate(this);
 	}
 
 	/**
-	 * Returns a new `Vector3f` object that is the result of rotating a fixed vector (-1,
-	 * 0, 0) around the origin by an amount specified by the current instance. The rotation
-	 * is applied using the `rotate` method, which takes this instance as its argument.
+	 * Returns a new vector by rotating the default left unit vector (-1, 0, 0) around
+	 * the current object's rotation, resulting in a vector representing the direction
+	 * to the left relative to the object's orientation. The returned vector is of type
+	 * Vector3f.
 	 *
-	 * @returns a rotated vector with negative x-axis component and zero y- and z-axis components.
+	 * @returns a Vector3f rotated to the left of its original orientation.
 	 */
 	public Vector3f getLeft() {
 		return new Vector3f(-1, 0, 0).rotate(this);
 	}
 
 	/**
-	 * Initializes a Quaternion object with specified values for its components (x, y,
-	 * z, and w) and returns the same object instance. It updates the internal state of
-	 * the object by assigning the given float values to the corresponding properties.
+	 * Updates the values of a Quaternion object's components with new float values for
+	 * x, y, z, and w coordinates. It assigns these new values to the corresponding
+	 * instance variables. The function returns the updated Quaternion object itself.
 	 *
-	 * @param x 1st component of a quaternion, which is assigned to the instance variable
-	 * `this.x`.
+	 * @param x 3D space component of the quaternion and sets it to the value passed as
+	 * an argument.
 	 *
-	 * @param y 2nd component of a quaternion and is assigned to the instance variable `this.y`.
+	 * @param y 2nd component of the quaternion, which is used to define its rotation or
+	 * transformation properties.
 	 *
-	 * @param z 3D axis of the quaternion and is assigned to the instance variable `this.z`.
+	 * @param z 3D coordinate on the z-axis of a quaternion, typically used to store
+	 * rotation or transformation data in three-dimensional space.
 	 *
-	 * @param w 4th component of a quaternion, which is assigned to the instance variable
-	 * `this.w`.
+	 * @param w 4th component of the quaternion, which is often used to represent the
+	 * scalar or imaginary part.
 	 *
-	 * @returns an instance of Quaternion with updated values for x, y, z, and w.
+	 * @returns a reference to the updated instance of Quaternion.
 	 */
 	public Quaternion set(float x, float y, float z, float w) {
 		this.x = x;
@@ -424,14 +453,14 @@ public class Quaternion {
 	}
 
 	/**
-	 * Modifies the current quaternion instance by updating its components with those
-	 * from a provided `Quaternion` object, and returns the updated instance for method
-	 * chaining.
+	 * Initializes the quaternion object with values from another quaternion object. It
+	 * sets the x, y, z, and w components using the provided setter method. The function
+	 * returns a reference to the current object for chaining.
 	 *
-	 * @param r 3D rotation to be applied, from which the x, y, z, and w components are
-	 * extracted and used to set the corresponding values of the current Quaternion object.
+	 * @param r 4D vector (quaternion) whose components are copied into the current object,
+	 * modifying its state.
 	 *
-	 * @returns a reference to the modified `Quaternion` object itself.
+	 * @returns a reference to the modified instance of Quaternion.
 	 */
 	public Quaternion set(Quaternion r) {
 		set(r.getX(), r.getY(), r.getZ(), r.getW());
@@ -439,105 +468,114 @@ public class Quaternion {
 	}
 
 	/**
-	 * Returns a floating-point value representing the value of variable `x`. It simply
-	 * retrieves and provides access to the current state of `x`, without modifying it.
-	 * The returned value is used by other parts of the program as needed.
+	 * Returns a floating-point value representing a coordinate or position along the
+	 * x-axis, likely as part of a larger geometric or spatial context. The function
+	 * provides read-only access to a private member variable named `x`. Its return type
+	 * is a primitive `float`.
 	 *
-	 * @returns a floating-point value representing the variable `x`.
+	 * @returns a floating-point value representing the current state of field `x`. The
+	 * exact value depends on its initialization. It returns the private instance variable
+	 * `x`.
 	 */
 	public float getX() {
 		return x;
 	}
 
 	/**
-	 * Assigns a floating-point value to an instance variable named `x`. The input `float`
-	 * parameter is used to update the internal state of the object, effectively changing
-	 * its value. This method sets the x-coordinate or attribute of the object.
+	 * Assigns a new value to an instance variable named `x`, which is presumably of type
+	 * float, updating its current state with the provided input value. This updates the
+	 * attribute's state directly without any validation or processing beyond assignment.
+	 * The change persists in subsequent program execution.
 	 *
-	 * @param x value to be assigned to the instance variable `x` of the class, updating
-	 * its current value.
+	 * @param x 2D coordinate's X-axis value to be assigned to an object's internal state
+	 * variable `this.x`.
 	 */
 	public void setX(float x) {
 		this.x = x;
 	}
 
 	/**
-	 * Returns a floating-point value representing the y-coordinate. It simply retrieves
-	 * and outputs the value of the variable `y`. This method does not perform any
-	 * calculations or modifications, but rather provides direct access to the stored value.
+	 * Returns the current value of a private field named `y`, which is presumably an
+	 * instance variable of a class, allowing external access to its value for various
+	 * purposes such as calculations or visualization. The return type is float, indicating
+	 * a decimal number. This is a getter method.
 	 *
-	 * @returns a floating-point value representing the attribute `y`.
+	 * @returns the current value of a private member variable `y`, represented as a
+	 * floating-point number.
 	 */
 	public float getY() {
 		return y;
 	}
 
 	/**
-	 * Updates the value of a float variable named `y`. It takes a single float parameter
-	 * and assigns it to the object's instance field with the same name. This allows
-	 * external code to modify the internal state of the object.
+	 * Updates the value of a floating-point field named `y`. The field can be accessed
+	 * via an instance of its containing class, allowing modification of the object's
+	 * state. This method does not perform any validation or checks on the input value.
 	 *
-	 * @param y vertical coordinate to be assigned to the object, and its value is stored
-	 * as an instance variable of the class.
+	 * @param y vertical coordinate that is being assigned to an instance variable or
+	 * field of a class, updating its value accordingly.
 	 */
 	public void setY(float y) {
 		this.y = y;
 	}
 
 	/**
-	 * Retrieves a floating-point value representing the value of the variable `z`. It
-	 * does not perform any calculations or modifications, instead, it simply returns the
-	 * existing value. The returned value is stored as a float type and can be used
-	 * elsewhere in the program.
+	 * Returns the value of a variable named `z`, which is assumed to be a member of the
+	 * same class and of type `float`. The purpose of this function appears to provide
+	 * access to the `z` attribute. It does not modify the state of the object.
 	 *
-	 * @returns a floating-point value representing the variable `z`.
+	 * @returns a floating-point value representing the current state of variable z.
 	 */
 	public float getZ() {
 		return z;
 	}
 
 	/**
-	 * Updates the value of a floating-point variable `z`. The new value is assigned to
-	 * the existing instance variable `this.z`, effectively modifying its state. This
-	 * allows external code to alter the internal state of the object.
+	 * Updates the `z` field with a new value provided as input, allowing it to be modified
+	 * after initialization. The function takes a single parameter of type `float`, which
+	 * is used to replace the existing value of `this.z`.
 	 *
-	 * @param z 3D coordinate value that is assigned to the instance variable `z`.
+	 * @param z 3D coordinate value being assigned to an object's property or attribute,
+	 * modifying its vertical position within a three-dimensional space.
 	 */
 	public void setZ(float z) {
 		this.z = z;
 	}
 
 	/**
-	 * Retrieves and returns a floating-point value named `w`. It appears to be a getter
-	 * method, allowing access to the private variable `w` from outside the class. This
-	 * enables other parts of the program to use or display the value stored in `w`.
+	 * Returns the value of a variable `w`, which is presumably used to represent some
+	 * width or dimension, as it is declared with a data type of float indicating a
+	 * numerical measurement.
 	 *
-	 * @returns a floating-point value representing the variable `w`.
+	 * @returns a floating-point value representing the width of an object or variable
+	 * named `w`.
 	 */
 	public float getW() {
 		return w;
 	}
 
 	/**
-	 * Assigns a value to the instance variable `w`. It takes a float parameter `w`, which
-	 * is used to initialize or update the value of the `w` variable. The updated value
-	 * becomes accessible through subsequent references to the object's `w` property.
+	 * Sets a value for the instance variable `w`. It takes a float argument, assigns it
+	 * to the `w` field, and does not return any value. The assignment is direct, without
+	 * any validation or modification of the input value.
 	 *
-	 * @param w width value to be assigned to an instance variable of the same name within
-	 * the class.
+	 * @param w width value to be assigned to the object's field, which is then stored
+	 * within it.
 	 */
 	public void setW(float w) {
 		this.w = w;
 	}
 
 	/**
-	 * Compares two Quaternion objects for equality by checking if their respective
-	 * components (x, y, z, and w) are equal. It returns a boolean value indicating whether
-	 * the Quaternions are identical or not.
+	 * Compares two Quaternion objects for equality based on their component values,
+	 * specifically whether x, y, z, and w coordinates match exactly between the two
+	 * Quaternions. The comparison is done using strict equality checks via the `==`
+	 * operator. A true result indicates identical Quaternions.
 	 *
-	 * @param r quaternion to be compared with the current object for equality.
+	 * @param r 3D quaternion object being compared for equality with the current quaternion
+	 * instance.
 	 *
-	 * @returns a boolean indicating whether two Quaternions are identical.
+	 * @returns a boolean value indicating equality of two Quaternion objects.
 	 */
 	public boolean equals(Quaternion r) {
 		return x == r.getX() && y == r.getY() && z == r.getZ() && w == r.getW();

@@ -28,10 +28,9 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
 /**
- * Is responsible for loading and managing textures from image files using OpenGL
- * libraries. It provides a way to bind and use these textures in rendering operations.
- * The class encapsulates the process of generating and configuring texture IDs,
- * buffer creation, and texture mapping.
+ * Loads and manages image textures for OpenGL rendering. It creates a texture from
+ * an image file using the ImageIO library and stores it in an OpenGL texture object.
+ * The class provides methods to bind and retrieve the texture ID.
  */
 public class Texture {
 	
@@ -44,31 +43,31 @@ public class Texture {
 	}
 
 	/**
-	 * Overrides the default method from the `Object` class and provides a way to release
-	 * system resources when an object is being garbage-collected, but its implementation
-	 * is optional and not guaranteed to be called by the JVM.
+	 * Performs automatic cleanup when an object is about to be garbage collected.
+	 * It allows an object to free resources before being destroyed.
+	 * It may not be called at all if the object is not garbage collected.
 	 */
 	@Override
 	protected void finalize() {
 	}
 
 	/**
-	 * Initializes a binding operation by calling another `bind` function with an argument
-	 * of 0. This single-function implementation implies that it is delegating its
-	 * responsibility to another method, likely for further processing or initialization
-	 * purposes. The outcome depends on the behavior of the called `bind` function.
+	 * Binds an object with default index value of 0, implying it is a call to another
+	 * overloaded `bind` method. The actual binding operation depends on the implementation
+	 * of the other method. Binding results in the establishment of a connection or
+	 * association between two objects.
 	 */
 	public void bind() {
 		bind(0);
 	}
 
 	/**
-	 * Activates a texture unit with a specified slot and binds a texture to it. It asserts
-	 * that the provided slot is within a valid range (0-31) before performing the binding
-	 * operation. The active texture unit is updated accordingly.
+	 * Sets up a texture for use by OpenGL. It selects an active texture unit based on a
+	 * given sampler slot and then binds a specified 2D texture ID to that unit. The
+	 * assertion ensures the samplerSlot is within valid range.
 	 *
-	 * @param samplerSlot 32-bit enumeration value that specifies the texture unit to
-	 * bind the texture to.
+	 * @param samplerSlot 32-bit texture slot where the bound texture will be accessed
+	 * for rendering purposes.
 	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
@@ -77,29 +76,30 @@ public class Texture {
 	}
 
 	/**
-	 * Retrieves and returns the value of the variable `id`. It does not modify or
-	 * manipulate the `id` in any way, simply exposing its current state to the caller.
-	 * The returned value is an integer representation of the `id`.
+	 * Returns an integer value representing a unique identifier stored in the variable
+	 * `id`. It is a getter method, providing direct access to the `id` field for other
+	 * parts of the program. The returned value can be used or manipulated as needed.
 	 *
-	 * @returns an integer value representing a unique identifier or code.
+	 * @returns an integer value representing a unique identifier.
 	 */
 	public int getID() {
 		return id;
 	}
 
 	/**
-	 * Loads a texture from a file, converts it to a ByteBuffer, and returns an integer
-	 * identifier for the newly created OpenGL texture. The function handles exceptions
-	 * and prints stack traces if any errors occur during execution.
+	 * Loads a texture from a file, converts it into a ByteBuffer format suitable for
+	 * OpenGL, and generates a new OpenGL texture ID. It sets various texture parameters
+	 * to optimize rendering performance. On failure, it prints the exception stack trace
+	 * and exits the program.
 	 *
-	 * @param fileName filename of the image file that is to be loaded and converted into
-	 * a texture for use in an OpenGL application.
+	 * @param fileName 2D image file to be loaded into OpenGL as a texture, with its
+	 * contents used for generating an OpenGL texture object.
 	 *
-	 * @returns an integer ID of a generated texture.
+	 * @returns a generated OpenGL texture ID.
 	 *
-	 * The output is an integer representing the unique identifier (id) assigned to the
-	 * generated texture. It is used for referencing and binding the texture in subsequent
-	 * OpenGL operations.
+	 * The return type is an integer representing a unique OpenGL texture identifier. The
+	 * value 0 indicates failure to load the texture due to an exception. Otherwise, the
+	 * integer represents the generated texture ID that can be used for rendering purposes.
 	 */
 	private static int loadTexture(String fileName) {
 		try {
