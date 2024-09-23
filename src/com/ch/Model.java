@@ -6,9 +6,10 @@ import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 
 /**
- * Provides an interface for rendering and storing vertex data in OpenGL. It encapsulates
- * the process of loading and drawing 3D models from arrays of vertices and indices.
- * The class also includes utility methods for enabling and disabling attribute access.
+ * Handles rendering of 3D models using OpenGL, providing functionality to create and
+ * draw vertices with their associated indices. It encapsulates vertex array objects
+ * (VAOs) and vertex buffer objects (VBOs) for efficient data storage and rendering.
+ * The class includes methods for loading, drawing, and managing model data.
  */
 public class Model {
 
@@ -20,9 +21,9 @@ public class Model {
 	}
 	
 	/**
-	 * Enables and disables vertex attribute arrays and binds a vertex array object to
-	 * the GPU context for rendering, drawing specified geometry with indexed vertices
-	 * using triangles.
+	 * Binds a vertex array object, enables attribute arrays for vertices and normals,
+	 * draws triangles using indexed data, and then disables the attribute arrays and
+	 * unbinds the vertex array object.
 	 */
 	public void draw() {
 		GL30.glBindVertexArray(vao);
@@ -36,10 +37,10 @@ public class Model {
 	}
 	
 	/**
-	 * Enables two generic vertex attribute arrays (GL20) by calling glEnableVertexAttribArray
-	 * with indices 0 and 1, respectively. This allows OpenGL to access specific attributes
-	 * of a mesh's vertices during rendering operations. Attribute array state is set for
-	 * the current context.
+	 * Enables two vertex attribute arrays with indices 0 and 1 for OpenGL rendering,
+	 * allowing data to be retrieved from these attributes during rendering operations.
+	 * This is typically used for setting up vertex buffers and enabling user-defined
+	 * data attributes. The function affects the current GL context.
 	 */
 	public static void enableAttribs() {
 		GL20.glEnableVertexAttribArray(0);
@@ -47,10 +48,10 @@ public class Model {
 	}
 	
 	/**
-	 * Disables vertex attribute arrays for vertices and normals, indicated by indices 0
-	 * and 1 respectively, thereby preventing data from these locations being used during
-	 * rendering operations. The changes are applied globally. Vertex data from these
-	 * sources is no longer sent to the GPU.
+	 * Disables two vertex attribute arrays with indices 0 and 1 using OpenGL's GL20
+	 * library. This typically indicates that no further data should be sent to these
+	 * attributes for rendering purposes. The corresponding data is prevented from being
+	 * used by the GPU.
 	 */
 	public static void disableAttribs() {
 		GL20.glDisableVertexAttribArray(0);
@@ -58,40 +59,39 @@ public class Model {
 	}
 	
 	/**
-	 * Returns an integer representing a Vertex Array Object (VAO). The VAO is presumably
-	 * used for storing and managing vertex array data. This data is likely related to
-	 * graphics rendering and may be used by other functions or methods within the class.
+	 * Retrieves and returns a previously initialized VAO object stored in a variable
+	 * named `vao`. The function does not modify any state but simply exposes the current
+	 * value of the `vao` variable to the caller. It is likely used for rendering purposes.
 	 *
-	 * @returns an integer value representing a VAO (Vertex Array Object) ID.
+	 * @returns an integer representing a valid OpenGL Vertex Array Object ID.
 	 */
 	public int getVAO() {
 		return vao;
 	}
 	
 	/**
-	 * Returns an integer representing the current size of a data structure or object.
-	 * The size is presumably stored as an instance variable named `size`. This value can
-	 * be accessed by calling the `getSize` method.
+	 * Returns an integer value representing the current size. It retrieves a stored
+	 * `size` variable and provides it as output. This allows other parts of the program
+	 * to access or use the current size value.
 	 *
-	 * @returns an integer representing the current size of a data structure.
+	 * @returns an integer representing the current object's property or attribute value.
 	 */
 	public int getSize() {
 		return size;
 	}
 	
 	/**
-	 * Creates a model by binding vertex array object (VAO), storing vertices and indices
-	 * data, and unbinding VAO, ultimately returning a new `Model` instance with the
-	 * created VAO and vertex count. It takes float arrays of vertices and int arrays of
-	 * indices as input.
+	 * Initializes a 3D model by creating a Vertex Array Object (VAO), storing index and
+	 * vertex data, and returning an instance of the `Model` class with its VAO ID and
+	 * vertex count. It binds and unbinds VAO accordingly to preserve GPU resources.
 	 *
-	 * @param vertices 3D vertex data of an object to be rendered, which is stored in the
-	 * graphics card's memory using OpenGL commands.
+	 * @param vertices 3D vertex coordinates to be stored in the Vertex Array Object (VAO)
+	 * for rendering.
 	 *
-	 * @param indices 1D array of indices that define the connectivity between vertices
-	 * for rendering purposes.
+	 * @param indices 1D array of vertex index values that define the connectivity between
+	 * vertices in the 3D model.
 	 *
-	 * @returns a new instance of the `Model` class.
+	 * @returns a `Model` object containing VAO ID and vertex count.
 	 */
 	public static Model load(float[] vertices, int[] indices) {
 		int vao = createVAO();
@@ -103,11 +103,11 @@ public class Model {
 	}
 	
 	/**
-	 * Generates a unique identifier for a vertex array object, binds it to the current
-	 * OpenGL context, and returns the generated ID. This allows the application to store
-	 * references to vertex arrays for later use. The VAO is created on the GPU.
+	 * Generates a unique ID for a Vertex Array Object (VAO), binds it to the current
+	 * OpenGL context, and returns its identifier. This VAO can be used to store vertex
+	 * array data. The VAO is created and bound in one operation.
 	 *
-	 * @returns a unique identifier for a Vertex Array Object.
+	 * @returns a unique identifier for a Vertex Array Object (VAO).
 	 */
 	private static int createVAO() {
 		int vao = GL30.glGenVertexArrays();
@@ -116,16 +116,15 @@ public class Model {
 	}
 	
 	/**
-	 * Generates and configures a vertex buffer object (VBO) to store data for rendering.
-	 * It creates a VBO, binds it, and uploads vertex data from an array into the GPU's
-	 * memory, configuring two attributes with their respective formats and offsets. The
-	 * VBO is then unbound.
+	 * Generates and initializes a buffer object to store vertex data on the GPU. It binds
+	 * a new buffer, copies data from a float array into it, and specifies how the buffer's
+	 * attributes should be interpreted by the GPU. Buffer is then unbound.
 	 *
-	 * @param attrib 16-bit integer index specifying the location of an attribute buffer
-	 * within the vertex shader.
+	 * @param attrib 1-based index of an attribute in the vertex shader that is being
+	 * associated with the given data.
 	 *
-	 * @param data 1D array of floating-point values that will be stored in an OpenGL
-	 * buffer object for use as vertex attributes.
+	 * @param data 1D array of floating-point values that will be stored as vertex data
+	 * in an OpenGL buffer object.
 	 */
 	private static void storeData(int attrib, float[] data) {
 		int vbo = GL15.glGenBuffers();
@@ -137,12 +136,12 @@ public class Model {
 	}
 	
 	/**
-	 * Generates a buffer object and stores an array of indices in it for use with OpenGL.
-	 * It creates a static draw buffer from the provided index array, binding it as an
-	 * element array buffer. The buffer is then stored for future use.
+	 * Generates a buffer object and stores an array of indices within it for use by
+	 * OpenGL. The indices are created as a flipped byte buffer with the `createFlippedBuffer`
+	 * method. The buffer is bound to the GL_ELEMENT_ARRAY_BUFFER target.
 	 *
-	 * @param indices 1D array of integer vertex indices to be stored in an OpenGL buffer
-	 * object.
+	 * @param indices 1D array of integers containing the indices that will be stored as
+	 * an element array buffer.
 	 */
 	private static void storeIndices(int[] indices) {
 		int ibo = GL15.glGenBuffers();
@@ -151,10 +150,10 @@ public class Model {
 	}
 	
 	/**
-	 * Resets the current vertex array object (VAO) to the default state, effectively
-	 * disassociating it from any previously bound VAO. It achieves this by binding a VAO
-	 * with an index of 0 using the `glBindVertexArray` function. This clears the current
-	 * binding.
+	 * Unbinds a Vertex Array Object (VAO) from the current OpenGL context, returning the
+	 * default VAO (index 0). This is typically done to prevent memory leaks or unexpected
+	 * behavior when switching between different VAOs. The operation is performed via an
+	 * OpenGL API call.
 	 */
 	private static void unbindVAO() {
 		GL30.glBindVertexArray(0);
