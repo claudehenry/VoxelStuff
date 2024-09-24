@@ -6,6 +6,11 @@ import com.ch.Camera;
 import com.ch.Shader;
 
 
+/**
+ * Manages a 3D world composed of chunks, each represented by an instance of the Chunk
+ * class. It generates and updates these chunks based on the game's position in the
+ * world. The class is responsible for rendering the world using shaders and a camera.
+ */
 public class World {
 
 	private int x, y, z; // in chunks
@@ -21,6 +26,12 @@ public class World {
 		gen();
 	}
 	
+	/**
+	 * Initializes a 3D chunk grid and populates it with Chunk objects. It creates new
+	 * instances of Chunk, updates their blocks, and generates their visual models for
+	 * each position within a predefined grid defined by W, H, D dimensions. The grid is
+	 * centered at (x, y, z).
+	 */
 	private void gen() {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
@@ -31,6 +42,20 @@ public class World {
 				}
 	}
 
+	/**
+	 * Updates the position of a chunk in a 3D grid, handling cases where the new position
+	 * is adjacent to or far from the current position. It triggers chunk generation when
+	 * necessary and updates block data.
+	 *
+	 * @param x 3D coordinate to be updated and is used to compute the new position of
+	 * the chunk.
+	 *
+	 * @param y 1D block coordinate that is being updated, but its value is always ignored
+	 * because it is initialized to 0 and not used anywhere else in the code.
+	 *
+	 * @param z 3D position's z-coordinate, which determines the vertical chunk positioning
+	 * and potentially triggers chunk generation when moved beyond a certain distance.
+	 */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
 		final int _y = 0;//(int) (y / Chunk.CHUNK_SIZE);
@@ -215,6 +240,27 @@ public class World {
 		/* welp... this logic sure looks aweful */
 	}
 
+	/**
+	 * Loops through a 3D grid of chunks, rendering each non-null chunk using its model
+	 * matrix and color calculated from its coordinates' hash code. The shader's "color"
+	 * uniform is set to the calculated color and "MVP" uniform is set to the transformed
+	 * model matrix.
+	 *
+	 * @param s 3D graphics shader, which is used to set various parameters such as color
+	 * and model-view-projection matrix for drawing 3D models.
+	 *
+	 * Set uniform float vector "color" with three values representing red, green, and
+	 * blue color components.
+	 * Set uniform matrix 4x4 "MVP" as a product of view-projection matrix and model matrix.
+	 *
+	 * @param c 3D camera, providing its view-projection matrix to calculate the
+	 * model-view-projection matrix used for rendering.
+	 *
+	 * MVP is a matrix.
+	 * ViewProjection is an operation that returns MVP.
+	 * getModelMatrix is a method of Chunk object returning a matrix.
+	 * getViewProjection is a method of Camera object returning a matrix.
+	 */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
