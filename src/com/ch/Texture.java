@@ -26,6 +26,11 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL14;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Loads and manages textures for rendering graphics. It creates OpenGL texture objects
+ * from image files and handles binding and unbinding of these textures to specific
+ * sampler slots. The class also generates mipmaps for the loaded textures.
+ */
 public class Texture {
 
 	private int id;
@@ -37,20 +42,51 @@ public class Texture {
 	}
 
 
+	/**
+	 * Binds an object or method to a specific resource or interface with a default index
+	 * of 0, indicating it's being used as the initial binding point. The call is cascaded
+	 * through overloaded methods. The result of the binding operation is not explicitly
+	 * returned.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Activates a texture with ID on the specified sampler slot and binds it to the GPU
+	 * for rendering. The active texture is determined by GL_TEXTURE0 plus the sampler
+	 * slot index. The function ensures the sampler slot is within valid range of 0 to 31.
+	 *
+	 * @param samplerSlot 32 available texture unit slots that can be used to bind textures.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Returns the value of an integer variable named `id`. It allows external access to
+	 * this private or protected member of a class, which can be used for various purposes
+	 * such as retrieval or comparison with other objects. The function has no input
+	 * parameters and is simple.
+	 *
+	 * @returns an integer value representing a unique identifier stored in the variable
+	 * `id`.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a texture from a specified file, converts it to OpenGL format, and returns
+	 * its ID. It uses Java's ImageIO library to read the image, and OpenGl's glBindTexture
+	 * function to bind the image as a texture. It also generates mipmaps for the texture.
+	 *
+	 * @param fileName 2D image file to be loaded and processed for texture mapping purposes.
+	 *
+	 * @returns a unique texture ID.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));
