@@ -8,6 +8,10 @@ import com.ch.SimplexNoise;
 import com.ch.Util;
 import com.ch.math.Matrix4f;
 
+/**
+ * Generates and manages 3D terrain data for a chunk of the game world, utilizing
+ * Simplex Noise for terrain generation and a Model class for rendering.
+ */
 public class Chunk {
 
 	public static final int CHUNK_SIZE = 64;
@@ -18,6 +22,14 @@ public class Chunk {
 	public int x, y, z;
 	private Model model;
 	
+	/**
+	 * Returns a model, either a pre-existing one or a newly created one, depending on
+	 * the `to_gen_model` flag. If `to_gen_model` is true, a model is created and then
+	 * returned. The flag is then set to false.
+	 *
+	 * @returns either a pre-existing `model` if `to_gen_model` is false, or a newly
+	 * created `model` otherwise.
+	 */
 	public Model getModel() {
 		if (to_gen_model) {
 			createModel();
@@ -26,6 +38,14 @@ public class Chunk {
 		return model;
 	}
 	
+	/**
+	 * Returns a 4x4 transformation matrix representing the translation of a chunk based
+	 * on its position (x, y, z). The translation is scaled by a CHUNK_SIZE factor. The
+	 * matrix is initialized with this translation.
+	 *
+	 * @returns a 4x4 matrix representing a translation transformation at the specified
+	 * coordinates.
+	 */
 	public Matrix4f getModelMatrix() {
 		return new Matrix4f().initTranslation(x * CHUNK_SIZE, y * CHUNK_SIZE, z * CHUNK_SIZE);
 	}
@@ -51,6 +71,10 @@ public class Chunk {
 	
 	
 
+	/**
+	 * Checks the neighboring blocks for each block in the 3D chunk and updates the block's
+	 * flags (lt, bt, ft, rt, tp, bk) accordingly.
+	 */
 	public void updateBlocks() {
 		for (int i = 0; i < CHUNK_SIZE_CUBED; i++) {
 			Block b = blocks[i];
@@ -143,8 +167,21 @@ public class Chunk {
 	private boolean to_gen_model;
 	
 	
+	/**
+	 * Calls another instance of `toGenModel` with a parameter of `false`, indicating
+	 * that it recursively invokes itself without any additional input. This approach
+	 * suggests a method that can handle different scenarios based on the parameter passed.
+	 * The function appears to be used for model generation.
+	 */
 	public void toGenModel() { toGenModel(false); };
 	
+	/**
+	 * Generates model data from a collection of blocks and stores it in `vertices` and
+	 * `indices` arrays. It also determines the maximum index of the generated model data.
+	 *
+	 * @param now flag that determines whether the generated model should be used immediately
+	 * or if the model generation process should be continued in subsequent calls.
+	 */
 	public void toGenModel(boolean now) {
 
 		int max_index = 0;
@@ -180,10 +217,20 @@ public class Chunk {
 		
 	}
 	
+	/**
+	 * Loads a 3D model from an array of vertices and indices, storing it in the `model`
+	 * field. It utilizes the `Model.load` method and the `Util` class for data conversion.
+	 */
 	private void createModel() {
 		this.model = Model.load(Util.toFloatArray(vertices), Util.toIntArray(indices));
 	}
 	
+	/**
+	 * Generates a model by calling `toGenModel` with a boolean argument set to `true`,
+	 * and returns the generated model.
+	 *
+	 * @returns an instance of the `Model` class.
+	 */
 	public Model genModel() {
 		
 		toGenModel(true);
@@ -191,6 +238,38 @@ public class Chunk {
 		return this.model;
 	}
 
+	/**
+	 * Generates 3D vertices and indices for a block's faces based on its properties (ft,
+	 * bk, bt, tp, lt, rt). It adds the generated data to the `vertices` and `indices`
+	 * lists, incrementing `max_index` accordingly.
+	 *
+	 * @param vertices a list of 3D vertices that is populated with new values from the
+	 * `block` object.
+	 *
+	 * Transform.
+	 *
+	 * @param indices list of vertex indices for the generated block faces, which are
+	 * added to it in a specific order based on the block's orientation.
+	 *
+	 * Transform.
+	 *
+	 * @param block a 3D block, and its properties (`ft`, `bk`, `bt`, `tp`, `lt`, `rt`)
+	 * determine which faces of the block are processed.
+	 *
+	 * Deconstruct `block` into its properties:
+	 * - `x`, `y`, `z`: coordinates of the block.
+	 * - `ft`, `bk`, `bt`, `tp`, `lt`, `rt`: boolean flags indicating the presence of
+	 * front, back, bottom, top, left, and right faces, respectively.
+	 *
+	 * @param max_index initial index in the `vertices` and `indices` lists, to which new
+	 * vertices and indices are added.
+	 *
+	 * @returns an updated maximum index value after adding vertices and indices to the
+	 * provided lists.
+	 *
+	 * Returned by the `gen` function is an integer value. It represents the updated
+	 * maximum index of the vertices and indices lists.
+	 */
 	private static int gen(List<Float> vertices, List<Integer> indices, Block block, int max_index) {
 		
 		float x = block.x;

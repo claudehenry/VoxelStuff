@@ -12,8 +12,18 @@ import org.lwjgl.opengl.PixelFormat;
 import com.ch.math.Vector3f;
 import com.ch.voxel.World;
 
+/**
+ * It initializes a display and OpenGL context, loads shaders and textures, and enters
+ * a main loop where it continuously updates and renders the game world.
+ */
 public class Main {
 	
+	/**
+	 * Initializes a display, sets up OpenGL, enters a rendering loop, and then exits the
+	 * program with a status of 0.
+	 *
+	 * @param args command-line arguments passed to the program.
+	 */
 	public static void main(String[] args) {
 		
 		initDisplay();
@@ -30,6 +40,10 @@ public class Main {
 //	private static Chunk[][][] ch;
 	private static World w;
 	
+	/**
+	 * Sets the display mode to 1920x1080, creates a new display context with specific
+	 * attributes, enables vertical sync, and prints the OpenGL version to the console.
+	 */
 	private static void initDisplay() {
 		try {
 			Display.setDisplayMode(new DisplayMode(1920, 1080));
@@ -41,6 +55,12 @@ public class Main {
 		}
 	}
 	
+	/**
+	 * Initializes the OpenGL environment, enables clearing the screen, grabbing the
+	 * mouse, and culling back faces. It sets up a camera, loads a shader, and creates a
+	 * texture. Additionally, it creates a world and a chunk grid, although the chunk
+	 * grid is not fully populated.
+	 */
 	private static void initGL() {
 		
 		GL11.glClearColor(0.1f, 0.7f, 1f, 1);
@@ -83,6 +103,10 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Maintains a game loop, continuously updating and rendering the game until the user
+	 * closes the window or presses the Escape key.
+	 */
 	private static void loop() {
 		
 		Timer.init();
@@ -105,11 +129,22 @@ public class Main {
 		
 	}
 	
+	/**
+	 * Processes user input, updates the game world position based on the camera's current
+	 * position, and applies a time delta for smoother movement.
+	 *
+	 * @param dt delta time, or the time elapsed since the last update.
+	 */
 	private static void update(float dt) {
 		c.processInput(dt, 5, .3f);
 		w.updatePos(c.getTransform().getPos().getX(), c.getTransform().getPos().getY(), c.getTransform().getPos().getZ());
 	}
 
+	/**
+	 * Binds a graphics buffer, renders a 3D scene, and then releases the buffer. The
+	 * scene is rendered using a specific window object, with the view and projection
+	 * matrices applied to the model.
+	 */
 	private static void render() {
 		
 //		Model.enableAttribs();
@@ -131,6 +166,13 @@ public class Main {
 //		Model.disableAttribs();
 	}
 	
+	/**
+	 * Terminates the Java Virtual Machine (JVM) with a specified status code. The
+	 * `System.exit` method is called to initiate the JVM's shutdown.
+	 *
+	 * @param status exit status code that will be returned to the operating system upon
+	 * program termination.
+	 */
 	private static void exit(int status) {
 		System.exit(status);
 	}

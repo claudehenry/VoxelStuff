@@ -6,6 +6,11 @@ import com.ch.Camera;
 import com.ch.Shader;
 
 
+/**
+ * Represents the game world, containing a 3D grid of Chunk objects, which are generated
+ * and updated based on the game's position and chunk size. The class also handles
+ * rendering of the world using a Shader and Camera.
+ */
 public class World {
 
 	private int x, y, z; // in chunks
@@ -21,6 +26,10 @@ public class World {
 		gen();
 	}
 	
+	/**
+	 * Generates chunks of terrain data, initializes them with new Chunk objects, and
+	 * updates their block data and generates a model for each chunk.
+	 */
 	private void gen() {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
@@ -31,6 +40,17 @@ public class World {
 				}
 	}
 
+	/**
+	 * Updates the position of a chunk in a 3D grid, handling cases where the chunk moves
+	 * forward or backward in the grid, and generating new chunks or updating existing
+	 * ones as necessary.
+	 *
+	 * @param x new x-coordinate of the chunk to be updated.
+	 *
+	 * @param y y-coordinate of the position to be updated.
+	 *
+	 * @param z coordinates of a chunk in a 3D grid.
+	 */
 	public void updatePos(float x, float y, float z) {
 		final int _x = (int) (x / Chunk.CHUNK_SIZE);
 		final int _y = 0;//(int) (y / Chunk.CHUNK_SIZE);
@@ -215,6 +235,22 @@ public class World {
 		/* welp... this logic sure looks aweful */
 	}
 
+	/**
+	 * Renders 3D chunks using a shader, where each chunk's color is determined by its
+	 * coordinates and a hash of its position. The camera's view and projection matrices
+	 * are applied to each chunk's model matrix before drawing.
+	 *
+	 * @param s Shader object to which uniform variables are set and from which methods
+	 * are called to render the scene.
+	 *
+	 * Bind. The `Shader` object `s` has methods `uniformf` and `unifromMat4` for binding
+	 * uniforms.
+	 *
+	 * @param c camera, which is used to calculate the model-view-projection (MVP) matrix
+	 * for each chunk.
+	 *
+	 * Contain a `getViewProjection` method.
+	 */
 	public void render(Shader s, Camera c) {
 		for (int i = 0; i < W; i++)
 			for (int j = 0; j < H; j++)
