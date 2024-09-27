@@ -27,6 +27,9 @@ import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL30;
 
+/**
+ * Handles the loading and binding of textures from image files.
+ */
 public class Texture {
 	
 	private String fileName;
@@ -37,24 +40,54 @@ public class Texture {
 		this.id = Texture.loadTexture(fileName);
 	}
 
+	/**
+	 * Is called when an object is about to be garbage collected, allowing for cleanup
+	 * operations to be performed.
+	 */
 	@Override
 	protected void finalize() {
 	}
 
+	/**
+	 * Calls another `bind` function with argument `0`, implying a default or initial
+	 * bind operation.
+	 */
 	public void bind() {
 		bind(0);
 	}
 
+	/**
+	 * Specifies an active texture unit and binds a 2D texture to it, using the provided
+	 * sampler slot and texture ID. It ensures the sampler slot is within the valid range.
+	 *
+	 * @param samplerSlot texture unit to bind the texture to, with a valid range of 0
+	 * to 31.
+	 */
 	public void bind(int samplerSlot) {
 		assert (samplerSlot >= 0 && samplerSlot <= 31);
 		glActiveTexture(GL_TEXTURE0 + samplerSlot);
 		glBindTexture(GL_TEXTURE_2D, id);
 	}
 
+	/**
+	 * Returns the value of the `id` field. It is a simple getter method that provides
+	 * access to the `id` field. The function does not perform any validation or modification.
+	 *
+	 * @returns the value of the `id` variable.
+	 */
 	public int getID() {
 		return id;
 	}
 
+	/**
+	 * Loads a texture image from a file, converts it to a format suitable for OpenGL,
+	 * generates a new texture ID, and binds the texture to the OpenGL context.
+	 *
+	 * @param fileName file path to the image file that is to be loaded and processed as
+	 * a texture.
+	 *
+	 * @returns a unique integer identifier for the loaded texture.
+	 */
 	private static int loadTexture(String fileName) {
 		try {
 			BufferedImage image = ImageIO.read(new File(fileName));

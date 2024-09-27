@@ -1,5 +1,13 @@
 package com.ch.voxel;
 
+/**
+ * Represents a three-dimensional block with attributes to track its position and
+ * orientation in a virtual environment.
+ *
+ * - z (int): represents a three-dimensional coordinate.
+ *
+ * - rt (boolean): Represents a boolean value indicating a right-facing orientation.
+ */
 public class Block {
 	
 	public int x, y, z;
